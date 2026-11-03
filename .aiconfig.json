@@ -1,0 +1,21 @@
+{
+  "project_name": "Month-End Finance Reviewer",
+  "project_shortname": "MEFR",
+  "standards": {
+    "engineering": [
+      "csharp", "avalonia"
+    ],
+    "all": []
+  },
+  "paths": {
+    "plans": "plans",
+    "knowledge": "knowledge",
+    "architecture": "knowledge/architecture",
+    "research": "knowledge/research",
+    "product": "knowledge/product"
+  },
+  "oversight": {
+    "default": "by-size",
+    "enforced": false
+  }
+}
