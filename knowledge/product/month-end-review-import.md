@@ -23,7 +23,12 @@ Part of [Month-End Spending Review](month-end-review.md). Each CSV belongs to on
 | I1.17 | A CSV balance column, when present, is kept as a known balance for month-end balance calculation ([N](month-end-review-net-worth.md))                                         | should   |
 | I1.18 | Provider profiles can be viewed, edited and deleted in Settings                                                                                                              | should   |
 | I1.19 | PDF statement import is later and reuses the preview step                                                                                                                   | could    |
+| I1.20 | The preview flags a row as suspicious with a stated reason when a local check trips: a new merchant with a large amount, repeated charges in a short window, an amount far above that merchant's norm, or foreign-currency or unusual-merchant-code markers | must |
+| I1.21 | Flagging runs offline on the user's data only and never blocks or delays an import | must |
+| I1.22 | A suspicious flag can be dismissed, or the transaction marked as confirmed fraud; confirmed fraud is excluded from spending and income totals and carries a note | must |
+| I1.23 | Undismissed suspicious flags continue into the month's review queue ([M](month-end-review-close.md)) | must |
+| I1.24 | The thresholds for each check are set in Settings, with defaults | should |
 
 Flow and rules: choose files → detect provider (or map columns) → pick account → preview → import. Files are read locally and never uploaded.
 
-Assumptions (not in the write-up): I1.16 (clear error on a malformed file, nothing added) and I1.18 (profiles editable in Settings) are proposed; "likely duplicate" means same account, date, amount and normalized description as an existing transaction; the precise rule is settled at planning. Re-importing an identical file therefore flags every row.
+Assumptions (not in the write-up): I1.20 to I1.24 come from the review comment on flagging possibly fraudulent transactions (local heuristics chosen in review; exact thresholds and defaults are defined at planning, and excluding confirmed fraud from totals is an assumption to confirm); I1.16 (clear error on a malformed file, nothing added) and I1.18 (profiles editable in Settings) are proposed; "likely duplicate" means same account, date, amount and normalized description as an existing transaction; the precise rule is settled at planning. Re-importing an identical file therefore flags every row.

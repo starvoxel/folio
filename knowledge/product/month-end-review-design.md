@@ -81,3 +81,10 @@ Decisions for Jeremy; neither side is changed yet. Other than these, the prototy
 1. **Review is a nav item.** The prototype puts Review (with a queue count) in the navigation; the PRD (H1.4) lists Overview, Transactions, Trends, Net worth, Accounts, Rules & categories, Settings.
 2. **Net worth in the close flow.** Step 3 of the prototype's close page confirms balances and net worth, which makes net worth part of closing; the PRD ranks net worth below the core views and lets it ship later (N, M1.5).
 3. **Settings is missing the rolling-average length** (3, 6 or 12 months, H1.9); the prototype Settings has no such control, though the Trends views need it (A1.8).
+4. **Review-driven changes the prototype does not yet show** (PR 1 review comments, 2026-11-03). The PRD is ahead of the prototype here; the prototype needs updating:
+   - Hamburger menu in the top bar (H1.14) instead of relying only on the nav and command bar.
+   - Save controls: unsaved-changes indicator and manual Save, replacing the fixed "Saved automatically" label (H1.6a).
+   - Interactive Accounts: each row opens an account detail with current balance, covered-through, all transactions, per-account review and import (S1.16 to S1.22), and an Archived list (S1.14); today the page is a static table.
+   - Close coverage rule: a short gap of N days or fewer closes with a confirmation warning (M1.15); the prototype's close step 1 treats any gap as blocking.
+   - Suspicious-transaction flags with reasons in the import preview and review queue (I1.20 to I1.23).
+   - Settings controls for autosave interval, coverage tolerance and suspicious-transaction thresholds (H1.9).

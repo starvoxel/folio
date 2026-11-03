@@ -19,3 +19,5 @@ Part of [Month-End Spending Review](month-end-review.md). Net worth is in scope 
 Flow and rules: the whole area is "should" in priority terms because it can ship after the core views; the close checklist items that depend on it ([M](month-end-review-close.md) M1.5) are required only once this area ships.
 
 Assumptions: switching a free-form entry between asset and debt retroactively changes locked months' net worth presentation (as the write-up specifies) but not their spending totals; this exception to "locked months never change" is accepted and should be confirmed by Jeremy.
+
+Open (not in the write-up): how an archived account counts toward net worth in months after it is archived (carry its last confirmed balance, count it as zero, or require a final balance at archive time). Decided by Jeremy before net worth planning; see [S](month-end-review-setup.md) S1.12 to S1.15.

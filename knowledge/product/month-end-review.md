@@ -27,7 +27,7 @@ One household, several members sharing one budget file. All members have equal a
 | Platform        | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia` |
 | Users           | One household sharing the file                                                                  |
 | Storage         | Local budget file opened like a document; may sit in a shared folder. Format undecided (see open questions) |
-| Saving          | Autosave after each change; undo/redo for the session                                           |
+| Saving          | Autosave every X minutes (configurable) plus manual save; undo/redo for the session              |
 | Data sources    | CSV only                                                                                        |
 | Privacy         | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up |
 | Online lookups  | Off by default; opt-in; only services that neither keep nor sell data                           |
@@ -85,7 +85,8 @@ Months are calendar months; statements are not. Each transaction is filed under 
 Open (decider in brackets):
 
 - Budget file format: SQLite vs document file vs other. [Jeremy; decide before architecture/planning]
-- Prototype differences: Review as a nav item, and net worth inside the close flow (see the design notes). [Jeremy]
+- Prototype differences: Review as a nav item, net worth inside the close flow, plus the review-driven changes (hamburger menu, save controls, interactive accounts, coverage warning, suspicious flags); see the design notes. [Jeremy]
+- How an archived account's balance counts in net worth for months after it is archived. [Jeremy; decide before net worth planning]
 - Online merchant lookup: which service, if any. [Research during planning; Jeremy]
 
 Assumptions made while detailing the areas (each is a stated default, change freely):
