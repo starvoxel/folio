@@ -22,17 +22,17 @@ One household, several members sharing one budget file. All members have equal a
 
 ## Constraints
 
-| Area            | v1 choice                                                                                       |
-| --------------- | ----------------------------------------------------------------------------------------------- |
-| Platform        | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia` |
-| Users           | One household sharing the file                                                                  |
-| Storage         | Local budget file opened like a document; may sit in a shared folder. Format undecided (see open questions) |
-| Saving          | Autosave every X minutes (configurable) plus manual save; undo/redo for the session              |
-| Data sources    | CSV only                                                                                        |
-| Privacy         | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up |
-| Online lookups  | Off by default; opt-in; only services that neither keep nor sell data                           |
-| Currency        | CAD only                                                                                        |
-| Concurrency     | Two simultaneous editors not handled                                                            |
+| Area           | v1 choice                                                                                                                                            |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform       | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia`                                           |
+| Users          | One household sharing the file                                                                                                                       |
+| Storage        | Local budget file opened like a document; may sit in a shared folder. Format undecided (see open questions)                                          |
+| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                  |
+| Data sources   | CSV only                                                                                                                                             |
+| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up |
+| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                |
+| Currency       | CAD only                                                                                                                                             |
+| Concurrency    | Two simultaneous editors not handled                                                                                                                 |
 
 ## Success measures
 
@@ -42,16 +42,16 @@ One household, several members sharing one budget file. All members have equal a
 
 ## Feature areas
 
-| Area | Doc | Covers |
-| ---- | --- | ------ |
-| S | [Setup and accounts](month-end-review-setup.md) | New file, accounts, opening balances, category templates |
-| I | [Importing](month-end-review-import.md) | CSV intake, provider profiles, preview, duplicates, coverage |
-| C | [Categorization](month-end-review-categorization.md) | Categories, rules, splits, uncategorized list |
-| T | [Transfers, savings and excluded accounts](month-end-review-transfers.md) | Pairing, exclusions, how money into an account counts |
-| M | [Month-end review and locking](month-end-review-close.md) | Review queue, notes, checklist, close, reopen |
-| A | [Analysis and trends](month-end-review-analysis.md) | Overview, money in/out, category trends, averages |
-| N | [Net worth](month-end-review-net-worth.md) | Month-end balances, free-form entries, history |
-| H | [App shell and settings](month-end-review-shell.md) | Start screen, navigation, undo/redo, settings, backups |
+| Area | Doc                                                                       | Covers                                                       |
+| ---- | ------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| S    | [Setup and accounts](month-end-review-setup.md)                           | New file, accounts, opening balances, category templates     |
+| I    | [Importing](month-end-review-import.md)                                   | CSV intake, provider profiles, preview, duplicates, coverage |
+| C    | [Categorization](month-end-review-categorization.md)                      | Categories, rules, splits, uncategorized list                |
+| T    | [Transfers, savings and excluded accounts](month-end-review-transfers.md) | Pairing, exclusions, how money into an account counts        |
+| M    | [Month-end review and locking](month-end-review-close.md)                 | Review queue, notes, checklist, close, reopen                |
+| A    | [Analysis and trends](month-end-review-analysis.md)                       | Overview, money in/out, category trends, averages            |
+| N    | [Net worth](month-end-review-net-worth.md)                                | Month-end balances, free-form entries, history               |
+| H    | [App shell and settings](month-end-review-shell.md)                       | Start screen, navigation, undo/redo, settings, backups       |
 
 Visual design: [design notes](month-end-review-design.md) derived from the HTML prototype in `design/`.
 
@@ -67,18 +67,18 @@ Months are calendar months; statements are not. Each transaction is filed under 
 
 ## Later versions and out of scope
 
-| Item | Status |
-| ---- | ------ |
-| Budget targets and goals per category | Version 2 |
-| PDF statement import (reuses the preview step) | Later |
-| Bulk tagging across categories | Later |
-| Optional file password and encryption | Later |
-| Printable month summary and CSV export | Later |
-| Opt-in online merchant lookup | Research first, then decide |
-| Two people editing at once | Not handled in v1 |
-| Direct bank connections | Out of scope |
-| Currencies other than CAD | Out of scope |
-| Phone or web apps | Out of scope for now |
+| Item                                           | Status                      |
+| ---------------------------------------------- | --------------------------- |
+| Budget targets and goals per category          | Version 2                   |
+| PDF statement import (reuses the preview step) | Later                       |
+| Bulk tagging across categories                 | Later                       |
+| Optional file password and encryption          | Later                       |
+| Printable month summary and CSV export         | Later                       |
+| Opt-in online merchant lookup                  | Research first, then decide |
+| Two people editing at once                     | Not handled in v1           |
+| Direct bank connections                        | Out of scope                |
+| Currencies other than CAD                      | Out of scope                |
+| Phone or web apps                              | Out of scope for now        |
 
 ## Assumptions and open questions
 
@@ -86,7 +86,6 @@ Open (decider in brackets):
 
 - Budget file format: SQLite vs document file vs other. [Jeremy; decide before architecture/planning]
 - Prototype differences: Review as a nav item, net worth inside the close flow, plus the review-driven changes (hamburger menu, save controls, interactive accounts, coverage warning, suspicious flags); see the design notes. [Jeremy]
-- How an archived account's balance counts in net worth for months after it is archived. [Jeremy; decide before net worth planning]
 - Online merchant lookup: which service, if any. [Research during planning; Jeremy]
 
 Assumptions made while detailing the areas (each is a stated default, change freely):
