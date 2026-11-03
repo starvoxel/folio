@@ -25,4 +25,4 @@ Part of [Month-End Spending Review](month-end-review.md). Rules categorize on ar
 
 Flow and rules: rules run on import and when a rule is saved (open months only). Refunds reduce spending within their own category.
 
-Assumptions: "pattern" means regular expression; invalid patterns are rejected on save. Deleting a rule leaves already-assigned categories unchanged.
+Assumptions (not in the write-up): C1.11 (a manual category is never overwritten by a rule) and C1.17 (rules can be reordered, disabled, deleted) are proposed; C1.7 reads "a provider rule counts as more specific" as winning over a shared rule with the same number of conditions; "pattern" means regular expression; invalid patterns are rejected on save. Deleting a rule leaves already-assigned categories unchanged.

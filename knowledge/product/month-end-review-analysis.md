@@ -20,3 +20,5 @@ Part of [Month-End Spending Review](month-end-review.md). Version 1 looks back: 
 | A1.14 | Totals for a closed month are identical every time they are shown, across all views                                                              | must     |
 
 Flow and rules: open months show live figures marked as not final; they are never included in averages.
+
+Assumptions (not in the write-up): A1.13 (averages with fewer locked months than the window, comparisons hidden with none) and A1.14 (closed-month totals identical in every view, the testable form of the primary success measure) are proposed; open-month figures are marked as not final.

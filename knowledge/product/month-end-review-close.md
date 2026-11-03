@@ -21,4 +21,4 @@ Part of [Month-End Spending Review](month-end-review.md). Closing freezes a mont
 
 Flow and rules: "unusually large" and "new merchant" thresholds are defined at planning time. Data kept: notes, close and reopen history, confirmed balances.
 
-Assumptions: a month cannot be closed while an earlier month is still open (so history locks in order); this is stricter than the write-up and needs Jeremy's confirmation.
+Assumptions (not in the write-up): M1.3 (queue items resolve and reappear when sent back), M1.12 and M1.13 (status labels, history list) and M1.14 (close is not undoable except by guarded reopen) are proposed; a month cannot be closed while an earlier month is still open (so history locks in order); this is stricter than the write-up and needs Jeremy's confirmation.

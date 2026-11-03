@@ -26,4 +26,4 @@ Part of [Month-End Spending Review](month-end-review.md). Each CSV belongs to on
 
 Flow and rules: choose files → detect provider (or map columns) → pick account → preview → import. Files are read locally and never uploaded.
 
-Assumptions: "likely duplicate" means same account, date, amount and normalized description as an existing transaction; the precise rule is settled at planning. Re-importing an identical file therefore flags every row.
+Assumptions (not in the write-up): I1.16 (clear error on a malformed file, nothing added) and I1.18 (profiles editable in Settings) are proposed; "likely duplicate" means same account, date, amount and normalized description as an existing transaction; the precise rule is settled at planning. Re-importing an identical file therefore flags every row.

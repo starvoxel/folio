@@ -13,7 +13,7 @@ Sample data is a file named "Household 2026.budget"; the new-file dialog default
 
 ## Visual foundations
 
-The prototype uses a stock FluentAvalonia token set (WinUI naming), fixed "Windows blue" accent rather than the OS accent.
+The prototype uses FluentAvalonia's own v2 resources: colours from `Fluentv2Colors.axaml` in [amwx/FluentAvalonia](https://github.com/amwx/FluentAvalonia), structural values from its Resources docs page, and its icon font. The accent is fixed "Windows blue" rather than the OS accent.
 
 | Aspect | Value |
 | ------ | ----- |
@@ -30,7 +30,7 @@ The prototype uses a stock FluentAvalonia token set (WinUI naming), fixed "Windo
 | Elevation | Cards 0 1 2 at 6%; flyouts 0 8 16 at 14% |
 | Themes | Light, dark; Settings offers light / dark / system (H1.9) |
 
-Implementation rule: map each token to the matching FluentAvalonia theme resource (for example text-primary → `TextFillColorPrimaryBrush`, card-bg → `CardBackgroundFillColorDefaultBrush`, solid-bg-base → `SolidBackgroundFillColorBaseBrush`, divider → `DividerStrokeColorDefaultBrush`) and verify the exact keys against the pinned FluentAvalonia version when building; define project resources only for tokens FluentAvalonia lacks (status backgrounds).
+Implementation rule: map each token to the matching FluentAvalonia theme resource (for example text-primary → `TextFillColorPrimaryBrush`, card-bg → `CardBackgroundFillColorDefaultBrush`, solid-bg-base → `SolidBackgroundFillColorBaseBrush`, divider → `DividerStrokeColorDefaultBrush`) and verify the exact keys against the pinned FluentAvalonia version when building. Because the tokens are FluentAvalonia's own, the Avalonia app inherits them from the theme; define project resources only where the prototype adds its own (the status backgrounds).
 
 ## Shell
 
@@ -55,7 +55,7 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 | Net worth | Bar chart of locked months (bars start at a stated baseline so change is visible); breakdown at a chosen month by group; add asset or debt; inline rename and archive |
 | Accounts | Table: Type, Provider, Data through, Month-end analysis toggle, Money moved in counts as; add/edit form; note that included-account transfers pair automatically |
 | Rules & categories | Tabs Rules and Categories; rule list (match text, extra conditions, category, match count); rule editor with provider-profile picker, live preview of past transactions it would change, Save and Delete; categories as parent totals with subcategories |
-| Settings | Provider profiles (columns, date format, money-out direction); online category suggestions toggle shown as planned and off |
+| Settings | Provider profiles (columns, date format, money-out direction); transfer matching window; theme (Light, Dark, System); online category suggestions toggle shown as planned and off |
 | Import dialog | Drop zone plus Browse and recent downloads; provider detected from headers; column-mapping summary; preview table (date, description, amount, suggested category, status, Keep for duplicates); warning that locked-month rows are skipped and the account's new covered-through date; Back and Import |
 
 ## FluentAvalonia component mapping
@@ -76,7 +76,8 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 
 ## Differences from the PRD
 
-Decisions for Jeremy; neither side is changed yet. Everything else in the prototype matches the PRD.
+Decisions for Jeremy; neither side is changed yet. Other than these, the prototype matches the PRD.
 
 1. **Review is a nav item.** The prototype puts Review (with a queue count) in the navigation; the PRD (H1.4) lists Overview, Transactions, Trends, Net worth, Accounts, Rules & categories, Settings.
 2. **Net worth in the close flow.** Step 3 of the prototype's close page confirms balances and net worth, which makes net worth part of closing; the PRD ranks net worth below the core views and lets it ship later (N, M1.5).
+3. **Settings is missing the rolling-average length** (3, 6 or 12 months, H1.9); the prototype Settings has no such control, though the Trends views need it (A1.8).

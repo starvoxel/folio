@@ -18,4 +18,4 @@ Part of [Month-End Spending Review](month-end-review.md). A new budget file star
 
 Flow and rules: setup is a dialog launched from the start screen. Changing an account's analysis flag or transfer treatment after months are closed does not alter locked months.
 
-Assumptions: the exact contents of the Detailed household and Simple templates are drafted at planning time and reviewed with Jeremy; an account's type can change only before its first import.
+Assumptions (not in the write-up): S1.3 (the account type list) and S1.11 (setup may be left unfinished) are proposed; the exact contents of the Detailed household and Simple templates are drafted at planning time and reviewed with Jeremy; an account's type can change only before its first import.

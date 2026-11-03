@@ -29,7 +29,7 @@ One household, several members sharing one budget file. All members have equal a
 | Storage         | Local budget file opened like a document; may sit in a shared folder. Format undecided (see open questions) |
 | Saving          | Autosave after each change; undo/redo for the session                                           |
 | Data sources    | CSV only                                                                                        |
-| Privacy         | Data stays in the file on our computers; nothing leaves unless opted in. No telemetry, no bank connections |
+| Privacy         | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up |
 | Online lookups  | Off by default; opt-in; only services that neither keep nor sell data                           |
 | Currency        | CAD only                                                                                        |
 | Concurrency     | Two simultaneous editors not handled                                                            |
@@ -37,8 +37,8 @@ One household, several members sharing one budget file. All members have equal a
 ## Success measures
 
 - Totals of a closed month never change unless it is deliberately reopened (the primary measure).
-- Categorization effort falls month over month: manual fixes per import trend down as rules accumulate.
-- A month can be imported, reviewed and closed without leaving the app or editing a spreadsheet.
+- Assumption, not in the write-up: categorization effort falls month over month, with manual fixes per import trending down as rules accumulate.
+- Assumption, not in the write-up: a month can be imported, reviewed and closed without leaving the app or editing a spreadsheet.
 
 ## Feature areas
 
@@ -54,6 +54,8 @@ One household, several members sharing one budget file. All members have equal a
 | H | [App shell and settings](month-end-review-shell.md) | Start screen, navigation, undo/redo, settings, backups |
 
 Visual design: [design notes](month-end-review-design.md) derived from the HTML prototype in `design/`.
+
+Net worth (N) requirements are all "should" because the area ships after the core views, even where a "must" in another area (M1.5, M1.11) references it; those "must"s apply once N ships.
 
 Priority: areas S, I, C, T, M, A, H are the core month-end views and ship first; N ships after them (ranked below spending trends).
 
@@ -88,7 +90,7 @@ Open (decider in brackets):
 
 Assumptions made while detailing the areas (each is a stated default, change freely):
 
-1. Each area's detailing was done from the write-up alone; items the write-up did not specify are listed in that area's doc under "Assumptions".
+1. Each area's detailing was done from the write-up alone; requirements the write-up did not specify are labelled in that area's doc under "Assumptions".
 2. Amounts are stored and compared in exact CAD cents; no floating point.
 3. A "month" is the calendar month of the transaction's posted date.
 4. Autosave never changes a locked month; the only path to change one is reopen.

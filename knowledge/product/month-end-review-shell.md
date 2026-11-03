@@ -20,4 +20,4 @@ Part of [Month-End Spending Review](month-end-review.md). The app works like a d
 
 Flow and rules: backup frequency, retention and location are decided at planning time. Visual design follows the [design notes](month-end-review-design.md), realized with FluentAvalonia.
 
-Assumptions: because two concurrent editors are unsupported, the app may detect an in-use file and warn, but is not required to.
+Assumptions (not in the write-up): H1.8 (undo never alters a locked month) and H1.11 (corrupt-file error offering a backup) are proposed; because two concurrent editors are unsupported, the app may detect an in-use file and warn, but is not required to.
