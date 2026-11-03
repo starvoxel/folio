@@ -5,8 +5,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const patterns = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.json'), 'utf8'));
-
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Builds the compiled rule list from patterns.json. Pure. */
@@ -14,8 +12,11 @@ function buildRules(p) {
   const rules = [];
   for (const [category, { fix, terms }] of Object.entries(p.words)) {
     for (const term of terms) {
-      const edge = /[a-z0-9]$/i.test(term) ? '\\b' : '';
-      rules.push({ category, fix, re: new RegExp(`\\b${escapeRe(term)}${edge}`, 'gi') });
+      // Single words also match common inflections (utilize -> utilized, leverages, showcasing).
+      const single = /^[a-z-]+$/i.test(term);
+      const stem = single ? term.replace(/e$/i, '') : term;
+      const tail = single ? '(?:e|es|ed|d|s|ing)?\\b' : /[a-z0-9]$/i.test(term) ? '\\b' : '';
+      rules.push({ category, fix, re: new RegExp(`\\b${escapeRe(stem)}${tail}`, 'gi') });
     }
   }
   for (const { match, fix } of p.wordy) {
@@ -63,18 +64,25 @@ function scanText(text, rules) {
   const findings = [];
   maskCode(text).forEach((line, i) => {
     if (!line.trim()) return;
+    const found = [];
     for (const { category, fix, re } of rules) {
       re.lastIndex = 0;
       let m;
       while ((m = re.exec(line)) !== null) {
         if (m[0] === '') { re.lastIndex++; continue; }
-        findings.push({ line: i + 1, category, match: m[0].trim(), fix });
+        found.push({ start: m.index, end: m.index + m[0].length, line: i + 1, category, match: m[0].trim(), fix });
       }
+    }
+    // Drop findings fully inside a longer one on the same line (overlapping terms, bold inside inline-header).
+    for (const f of found) {
+      const covered = found.some((o) => o !== f && o.start <= f.start && o.end >= f.end &&
+        (o.end - o.start > f.end - f.start || (o.end - o.start === f.end - f.start && found.indexOf(o) < found.indexOf(f))));
+      if (!covered) findings.push({ line: f.line, category: f.category, match: f.match, fix: f.fix });
     }
     const t = titleCaseHeading(line);
     if (t) findings.push({ line: i + 1, category: 'title-case', match: t, fix: 'use sentence case' });
   });
-  return findings.sort((a, b) => a.line - b.line);
+  return findings;
 }
 
 function main(argv) {
@@ -84,10 +92,16 @@ function main(argv) {
     console.error('Usage: node scan.js <file...> [--json]');
     return 2;
   }
-  const rules = buildRules(patterns);
   const all = [];
-  for (const file of files) {
-    for (const f of scanText(fs.readFileSync(file, 'utf8'), rules)) all.push({ file, ...f });
+  try {
+    const patterns = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.json'), 'utf8'));
+    const rules = buildRules(patterns);
+    for (const file of files) {
+      for (const f of scanText(fs.readFileSync(file, 'utf8'), rules)) all.push({ file, ...f });
+    }
+  } catch (err) {
+    console.error(`scan error: ${err.message}`);
+    return 2;
   }
   if (json) console.log(JSON.stringify(all, null, 2));
   else for (const f of all) console.log(`${f.file}:${f.line} [${f.category}] "${f.match}" -> ${f.fix}`);

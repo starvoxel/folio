@@ -16,7 +16,7 @@ Removes AI writing tells from docs, READMEs, PR text, and comments. A script fin
 
 ### Step 1: Scan
 
-Run `node scripts/scan.js <file...>` from this skill's directory. It prints `file:line [category] "match" -> fix` and skips frontmatter, fenced code, and inline code. Exit code 1 means findings. The word and phrase lists live in `scripts/patterns.json`; extend that file, not the script.
+Run `node scripts/scan.js <file...>` from this skill's directory. It prints `file:line [category] "match" -> fix` and skips frontmatter, fenced code, and inline code. Exit code 1 means findings, 2 means a file or usage error. Rule of three, passive voice, and title case are advisory; judge each hit in context. The word and phrase lists live in `scripts/patterns.json`; extend that file, not the script.
 
 ### Step 2: Fix scan findings
 
@@ -37,11 +37,11 @@ Read the text for what the scan cannot see. Rules by area:
 - "Not just X, but Y" and "It's not X, it's Y": state Y.
 - Rule of three: list only the items that exist. Split forced triplets of adjectives or nouns.
 - Synonym cycling: name a thing once, then reuse the same word for it in the paragraph.
-- False ranges: "from X to Y" only when X and Y sit on a real scale. Otherwise list the items.
+- False ranges: "from X to Y" only when X and Y sit on a real scale. Otherwise list the items. (The scan does not detect this; look for it.)
 
 *Style*
 - Em dashes: replace with a period, comma, colon, or parentheses. Zero by default.
-- Colons: only before a list or a definition, never to join clauses mid-sentence.
+- Colons: only before a list or a definition, never to join clauses mid-sentence. (The scan does not detect this.)
 - Bold: only for UI labels and warnings that must not be missed. Never for proper nouns, acronyms, or emphasis.
 - Inline-header lists ("bold Label: text" where the text restates the label): rewrite as prose, with an italic lead-in if a label is needed (`*Schema in C#.* All tables live in one file.`).
 - Headings: sentence case. Keep proper nouns and acronyms capitalized.
@@ -59,7 +59,7 @@ Read the text for what the scan cannot see. Rules by area:
 - Generic conclusions ("The future looks bright", "In summary", "Overall"): replace with a specific next step or fact, or delete.
 
 *Jargon*
-- Abstract metaphor nouns: substrate (base), wedge or "wedge in" (add), vector (way, method), locus (place), landscape, tapestry, ecosystem, paradigm, lens, north star, bedrock, linchpin. Use the literal word.
+- Abstract metaphor nouns: substrate (base), wedge or "wedge in" (add), vector (way, method), locus (place), and the rest of the list in `scripts/patterns.json`. Use the literal word.
 
 *Plain speech*
 - Say what it does, not how it feels or how impressive it is.

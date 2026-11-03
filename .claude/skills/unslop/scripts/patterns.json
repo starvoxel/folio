@@ -19,7 +19,6 @@
         "pivotal",
         "showcase",
         "showcasing",
-        "testament",
         "underscore",
         "underscores",
         "vibrant",
@@ -35,7 +34,6 @@
         "streamline",
         "empower",
         "elevate",
-        "unlock",
         "unleash",
         "realm",
         "beacon",
@@ -64,10 +62,10 @@
         "commendable",
         "invaluable",
         "transformative",
-        "harness",
         "bolster",
         "resonate",
-        "resonates"
+        "resonates",
+        "testament"
       ]
     },
     "fancy-is": {
@@ -75,15 +73,12 @@
       "terms": [
         "serves as",
         "stands as",
-        "acts as",
-        "functions as",
         "boasts",
         "boasting",
         "features a",
         "represents a",
         "marks a",
         "constitutes",
-        "stands as a testament",
         "plays a key role",
         "plays a crucial role",
         "plays a vital role",
@@ -91,22 +86,16 @@
       ]
     },
     "abstract-metaphor": {
-      "fix": "use the literal word (substrate=base, wedge in=add, vector=way, locus=place)",
+      "fix": "use the literal word (substrate=base, wedge in=add, vector=way, locus=place); keep if used literally",
       "terms": [
         "substrate",
-        "wedge",
-        "wedge in",
-        "vector",
         "locus",
-        "lens",
         "north star",
         "bedrock",
         "linchpin",
-        "ecosystem",
         "paradigm",
         "crucible",
         "fulcrum",
-        "scaffolding",
         "double-edged sword",
         "deep dive",
         "low-hanging fruit",
@@ -114,7 +103,11 @@
         "sweet spot",
         "ripple effect",
         "stakeholder buy-in",
-        "tapestry"
+        "tapestry",
+        "wedge",
+        "vector",
+        "lens",
+        "ecosystem"
       ]
     },
     "plain-word": {
@@ -132,10 +125,8 @@
         "operationalize",
         "synergy",
         "synergies",
-        "paradigm shift",
         "actionable",
         "impactful",
-        "holistic approach",
         "robustly",
         "prior to",
         "subsequent to",
@@ -197,10 +188,6 @@
         "certainly!",
         "absolutely!",
         "of course!",
-        "sure!",
-        "here is a",
-        "here's a",
-        "here are some",
         "as an ai",
         "as a language model",
         "i'd be happy to",
@@ -261,8 +248,6 @@
         "in the world of",
         "at the end of the day",
         "when it comes to",
-        "a testament to",
-        "stands as a testament",
         "a rich tapestry",
         "of paramount importance"
       ]
@@ -427,11 +412,6 @@
       "fix": "state the point directly"
     },
     {
-      "category": "false-range",
-      "pattern": "\\bfrom [^.,;]{2,40} to [^.,;]{2,40}",
-      "fix": "keep only if X and Y are ends of a real scale"
-    },
-    {
       "category": "em-dash",
       "pattern": "\\u2014|\\u2013| -- ",
       "fix": "use a period, comma, colon, or parentheses"
@@ -453,13 +433,8 @@
     },
     {
       "category": "emoji",
-      "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2B50}\\u{2705}\\u{274C}]",
+      "pattern": "[🌀-🫿⭐✅❌]",
       "fix": "remove decorative emoji"
-    },
-    {
-      "category": "mid-sentence-colon",
-      "pattern": "[a-z,] [a-z][^:\\n]{3,}: [a-z]",
-      "fix": "colon only before a list or definition; use a period or 'because'"
     },
     {
       "category": "passive",
