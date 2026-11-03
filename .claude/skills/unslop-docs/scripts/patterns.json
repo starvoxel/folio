@@ -1,0 +1,485 @@
+{
+  "words": {
+    "ai-vocabulary": {
+      "fix": "delete or use a plain word",
+      "terms": [
+        "additionally",
+        "crucial",
+        "delve",
+        "delves",
+        "delving",
+        "enduring",
+        "fostering",
+        "foster",
+        "garner",
+        "intricate",
+        "intricacies",
+        "interplay",
+        "landscape",
+        "pivotal",
+        "showcase",
+        "showcasing",
+        "testament",
+        "underscore",
+        "underscores",
+        "vibrant",
+        "comprehensive",
+        "robust",
+        "seamless",
+        "seamlessly",
+        "meticulous",
+        "meticulously",
+        "nuanced",
+        "multifaceted",
+        "holistic",
+        "streamline",
+        "empower",
+        "elevate",
+        "unlock",
+        "unleash",
+        "realm",
+        "beacon",
+        "cornerstone",
+        "game-changer",
+        "groundbreaking",
+        "cutting-edge",
+        "state-of-the-art",
+        "best-in-class",
+        "ever-evolving",
+        "ever-changing",
+        "myriad",
+        "plethora",
+        "embark",
+        "furthermore",
+        "moreover",
+        "notably",
+        "importantly",
+        "ultimately",
+        "essentially",
+        "fundamentally",
+        "crucially",
+        "paramount",
+        "bustling",
+        "profound",
+        "commendable",
+        "invaluable",
+        "transformative",
+        "harness",
+        "bolster",
+        "resonate",
+        "resonates"
+      ]
+    },
+    "fancy-is": {
+      "fix": "use 'is' or 'has'",
+      "terms": [
+        "serves as",
+        "stands as",
+        "acts as",
+        "functions as",
+        "boasts",
+        "boasting",
+        "features a",
+        "represents a",
+        "marks a",
+        "constitutes",
+        "stands as a testament",
+        "plays a key role",
+        "plays a crucial role",
+        "plays a vital role",
+        "plays a pivotal role"
+      ]
+    },
+    "abstract-metaphor": {
+      "fix": "use the literal word (substrate=base, wedge in=add, vector=way, locus=place)",
+      "terms": [
+        "substrate",
+        "wedge",
+        "wedge in",
+        "vector",
+        "locus",
+        "lens",
+        "north star",
+        "bedrock",
+        "linchpin",
+        "ecosystem",
+        "paradigm",
+        "crucible",
+        "fulcrum",
+        "scaffolding",
+        "double-edged sword",
+        "deep dive",
+        "low-hanging fruit",
+        "moving parts",
+        "sweet spot",
+        "ripple effect",
+        "stakeholder buy-in",
+        "tapestry"
+      ]
+    },
+    "plain-word": {
+      "fix": "use the plain word",
+      "terms": [
+        "utilize",
+        "utilise",
+        "leverage",
+        "leveraging",
+        "facilitate",
+        "facilitates",
+        "commence",
+        "endeavor",
+        "ascertain",
+        "operationalize",
+        "synergy",
+        "synergies",
+        "paradigm shift",
+        "actionable",
+        "impactful",
+        "holistic approach",
+        "robustly",
+        "prior to",
+        "subsequent to",
+        "in lieu of",
+        "pertaining to",
+        "with regard to",
+        "with respect to"
+      ]
+    },
+    "hedging": {
+      "fix": "state it plainly or use 'may'",
+      "terms": [
+        "could potentially",
+        "might possibly",
+        "may potentially",
+        "could possibly",
+        "it could be argued",
+        "it may be argued",
+        "it can be argued",
+        "it is possible that",
+        "arguably",
+        "seemingly",
+        "to some extent",
+        "in some cases it may"
+      ]
+    },
+    "vague-attribution": {
+      "fix": "name the source or delete the claim",
+      "terms": [
+        "experts believe",
+        "experts say",
+        "experts agree",
+        "industry reports suggest",
+        "industry experts",
+        "studies show",
+        "studies suggest",
+        "research shows",
+        "research suggests",
+        "many believe",
+        "some argue",
+        "it is widely believed",
+        "it is widely known",
+        "it is often said",
+        "observers note",
+        "critics argue",
+        "commonly regarded",
+        "widely regarded",
+        "widely considered"
+      ]
+    },
+    "chatbot": {
+      "fix": "delete",
+      "terms": [
+        "i hope this helps",
+        "hope this helps",
+        "let me know if",
+        "feel free to",
+        "don't hesitate to",
+        "certainly!",
+        "absolutely!",
+        "of course!",
+        "sure!",
+        "here is a",
+        "here's a",
+        "here are some",
+        "as an ai",
+        "as a language model",
+        "i'd be happy to",
+        "i would be happy to",
+        "happy to help",
+        "as of my last update",
+        "as of my knowledge cutoff",
+        "i cannot browse",
+        "great question",
+        "excellent question",
+        "good question",
+        "you're absolutely right",
+        "you are absolutely right",
+        "that's a great",
+        "what a great",
+        "i apologize",
+        "sorry for the confusion",
+        "i understand your"
+      ]
+    },
+    "generic-conclusion": {
+      "fix": "state a specific fact or next step, or delete",
+      "terms": [
+        "the future looks bright",
+        "the future is bright",
+        "exciting times ahead",
+        "only time will tell",
+        "in conclusion",
+        "in summary",
+        "to summarize",
+        "to sum up",
+        "overall,",
+        "all in all",
+        "moving forward",
+        "going forward",
+        "paving the way",
+        "continues to evolve",
+        "remains to be seen",
+        "a step in the right direction",
+        "the possibilities are endless",
+        "the sky is the limit"
+      ]
+    },
+    "significance-filler": {
+      "fix": "state the concrete fact",
+      "terms": [
+        "it is important to note",
+        "it's important to note",
+        "it is worth noting",
+        "it's worth noting",
+        "it should be noted",
+        "it is worth mentioning",
+        "needless to say",
+        "it goes without saying",
+        "in today's",
+        "in the modern world",
+        "in the realm of",
+        "in the world of",
+        "at the end of the day",
+        "when it comes to",
+        "a testament to",
+        "stands as a testament",
+        "a rich tapestry",
+        "of paramount importance"
+      ]
+    }
+  },
+  "wordy": [
+    {
+      "match": "in order to",
+      "fix": "to"
+    },
+    {
+      "match": "due to the fact that",
+      "fix": "because"
+    },
+    {
+      "match": "owing to the fact that",
+      "fix": "because"
+    },
+    {
+      "match": "in light of the fact that",
+      "fix": "because"
+    },
+    {
+      "match": "despite the fact that",
+      "fix": "although"
+    },
+    {
+      "match": "in spite of the fact that",
+      "fix": "although"
+    },
+    {
+      "match": "the fact that",
+      "fix": "that (or rephrase)"
+    },
+    {
+      "match": "at this point in time",
+      "fix": "now"
+    },
+    {
+      "match": "at the present time",
+      "fix": "now"
+    },
+    {
+      "match": "in the event that",
+      "fix": "if"
+    },
+    {
+      "match": "in the event of",
+      "fix": "if"
+    },
+    {
+      "match": "on the condition that",
+      "fix": "if"
+    },
+    {
+      "match": "for the purpose of",
+      "fix": "for, to"
+    },
+    {
+      "match": "with the aim of",
+      "fix": "to"
+    },
+    {
+      "match": "with a view to",
+      "fix": "to"
+    },
+    {
+      "match": "is able to",
+      "fix": "can"
+    },
+    {
+      "match": "are able to",
+      "fix": "can"
+    },
+    {
+      "match": "has the ability to",
+      "fix": "can"
+    },
+    {
+      "match": "have the ability to",
+      "fix": "can"
+    },
+    {
+      "match": "is capable of",
+      "fix": "can"
+    },
+    {
+      "match": "it is possible to",
+      "fix": "can"
+    },
+    {
+      "match": "a large number of",
+      "fix": "many"
+    },
+    {
+      "match": "a majority of",
+      "fix": "most"
+    },
+    {
+      "match": "a significant amount of",
+      "fix": "much"
+    },
+    {
+      "match": "in close proximity to",
+      "fix": "near"
+    },
+    {
+      "match": "in the near future",
+      "fix": "soon, or a date"
+    },
+    {
+      "match": "on a regular basis",
+      "fix": "regularly"
+    },
+    {
+      "match": "on a daily basis",
+      "fix": "daily"
+    },
+    {
+      "match": "in a timely manner",
+      "fix": "promptly, or a deadline"
+    },
+    {
+      "match": "with the exception of",
+      "fix": "except"
+    },
+    {
+      "match": "in the process of",
+      "fix": "delete"
+    },
+    {
+      "match": "for the most part",
+      "fix": "mostly"
+    },
+    {
+      "match": "each and every",
+      "fix": "each"
+    },
+    {
+      "match": "first and foremost",
+      "fix": "first"
+    },
+    {
+      "match": "basically",
+      "fix": "delete"
+    }
+  ],
+  "regex": [
+    {
+      "category": "ing-phrase",
+      "pattern": ",\\s+(?:highlighting|ensuring|reflecting|underscoring|showcasing|emphasizing|demonstrating|contributing to|fostering|enabling|allowing|making it|providing|offering|cementing|solidifying|paving)\\b[^.]*",
+      "fix": "cut the trailing -ing clause or make it its own factual sentence"
+    },
+    {
+      "category": "not-just",
+      "pattern": "\\bnot (?:just|only|merely|simply)\\b[^.]{0,80}\\bbut (?:also )?\\b",
+      "fix": "state the point directly"
+    },
+    {
+      "category": "not-just",
+      "pattern": "\\b(?:it|this|that)(?:'s| is) not (?:just |only |merely )?[^.,;]{1,60}[,;] (?:it|this|that)(?:'s| is)\\b",
+      "fix": "state the point directly"
+    },
+    {
+      "category": "false-range",
+      "pattern": "\\bfrom [^.,;]{2,40} to [^.,;]{2,40}",
+      "fix": "keep only if X and Y are ends of a real scale"
+    },
+    {
+      "category": "em-dash",
+      "pattern": "\\u2014|\\u2013| -- ",
+      "fix": "use a period, comma, colon, or parentheses"
+    },
+    {
+      "category": "curly-quote",
+      "pattern": "[\\u2018\\u2019\\u201C\\u201D]",
+      "fix": "use straight quotes"
+    },
+    {
+      "category": "inline-header",
+      "pattern": "^\\s*(?:[-*+]|\\d+\\.)\\s+\\*\\*[^*]+?:?\\*\\*:?\\s",
+      "fix": "rewrite as prose; use an italic lead-in if a label is needed"
+    },
+    {
+      "category": "bold",
+      "pattern": "\\*\\*[^*]+\\*\\*",
+      "fix": "bold only UI labels and critical warnings"
+    },
+    {
+      "category": "emoji",
+      "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2B50}\\u{2705}\\u{274C}]",
+      "fix": "remove decorative emoji"
+    },
+    {
+      "category": "mid-sentence-colon",
+      "pattern": "[a-z,] [a-z][^:\\n]{3,}: [a-z]",
+      "fix": "colon only before a list or definition; use a period or 'because'"
+    },
+    {
+      "category": "passive",
+      "pattern": "\\b(?:is|are|was|were|been|being|be) (?:\\w+ly )?\\w+(?:ed|en) by\\b",
+      "fix": "use active voice; name the actor"
+    },
+    {
+      "category": "rule-of-three",
+      "pattern": "\\b[a-z-]+, [a-z-]+,? and [a-z-]+\\b",
+      "fix": "check that all three items exist; do not force triplets"
+    },
+    {
+      "category": "adverb",
+      "pattern": "\\b\\w+ly (?:fast|quick|slow|easy|simple|small|large|efficient)\\b|\\b(?:runs|works|moves|loads) (?:very |extremely )?(?:quickly|slowly|efficiently|seamlessly|effortlessly)\\b",
+      "fix": "use a stronger verb or adjective ('is fast')"
+    },
+    {
+      "category": "symbol-speak",
+      "pattern": "(?:\\s->\\s|\\s=>\\s|\\s&\\s|\\s\\+\\s|\\bw/\\s|\\bw/o\\b|\\bvs\\.?\\s)",
+      "fix": "spell out; avoid symbols the reader must decode"
+    }
+  ]
+}
