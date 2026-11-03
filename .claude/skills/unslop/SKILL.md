@@ -6,17 +6,17 @@ description: 'Detects and rewrites AI-sounding patterns in documentation so the 
 
 ## Purpose
 
-Removes AI writing tells from docs, READMEs, PR text, and comments. A script finds the mechanical patterns; the agent fixes those and the judgment patterns below. Meaning and facts never change.
+Removes AI writing tells from any prose: docs, READMEs, PR text, comments, pasted text, and the agent's own chat output. A script finds the mechanical patterns; the agent fixes those and the judgment patterns below. Meaning and facts never change.
 
 ## Inputs
 
-- *Target files.* Markdown or text files to clean. Default: files the current change adds or edits.
+- *Text to clean.* Any one of: files (default: files the current change adds or edits), text the user pasted, or a draft the agent is about to send in chat. No file is required.
 
 ## Steps
 
 ### Step 1: Scan
 
-Run `node scripts/scan.js <file...>` from this skill's directory. It prints `file:line [category] "match" -> fix` and skips frontmatter, fenced code, and inline code. Exit code 1 means findings, 2 means a file or usage error. Rule of three, passive voice, and title case are advisory; judge each hit in context. The word and phrase lists live in `scripts/patterns.json`; extend that file, not the script.
+For files, run `node scripts/scan.js <file...>` from this skill's directory. For text with no file (pasted text, a chat draft), pipe it on stdin: `node scripts/scan.js <<'EOF'` followed by the text and `EOF`. Output is `file:line [category] "match" -> fix`, with `<stdin>` as the name for piped text. The scan skips frontmatter, fenced code, and inline code. Exit code 1 means findings, 2 means a file or usage error. If no shell or Node is available, skip the script and apply Step 3 to the text directly; the rules do not depend on it. Rule of three, passive voice, and title case are advisory; judge each hit in context. The word and phrase lists live in `scripts/patterns.json`; extend that file, not the script.
 
 ### Step 2: Fix scan findings
 
@@ -76,7 +76,7 @@ Re-run the scan; it must report no findings except intentional ones (state them)
 
 ## Outputs
 
-- Edited files, plus a one-line summary of what changed per file and any findings left in place with the reason.
+- Edited files, or for text with no file, the rewritten text returned in chat. Add a one-line summary of what changed and any findings left in place with the reason.
 
 ## Edge Cases
 

@@ -87,17 +87,23 @@ function scanText(text, rules) {
 
 function main(argv) {
   const json = argv.includes('--json');
-  const files = argv.filter((a) => a !== '--json');
+  let files = argv.filter((a) => a !== '--json');
+  // No files, or "-", means read the text from stdin (pasted text, chat output, a draft).
   if (!files.length) {
-    console.error('Usage: node scan.js <file...> [--json]');
-    return 2;
+    if (process.stdin.isTTY) {
+      console.error('Usage: node scan.js <file...|-> [--json]   (pipe text on stdin, or pass "-")');
+      return 2;
+    }
+    files = ['-'];
   }
   const all = [];
   try {
     const patterns = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.json'), 'utf8'));
     const rules = buildRules(patterns);
     for (const file of files) {
-      for (const f of scanText(fs.readFileSync(file, 'utf8'), rules)) all.push({ file, ...f });
+      const text = file === '-' ? fs.readFileSync(0, 'utf8') : fs.readFileSync(file, 'utf8');
+      const label = file === '-' ? '<stdin>' : file;
+      for (const f of scanText(text, rules)) all.push({ file: label, ...f });
     }
   } catch (err) {
     console.error(`scan error: ${err.message}`);
