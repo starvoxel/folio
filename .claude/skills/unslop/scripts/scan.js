@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Scans Markdown/text files for AI-writing patterns. Usage: node scan.js <file...> [--json]
+// Scans text for AI-writing patterns. Usage: node scan.js [<file...|->] [--json]  (no files or "-" reads stdin)
 // Skips frontmatter, fenced code, and inline code. Exit 1 when findings exist.
 'use strict';
 const fs = require('fs');
