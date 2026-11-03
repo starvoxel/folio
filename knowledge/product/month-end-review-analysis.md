@@ -10,7 +10,7 @@ Part of [Month-End Spending Review](month-end-review.md). Version 1 looks back: 
 | A1.4  | Month vs average lists every category this month against its rolling average, biggest increases and decreases first                              | must     |
 | A1.5  | Transactions is a searchable list filtered by month, account, category and status                                                                | must     |
 | A1.6  | Selecting any category, bar or month in a chart opens the transactions behind it                                                                 | must     |
-| A1.7  | Only accounts included in month-end analysis count, and confirmed transfers are left out                                                         | must     |
+| A1.7  | Only accounts included in month-end analysis count, and confirmed transfers and transactions marked as confirmed fraud ([I](month-end-review-import.md) I1.22) are left out                                                         | must     |
 | A1.8  | The rolling average defaults to 6 months, switchable to 3 or 12 in each view, and counts only locked months                                      | must     |
 | A1.9  | Refunds reduce spending in their own category                                                                                                    | must     |
 | A1.10 | Income uses an Income parent category with subcategories Salary, Government benefits, Interest and dividends, Gifts, Other; shown as household totals, never per person | must     |

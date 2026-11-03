@@ -25,7 +25,7 @@ Part of [Month-End Spending Review](month-end-review.md). Each CSV belongs to on
 | I1.19 | PDF statement import is later and reuses the preview step                                                                                                                   | could    |
 | I1.20 | The preview flags a row as suspicious with a stated reason when a local check trips: a new merchant with a large amount, repeated charges in a short window, an amount far above that merchant's norm, or foreign-currency or unusual-merchant-code markers | must |
 | I1.21 | Flagging runs offline on the user's data only and never blocks or delays an import | must |
-| I1.22 | A suspicious flag can be dismissed, or the transaction marked as confirmed fraud; confirmed fraud is excluded from spending and income totals and carries a note | must |
+| I1.22 | A suspicious flag can be dismissed, or the transaction marked as confirmed fraud; confirmed fraud is excluded from spending and income totals and carries a note; a transaction in a locked month can be marked only through the guarded reopen | must |
 | I1.23 | Undismissed suspicious flags continue into the month's review queue ([M](month-end-review-close.md)) | must |
 | I1.24 | The thresholds for each check are set in Settings, with defaults | should |
 

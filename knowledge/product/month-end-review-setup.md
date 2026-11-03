@@ -13,10 +13,12 @@ Part of [Month-End Spending Review](month-end-review.md). A new budget file star
 | S1.7 | After choosing a template, categories can be renamed, added and removed at main and sub level; Income can be renamed but never removed                                   | must     |
 | S1.8 | The last setup step imports the current month's CSVs via the normal import flow ([I](month-end-review-import.md))                                                       | must     |
 | S1.9 | Accounts can be added, edited and archived at any time after setup; an archived account keeps its history and is no longer asked for at close | must |
+| S1.10 | Assets and debts with no CSV (house, car, family loan) are not part of setup; they are added from Net worth ([N](month-end-review-net-worth.md))                          | must     |
+| S1.11 | Setup may be left unfinished; the file opens with whatever was entered and missing steps remain reachable from their normal screens                                      | should   |
 | S1.12 | An archived account can be unarchived at any time; unarchiving never changes a locked month | must |
 | S1.13 | An account that has transactions is never deleted, only archived; an account with no transactions can be deleted | must |
 | S1.14 | An archived account is hidden from pickers, the close checklist and open-month coverage checks, and shown under a collapsed Archived list on the Accounts page | must |
-| S1.15 | An unarchived account is checked again from the next open month; a gap between its covered-through date and that month is flagged per I1.13 with no forced catch-up | must |
+| S1.15 | An unarchived account is checked again from the month it is unarchived; a gap before that is flagged per I1.13 but never blocks closing, so there is no forced catch-up | must |
 | S1.16 | Each row on the Accounts page opens that account's detail view; rows are not static text | must |
 | S1.17 | The account detail shows the account's current balance, covered-through date, type, provider and analysis setting | must |
 | S1.18 | The current balance is the latest known balance (a CSV balance or a confirmed figure) adjusted by later transactions; with none known it says so and offers to enter one | must |
@@ -24,8 +26,6 @@ Part of [Month-End Spending Review](month-end-review.md). A new budget file star
 | S1.20 | Review (queue and full pass) can be scoped to one account from its detail view | should |
 | S1.21 | Import can be started from an account's detail view with that account preselected | should |
 | S1.22 | Archived accounts remain viewable in the same detail view, read-only except for unarchive | must |
-| S1.10 | Assets and debts with no CSV (house, car, family loan) are not part of setup; they are added from Net worth ([N](month-end-review-net-worth.md))                          | must     |
-| S1.11 | Setup may be left unfinished; the file opens with whatever was entered and missing steps remain reachable from their normal screens                                      | should   |
 
 Flow and rules: setup is a dialog launched from the start screen. Changing an account's analysis flag or transfer treatment after months are closed does not alter locked months.
 
