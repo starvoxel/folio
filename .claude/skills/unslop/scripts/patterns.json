@@ -82,7 +82,10 @@
         "plays a key role",
         "plays a crucial role",
         "plays a vital role",
-        "plays a pivotal role"
+        "plays a pivotal role",
+        "acts as",
+        "functions as",
+        "holds the distinction of"
       ]
     },
     "abstract-metaphor": {
@@ -107,7 +110,9 @@
         "wedge",
         "vector",
         "lens",
-        "ecosystem"
+        "ecosystem",
+        "surface area",
+        "touchpoint"
       ]
     },
     "plain-word": {
@@ -133,7 +138,8 @@
         "in lieu of",
         "pertaining to",
         "with regard to",
-        "with respect to"
+        "with respect to",
+        "methodology"
       ]
     },
     "hedging": {
@@ -174,7 +180,10 @@
         "critics argue",
         "commonly regarded",
         "widely regarded",
-        "widely considered"
+        "widely considered",
+        "critics say",
+        "critics claim",
+        "many say"
       ]
     },
     "chatbot": {
@@ -205,7 +214,10 @@
         "what a great",
         "i apologize",
         "sorry for the confusion",
-        "i understand your"
+        "i understand your",
+        "here is a",
+        "here's a",
+        "hope it helps"
       ]
     },
     "generic-conclusion": {
@@ -249,7 +261,12 @@
         "at the end of the day",
         "when it comes to",
         "a rich tapestry",
-        "of paramount importance"
+        "of paramount importance",
+        "setting the stage for",
+        "stunning",
+        "must-have",
+        "continues to shape",
+        "a game changer"
       ]
     }
   },
@@ -433,7 +450,7 @@
     },
     {
       "category": "emoji",
-      "pattern": "[🌀-🫿⭐✅❌]",
+      "pattern": "[🌀-🫿⭐✅❌⚠]",
       "fix": "remove decorative emoji"
     },
     {
@@ -455,6 +472,11 @@
       "category": "symbol-speak",
       "pattern": "(?:\\s->\\s|\\s=>\\s|\\s&\\s|\\s\\+\\s|\\bw/\\s|\\bw/o\\b|\\bvs\\.?\\s)",
       "fix": "spell out; avoid symbols the reader must decode"
+    },
+    {
+      "category": "not-just",
+      "pattern": "\\b(?:this|it|that) (?:isn't|is not|wasn't) (?:really )?about [^.;]{1,60}[;,] (?:it's|it is) (?:really )?about\\b",
+      "fix": "state the point directly"
     }
   ]
 }

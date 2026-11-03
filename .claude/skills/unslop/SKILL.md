@@ -18,7 +18,7 @@ Removes AI writing tells from any prose: docs, READMEs, PR text, comments, paste
 
 Choose the path by what is available. Both paths end with the same list of findings, each as `location [category] "match"`.
 
-*Script path.* For files, run `node scripts/scan.js <file...>` from this skill's directory. For text with no file, pipe it on stdin: `node scripts/scan.js <<'EOF'` followed by the text and `EOF`. Output is `file:line [category] "match" -> fix`, with `<stdin>` as the name for piped text. The scan skips frontmatter, fenced code, and inline code. Exit code 1 means findings, 2 means a file or usage error, and 0 means the scan found nothing, not that the text is clean: it cannot see the judgment-only patterns marked "script: no" in Step 3. After a script run, still do the manual pass for those.
+*Script path.* For files, run `node scripts/scan.js <file...>` from this skill's directory. For text with no file, pipe it on stdin: `node scripts/scan.js <<'EOF'` followed by the text and `EOF`. Output is `file:line [category] "match" -> fix`, with `<stdin>` as the name for piped text. The scan skips frontmatter, fenced code, and inline code. Exit code 1 means findings, 2 means a file or usage error, and 0 means the scan found nothing, not that the text is clean: it cannot see the judgment-only patterns marked "script: no" in Step 3. After a script run, still do the manual pass for every entry marked "script: no" or "script: partial", and for any cue marked "(agent only)".
 
 *Manual path (no shell, no Node, or the script fails).* The agent does the whole detection itself:
 1. Read `scripts/patterns.json` with the Read tool. It needs no Node. Its `words`, `wordy`, and `regex` entries are the full term lists. If the file is unreadable, use the examples in Step 3 and add terms you recognize from the same families.
@@ -33,7 +33,7 @@ Rewrite each finding per its Fix. Do not swap one tell for another ("crucial" to
 
 ### Step 3: The catalog
 
-Each entry gives the Detect cues, the Fix, and whether the script finds it. "Script: partial" means the script flags candidates and the agent decides; "script: no" means only the agent can find it.
+Each entry gives the Detect cues, the Fix, and whether the script finds it. "Script: partial" means the script flags candidates and the agent decides; "script: no" means only the agent can find it. "Script: yes" means the listed cues are detected; a cue marked "(agent only)" is not.
 
 *Content*
 
@@ -50,7 +50,7 @@ Each entry gives the Detect cues, the Fix, and whether the script finds it. "Scr
 *Language*
 
 - AI vocabulary (script: yes).
-  - Detect: "additionally", "furthermore", "moreover", "crucial", "pivotal", "paramount", "delve", "enduring", "intricate", "tapestry", "landscape" (abstract), "interplay", "underscore", "showcase", "foster", "garner", "robust", "seamless", "comprehensive", "meticulous", "nuanced", "multifaceted", "holistic", "streamline", "elevate", "empower", "realm", "cornerstone", "beacon", "navigate" (non-literal), "journey" (non-literal), "myriad", "plethora", "notably", "importantly", "ultimately". Check inflections ("delves", "fostering", "showcased"). Full list: `words.ai-vocabulary` in `scripts/patterns.json`.
+  - Detect: "additionally", "furthermore", "moreover", "crucial", "pivotal", "paramount", "delve", "enduring", "intricate", "tapestry", "landscape" (abstract), "interplay", "underscore", "showcase", "foster", "garner", "robust", "seamless", "comprehensive", "meticulous", "nuanced", "multifaceted", "holistic", "streamline", "elevate", "empower", "realm", "cornerstone", "beacon", "navigate" and "journey" used figuratively (agent only), "myriad", "plethora", "notably", "importantly", "ultimately". Check inflections ("delves", "fostering", "showcased"). Full list: `words.ai-vocabulary` in `scripts/patterns.json`.
   - Fix: delete the word, or replace with the plain word ("important" only if it truly is, "also" for "additionally", "strong" for "robust").
 - Fancy "is" (script: yes).
   - Detect: "serves as", "stands as", "acts as", "functions as", "boasts", "features a", "represents a", "marks a", "constitutes", "holds the distinction of".
@@ -107,10 +107,10 @@ Each entry gives the Detect cues, the Fix, and whether the script finds it. "Scr
   - Detect: "in order to", "due to the fact that", "the fact that", "at this point in time", "in the event that", "has the ability to", "is able to", "a large number of", "in close proximity to", "on a regular basis", "it is important to note that", "it is worth noting", "needless to say", "when it comes to", "basically", "essentially". Full list: `wordy` and `significance-filler` in `scripts/patterns.json`.
   - Fix: "to", "because", "now", "if", "can", "many", "near", "regularly"; delete the opener and state the point.
 - Excessive hedging (script: yes).
-  - Detect: stacked hedges ("could potentially", "might possibly", "it could be argued that", "may in some cases tend to"); hedging a fact that is known.
+  - Detect: stacked hedges ("could potentially", "might possibly", "it could be argued that"); hedging a fact that is known.
   - Fix: one hedge only, and only for real uncertainty. Prefer "may". State known things flatly.
 - Generic conclusions (script: yes).
-  - Detect: closing lines that summarize or look ahead without content: "The future looks bright", "In conclusion", "In summary", "Overall", "Moving forward", "Only time will tell", "continues to evolve".
+  - Detect: closing lines that summarize or look ahead without content: "The future looks bright", "In conclusion", "In summary", "Overall,", "Moving forward", "Only time will tell", "continues to evolve".
   - Fix: replace with a specific next step, date, owner, or fact. Delete if nothing specific exists.
 
 *Jargon*
