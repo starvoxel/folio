@@ -18,6 +18,6 @@ Part of [Month-End Spending Review](month-end-review.md). The app works like a d
 | H1.12 | All financial data stays in the budget file on the user's computers; nothing is sent anywhere unless an opt-in setting is on                                                 | must     |
 | H1.13 | Opening the same file on two computers at once is not handled in v1                                                                                                          | should   |
 
-Flow and rules: backup frequency, retention and location are decided at planning time. Visual design follows the captured design notes (to be added) realized with FluentAvalonia.
+Flow and rules: backup frequency, retention and location are decided at planning time. Visual design follows the [design notes](month-end-review-design.md), realized with FluentAvalonia.
 
 Assumptions: because two concurrent editors are unsupported, the app may detect an in-use file and warn, but is not required to.

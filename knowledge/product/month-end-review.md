@@ -53,6 +53,8 @@ One household, several members sharing one budget file. All members have equal a
 | N | [Net worth](month-end-review-net-worth.md) | Month-end balances, free-form entries, history |
 | H | [App shell and settings](month-end-review-shell.md) | Start screen, navigation, undo/redo, settings, backups |
 
+Visual design: [design notes](month-end-review-design.md) derived from the HTML prototype in `design/`.
+
 Priority: areas S, I, C, T, M, A, H are the core month-end views and ship first; N ships after them (ranked below spending trends).
 
 ## Monthly flow
@@ -81,7 +83,7 @@ Months are calendar months; statements are not. Each transaction is filed under 
 Open (decider in brackets):
 
 - Budget file format: SQLite vs document file vs other. [Jeremy; decide before architecture/planning]
-- Visual design: attached design artifacts not yet captured; design notes to follow. [Jeremy]
+- Prototype differences: Review as a nav item, and net worth inside the close flow (see the design notes). [Jeremy]
 - Online merchant lookup: which service, if any. [Research during planning; Jeremy]
 
 Assumptions made while detailing the areas (each is a stated default, change freely):
