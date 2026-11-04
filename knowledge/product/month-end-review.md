@@ -17,7 +17,7 @@ One household, several members sharing one budget file. All members have equal a
   - Little manual sorting: automatic categorization where every fix teaches a rule.
   - Honest totals: transfers and card payments never double-counted; savings apart from spending.
   - A month-end ritual: review, note, then close and lock the month.
-  - Trends: each month vs last month and vs average; net worth over time.
+  - Reporting: each month vs last month and vs average; net worth over time.
 - Non-goals (v1): see [Later versions and out of scope](#later-versions-and-out-of-scope).
 
 ## Constraints
@@ -49,7 +49,7 @@ One household, several members sharing one budget file. All members have equal a
 | C    | [Categorization](month-end-review-categorization.md)                      | Categories, rules, splits, uncategorized list                |
 | T    | [Transfers, savings and excluded accounts](month-end-review-transfers.md) | Pairing, exclusions, how money into an account counts        |
 | M    | [Month-end review and locking](month-end-review-close.md)                 | Review queue, notes, checklist, close, reopen                |
-| A    | [Analysis and trends](month-end-review-analysis.md)                       | Overview, money in/out, category trends, averages            |
+| A    | [Reporting](month-end-review-analysis.md)                                 | Month breakdown, money in/out, category trends, averages     |
 | N    | [Net worth](month-end-review-net-worth.md)                                | Month-end balances, free-form entries, history               |
 | H    | [App shell and settings](month-end-review-shell.md)                       | Start screen, navigation, undo/redo, settings, backups       |
 
@@ -85,7 +85,6 @@ Months are calendar months; statements are not. Each transaction is filed under 
 Open (decider in brackets):
 
 - Budget file format: SQLite vs document file vs other. [Jeremy; decide before architecture/planning]
-- Prototype differences: Review as a nav item, net worth inside the close flow, plus the review-driven changes (hamburger menu, save controls, interactive accounts, coverage warning, suspicious flags); see the design notes. [Jeremy]
 - Online merchant lookup: which service, if any. [Research during planning; Jeremy]
 
 Assumptions made while detailing the areas (each is a stated default, change freely):

@@ -14,7 +14,7 @@ Part of [Month-End Spending Review](month-end-review.md). Net worth is in scope 
 | N1.8  | The chart shows locked months only, so its history never shifts                                                                                                                                                      | should   |
 | N1.9  | Free-form entries can be renamed or switched between asset and debt at any time; a rename shows in every month, locked ones included                                                                                 | should   |
 | N1.10 | A free-form entry that is gone is archived, not deleted; its past values stay in locked months and it is no longer asked for at close                                                                                | should   |
-| N1.11 | A reopened month's changed balances flag later locked months for re-confirmation ([M](month-end-review-close.md))                                                                                                    | should   |
+| N1.11 | Closing a reopened month again with changed balances flags later locked months for re-confirmation ([M](month-end-review-close.md))                                                                                  | should   |
 | N1.12 | An account counts toward net worth in the months before it is archived and is ignored in every month in which it is archived, including the month it is archived; locked months keep the value they were locked with | should   |
 
 Flow and rules: the whole area is "should" in priority terms because it can ship after the core views; the close checklist items that depend on it ([M](month-end-review-close.md) M1.5) are required only once this area ships.
