@@ -1,6 +1,6 @@
 # PRD area N: Net worth
 
-Part of [Month-End Spending Review](month-end-review.md). Net worth is in scope but ranked below the spending trends, so it ships after the core month-end views. It is recorded once per month, at close, and only locked months appear in its chart.
+Part of [Folio](month-end-review.md). Net worth is in scope but ranked below the spending trends, so it ships after the core month-end views. It is recorded once per month, at close, and only locked months appear in its chart.
 
 | ID    | Requirement                                                                                                                                                                                                          | Priority |
 | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

@@ -1,6 +1,6 @@
 # PRD area M: Month-end review and locking
 
-Part of [Month-End Spending Review](month-end-review.md). Closing freezes a month's transactions, balances and notes; this is what makes the numbers trustworthy.
+Part of [Folio](month-end-review.md). Closing freezes a month's transactions, balances and notes; this is what makes the numbers trustworthy.
 
 | ID    | Requirement                                                                                                                                                                                                                                                                                                                                                                                               | Priority |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

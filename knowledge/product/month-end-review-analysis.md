@@ -1,6 +1,6 @@
 # PRD area A: Reporting
 
-Part of [Month-End Spending Review](month-end-review.md). Reporting was called Analysis and trends in the first draft; the nav item was Trends. Version 1 looks back: each month vs the previous month and vs a recent average. Target budgets are version 2.
+Part of [Folio](month-end-review.md). Reporting was called Analysis and trends in the first draft; the nav item was Trends. Version 1 looks back: each month vs the previous month and vs a recent average. Target budgets are version 2.
 
 | ID    | Requirement                                                                                                                                                                                                                                                                       | Priority |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
