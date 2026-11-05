@@ -14,7 +14,7 @@ namespace Folio.Core.UnitTests;
 public class CoreAssemblyTests
 {
     [Fact]
-    public void Name_CoreAssembly_ReturnsFolioCore()
+    public void Name_DefaultState_ReturnsFolioCore()
     {
         Assert.Equal("Folio.Core", CoreAssembly.Name);
     }

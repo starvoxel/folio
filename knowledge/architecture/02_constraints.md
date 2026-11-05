@@ -46,6 +46,14 @@ The project follows the ai-foundation standards `csharp_base` and `csharp_avalon
 
 Naming acronyms follows Microsoft's .NET guideline: two-letter acronyms are all capitals (`UI`, `IO`), and acronyms of three or more letters are PascalCase (`Cli`, `Csv`, `Json`, `Http`), so names read consistently beside framework types such as `JsonSerializer` and `HttpClient`. Abbreviations such as `Id` are PascalCase. Analyzers cannot check this, so review does. Proposed as an explicit `csharp_base` rule.
 
+Test methods are named `{Subject}_{Condition}_{ExpectedResult}`, which refines the `{MethodName}_{Scenario}_{ExpectedResult}` rule in `csharp_base`:
+
+- _Subject_: the member under test (`Parse`, `Show`, `TryFindResource`); for validation tests, the artefact being checked (`ReferencedAssemblies`, `SourceFiles`, `TestProjects`).
+- _Condition_: the input, state or scope as a noun phrase (`EmptyInput`, `ViewModelAsDataContext`, `CoreAssembly`); `DefaultState` when there is none.
+- _ExpectedResult_: a present-tense verb phrase (`ReturnsEmptyResult`, `ThrowsArgumentException`, `ExcludeUIFrameworks`).
+
+Test classes are named `{ClassUnderTest}Tests`, or `{Rule}Tests` for validation tests. `TestNamingTests` fails on any test method that is not three PascalCase parts; review checks the wording.
+
 Known deviations, to be resolved upstream in ai-foundation rather than as per-plan exceptions where possible:
 
 | Standard says                                                     | This project                                                                                                               | Status                                                                                                          |

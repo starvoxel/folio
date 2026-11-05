@@ -19,7 +19,7 @@ public class TestLayoutTests
     private static readonly string[] Kinds = ["Unit", "Integration", "Validation"];
 
     [Fact]
-    public void TestProjects_AllProjects_FollowKindLayout()
+    public void TestProjects_UnderTestsFolder_FollowKindLayout()
     {
         string root = RepositoryRoot.Find();
         string testsRoot = Path.Combine(root, "tests");
