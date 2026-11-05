@@ -44,18 +44,18 @@ _Context._ With AD-1, a database's strengths (querying while working, incrementa
 _Decision._ A budget file uses the `.folio` extension and is a zip container, like `.docx`:
 
 - `manifest.json`: file-format version, app version, a checksum per part, and whether each part is JSON or JSONL.
-- One part per area (accounts, transactions, rules, months, net worth, settings, audit log). Parts that are long lists of independent records, such as transactions and the audit log, may be JSONL (one record per line) for streaming, readable diffs and damage containment; small structured parts stay JSON.
+- One part per area (accounts, transactions, rules, months, net worth, settings, audit log). Parts that are long lists of independent records, such as transactions and the audit log, may be JSONL (one record per line). JSONL allows streaming and readable diffs, and a damaged line loses one record, not the whole part. Small structured parts stay JSON.
 - `summary.json`: what the start screen shows (H1.1) without loading the rest.
 
 Save writes a complete new file beside the original, flushes it, then atomically replaces the original. Format upgrades are one migration step per format version on the way in. Serialization uses System.Text.Json with source generation.
 
 Filtering stays in memory: LINQ over the model plus a few lookup indexes (by month, by account) that change sets keep up to date. An in-memory database was rejected because it would be a second copy of the data to keep in sync with every command, undo and redo.
 
-_Consequences._ No native dependency; encryption later is AES-GCM over the bytes; attachments (PDF import) become zip entries. We write migration code by hand, and there is no ad-hoc querying of the file outside the app.
+_Consequences._ There is no native dependency. Encryption, when it comes, is AES-GCM over the file's bytes, and attachments (PDF import) become zip entries. We write migration code by hand, and the file cannot be queried ad hoc outside the app.
 
 ## AD-3. One classification entry point, frozen at close
 
-_Context._ "How does this line count?" is answered in many PRD places (T1.3 to T1.8, A1.7, A1.9, A1.12, I1.22, S1.14). If each view filters on its own, views will disagree, which is the untrustworthy-totals problem the product exists to fix.
+_Context._ Many PRD requirements answer "how does this line count?" (T1.3 to T1.8, A1.7, A1.9, A1.12, I1.22, S1.14). If each view filters on its own, views will disagree, which is the untrustworthy-totals problem the product exists to fix.
 
 _Decision._ A single classifier returns each line's treatment: `Income`, `Spending(category)`, `Savings`, `NeutralTransfer`, or `Excluded(reason)`. It asks each owning area a question, in a fixed order, without those areas knowing about each other:
 
@@ -68,11 +68,11 @@ _Decision._ A single classifier returns each line's treatment: `Income`, `Spendi
 
 Closing a month stores every line's treatment plus the month's totals and net-worth values. Locked months are reported from stored data; open months are classified live.
 
-_Consequences._ Every view agrees by construction. Locked months are protected even against fixes to the classifier in later app versions, because their stored results no longer depend on code. Changing account flags or merging categories after a close needs no special handling. The classifier is a hub every money feature touches; if its order grows past a handful of steps, revisit how it scales.
+_Consequences._ Every view agrees, because every view gets its numbers from the one classifier. Locked months are protected even against fixes to the classifier in later app versions, because their stored results no longer depend on code. Changing account flags or merging categories after a close needs no special handling. Every money feature touches the classifier. If its order grows past a handful of steps, revisit how it scales.
 
 ## AD-4. Every change is a command, checked by one lock guard
 
-_Decision._ All mutations are command objects that produce a change set. Before a change set is applied, one lock guard computes the months it touches and refuses it if any is locked. Domain types also refuse edits to locked lines as a second line of defence. This makes C1.12, H1.8, I1.11 and T1.11 one check rather than many.
+_Decision._ All mutations are command objects that produce a change set. Before a change set is applied, one lock guard computes the months it touches and refuses it if any is locked. Domain types also refuse edits to locked lines as a second check. This makes C1.12, H1.8, I1.11 and T1.11 one check rather than many.
 
 _Consequences._ No code path may mutate the model except through a command; the UI, the importer, undo and the automation server (AD-16) all use the same path.
 
@@ -83,7 +83,7 @@ _Context._ Undo must survive saving (H1.7), must never alter a locked month (H1.
 _Decision._ Each undo entry is a change set whose parts are tagged with the month they belong to, or "global" for accounts, rules and categories. Undo applies the inverse of each part.
 
 - Closing a month removes that month's parts from every entry and keeps the rest. Undo then walks back through other months' work as normal.
-- A rule change is a global part (the rule definition) plus per-month parts (recategorizations). After January closes, undoing it reverts the rule and February's recategorizations; January stays as frozen.
+- A rule change is a global part (the rule definition) plus per-month parts (recategorizations). After January closes, undoing it reverts the rule and February's recategorizations; January keeps its frozen values.
 - An import that covered January and February, undone after January closed, removes only February's rows. This relaxes I1.15's "one step" (recorded in the PRD).
 - The one case that stops undo: a part that cannot be split by month, such as confirming a transfer pair between a January and a February line. Its entry is dropped and undo stops there with a message naming the locked month.
 - Reopening a month does not bring back its removed parts. Reopen itself is not undoable.
@@ -109,7 +109,17 @@ _Consequences._ If fractions of a cent are ever needed, only `Money`'s internals
 
 ## AD-8. Import is a pipeline of pure stages
 
-_Decision._ Read CSV → detect provider by headers → map columns and sign → drop pending rows → check the account's provider matches (I1.25) → stage (duplicates, locked-month rows, coverage gap, rules, suspicious flags, transfer suggestions) → an `ImportDraft`. The preview shows the draft; confirming applies it as one command and saves immediately (H1.6b). Provider profiles are data, and the built-in ones ship as embedded resources. Each imported row keeps a source fingerprint (file hash, row number, raw text) for duplicate detection and auditing.
+_Decision._ Import runs these stages in order:
+
+1. Read the CSV.
+2. Detect the provider from the headers.
+3. Map columns and the sign of amounts.
+4. Drop pending rows.
+5. Check that the account's provider matches the file's (I1.25).
+6. Stage the rows: duplicates, locked-month rows, coverage gap, rules, suspicious flags, transfer suggestions.
+7. Produce an `ImportDraft`.
+
+The preview shows the draft; confirming applies it as one command and saves immediately (H1.6b). Provider profiles are data, and the built-in ones ship as embedded resources. Each imported row keeps a source fingerprint (file hash, row number, raw text) for duplicate detection and auditing.
 
 _Consequences._ The preview is the real import run as a dry run, so they cannot disagree. Each stage is testable with CSV fixtures.
 
@@ -145,15 +155,15 @@ _Decision._ Back up the file on open and on a rotating schedule, to the local ap
 
 ## AD-13. Custom charts behind chart view-models
 
-_Decision._ The four chart types (donut, stacked bar, column bars, diverging bars) are custom-drawn Avalonia controls. Each is fed by a chart view-model that holds series data, colours taken from theme token keys, and click events for drill-down (A1.6). Rendering is replaceable without touching the view-models.
+_Decision._ The four chart types (donut, stacked bar, column bars, diverging bars) are custom-drawn Avalonia controls. A chart view-model feeds each one with series data, colours taken from theme token keys, and click events for drill-down (A1.6). Rendering is replaceable without touching the view-models.
 
 _Alternatives kept in reserve_ (all MIT, Avalonia 12): ScottPlot.Avalonia 5.1, OxyPlot.Avalonia 2.2; LiveCharts2 only as a prerelease. Avalonia Pro Charts is excluded (per-seat subscription and embedded licence checks).
 
 ## AD-14. Solution layout and MVVM toolkit
 
-_Decision._ Projects follow the `csharp_avalonia` standard: `Folio.Core` (all domain logic, never references the UI), `Folio.Desktop` (views, view-models and thin adapters), and test projects grouped by kind (below). Layers inside Core are namespaces (`Folio.Core.Domain`, `Folio.Core.Commands`, `Folio.Core.Persistence`, …), not extra projects. Automation and CLI projects are added by AD-16.
+_Decision._ Projects follow the `csharp_avalonia` standard: `Folio.Core` (all domain logic, never references the UI), `Folio.Desktop` (views, view-models and thin adapters), and test projects grouped by kind (below). Layers inside Core are namespaces (`Folio.Core.Domain`, `Folio.Core.Commands`, `Folio.Core.Persistence`, …), not extra projects. AD-16 adds the automation and CLI projects.
 
-Tests come in three kinds, each with its own project and solution file, so each runs on its own with `dotnet test tests/<Kind>.slnx`; `Folio.slnx` runs everything. A test's kind is decided by the most expensive resource it touches, not by how much code it covers. This follows Google's small/medium test sizes and Microsoft's advice to keep infrastructure out of unit-test projects:
+Tests come in three kinds, each with its own project and solution file, so each runs on its own with `dotnet test tests/<Kind>.slnx`; `Folio.slnx` runs everything. The most expensive resource a test touches decides its kind, not how much code it covers. This follows Google's small/medium test sizes and Microsoft's advice to keep infrastructure out of unit-test projects:
 
 | Kind         | Rule                                                                                                                                                                                         | Project                                            |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
@@ -171,7 +181,7 @@ View-models use CommunityToolkit.Mvvm. DynamicData (with System.Reactive) is add
 
 _Why CommunityToolkit over ReactiveUI._ It is Avalonia's template default and the docs call it the recommended framework. The project's hard logic is in Core, so view-models are thin and simple to test. Its API is small and stable, which suits agent-written code. ReactiveUI shipped three breaking major versions in 2026 (v24 to v26). ReactiveUI would win if most screens became stream-heavy; even then, wait for its API to settle.
 
-_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. The Core boundary is enforced by `tests/Architecture/Folio.ArchitectureTests/CoreDependencyTests.cs`.
+_Consequences._ CommunityToolkit has one main maintainer. Most of it is generated code over a frozen API, so if it stalls we can keep it or replace it with a small base class. `tests/Architecture/Folio.ArchitectureTests/CoreDependencyTests.cs` enforces the Core boundary.
 
 ## AD-15. FluentAvalonia is isolated behind app wrappers
 
@@ -181,8 +191,8 @@ _Decision._ Build on FluentAvalonia 3.1 with Avalonia 12.1.5, and contain it:
 
 1. Screens reference only WinUI token keys (`TextFillColor*`, `*FillColor*`, `*StrokeColor*`, `ControlCornerRadius`, `OverlayCornerRadius`) through `DynamicResource`, never FluentAvalonia-specific or `SystemControl*` keys.
 2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/Folio.Desktop/UI/Fluent/AppStyles.axaml`.
-3. FluentAvalonia controls are used only through wrappers: `AppShell` (NavigationView, with our own navigation-item model), `IDialogService` (ContentDialog, with multi-step logic in view-models), `AppBanner` (InfoBar) and `AppIcon` (symbol name → font glyph now, a path later).
-4. No FluentAvalonia type or namespace appears outside `src/Folio.Desktop/UI/Fluent/`. Enforced by `tests/Architecture/Folio.ArchitectureTests/FluentIsolationTests.cs`.
+3. FluentAvalonia controls are used only through wrappers: `AppShell` (NavigationView, with our own navigation-item model), `IDialogService` (ContentDialog, with multi-step logic in view-models), `AppBanner` (InfoBar) and `AppIcon` (maps a symbol name to a font glyph now, and to a vector path later).
+4. No FluentAvalonia type or namespace appears outside `src/Folio.Desktop/UI/Fluent/`. `tests/Architecture/Folio.ArchitectureTests/FluentIsolationTests.cs` enforces this.
 5. Charts read colours from the same token keys and redraw on theme change.
 
 _Revisit when_ Avalonia 12.2 ships. If FluentAvalonia supports it and offers a controls-only mode, use Fluent2 for the base theme and FluentAvalonia for its shell controls. If FluentAvalonia stays inactive and breaks, use Fluent2 plus our own shell controls, possibly forked from FluentAvalonia's MIT code. Either way the change stays inside `UI/Fluent/`.

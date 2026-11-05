@@ -11,15 +11,15 @@ key_files:
 
 ## The core ideas
 
-1. _The file is a document, held in memory._ Open loads everything into an immutable in-memory model; edits change the model; Save writes the whole thing atomically to a zip of JSON/JSONL parts (AD-1, AD-2). This gives Save, Discard, autosave and undo their natural meaning, and keeps the format a replaceable adapter.
+1. _The file is a document, held in memory._ Opening a file loads everything into an immutable in-memory model. Edits change the model, and Save writes all of it atomically to a zip of JSON/JSONL parts (AD-1, AD-2). Discard drops the in-memory changes, autosave is a timed Save, and undo history survives saving. The file format stays a replaceable adapter.
 
-2. _Every change is a command that produces a month-tagged change set._ One object per change carries before/after values tagged with the month (or "global") each part belongs to. Everything else hangs off it: the single lock guard refuses change sets that touch a locked month (AD-4); undo replays them backwards and, when a month closes, drops only that month's parts (AD-5); dirty tracking, lookup indexes and the audit log read them too (AD-10).
+2. _Every change is a command that produces a month-tagged change set._ One object per change carries before and after values, each tagged with the month it belongs to, or "global". The rest of the design reads these change sets. The single lock guard refuses any that touch a locked month (AD-4). Undo replays them backwards and, when a month closes, drops only that month's parts (AD-5). Dirty tracking, lookup indexes and the audit log read them too (AD-10).
 
-3. _One classification entry point decides how every line counts, and its output is frozen at close._ Each transaction line is classified as income, spending, savings, neutral transfer or excluded by asking the owning areas in a fixed order (AD-3, AD-6). Open months are classified live; closing a month stores the results, so locked months are reported from stored data and cannot drift, even when the app's own code changes.
+3. _One classification entry point decides how every line counts, and its output is frozen at close._ The classifier asks the owning areas in a fixed order whether each transaction line is income, spending, savings, a neutral transfer, or excluded (AD-3, AD-6). Open months are classified live. Closing a month stores the results, and reports on locked months read the stored data, so those months cannot drift, even when the app's own code changes.
 
 4. _The domain knows nothing about the UI._ `Folio.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `Folio.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
 
-5. _The UI stack is quarantined._ FluentAvalonia is used only under `UI/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
+5. _The UI stack is isolated._ FluentAvalonia is used only under `UI/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
 
 6. _The running app is drivable by machine._ An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `folio` CLI and a headless mode for CI and agents (AD-16).
 
