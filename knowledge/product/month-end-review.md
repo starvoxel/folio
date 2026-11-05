@@ -1,4 +1,4 @@
-# PRD: Month-End Spending Review
+# PRD: Folio
 
 Source: product write-up of 2026-11-02 (Jeremy). Per-area requirements live in the linked docs; this file owns the shared context.
 
@@ -22,17 +22,17 @@ One household, several members sharing one budget file. All members have equal a
 
 ## Constraints
 
-| Area           | v1 choice                                                                                                                                            |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platform       | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia`                                           |
-| Users          | One household sharing the file                                                                                                                       |
-| Storage        | Local budget file opened like a document; may sit in a shared folder. Format undecided (see open questions)                                          |
-| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                  |
-| Data sources   | CSV only                                                                                                                                             |
-| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up |
-| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                |
-| Currency       | CAD only                                                                                                                                             |
-| Concurrency    | Two simultaneous editors not handled                                                                                                                 |
+| Area           | v1 choice                                                                                                                                                                                                                                 |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform       | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia`                                                                                                                                |
+| Users          | One household sharing the file                                                                                                                                                                                                            |
+| Storage        | Local budget file opened like a document; may sit in a shared folder. Format: a `.folio` file, a zip of JSON and JSONL parts ([AD-2](../architecture/09_architecture_decisions.md#ad-2-the-budget-file-is-a-zip-of-json-and-jsonl-parts)) |
+| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                                                                                                       |
+| Data sources   | CSV only                                                                                                                                                                                                                                  |
+| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up                                                                                      |
+| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                                                                                                     |
+| Currency       | One currency, in dollars; all accounts are assumed to use the same currency                                                                                                                                                               |
+| Concurrency    | Two simultaneous editors not handled                                                                                                                                                                                                      |
 
 ## Success measures
 
@@ -77,19 +77,20 @@ Months are calendar months; statements are not. Each transaction is filed under 
 | Opt-in online merchant lookup                  | Research first, then decide |
 | Two people editing at once                     | Not handled in v1           |
 | Direct bank connections                        | Out of scope                |
-| Currencies other than CAD                      | Out of scope                |
+| More than one currency                         | Out of scope                |
 | Phone or web apps                              | Out of scope for now        |
 
 ## Assumptions and open questions
 
 Open (decider in brackets):
 
-- Budget file format: SQLite vs document file vs other. [Jeremy; decide before architecture/planning]
 - Online merchant lookup: which service, if any. [Research during planning; Jeremy]
+
+Resolved: the budget file format is a zip of JSON and JSONL parts (decided 2026-11-05; see [architecture decisions](../architecture/09_architecture_decisions.md)).
 
 Assumptions made while detailing the areas (each is a stated default, change freely):
 
 1. Each area's detailing was done from the write-up alone; requirements the write-up did not specify are labelled in that area's doc under "Assumptions".
-2. Amounts are stored and compared in exact CAD cents; no floating point.
+2. All accounts use the same currency. Amounts are stored and compared in exact cents of that currency; no floating point.
 3. A "month" is the calendar month of the transaction's posted date.
 4. Autosave never changes a locked month; the only path to change one is reopen.

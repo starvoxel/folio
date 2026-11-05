@@ -1,6 +1,6 @@
 # PRD area S: Setup and accounts
 
-Part of [Month-End Spending Review](month-end-review.md). A new budget file starts with the current month only; trends build as months are closed.
+Part of [Folio](month-end-review.md). A new budget file starts with the current month only; trends build as months are closed.
 
 | ID    | Requirement                                                                                                                                                                                                                                                                             | Priority |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

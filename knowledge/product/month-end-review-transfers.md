@@ -1,6 +1,6 @@
 # PRD area T: Transfers, savings and excluded accounts
 
-Part of [Month-End Spending Review](month-end-review.md). Money moving between our own accounts is never spending; where it goes decides whether it counts as savings or drops out.
+Part of [Folio](month-end-review.md). Money moving between our own accounts is never spending; where it goes decides whether it counts as savings or drops out.
 
 | ID    | Requirement                                                                                                                                                                                                                       | Priority |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -15,7 +15,9 @@ Part of [Month-End Spending Review](month-end-review.md). Money moving between o
 | T1.9  | Suggested pairs that are neither confirmed nor dismissed block closing the month ([M](month-end-review-close.md))                                                                                                                 | must     |
 | T1.10 | Where a transaction could pair with more than one candidate, the closest date wins and the rest stay suggestions                                                                                                                  | should   |
 | T1.11 | Locked months' pairs are never changed by new imports or by unpairing in an open month                                                                                                                                            | must     |
+| T1.12 | When a new import finds a likely pair whose other side is in a locked month, nothing is paired; the app warns, names the locked month, and recommends reopening it to fix; the user decides                                       | must     |
+| T1.13 | A transaction can be marked as a transfer out to savings or to spending without tracking the destination account; it then counts as savings or spending and needs no pair                                                         | must     |
 
 Flow and rules: matching runs on import and on demand. Savings is shown apart from spending in Money in vs out ([A](month-end-review-analysis.md)).
 
-Assumptions (not in the write-up): T1.8 follows from "never spending"; T1.10 (closest date wins) and T1.11 (locked pairs never change) are proposed edge-case rules; if only one side of a transfer exists in imported data (the other account not yet imported), the transaction stays unpaired and is surfaced in review rather than counted as spending automatically.
+Assumptions (not in the write-up): T1.8 follows from "never spending"; T1.10 (closest date wins) and T1.11 (locked pairs never change) are proposed edge-case rules; if only one side of a transfer exists in imported data (the other account not yet imported), the transaction stays unpaired and is surfaced in review rather than counted as spending automatically; T1.13 resolves it when the destination is never imported. T1.12 and T1.13 were decided by Jeremy during architecture review (2026-11-05).
