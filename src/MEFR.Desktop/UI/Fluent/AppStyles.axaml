@@ -1,5 +1,5 @@
 <!--
-  The only place the app's theme is chosen (AD-15). FluentAvalonia types may appear only under Ui/Fluent/.
+  The only place the app's theme is chosen (AD-15). FluentAvalonia types may appear only under UI/Fluent/.
   Screens reference WinUI token keys (TextFillColor*, *FillColor*, *StrokeColor*, ControlCornerRadius)
   through DynamicResource and never FluentAvalonia-specific keys, so a later move to Avalonia's
   Fluent2 theme keeps every screen's styling.

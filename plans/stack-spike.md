@@ -23,7 +23,7 @@ Spike code that proves a point and is worth keeping goes into `src/`. Throwaway 
 
 ### 1. Shell and wrappers
 
-- Does: `AppShell` around `FANavigationView`, with our own navigation-item model and the six nav items plus Settings in the footer (H1.4); `IDialogService` around `FAContentDialog`; `AppBanner` around `FAInfoBar`; `AppIcon`; the top bar with file name, unsaved indicator, Undo, Redo, Import and month picker as placeholders (H1.5); the hamburger menu (H1.14); a macOS `NativeMenu` (H1.16); light, dark and system themes. Every FluentAvalonia type stays under `Ui/Fluent/`.
+- Does: `AppShell` around `FANavigationView`, with our own navigation-item model and the six nav items plus Settings in the footer (H1.4); `IDialogService` around `FAContentDialog`; `AppBanner` around `FAInfoBar`; `AppIcon`; the top bar with file name, unsaved indicator, Undo, Redo, Import and month picker as placeholders (H1.5); the hamburger menu (H1.14); a macOS `NativeMenu` (H1.16); light, dark and system themes. Every FluentAvalonia type stays under `UI/Fluent/`.
 - Acceptance criteria: the shell runs on Windows, macOS and Linux (X11 and Wayland); navigation and theme switching work; a dialog takes keyboard focus on open, or a workaround for #766 is in place and documented; NavigationView alignment is recorded with screenshots per OS; the isolation test still passes.
 - Verified by: headless tests for navigation and dialog view-models; screenshots per OS attached to the PR; the manual focus check written up in the PR.
 

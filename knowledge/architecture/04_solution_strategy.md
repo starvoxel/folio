@@ -19,7 +19,7 @@ key_files:
 
 4. _The domain knows nothing about the UI._ `MEFR.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `MEFR.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
 
-5. _The UI stack is quarantined._ FluentAvalonia is used only under `Ui/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
+5. _The UI stack is quarantined._ FluentAvalonia is used only under `UI/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
 
 6. _The running app is drivable by machine._ An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `mefr` CLI and a headless mode for CI and agents (AD-16).
 
@@ -30,7 +30,7 @@ MEFR.slnx
 ├── src/
 │   ├── MEFR.Core            domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
 │   ├── MEFR.Desktop         Avalonia + FluentAvalonia views and view-models; thin platform adapters
-│   │   └── Ui/Fluent/       the only place FluentAvalonia types appear
+│   │   └── UI/Fluent/       the only place FluentAvalonia types appear
 │   ├── MEFR.Automation      (planned) loopback HTTP server exposing commands, queries and UI actions
 │   └── MEFR.Cli             (planned) `mefr` command-line client
 └── tests/

@@ -33,7 +33,7 @@ public class MainWindowTests
     }
 
     [AvaloniaFact]
-    public void Theme_Loaded_ProvidesWinUiTokenBrush()
+    public void Theme_Loaded_ProvidesWinUITokenBrush()
     {
         MainWindow window = new() { DataContext = new MainWindowViewModel() };
         window.Show();

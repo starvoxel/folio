@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!--
     Avalonia + FluentAvalonia views and view-models, plus thin platform adapters.
-    FluentAvalonia types may only be used under Ui/Fluent/ (AD-15; enforced by
+    FluentAvalonia types may only be used under UI/Fluent/ (AD-15; enforced by
     tests/MEFR.Desktop.Tests/Architecture/FluentIsolationTests.cs).
   -->
   <PropertyGroup>

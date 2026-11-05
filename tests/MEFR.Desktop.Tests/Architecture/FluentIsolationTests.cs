@@ -9,7 +9,7 @@
 namespace MEFR.Desktop.Tests.Architecture;
 
 /// <summary>
-/// Guards AD-15: FluentAvalonia is used only under src/MEFR.Desktop/Ui/Fluent/, so the theme and its
+/// Guards AD-15: FluentAvalonia is used only under src/MEFR.Desktop/UI/Fluent/, so the theme and its
 /// controls can be replaced without touching screens.
 /// </summary>
 public class FluentIsolationTests
@@ -20,7 +20,7 @@ public class FluentIsolationTests
     public void DesktopSources_OutsideUiFluent_DoNotReferenceFluentAvalonia()
     {
         string desktopRoot = Path.Combine(FindRepositoryRoot(), "src", "MEFR.Desktop");
-        string allowedRoot = Path.Combine(desktopRoot, "Ui", "Fluent") + Path.DirectorySeparatorChar;
+        string allowedRoot = Path.Combine(desktopRoot, "UI", "Fluent") + Path.DirectorySeparatorChar;
 
         List<string> offending = Directory
             .EnumerateFiles(desktopRoot, "*.*", SearchOption.AllDirectories)

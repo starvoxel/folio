@@ -26,7 +26,7 @@ dotnet format MEFR.slnx --verify-no-changes
 | Project                    | Holds                                                                                     |
 | -------------------------- | ----------------------------------------------------------------------------------------- |
 | `src/MEFR.Core`            | All domain logic; never references the UI                                                 |
-| `src/MEFR.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `Ui/Fluent/` |
+| `src/MEFR.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `UI/Fluent/` |
 | `tests/MEFR.Core.Tests`    | Domain and architecture tests                                                             |
 | `tests/MEFR.Desktop.Tests` | View-model and headless UI tests                                                          |
 

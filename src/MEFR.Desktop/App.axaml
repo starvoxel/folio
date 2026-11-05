@@ -8,7 +8,7 @@
   </Application.DataTemplates>
 
   <Application.Styles>
-    <!-- The theme is owned by Ui/Fluent (AD-15); screens only reference WinUI token keys. -->
-    <StyleInclude Source="avares://MEFR.Desktop/Ui/Fluent/AppStyles.axaml" />
+    <!-- The theme is owned by UI/Fluent (AD-15); screens only reference WinUI token keys. -->
+    <StyleInclude Source="avares://MEFR.Desktop/UI/Fluent/AppStyles.axaml" />
   </Application.Styles>
 </Application>

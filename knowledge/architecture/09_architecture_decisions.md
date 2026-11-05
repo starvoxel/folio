@@ -5,7 +5,7 @@ lifecycle: draft
 tags: [decisions, adr]
 key_files:
   - Directory.Packages.props
-  - src/MEFR.Desktop/Ui/Fluent/AppStyles.axaml
+  - src/MEFR.Desktop/UI/Fluent/AppStyles.axaml
 ---
 
 > The architecture decisions agreed with Jeremy on 2026-11-05, each with its reason and what it costs. Numbering is stable; a superseded decision is marked, not deleted.
@@ -166,12 +166,12 @@ _Context._ FluentAvalonia 3.1 is the only source of the shell controls the desig
 _Decision._ Build on FluentAvalonia 3.1 with Avalonia 12.1.5, and contain it:
 
 1. Screens reference only WinUI token keys (`TextFillColor*`, `*FillColor*`, `*StrokeColor*`, `ControlCornerRadius`, `OverlayCornerRadius`) through `DynamicResource`, never FluentAvalonia-specific or `SystemControl*` keys.
-2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/MEFR.Desktop/Ui/Fluent/AppStyles.axaml`.
+2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/MEFR.Desktop/UI/Fluent/AppStyles.axaml`.
 3. FluentAvalonia controls are used only through wrappers: `AppShell` (NavigationView, with our own navigation-item model), `IDialogService` (ContentDialog, with multi-step logic in view-models), `AppBanner` (InfoBar) and `AppIcon` (symbol name → font glyph now, a path later).
-4. No FluentAvalonia type or namespace appears outside `src/MEFR.Desktop/Ui/Fluent/`. Enforced by `tests/MEFR.Desktop.Tests/Architecture/FluentIsolationTests.cs`.
+4. No FluentAvalonia type or namespace appears outside `src/MEFR.Desktop/UI/Fluent/`. Enforced by `tests/MEFR.Desktop.Tests/Architecture/FluentIsolationTests.cs`.
 5. Charts read colours from the same token keys and redraw on theme change.
 
-_Revisit when_ Avalonia 12.2 ships. If FluentAvalonia supports it and offers a controls-only mode, use Fluent2 for the base theme and FluentAvalonia for its shell controls. If FluentAvalonia stays inactive and breaks, use Fluent2 plus our own shell controls, possibly forked from FluentAvalonia's MIT code. Either way the change stays inside `Ui/Fluent/`.
+_Revisit when_ Avalonia 12.2 ships. If FluentAvalonia supports it and offers a controls-only mode, use Fluent2 for the base theme and FluentAvalonia for its shell controls. If FluentAvalonia stays inactive and breaks, use Fluent2 plus our own shell controls, possibly forked from FluentAvalonia's MIT code. Either way the change stays inside `UI/Fluent/`.
 
 _Tables._ The DataGrid (deprecated upstream, bug fixes only) is used where sorting or editing is needed, such as Transactions. Editing happens in side panels, not in cells, which avoids its in-cell focus bug (#248). Avalonia's TableView is used for small read-only tables; it has no column sorting.
 
