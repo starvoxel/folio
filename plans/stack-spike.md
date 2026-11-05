@@ -2,8 +2,8 @@
 
 | Field       | Value      |
 | ----------- | ---------- |
-| Status      | Draft      |
-| Approved by | Pending    |
+| Status      | Approved   |
+| Approved by | Jeremy     |
 | Created     | 2026-11-05 |
 
 ## Goal
