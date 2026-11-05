@@ -34,7 +34,7 @@ dotnet format Folio.slnx --verify-no-changes
 | `tests/Integration/Folio.Desktop.IntegrationTests` | Integration tests: the real app on Avalonia's headless platform, bindings and I/O adapters                                             |
 | `tests/Validation/Folio.ValidationTests`           | Validation tests: structural rules such as Core never referencing the UI, FluentAvalonia only under `UI/Fluent/`, and this test layout |
 
-Each kind of test lives under `tests/<Kind>/`, its project names end in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`; a validation test enforces this. End-to-end tests driven through the automation CLI will be a fourth kind, added later.
+Each kind of test lives under `tests/<Kind>/`, its project names end in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`; a validation test enforces this. Performance and end-to-end stress testing are a separate initiative; how and where they run is still to be investigated.
 
 Test methods are named `{Subject}_{Condition}_{ExpectedResult}`, for example `Parse_EmptyInput_ReturnsEmptyResult`; the rules are in `TestNamingTests`, which also enforces the three-part shape.
 
