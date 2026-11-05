@@ -18,7 +18,7 @@ public class CoreDependencyTests
     private static readonly string[] ForbiddenPrefixes = ["Avalonia", "FluentAvalonia", "Folio.Desktop", "CommunityToolkit"];
 
     [Fact]
-    public void CoreAssembly_ReferencedAssemblies_ExcludeUiFrameworks()
+    public void ReferencedAssemblies_CoreAssembly_ExcludeUIFrameworks()
     {
         Assembly core = typeof(Folio.Core.CoreAssembly).Assembly;
 
