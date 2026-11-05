@@ -6,7 +6,7 @@ Financial data stays in a budget file on your own computers. There are no bank l
 
 ## Status
 
-The solution is scaffolded; no features yet.
+The architecture is decided and the solution is scaffolded. There are no features yet.
 
 ## Stack
 
@@ -38,17 +38,17 @@ dotnet format Folio.slnx --verify-no-changes
 
 There are three kinds of test, decided by the most expensive resource a test touches. Each runs on its own:
 
-- **Unit**: in memory, one process; no real file system, network or Avalonia platform.
-- **Integration**: one machine; real temporary folders, Avalonia's headless platform, loopback HTTP.
-- **Architecture**: structural rules of the codebase itself.
+- _Unit tests_ run in memory, in one process, with no real file system, network or Avalonia platform.
+- _Integration tests_ stay on one machine and may use real temporary folders, Avalonia's headless platform and loopback HTTP.
+- _Architecture tests_ check structural rules of the codebase itself.
 
 The full rules for test kinds, layout and naming are in [project-standards.md](project-standards.md). Performance and end-to-end stress testing are a separate initiative.
 
 ## Documentation
 
-| Where                                                                          | What                                                                                          |
-| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                           |
-| [project-standards.md](project-standards.md)                                   | Folio's implementation conventions on top of the ai-foundation standards (currently: testing) |
-| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                                            |
-| `plans/`                                                                       | Approved implementation plans (none yet)                                                      |
+| Where                                                                          | What                                                                                                                          |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                                                           |
+| [project-standards.md](project-standards.md)                                   | Folio's implementation conventions on top of the ai-foundation standards (currently: testing)                                 |
+| [knowledge/architecture/](knowledge/architecture/)                             | arc42 architecture docs; decisions are in [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md) |
+| `plans/`                                                                       | Approved implementation plans (none yet)                                                                                      |
