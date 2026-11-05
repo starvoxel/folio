@@ -9,7 +9,7 @@ Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/
 | Start | 1200×760 | Last-file card with status, other recent files, Open / New actions, 3-step new-file dialog (Name, Accounts, Categories) |
 | App   | 1440×960 | NavigationView shell with all pages, import dialog, light and dark themes                                               |
 
-Sample data is a file named "Household 2026.budget"; the new-file dialog defaults to "Household 2027.budget".
+Sample data is a file named "Household 2026.budget"; the new-file dialog defaults to "Household 2027.budget". The prototype predates the file extension decision: the app uses `.folio`, so these are "Household 2026.folio" and "Household 2027.folio".
 
 ## Visual foundations
 

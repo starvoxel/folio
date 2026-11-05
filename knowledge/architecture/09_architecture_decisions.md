@@ -41,7 +41,7 @@ _Consequences._ No database session to keep consistent with the UI; Discard is "
 
 _Context._ With AD-1, a database's strengths (querying while working, incremental writes, many writers) go unused. What matters is atomic saves, corruption detection, schema evolution, later encryption and attachments, and a format the household can inspect.
 
-_Decision._ A `.budget` file is a zip container, like `.docx`:
+_Decision._ A budget file uses the `.folio` extension and is a zip container, like `.docx`:
 
 - `manifest.json`: file-format version, app version, a checksum per part, and whether each part is JSON or JSONL.
 - One part per area (accounts, transactions, rules, months, net worth, settings, audit log). Parts that are long lists of independent records, such as transactions and the audit log, may be JSONL (one record per line) for streaming, readable diffs and damage containment; small structured parts stay JSON.

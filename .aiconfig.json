@@ -1,6 +1,6 @@
 {
   "project_name": "Folio",
-  "project_shortname": "MEFR",
+  "project_shortname": "FOL",
   "standards": {
     "engineering": [
       "csharp", "avalonia"

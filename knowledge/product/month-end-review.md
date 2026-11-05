@@ -22,17 +22,17 @@ One household, several members sharing one budget file. All members have equal a
 
 ## Constraints
 
-| Area           | v1 choice                                                                                                                                                                                                                |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Platform       | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia`                                                                                                               |
-| Users          | One household sharing the file                                                                                                                                                                                           |
-| Storage        | Local budget file opened like a document; may sit in a shared folder. Format: a zip of JSON and JSONL parts ([AD-2](../architecture/09_architecture_decisions.md#ad-2-the-budget-file-is-a-zip-of-json-and-jsonl-parts)) |
-| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                                                                                      |
-| Data sources   | CSV only                                                                                                                                                                                                                 |
-| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up                                                                     |
-| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                                                                                    |
-| Currency       | CAD only                                                                                                                                                                                                                 |
-| Concurrency    | Two simultaneous editors not handled                                                                                                                                                                                     |
+| Area           | v1 choice                                                                                                                                                                                                                                 |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform       | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia`                                                                                                                                |
+| Users          | One household sharing the file                                                                                                                                                                                                            |
+| Storage        | Local budget file opened like a document; may sit in a shared folder. Format: a `.folio` file, a zip of JSON and JSONL parts ([AD-2](../architecture/09_architecture_decisions.md#ad-2-the-budget-file-is-a-zip-of-json-and-jsonl-parts)) |
+| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                                                                                                       |
+| Data sources   | CSV only                                                                                                                                                                                                                                  |
+| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up                                                                                      |
+| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                                                                                                     |
+| Currency       | CAD only                                                                                                                                                                                                                                  |
+| Concurrency    | Two simultaneous editors not handled                                                                                                                                                                                                      |
 
 ## Success measures
 
