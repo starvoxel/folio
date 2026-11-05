@@ -48,9 +48,16 @@ Spike code that proves a point and is worth keeping goes into `src/`. Throwaway 
 ### 5. Automation server, CLI and headless mode
 
 - Does: create `Folio.Automation` and `Folio.Cli`. `--automation` starts a loopback-only server on `127.0.0.1` built on .NET's `HttpListener` (no added dependency), with a fresh token per session written with the port and process id to a discovery file readable only by the user (`chmod 600` on macOS and Linux; per-user AppData on Windows). Endpoints: `status`, `ui navigate`, `ui state` and `ui screenshot`. Every request handler reaches the model and view-models only through one helper that marshals onto the UI thread (`Dispatcher.UIThread.InvokeAsync`). Screenshots use `CaptureRenderedFrame()` when headless and render the window's content to a bitmap otherwise. `--headless --automation` runs the real app on Avalonia's headless platform with Skia rendering. Page view-models expose state and named actions through an explicit automation interface (no reflection, trim-safe); a test fails if a page view-model does not implement it. The `folio` CLI reads the discovery file, calls the server and prints JSON.
-- Already proven (2026-11-05, throwaway probe on Avalonia 12.1.5 headless + Skia + `HttpListener`): a headless app answered state, navigated, returned a correct PNG and shut down cleanly over loopback HTTP. Remaining unknown: that a non-admin user on Windows can listen on `http://127.0.0.1:<port>/` with `HttpListener` without a URL reservation. If not, swap in Kestrel minimal APIs behind the same handler code.
-- Acceptance criteria: without `--automation` nothing listens (checked); the server refuses requests without the token and refuses non-loopback connections; `folio ui navigate Reporting` then `folio ui screenshot` produces a PNG of the Reporting placeholder from a headless run in CI.
-- Verified by: integration tests in CI that start the headless app, drive it through the CLI and check the JSON and the PNG; a test that the port is closed without the flag; the `HttpListener` loopback check on the Windows CI runner.
+- Also does: browser-request protections in every build (the `Host` header must be `127.0.0.1:<port>`, any request with an `Origin` header is rejected, no CORS headers). In release builds the server starts only after a secure enabling step beyond `--automation`; debug and test builds need only the flag. Two options for that step, for Jeremy to choose at the start of this milestone:
+
+  - _Signed unlock file (recommended)._ The app ships a public key. The server starts only if an unlock file signed with the developer's private key is present, has not expired (at most seven days) and, optionally, names this machine. Hardest to switch on by accident or by another program; needs the private key kept offline and a small tool to issue unlocks.
+  - _In-app setting._ A Settings toggle with a confirmation, an expiry and a persistent banner. No keys to manage, but anything that can edit the user's settings can turn it on.
+
+  Either way, the app shows a banner while the server runs and records each start in the audit log.
+
+- Already proven (2026-11-05, throwaway probe of Avalonia 12.1.5 running headless with Skia and `HttpListener`): a headless app answered state, navigated, returned a correct PNG and shut down cleanly over loopback HTTP. Remaining unknown: that a non-admin user on Windows can listen on `http://127.0.0.1:<port>/` with `HttpListener` without a URL reservation. If not, swap in Kestrel minimal APIs behind the same handler code.
+- Acceptance criteria: without `--automation` nothing listens (checked); in a release build, `--automation` without a valid unlock starts nothing, and an expired or wrongly signed unlock is refused; the server refuses requests without the token, non-loopback connections, a mismatched `Host` header and any request with an `Origin` header; `folio ui navigate Reporting` then `folio ui screenshot` produces a PNG of the Reporting placeholder from a headless run in CI.
+- Verified by: integration tests in CI that start the headless app, drive it through the CLI and check the JSON and the PNG; a test that the port is closed without the flag; tests for the release unlock check (valid, expired, wrongly signed, missing) and for the `Host` and `Origin` checks; the `HttpListener` loopback check on the Windows CI runner.
 
 ### 6. Fluent2 look-ahead (throwaway)
 
@@ -60,12 +67,16 @@ Spike code that proves a point and is worth keeping goes into `src/`. Throwaway 
 
 ## Requirements
 
-- Security: the automation server binds to `127.0.0.1` only, generates a fresh random token per session, stores it in a file with user-only permissions, rejects requests without it, limits request size, and serves no files. Without the flag no listener exists. The csharp_base security checklist applies.
+- Security: the automation server binds to `127.0.0.1` only, generates a fresh random token per session, stores it in a file with user-only permissions, rejects requests without it, checks the `Host` header, rejects requests with an `Origin` header, sends no CORS headers, limits request size, and serves no files. Without the flag no listener exists, and release builds also require the secure enabling step. The csharp_base security checklist applies.
 - Logging: Microsoft.Extensions.Logging with the standard format; the automation server logs start, stop and rejected requests at Info and Warning; no financial data in any log.
+
+## Decisions recorded
+
+- HTTP stack: `HttpListener`, with Kestrel only if the Windows loopback check fails (Jeremy: no strong preference, 2026-11-05).
+- Release builds include the automation server for long-term debugging, but enabling it needs a secure step beyond the flag so an attacker cannot easily turn it on (Jeremy, 2026-11-05). See milestone 5 and AD-16.
 
 ## Open questions
 
 - Inter or the platform default font? [Jeremy, at milestone 2]
-- HTTP stack: `HttpListener` recommended (proven in the probe, no dependency); Kestrel only if the Windows loopback check fails. [Jeremy approves with the plan]
-- Should release builds include the automation server (inert without the flag) or only debug and test builds? [Jeremy]
+- Release enabling step: signed unlock file (recommended) or in-app setting? [Jeremy, at the start of milestone 5]
 - Which CI runners can show a real window for the per-OS screenshot checks, or do those stay manual? [Engineer, at milestone 1]
