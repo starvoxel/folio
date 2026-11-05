@@ -46,9 +46,9 @@ The full rules for test kinds, layout and naming are in [project-standards.md](p
 
 ## Documentation
 
-| Where                                                                          | What                                                                                                  |
-| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                                   |
-| [project-standards.md](project-standards.md)                                   | Project rules that refine or override the ai-foundation coding standards (stack, UI, naming, testing) |
-| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                                                    |
-| `plans/`                                                                       | Approved implementation plans (none yet)                                                              |
+| Where                                                                          | What                                                                                          |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                           |
+| [project-standards.md](project-standards.md)                                   | Folio's implementation conventions on top of the ai-foundation standards (currently: testing) |
+| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                                            |
+| `plans/`                                                                       | Approved implementation plans (none yet)                                                      |
