@@ -38,6 +38,6 @@ key_files: []
 
 ## Technical context
 
-- No network listener exists unless the app is started with `--automation`; when it is, it binds to loopback only and requires a per-session token.
-- No outbound network calls in normal operation. Dependencies are checked for this (paid Avalonia components are excluded partly because they contain licence-validation code).
+- No network listener exists unless the app is started with `--automation`. With that flag, the listener binds to loopback only and requires a per-session token.
+- The app makes no outbound network calls in normal operation. Review checks each new dependency for outbound calls; paid Avalonia components are excluded partly because they contain licence-validation code.
 - A sidecar `.lock` file next to the budget file warns when another computer has it open (AD-12).
