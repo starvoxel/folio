@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace Folio.Desktop.Tests.Architecture;
+namespace Folio.ValidationTests.Architecture;
 
 /// <summary>
 /// Guards AD-15: FluentAvalonia is used only under src/Folio.Desktop/UI/Fluent/, so the theme and its
@@ -19,7 +19,7 @@ public class FluentIsolationTests
     [Fact]
     public void DesktopSources_OutsideUiFluent_DoNotReferenceFluentAvalonia()
     {
-        string desktopRoot = Path.Combine(FindRepositoryRoot(), "src", "Folio.Desktop");
+        string desktopRoot = Path.Combine(RepositoryRoot.Find(), "src", "Folio.Desktop");
         string allowedRoot = Path.Combine(desktopRoot, "UI", "Fluent") + Path.DirectorySeparatorChar;
 
         List<string> offending = Directory
@@ -51,16 +51,5 @@ public class FluentIsolationTests
     {
         string text = File.ReadAllText(path);
         return FluentMarkers.Any(marker => text.Contains(marker, StringComparison.Ordinal));
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        DirectoryInfo? directory = new(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Folio.slnx")))
-        {
-            directory = directory.Parent;
-        }
-
-        return directory?.FullName ?? throw new InvalidOperationException("Folio.slnx not found above the test output directory.");
     }
 }

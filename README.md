@@ -18,17 +18,23 @@ Needs the .NET 10 SDK (see [global.json](global.json)).
 
 ```
 dotnet build Folio.slnx
-dotnet test Folio.slnx
+dotnet test Folio.slnx                       # every test
+dotnet test tests/Unit.slnx                  # unit tests only
+dotnet test tests/Integration.slnx           # integration tests only
+dotnet test tests/Validation.slnx            # validation tests only
 dotnet run --project src/Folio.Desktop
 dotnet format Folio.slnx --verify-no-changes
 ```
 
-| Project                     | Holds                                                                                     |
-| --------------------------- | ----------------------------------------------------------------------------------------- |
-| `src/Folio.Core`            | All domain logic; never references the UI                                                 |
-| `src/Folio.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `UI/Fluent/` |
-| `tests/Folio.Core.Tests`    | Domain and architecture tests                                                             |
-| `tests/Folio.Desktop.Tests` | View-model and headless UI tests                                                          |
+| Project                                            | Holds                                                                                                                                  |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/Folio.Core`                                   | All domain logic; never references the UI                                                                                              |
+| `src/Folio.Desktop`                                | Avalonia views, view-models and platform adapters; FluentAvalonia only under `UI/Fluent/`                                              |
+| `tests/Unit/Folio.Core.UnitTests`                  | Unit tests: pure logic, no UI or I/O                                                                                                   |
+| `tests/Integration/Folio.Desktop.IntegrationTests` | Integration tests: the real app on Avalonia's headless platform, bindings and I/O adapters                                             |
+| `tests/Validation/Folio.ValidationTests`           | Validation tests: structural rules such as Core never referencing the UI, FluentAvalonia only under `UI/Fluent/`, and this test layout |
+
+Each kind of test lives under `tests/<Kind>/`, its project names end in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`; a validation test enforces this. End-to-end tests driven through the automation CLI will be a fourth kind, added later.
 
 ## Documentation
 
