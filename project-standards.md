@@ -1,33 +1,10 @@
 # Project standards: Folio
 
-Project-specific rules for Folio. ai-foundation loads this file after the general standards it resolves from `.aiconfig.json` (`csharp_base`, `csharp_avalonia`). Where they disagree, this file wins. Why each rule exists is recorded in the architecture docs ([02_constraints.md](knowledge/architecture/02_constraints.md), [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md)); this file states the rules.
+Folio's implementation conventions. ai-foundation loads this file after the general standards it resolves from `.aiconfig.json` (`csharp_base`, `csharp_avalonia`), and where they disagree this file wins.
+
+Rules that have another owner are not repeated here: the stack and pinned versions (`Directory.Packages.props`, [02_constraints.md](knowledge/architecture/02_constraints.md)), architecture decisions such as FluentAvalonia isolation (each enforced by its own architecture test, [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md)), product requirements such as menus (`knowledge/product/`), and generic C# naming rules (the ai-foundation standards).
 
 ---
-
-## Stack
-
-These override the `csharp_avalonia` stack table.
-
-| Layer        | Rule                                                                                                           |
-| ------------ | -------------------------------------------------------------------------------------------------------------- |
-| UI framework | Avalonia 12.1.x, not 11.x. Do not move to 12.2 until FluentAvalonia supports it                                |
-| Theme        | `FluentAvaloniaTheme` (FluentAvalonia 3.x), not `Avalonia.Themes.Fluent`. Load exactly one Fluent-family theme |
-| MVVM         | CommunityToolkit.Mvvm. DynamicData only where a view filters a collection live                                 |
-| Versions     | Exact pins in `Directory.Packages.props`; the SDK in `global.json`                                             |
-
-## UI rules
-
-- FluentAvalonia types and namespaces appear only under `src/Folio.Desktop/UI/Fluent/`. Screens use the app's wrappers (shell, dialog service, banner, icon). Enforced by `FluentIsolationTests`.
-- Screens reference only WinUI token keys (`TextFillColor*`, `*FillColor*`, `*StrokeColor*`, `ControlCornerRadius`, `OverlayCornerRadius`) through `DynamicResource`. Never use FluentAvalonia-specific or `SystemControl*` keys, and never inline colours.
-- Top-level commands use the in-window hamburger menu (PRD H1.14), not a docked `<Menu>` bar. This overrides the `csharp_avalonia` Windows menu rule. On macOS, the app also provides a `NativeMenu` with About, Settings, Quit and the standard Edit items (PRD H1.16).
-- `ViewLocator` resolves views from an explicit registration table, not reflection, so it stays trim-safe.
-- Keep view-models thin. If a view-model needs more than a trivial test, its logic belongs in `Folio.Core`.
-
-## Naming
-
-- Acronyms follow Microsoft's .NET guideline. Two-letter acronyms are all capitals (`UI`, `IO`); acronyms of three or more letters are PascalCase (`Cli`, `Csv`, `Json`, `Http`); abbreviations such as `Id` are PascalCase. Names from the framework or third-party libraries keep their own spelling.
-- `private static readonly` fields are PascalCase, like constants (enforced by `.editorconfig`).
-- The code name is `Folio` (namespaces `Folio.*`, CLI command `folio`). The file extension is `.folio`. The short name is `FOL`.
 
 ## Testing
 
