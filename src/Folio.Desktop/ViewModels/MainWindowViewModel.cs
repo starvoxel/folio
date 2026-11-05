@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace Closeout.Desktop.ViewModels;
+namespace Folio.Desktop.ViewModels;
 
 /// <summary>
 /// View-model for the main window. Placeholder until the shell is built.
@@ -16,5 +16,5 @@ public sealed class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// Gets the window title.
     /// </summary>
-    public string Title { get; } = "Closeout";
+    public string Title { get; } = "Folio";
 }

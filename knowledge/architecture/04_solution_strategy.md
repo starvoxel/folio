@@ -4,7 +4,7 @@ title: 'Solution Strategy'
 lifecycle: draft
 tags: [strategy]
 key_files:
-  - Closeout.slnx
+  - Folio.slnx
 ---
 
 > The handful of ideas the rest of the design follows from. Each links to its decision in [09_architecture_decisions.md](09_architecture_decisions.md).
@@ -17,25 +17,25 @@ key_files:
 
 3. _One classification entry point decides how every line counts, and its output is frozen at close._ Each transaction line is classified as income, spending, savings, neutral transfer or excluded by asking the owning areas in a fixed order (AD-3, AD-6). Open months are classified live; closing a month stores the results, so locked months are reported from stored data and cannot drift, even when the app's own code changes.
 
-4. _The domain knows nothing about the UI._ `Closeout.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `Closeout.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
+4. _The domain knows nothing about the UI._ `Folio.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `Folio.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
 
 5. _The UI stack is quarantined._ FluentAvalonia is used only under `UI/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
 
-6. _The running app is drivable by machine._ An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `closeout` CLI and a headless mode for CI and agents (AD-16).
+6. _The running app is drivable by machine._ An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `folio` CLI and a headless mode for CI and agents (AD-16).
 
 ## Solution structure
 
 ```
-Closeout.slnx
+Folio.slnx
 ├── src/
-│   ├── Closeout.Core          domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
-│   ├── Closeout.Desktop       Avalonia + FluentAvalonia views and view-models; thin platform adapters
+│   ├── Folio.Core             domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
+│   ├── Folio.Desktop          Avalonia + FluentAvalonia views and view-models; thin platform adapters
 │   │   └── UI/Fluent/         the only place FluentAvalonia types appear
-│   ├── Closeout.Automation    (planned) loopback HTTP server exposing commands, queries and UI actions
-│   └── Closeout.Cli           (planned) `closeout` command-line client
+│   ├── Folio.Automation       (planned) loopback HTTP server exposing commands, queries and UI actions
+│   └── Folio.Cli              (planned) `folio` command-line client
 └── tests/
-    ├── Closeout.Core.Tests    the bulk: domain, CSV fixtures, file round-trips, size budget
-    └── Closeout.Desktop.Tests view-model tests and headless Avalonia binding tests
+    ├── Folio.Core.Tests       the bulk: domain, CSV fixtures, file round-trips, size budget
+    └── Folio.Desktop.Tests    view-model tests and headless Avalonia binding tests
 ```
 
 ## Technology choices at a glance

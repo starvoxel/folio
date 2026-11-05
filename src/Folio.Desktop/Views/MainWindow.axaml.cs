@@ -8,7 +8,7 @@
 
 using Avalonia.Controls;
 
-namespace Closeout.Desktop.Views;
+namespace Folio.Desktop.Views;
 
 /// <summary>
 /// The main application window.

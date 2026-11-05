@@ -1,4 +1,4 @@
-# Design notes: Closeout
+# Design notes: Folio
 
 Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/Month-End_Financial_Review-v1.html) (v1, updated from the PRD; earlier draft of 2026-11-03 replaced). It is a reference for look and behavior, not code to port: the implementation is Avalonia with FluentAvalonia controls and its theme resources, so use the theme's resource keys instead of copying hex values or CSS. Requirements stay in [month-end-review.md](month-end-review.md); where this prototype differs from them, see [Differences from the PRD](#differences-from-the-prd).
 
@@ -34,7 +34,7 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 
 ## Shell
 
-- Left `NavigationView` headed "Closeout", filling the window height. The prototype predates the product name and still shows "Month-End Review" and "Month-End Spending Review"; the app uses "Closeout".
+- Left `NavigationView` headed "Folio", filling the window height. The prototype predates the product name and still shows "Month-End Review" and "Month-End Spending Review"; the app uses "Folio".
 - Items in order: Overview, Transactions, Reporting, Net worth, Accounts, Rules & categories (Review is not a nav item, per H1.4). Settings is the footer item.
 - Top bar: file name and "Saved automatically" with a "sample data" tag, Undo, Redo, Import CSV, and the month picker (ComboBox of months).
 - Content max width about 1240, 20px vertical rhythm between sections, cards in auto-fit grids (210 and 440 minimum column widths).
@@ -60,7 +60,7 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 
 ## FluentAvalonia component mapping
 
-FluentAvalonia 3.x (pinned 3.1.0) prefixes its own controls with `FA` (`FANavigationView`, `FAContentDialog`, `FAInfoBar`, `FAComboBox`), so older samples will not compile as written. Screens never use these types directly: they go through the app's wrappers under `src/Closeout.Desktop/UI/Fluent/` ([AD-15](../architecture/09_architecture_decisions.md#ad-15-fluentavalonia-is-isolated-behind-app-wrappers)). The Charts row below is decided by AD-13: custom-drawn controls behind chart view-models.
+FluentAvalonia 3.x (pinned 3.1.0) prefixes its own controls with `FA` (`FANavigationView`, `FAContentDialog`, `FAInfoBar`, `FAComboBox`), so older samples will not compile as written. Screens never use these types directly: they go through the app's wrappers under `src/Folio.Desktop/UI/Fluent/` ([AD-15](../architecture/09_architecture_decisions.md#ad-15-fluentavalonia-is-isolated-behind-app-wrappers)). The Charts row below is decided by AD-13: custom-drawn controls behind chart view-models.
 
 | Prototype                                                       | Avalonia / FluentAvalonia                                                                                          |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |

@@ -9,10 +9,10 @@
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 
-using Closeout.Desktop.ViewModels;
-using Closeout.Desktop.Views;
+using Folio.Desktop.ViewModels;
+using Folio.Desktop.Views;
 
-namespace Closeout.Desktop.Tests.Views;
+namespace Folio.Desktop.Tests.Views;
 
 /// <summary>
 /// Smoke tests that the app, its theme and the main window load headlessly.
@@ -28,8 +28,8 @@ public class MainWindowTests
 
         TextBlock? title = window.FindControl<TextBlock>("TitleText");
         Assert.NotNull(title);
-        Assert.Equal("Closeout", title.Text);
-        Assert.Equal("Closeout", window.Title);
+        Assert.Equal("Folio", title.Text);
+        Assert.Equal("Folio", window.Title);
     }
 
     [AvaloniaFact]

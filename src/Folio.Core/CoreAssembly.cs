@@ -6,15 +6,15 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace Closeout.Core;
+namespace Folio.Core;
 
 /// <summary>
-/// Marker type that identifies the Closeout.Core assembly for reflection and architecture tests.
+/// Marker type that identifies the Folio.Core assembly for reflection and architecture tests.
 /// </summary>
 public static class CoreAssembly
 {
     /// <summary>
     /// Gets the name of the Core assembly.
     /// </summary>
-    public static string Name => typeof(CoreAssembly).Assembly.GetName().Name ?? "Closeout.Core";
+    public static string Name => typeof(CoreAssembly).Assembly.GetName().Name ?? "Folio.Core";
 }

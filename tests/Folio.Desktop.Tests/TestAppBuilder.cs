@@ -9,11 +9,11 @@
 using Avalonia;
 using Avalonia.Headless;
 
-using Closeout.Desktop.Tests;
+using Folio.Desktop.Tests;
 
 [assembly: AvaloniaTestApplication(typeof(TestAppBuilder))]
 
-namespace Closeout.Desktop.Tests;
+namespace Folio.Desktop.Tests;
 
 /// <summary>
 /// Builds the real application on Avalonia's headless platform for UI tests.

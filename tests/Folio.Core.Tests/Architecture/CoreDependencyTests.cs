@@ -8,14 +8,14 @@
 
 using System.Reflection;
 
-namespace Closeout.Core.Tests.Architecture;
+namespace Folio.Core.Tests.Architecture;
 
 /// <summary>
-/// Guards AD-14: Closeout.Core holds the domain and never depends on the UI.
+/// Guards AD-14: Folio.Core holds the domain and never depends on the UI.
 /// </summary>
 public class CoreDependencyTests
 {
-    private static readonly string[] ForbiddenPrefixes = ["Avalonia", "FluentAvalonia", "Closeout.Desktop", "CommunityToolkit"];
+    private static readonly string[] ForbiddenPrefixes = ["Avalonia", "FluentAvalonia", "Folio.Desktop", "CommunityToolkit"];
 
     [Fact]
     public void CoreAssembly_ReferencedAssemblies_ExcludeUiFrameworks()
@@ -31,8 +31,8 @@ public class CoreDependencyTests
     }
 
     [Fact]
-    public void Name_CoreAssembly_ReturnsCloseoutCore()
+    public void Name_CoreAssembly_ReturnsFolioCore()
     {
-        Assert.Equal("Closeout.Core", CoreAssembly.Name);
+        Assert.Equal("Folio.Core", CoreAssembly.Name);
     }
 }

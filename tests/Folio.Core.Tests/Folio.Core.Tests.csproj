@@ -1,17 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Closeout.Desktop.Tests</RootNamespace>
+    <RootNamespace>Folio.Core.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Headless.XUnit" />
     <PackageReference Include="xunit.v3" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Closeout.Desktop\Closeout.Desktop.csproj" />
+    <ProjectReference Include="..\..\src\Folio.Core\Folio.Core.csproj" />
   </ItemGroup>
 </Project>

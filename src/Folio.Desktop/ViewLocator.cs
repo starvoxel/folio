@@ -9,9 +9,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
-using Closeout.Desktop.ViewModels;
+using Folio.Desktop.ViewModels;
 
-namespace Closeout.Desktop;
+namespace Folio.Desktop;
 
 /// <summary>
 /// Resolves a view for a view-model from an explicit registration table. It uses no reflection, so it

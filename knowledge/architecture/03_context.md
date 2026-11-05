@@ -13,12 +13,12 @@ key_files: []
 ```
                         ┌──────────────────────────────┐
   Household member ────▶│                              │──▶ Budget file (.budget, zip of JSON/JSONL)
-  (desktop UI)          │           Closeout           │◀── (local disk or a synced folder)
+  (desktop UI)          │             Folio            │◀── (local disk or a synced folder)
                         │                              │
   Bank CSV exports ────▶│                              │──▶ Backups (local app-data folder)
   (read only)           │                              │
                         │                              │◀─▶ Machine preferences (local app-data)
-  closeout CLI ────────▶│  loopback only, opt-in       │
+  folio CLI ───────────▶│  loopback only, opt-in       │
   (AD-16)               └──────────────────────────────┘
                                       ┊
                                       ┊ opt-in only, not in v1
@@ -26,15 +26,15 @@ key_files: []
                            Online merchant lookup (research first)
 ```
 
-| Partner                   | Direction  | What crosses                                                                                                                       |
-| ------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Household member          | In and out | Every interaction, through the desktop UI                                                                                          |
-| Bank CSV exports          | In         | Files picked or dropped by the user; read locally, never uploaded                                                                  |
-| Budget file               | In and out | The household's entire data set; written atomically on save                                                                        |
-| Backups                   | Out        | Copies of the budget file, rotated (AD-12)                                                                                         |
-| Machine preferences       | In and out | Theme, autosave interval, auto-open, recent files, backup location (AD-11)                                                         |
-| `closeout` CLI and agents | In and out | Commands, queries, UI state and screenshots over HTTP on `127.0.0.1`, only when the app is started with automation enabled (AD-16) |
-| Online merchant lookup    | Out        | Not in v1. If ever added it is opt-in, stored per budget file, and limited to services that neither keep nor sell data             |
+| Partner                | Direction  | What crosses                                                                                                                       |
+| ---------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Household member       | In and out | Every interaction, through the desktop UI                                                                                          |
+| Bank CSV exports       | In         | Files picked or dropped by the user; read locally, never uploaded                                                                  |
+| Budget file            | In and out | The household's entire data set; written atomically on save                                                                        |
+| Backups                | Out        | Copies of the budget file, rotated (AD-12)                                                                                         |
+| Machine preferences    | In and out | Theme, autosave interval, auto-open, recent files, backup location (AD-11)                                                         |
+| `folio` CLI and agents | In and out | Commands, queries, UI state and screenshots over HTTP on `127.0.0.1`, only when the app is started with automation enabled (AD-16) |
+| Online merchant lookup | Out        | Not in v1. If ever added it is opt-in, stored per budget file, and limited to services that neither keep nor sell data             |
 
 ## Technical context
 

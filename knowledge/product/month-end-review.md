@@ -1,4 +1,4 @@
-# PRD: Closeout
+# PRD: Folio
 
 Source: product write-up of 2026-11-02 (Jeremy). Per-area requirements live in the linked docs; this file owns the shared context.
 

@@ -8,7 +8,7 @@
 
 using Avalonia;
 
-namespace Closeout.Desktop;
+namespace Folio.Desktop;
 
 /// <summary>
 /// Application entry point.

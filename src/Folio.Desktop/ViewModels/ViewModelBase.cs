@@ -8,7 +8,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Closeout.Desktop.ViewModels;
+namespace Folio.Desktop.ViewModels;
 
 /// <summary>
 /// Base class for every view-model (CommunityToolkit.Mvvm, AD-14).

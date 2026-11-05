@@ -6,7 +6,7 @@ tags: [overview]
 key_files: []
 ---
 
-> What Closeout is, the quality goals its architecture serves, and who cares about them.
+> What Folio is, the quality goals its architecture serves, and who cares about them.
 
 ## Requirements overview
 

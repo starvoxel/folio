@@ -10,10 +10,10 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-using Closeout.Desktop.ViewModels;
-using Closeout.Desktop.Views;
+using Folio.Desktop.ViewModels;
+using Folio.Desktop.Views;
 
-namespace Closeout.Desktop;
+namespace Folio.Desktop;
 
 /// <summary>
 /// The Avalonia application: loads styles and creates the main window.

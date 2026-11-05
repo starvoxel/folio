@@ -2,12 +2,12 @@
   <!--
     Avalonia + FluentAvalonia views and view-models, plus thin platform adapters.
     FluentAvalonia types may only be used under UI/Fluent/ (AD-15; enforced by
-    tests/Closeout.Desktop.Tests/Architecture/FluentIsolationTests.cs).
+    tests/Folio.Desktop.Tests/Architecture/FluentIsolationTests.cs).
   -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Closeout.Desktop</RootNamespace>
-    <AssemblyName>Closeout.Desktop</AssemblyName>
+    <RootNamespace>Folio.Desktop</RootNamespace>
+    <AssemblyName>Folio.Desktop</AssemblyName>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ApplicationManifest Condition="Exists('app.manifest')">app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Closeout.Core\Closeout.Core.csproj" />
+    <ProjectReference Include="..\Folio.Core\Folio.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Closeout.Desktop.Tests" />
+    <InternalsVisibleTo Include="Folio.Desktop.Tests" />
   </ItemGroup>
 </Project>
