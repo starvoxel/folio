@@ -7,6 +7,7 @@ key_files:
   - global.json
   - Directory.Build.props
   - Directory.Packages.props
+  - project-standards.md
 ---
 
 > The fixed choices the architecture works within: platform, pinned stack, coding standards and product rules.
@@ -44,24 +45,18 @@ Do not move to Avalonia 12.2 until FluentAvalonia supports it and the Fluent2 th
 
 The project follows the ai-foundation standards `csharp_base` and `csharp_avalonia` (`.aiconfig.json`). The build enforces what it can: nullable reference types, warnings as errors, explicit types instead of `var`, file-scoped namespaces, no primary constructors, explicit access modifiers, naming rules and XML docs on public members (`.editorconfig`, `Directory.Build.props`).
 
-Naming acronyms follows Microsoft's .NET guideline: two-letter acronyms are all capitals (`UI`, `IO`), and acronyms of three or more letters are PascalCase (`Cli`, `Csv`, `Json`, `Http`), so names read consistently beside framework types such as `JsonSerializer` and `HttpClient`. Abbreviations such as `Id` are PascalCase. Analyzers cannot check this, so review does. Proposed as an explicit `csharp_base` rule.
+Folio's own rules, which refine or override those standards, are in [project-standards.md](../../project-standards.md), which ai-foundation loads last. That file covers the stack and theme, FluentAvalonia isolation, menus, acronym and field naming, and the test kinds, layout and naming. This section records only why the project departs from the shared standards.
 
-Test methods are named `{Subject}_{Condition}_{ExpectedResult}`, which refines the `{MethodName}_{Scenario}_{ExpectedResult}` rule in `csharp_base`:
+Deviations from the shared ai-foundation standards. Each is in force through `project-standards.md` and is also proposed upstream:
 
-- _Subject_: the member under test (`Parse`, `Show`, `TryFindResource`); for architecture tests, the artefact being checked (`ReferencedAssemblies`, `SourceFiles`, `TestProjects`).
-- _Condition_: the input, state or scope as a noun phrase (`EmptyInput`, `ViewModelAsDataContext`, `CoreAssembly`); `DefaultState` when there is none.
-- _ExpectedResult_: a present-tense verb phrase (`ReturnsEmptyResult`, `ThrowsArgumentException`, `ExcludeUIFrameworks`).
-
-Test classes are named `{ClassUnderTest}Tests`, or `{Rule}Tests` for architecture tests. `TestNamingTests` fails on any test method that is not three PascalCase parts; review checks the wording.
-
-Known deviations, to be resolved upstream in ai-foundation rather than as per-plan exceptions where possible:
-
-| Standard says                                                     | This project                                                                                                                 | Status                                                                                                          |
-| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Avalonia 11.x                                                     | Avalonia 12.1.x                                                                                                              | Proposed standards update                                                                                       |
-| `Avalonia.Themes.Fluent` as the base theme                        | `FluentAvaloniaTheme`                                                                                                        | Proposed: base standard stops naming a theme; a layered `csharp_avalonia_fluent` standard covers FluentAvalonia |
-| Test projects named `{Project}.Tests` / `{Project}.Desktop.Tests` | One project per kind of test under `tests/<Kind>/`, named `*.UnitTests`, `*.IntegrationTests`, `*.ArchitectureTests` (AD-14) | Proposed: the standards describe test kinds and separate runs                                                   |
-| `<Menu>` bar docked at the top on Windows                         | Hamburger menu in the window (PRD H1.14), plus a `NativeMenu` on macOS                                                       | Proposed: the rule defers to the product design and requires a macOS `NativeMenu`                               |
+| Standard says                                                     | This project                                                                                                                 | Status                                                                                                                       |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Avalonia 11.x                                                     | Avalonia 12.1.x                                                                                                              | Proposed upstream: Avalonia 12.x                                                                                             |
+| `Avalonia.Themes.Fluent` as the base theme                        | `FluentAvaloniaTheme`                                                                                                        | Proposed upstream: the base standard stops naming a theme; a layered `csharp_avalonia_fluent` standard covers FluentAvalonia |
+| Test projects named `{Project}.Tests` / `{Project}.Desktop.Tests` | One project per kind of test under `tests/<Kind>/`, named `*.UnitTests`, `*.IntegrationTests`, `*.ArchitectureTests` (AD-14) | Proposed upstream: the standards describe test kinds and separate runs                                                       |
+| Acronym casing not specified; `CNS.Core.Services` example         | Microsoft's guideline: two-letter acronyms in capitals, longer ones PascalCase                                               | Proposed upstream as an explicit `csharp_base` rule                                                                          |
+| Test naming `{MethodName}_{Scenario}_{ExpectedResult}`            | `{Subject}_{Condition}_{ExpectedResult}`, with architecture tests naming the artefact checked                                | Proposed upstream                                                                                                            |
+| `<Menu>` bar docked at the top on Windows                         | Hamburger menu in the window (PRD H1.14), plus a `NativeMenu` on macOS                                                       | Proposed upstream: the rule defers to the product design and requires a macOS `NativeMenu`                                   |
 
 ## Product rules that act as constraints
 
