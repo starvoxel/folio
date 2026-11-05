@@ -44,6 +44,8 @@ Do not move to Avalonia 12.2 until FluentAvalonia supports it and the Fluent2 th
 
 The project follows the ai-foundation standards `csharp_base` and `csharp_avalonia` (`.aiconfig.json`). The build enforces what it can: nullable reference types, warnings as errors, explicit types instead of `var`, file-scoped namespaces, no primary constructors, explicit access modifiers, naming rules and XML docs on public members (`.editorconfig`, `Directory.Build.props`).
 
+Naming acronyms follows Microsoft's .NET guideline: two-letter acronyms are all capitals (`UI`, `IO`), and acronyms of three or more letters are PascalCase (`Cli`, `Csv`, `Json`, `Http`), so names read consistently beside framework types such as `JsonSerializer` and `HttpClient`. Abbreviations such as `Id` are PascalCase. Analyzers cannot check this, so review does. Proposed as an explicit `csharp_base` rule.
+
 Known deviations, to be resolved upstream in ai-foundation rather than as per-plan exceptions where possible:
 
 | Standard says                              | This project                                                           | Status                                                                                                          |
