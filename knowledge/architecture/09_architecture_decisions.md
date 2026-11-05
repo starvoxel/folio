@@ -153,23 +153,25 @@ _Alternatives kept in reserve_ (all MIT, Avalonia 12): ScottPlot.Avalonia 5.1, O
 
 _Decision._ Projects follow the `csharp_avalonia` standard: `Folio.Core` (all domain logic, never references the UI), `Folio.Desktop` (views, view-models and thin adapters), and test projects grouped by kind (below). Layers inside Core are namespaces (`Folio.Core.Domain`, `Folio.Core.Commands`, `Folio.Core.Persistence`, …), not extra projects. Automation and CLI projects are added by AD-16.
 
-Tests are grouped by what they check, and each kind runs on its own with `dotnet test tests/<Kind>.slnx`; `Folio.slnx` runs everything:
+Tests come in three kinds, each with its own project and solution file, so each runs on its own with `dotnet test tests/<Kind>.slnx`; `Folio.slnx` runs everything. A test's kind is decided by the most expensive resource it touches, not by how much code it covers. This follows Google's small/medium test sizes and Microsoft's advice to keep infrastructure out of unit-test projects:
 
-| Kind        | Checks                                                                                                                         | Today                                              |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
-| Unit        | Pure functions and domain logic, with no UI, file system or network                                                            | `tests/Unit/Folio.Core.UnitTests`                  |
-| Integration | The app itself and how it meets UI and I/O: the real app on Avalonia's headless platform, bindings, file and platform adapters | `tests/Integration/Folio.Desktop.IntegrationTests` |
-| Validation  | Structural constraints of the codebase: assembly references, where FluentAvalonia may appear, the test layout itself           | `tests/Validation/Folio.ValidationTests`           |
+| Kind         | Rule                                                                                                                                                                                         | Project                                            |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Unit         | One process, deterministic. No real file system, network or Avalonia platform; time comes from `TimeProvider`. Several real classes may work together as long as everything stays in memory. | `tests/Unit/Folio.Core.UnitTests`                  |
+| Integration  | One machine: real temporary folders on disk, Avalonia's headless platform, loopback HTTP.                                                                                                    | `tests/Integration/Folio.Desktop.IntegrationTests` |
+| Architecture | Structural rules of the codebase itself, often called fitness functions: assembly references, where FluentAvalonia may appear, the test layout and naming.                                   | `tests/Architecture/Folio.ArchitectureTests`       |
 
-A test project lives under `tests/<Kind>/`, its name ends in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`. `TestLayoutTests` in the validation project enforces this. View-model tests that need no UI are unit tests in a future `Folio.Desktop.UnitTests`.
-
-Performance and end-to-end stress testing are a separate initiative, not further kinds of this setup. Whether they use this test setup at all is part of that investigation.
+- _Techniques are not kinds._ Property-based tests, snapshot tests and committed sample `.folio` files (format-compatibility checks) go in whichever kind their resources put them in, usually Unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
+- _View-models stay thin._ When a view-model needs more than a trivial test, its logic belongs in Core as a small, unit-tested type (for example the import wizard's step flow or the close checklist's rules). The few view-models with logic of their own, such as live filter pipelines and the automation state from AD-16, are integration tests on the headless platform. A separate UI-free `Folio.Presentation` project for view-models is deferred until such tests become numerous or slow.
+- _Enforcement._ `TestLayoutTests` checks that each test project lives under `tests/<Kind>/`, ends in `<Kind>Tests` and is listed in both solution files. `UnitTestDependencyTests` checks that unit-test projects never reference Avalonia, FluentAvalonia or `Folio.Desktop`. The rest of the unit rule (no real file system or network) is a review check. CI runs architecture tests first because they are the cheapest.
+- _Later options._ Tagging tests within a kind (for example slow, visual or quarantined tests) is left open but not set up. Architecture rules that would be better as editor-time feedback, such as FluentAvalonia isolation, may move to Roslyn analyzers.
+- _Out of scope._ Performance and end-to-end stress testing are a separate initiative, not further kinds of this setup. Whether they use this test setup at all is part of that investigation.
 
 View-models use CommunityToolkit.Mvvm. DynamicData (with System.Reactive) is added only where views filter live: transaction search and filters, the account detail list and the rule-impact preview.
 
 _Why CommunityToolkit over ReactiveUI._ It is Avalonia's template default and the docs call it the recommended framework. The project's hard logic is in Core, so view-models are thin and simple to test. Its API is small and stable, which suits agent-written code. ReactiveUI shipped three breaking major versions in 2026 (v24 to v26). ReactiveUI would win if most screens became stream-heavy; even then, wait for its API to settle.
 
-_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. The Core boundary is enforced by `tests/Validation/Folio.ValidationTests/Architecture/CoreDependencyTests.cs`.
+_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. The Core boundary is enforced by `tests/Architecture/Folio.ArchitectureTests/CoreDependencyTests.cs`.
 
 ## AD-15. FluentAvalonia is isolated behind app wrappers
 
@@ -180,7 +182,7 @@ _Decision._ Build on FluentAvalonia 3.1 with Avalonia 12.1.5, and contain it:
 1. Screens reference only WinUI token keys (`TextFillColor*`, `*FillColor*`, `*StrokeColor*`, `ControlCornerRadius`, `OverlayCornerRadius`) through `DynamicResource`, never FluentAvalonia-specific or `SystemControl*` keys.
 2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/Folio.Desktop/UI/Fluent/AppStyles.axaml`.
 3. FluentAvalonia controls are used only through wrappers: `AppShell` (NavigationView, with our own navigation-item model), `IDialogService` (ContentDialog, with multi-step logic in view-models), `AppBanner` (InfoBar) and `AppIcon` (symbol name → font glyph now, a path later).
-4. No FluentAvalonia type or namespace appears outside `src/Folio.Desktop/UI/Fluent/`. Enforced by `tests/Validation/Folio.ValidationTests/Architecture/FluentIsolationTests.cs`.
+4. No FluentAvalonia type or namespace appears outside `src/Folio.Desktop/UI/Fluent/`. Enforced by `tests/Architecture/Folio.ArchitectureTests/FluentIsolationTests.cs`.
 5. Charts read colours from the same token keys and redraw on theme change.
 
 _Revisit when_ Avalonia 12.2 ships. If FluentAvalonia supports it and offers a controls-only mode, use Fluent2 for the base theme and FluentAvalonia for its shell controls. If FluentAvalonia stays inactive and breaks, use Fluent2 plus our own shell controls, possibly forked from FluentAvalonia's MIT code. Either way the change stays inside `UI/Fluent/`.
