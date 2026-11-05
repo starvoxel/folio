@@ -1,7 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:Mefr.Desktop"
-             x:Class="Mefr.Desktop.App"
+             xmlns:local="using:MEFR.Desktop"
+             x:Class="MEFR.Desktop.App"
              RequestedThemeVariant="Default">
   <Application.DataTemplates>
     <local:ViewLocator />
@@ -9,6 +9,6 @@
 
   <Application.Styles>
     <!-- The theme is owned by Ui/Fluent (AD-15); screens only reference WinUI token keys. -->
-    <StyleInclude Source="avares://Mefr.Desktop/Ui/Fluent/AppStyles.axaml" />
+    <StyleInclude Source="avares://MEFR.Desktop/Ui/Fluent/AppStyles.axaml" />
   </Application.Styles>
 </Application>

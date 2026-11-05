@@ -9,10 +9,10 @@
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
 
-using Mefr.Desktop.ViewModels;
-using Mefr.Desktop.Views;
+using MEFR.Desktop.ViewModels;
+using MEFR.Desktop.Views;
 
-namespace Mefr.Desktop.Tests.Views;
+namespace MEFR.Desktop.Tests.Views;
 
 /// <summary>
 /// Smoke tests that the app, its theme and the main window load headlessly.

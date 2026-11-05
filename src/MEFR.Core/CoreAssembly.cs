@@ -6,15 +6,15 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace Mefr.Core;
+namespace MEFR.Core;
 
 /// <summary>
-/// Marker type that identifies the Mefr.Core assembly for reflection and architecture tests.
+/// Marker type that identifies the MEFR.Core assembly for reflection and architecture tests.
 /// </summary>
 public static class CoreAssembly
 {
     /// <summary>
     /// Gets the name of the Core assembly.
     /// </summary>
-    public static string Name => typeof(CoreAssembly).Assembly.GetName().Name ?? "Mefr.Core";
+    public static string Name => typeof(CoreAssembly).Assembly.GetName().Name ?? "MEFR.Core";
 }

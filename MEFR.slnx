@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MEFR.Core/MEFR.Core.csproj" />
+    <Project Path="src/MEFR.Desktop/MEFR.Desktop.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MEFR.Core.Tests/MEFR.Core.Tests.csproj" />
+    <Project Path="tests/MEFR.Desktop.Tests/MEFR.Desktop.Tests.csproj" />
+  </Folder>
+</Solution>

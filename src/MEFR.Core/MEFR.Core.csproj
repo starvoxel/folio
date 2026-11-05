@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!--
     All domain logic: model, classifier, commands, change sets, lock guard, undo, file format.
-    Must never reference Avalonia, FluentAvalonia or Mefr.Desktop (AD-14; enforced by
-    tests/Mefr.Core.Tests/Architecture/CoreDependencyTests.cs).
+    Must never reference Avalonia, FluentAvalonia or MEFR.Desktop (AD-14; enforced by
+    tests/MEFR.Core.Tests/Architecture/CoreDependencyTests.cs).
   -->
   <PropertyGroup>
-    <RootNamespace>Mefr.Core</RootNamespace>
+    <RootNamespace>MEFR.Core</RootNamespace>
     <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Mefr.Core.Tests" />
+    <InternalsVisibleTo Include="MEFR.Core.Tests" />
   </ItemGroup>
 </Project>

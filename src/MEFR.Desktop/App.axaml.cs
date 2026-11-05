@@ -10,10 +10,10 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-using Mefr.Desktop.ViewModels;
-using Mefr.Desktop.Views;
+using MEFR.Desktop.ViewModels;
+using MEFR.Desktop.Views;
 
-namespace Mefr.Desktop;
+namespace MEFR.Desktop;
 
 /// <summary>
 /// The Avalonia application: loads styles and creates the main window.

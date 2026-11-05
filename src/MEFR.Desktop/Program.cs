@@ -8,7 +8,7 @@
 
 using Avalonia;
 
-namespace Mefr.Desktop;
+namespace MEFR.Desktop;
 
 /// <summary>
 /// Application entry point.

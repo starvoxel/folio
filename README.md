@@ -17,18 +17,18 @@ C# desktop app on .NET 10 with Avalonia 12.1 and the FluentAvalonia design syste
 Needs the .NET 10 SDK (see [global.json](global.json)).
 
 ```
-dotnet build Mefr.slnx
-dotnet test Mefr.slnx
-dotnet run --project src/Mefr.Desktop
-dotnet format Mefr.slnx --verify-no-changes
+dotnet build MEFR.slnx
+dotnet test MEFR.slnx
+dotnet run --project src/MEFR.Desktop
+dotnet format MEFR.slnx --verify-no-changes
 ```
 
 | Project                    | Holds                                                                                     |
 | -------------------------- | ----------------------------------------------------------------------------------------- |
-| `src/Mefr.Core`            | All domain logic; never references the UI                                                 |
-| `src/Mefr.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `Ui/Fluent/` |
-| `tests/Mefr.Core.Tests`    | Domain and architecture tests                                                             |
-| `tests/Mefr.Desktop.Tests` | View-model and headless UI tests                                                          |
+| `src/MEFR.Core`            | All domain logic; never references the UI                                                 |
+| `src/MEFR.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `Ui/Fluent/` |
+| `tests/MEFR.Core.Tests`    | Domain and architecture tests                                                             |
+| `tests/MEFR.Desktop.Tests` | View-model and headless UI tests                                                          |
 
 ## Documentation
 

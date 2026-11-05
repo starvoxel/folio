@@ -8,7 +8,7 @@
 
 using Avalonia.Controls;
 
-namespace Mefr.Desktop.Views;
+namespace MEFR.Desktop.Views;
 
 /// <summary>
 /// The main application window.

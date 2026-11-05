@@ -4,38 +4,38 @@ title: 'Solution Strategy'
 lifecycle: draft
 tags: [strategy]
 key_files:
-  - Mefr.slnx
+  - MEFR.slnx
 ---
 
 > The handful of ideas the rest of the design follows from. Each links to its decision in [09_architecture_decisions.md](09_architecture_decisions.md).
 
 ## The core ideas
 
-1. *The file is a document, held in memory.* Open loads everything into an immutable in-memory model; edits change the model; Save writes the whole thing atomically to a zip of JSON/JSONL parts (AD-1, AD-2). This gives Save, Discard, autosave and undo their natural meaning, and keeps the format a replaceable adapter.
+1. _The file is a document, held in memory._ Open loads everything into an immutable in-memory model; edits change the model; Save writes the whole thing atomically to a zip of JSON/JSONL parts (AD-1, AD-2). This gives Save, Discard, autosave and undo their natural meaning, and keeps the format a replaceable adapter.
 
-2. *Every change is a command that produces a month-tagged change set.* One object per change carries before/after values tagged with the month (or "global") each part belongs to. Everything else hangs off it: the single lock guard refuses change sets that touch a locked month (AD-4); undo replays them backwards and, when a month closes, drops only that month's parts (AD-5); dirty tracking, lookup indexes and the audit log read them too (AD-10).
+2. _Every change is a command that produces a month-tagged change set._ One object per change carries before/after values tagged with the month (or "global") each part belongs to. Everything else hangs off it: the single lock guard refuses change sets that touch a locked month (AD-4); undo replays them backwards and, when a month closes, drops only that month's parts (AD-5); dirty tracking, lookup indexes and the audit log read them too (AD-10).
 
-3. *One classification entry point decides how every line counts, and its output is frozen at close.* Each transaction line is classified as income, spending, savings, neutral transfer or excluded by asking the owning areas in a fixed order (AD-3, AD-6). Open months are classified live; closing a month stores the results, so locked months are reported from stored data and cannot drift, even when the app's own code changes.
+3. _One classification entry point decides how every line counts, and its output is frozen at close._ Each transaction line is classified as income, spending, savings, neutral transfer or excluded by asking the owning areas in a fixed order (AD-3, AD-6). Open months are classified live; closing a month stores the results, so locked months are reported from stored data and cannot drift, even when the app's own code changes.
 
-4. *The domain knows nothing about the UI.* `Mefr.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `Mefr.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
+4. _The domain knows nothing about the UI._ `MEFR.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `MEFR.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
 
-5. *The UI stack is quarantined.* FluentAvalonia is used only under `Ui/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
+5. _The UI stack is quarantined._ FluentAvalonia is used only under `Ui/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
 
-6. *The running app is drivable by machine.* An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `mefr` CLI and a headless mode for CI and agents (AD-16).
+6. _The running app is drivable by machine._ An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `mefr` CLI and a headless mode for CI and agents (AD-16).
 
 ## Solution structure
 
 ```
-Mefr.slnx
+MEFR.slnx
 ├── src/
-│   ├── Mefr.Core            domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
-│   ├── Mefr.Desktop         Avalonia + FluentAvalonia views and view-models; thin platform adapters
+│   ├── MEFR.Core            domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
+│   ├── MEFR.Desktop         Avalonia + FluentAvalonia views and view-models; thin platform adapters
 │   │   └── Ui/Fluent/       the only place FluentAvalonia types appear
-│   ├── Mefr.Automation      (planned) loopback HTTP server exposing commands, queries and UI actions
-│   └── Mefr.Cli             (planned) `mefr` command-line client
+│   ├── MEFR.Automation      (planned) loopback HTTP server exposing commands, queries and UI actions
+│   └── MEFR.Cli             (planned) `mefr` command-line client
 └── tests/
-    ├── Mefr.Core.Tests      the bulk: domain, CSV fixtures, file round-trips, size budget
-    └── Mefr.Desktop.Tests   view-model tests and headless Avalonia binding tests
+    ├── MEFR.Core.Tests      the bulk: domain, CSV fixtures, file round-trips, size budget
+    └── MEFR.Desktop.Tests   view-model tests and headless Avalonia binding tests
 ```
 
 ## Technology choices at a glance

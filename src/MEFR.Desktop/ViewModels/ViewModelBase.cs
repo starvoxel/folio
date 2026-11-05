@@ -8,7 +8,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Mefr.Desktop.ViewModels;
+namespace MEFR.Desktop.ViewModels;
 
 /// <summary>
 /// Base class for every view-model (CommunityToolkit.Mvvm, AD-14).
