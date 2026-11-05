@@ -151,13 +151,24 @@ _Alternatives kept in reserve_ (all MIT, Avalonia 12): ScottPlot.Avalonia 5.1, O
 
 ## AD-14. Solution layout and MVVM toolkit
 
-_Decision._ Projects follow the `csharp_avalonia` standard: `Folio.Core` (all domain logic, never references the UI), `Folio.Desktop` (views, view-models and thin adapters), `Folio.Core.Tests` and `Folio.Desktop.Tests`. Layers inside Core are namespaces (`Folio.Core.Domain`, `Folio.Core.Commands`, `Folio.Core.Persistence`, …), not extra projects. Automation and CLI projects are added by AD-16.
+_Decision._ Projects follow the `csharp_avalonia` standard: `Folio.Core` (all domain logic, never references the UI), `Folio.Desktop` (views, view-models and thin adapters), and test projects grouped by kind (below). Layers inside Core are namespaces (`Folio.Core.Domain`, `Folio.Core.Commands`, `Folio.Core.Persistence`, …), not extra projects. Automation and CLI projects are added by AD-16.
+
+Tests are grouped by what they check, and each kind runs on its own with `dotnet test tests/<Kind>.slnx`; `Folio.slnx` runs everything:
+
+| Kind               | Checks                                                                                                                         | Today                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| Unit               | Pure functions and domain logic, with no UI, file system or network                                                            | `tests/Unit/Folio.Core.UnitTests`                  |
+| Integration        | The app itself and how it meets UI and I/O: the real app on Avalonia's headless platform, bindings, file and platform adapters | `tests/Integration/Folio.Desktop.IntegrationTests` |
+| Validation         | Structural constraints of the codebase: assembly references, where FluentAvalonia may appear, the test layout itself           | `tests/Validation/Folio.ValidationTests`           |
+| End-to-end (later) | Larger scenarios chained through the running app via the automation CLI (AD-16)                                                | Not yet created                                    |
+
+A test project lives under `tests/<Kind>/`, its name ends in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`. `TestLayoutTests` in the validation project enforces this. View-model tests that need no UI are unit tests in a future `Folio.Desktop.UnitTests`.
 
 View-models use CommunityToolkit.Mvvm. DynamicData (with System.Reactive) is added only where views filter live: transaction search and filters, the account detail list and the rule-impact preview.
 
 _Why CommunityToolkit over ReactiveUI._ It is Avalonia's template default and the docs call it the recommended framework. The project's hard logic is in Core, so view-models are thin and simple to test. Its API is small and stable, which suits agent-written code. ReactiveUI shipped three breaking major versions in 2026 (v24 to v26). ReactiveUI would win if most screens became stream-heavy; even then, wait for its API to settle.
 
-_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. Enforced by `tests/Folio.Core.Tests/Architecture/CoreDependencyTests.cs`.
+_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. The Core boundary is enforced by `tests/Validation/Folio.ValidationTests/Architecture/CoreDependencyTests.cs`.
 
 ## AD-15. FluentAvalonia is isolated behind app wrappers
 
@@ -168,7 +179,7 @@ _Decision._ Build on FluentAvalonia 3.1 with Avalonia 12.1.5, and contain it:
 1. Screens reference only WinUI token keys (`TextFillColor*`, `*FillColor*`, `*StrokeColor*`, `ControlCornerRadius`, `OverlayCornerRadius`) through `DynamicResource`, never FluentAvalonia-specific or `SystemControl*` keys.
 2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/Folio.Desktop/UI/Fluent/AppStyles.axaml`.
 3. FluentAvalonia controls are used only through wrappers: `AppShell` (NavigationView, with our own navigation-item model), `IDialogService` (ContentDialog, with multi-step logic in view-models), `AppBanner` (InfoBar) and `AppIcon` (symbol name → font glyph now, a path later).
-4. No FluentAvalonia type or namespace appears outside `src/Folio.Desktop/UI/Fluent/`. Enforced by `tests/Folio.Desktop.Tests/Architecture/FluentIsolationTests.cs`.
+4. No FluentAvalonia type or namespace appears outside `src/Folio.Desktop/UI/Fluent/`. Enforced by `tests/Validation/Folio.ValidationTests/Architecture/FluentIsolationTests.cs`.
 5. Charts read colours from the same token keys and redraw on theme change.
 
 _Revisit when_ Avalonia 12.2 ships. If FluentAvalonia supports it and offers a controls-only mode, use Fluent2 for the base theme and FluentAvalonia for its shell controls. If FluentAvalonia stays inactive and breaks, use Fluent2 plus our own shell controls, possibly forked from FluentAvalonia's MIT code. Either way the change stays inside `UI/Fluent/`.
