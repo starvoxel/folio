@@ -9,7 +9,7 @@
   <Folder Name="/tests/integration/">
     <Project Path="tests/Integration/Folio.Desktop.IntegrationTests/Folio.Desktop.IntegrationTests.csproj" />
   </Folder>
-  <Folder Name="/tests/validation/">
-    <Project Path="tests/Validation/Folio.ValidationTests/Folio.ValidationTests.csproj" />
+  <Folder Name="/tests/architecture/">
+    <Project Path="tests/Architecture/Folio.ArchitectureTests/Folio.ArchitectureTests.csproj" />
   </Folder>
 </Solution>

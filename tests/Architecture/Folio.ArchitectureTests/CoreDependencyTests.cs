@@ -8,7 +8,7 @@
 
 using System.Reflection;
 
-namespace Folio.ValidationTests.Architecture;
+namespace Folio.ArchitectureTests;
 
 /// <summary>
 /// Guards AD-14: Folio.Core holds the domain and never depends on the UI.

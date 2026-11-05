@@ -48,20 +48,20 @@ Naming acronyms follows Microsoft's .NET guideline: two-letter acronyms are all 
 
 Test methods are named `{Subject}_{Condition}_{ExpectedResult}`, which refines the `{MethodName}_{Scenario}_{ExpectedResult}` rule in `csharp_base`:
 
-- _Subject_: the member under test (`Parse`, `Show`, `TryFindResource`); for validation tests, the artefact being checked (`ReferencedAssemblies`, `SourceFiles`, `TestProjects`).
+- _Subject_: the member under test (`Parse`, `Show`, `TryFindResource`); for architecture tests, the artefact being checked (`ReferencedAssemblies`, `SourceFiles`, `TestProjects`).
 - _Condition_: the input, state or scope as a noun phrase (`EmptyInput`, `ViewModelAsDataContext`, `CoreAssembly`); `DefaultState` when there is none.
 - _ExpectedResult_: a present-tense verb phrase (`ReturnsEmptyResult`, `ThrowsArgumentException`, `ExcludeUIFrameworks`).
 
-Test classes are named `{ClassUnderTest}Tests`, or `{Rule}Tests` for validation tests. `TestNamingTests` fails on any test method that is not three PascalCase parts; review checks the wording.
+Test classes are named `{ClassUnderTest}Tests`, or `{Rule}Tests` for architecture tests. `TestNamingTests` fails on any test method that is not three PascalCase parts; review checks the wording.
 
 Known deviations, to be resolved upstream in ai-foundation rather than as per-plan exceptions where possible:
 
-| Standard says                                                     | This project                                                                                                               | Status                                                                                                          |
-| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Avalonia 11.x                                                     | Avalonia 12.1.x                                                                                                            | Proposed standards update                                                                                       |
-| `Avalonia.Themes.Fluent` as the base theme                        | `FluentAvaloniaTheme`                                                                                                      | Proposed: base standard stops naming a theme; a layered `csharp_avalonia_fluent` standard covers FluentAvalonia |
-| Test projects named `{Project}.Tests` / `{Project}.Desktop.Tests` | One project per kind of test under `tests/<Kind>/`, named `*.UnitTests`, `*.IntegrationTests`, `*.ValidationTests` (AD-14) | Proposed: the standards describe test kinds and separate runs                                                   |
-| `<Menu>` bar docked at the top on Windows                         | Hamburger menu in the window (PRD H1.14), plus a `NativeMenu` on macOS                                                     | Proposed: the rule defers to the product design and requires a macOS `NativeMenu`                               |
+| Standard says                                                     | This project                                                                                                                 | Status                                                                                                          |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Avalonia 11.x                                                     | Avalonia 12.1.x                                                                                                              | Proposed standards update                                                                                       |
+| `Avalonia.Themes.Fluent` as the base theme                        | `FluentAvaloniaTheme`                                                                                                        | Proposed: base standard stops naming a theme; a layered `csharp_avalonia_fluent` standard covers FluentAvalonia |
+| Test projects named `{Project}.Tests` / `{Project}.Desktop.Tests` | One project per kind of test under `tests/<Kind>/`, named `*.UnitTests`, `*.IntegrationTests`, `*.ArchitectureTests` (AD-14) | Proposed: the standards describe test kinds and separate runs                                                   |
+| `<Menu>` bar docked at the top on Windows                         | Hamburger menu in the window (PRD H1.14), plus a `NativeMenu` on macOS                                                       | Proposed: the rule defers to the product design and requires a macOS `NativeMenu`                               |
 
 ## Product rules that act as constraints
 

@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace Folio.ValidationTests;
+namespace Folio.ArchitectureTests;
 
 /// <summary>
 /// Locates the repository root from the test output directory.

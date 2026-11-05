@@ -1,0 +1,4 @@
+<!-- Architecture tests only. Run with: dotnet test tests/Architecture.slnx -->
+<Solution>
+  <Project Path="Architecture/Folio.ArchitectureTests/Folio.ArchitectureTests.csproj" />
+</Solution>
