@@ -33,9 +33,9 @@ key_files:
 
 _Context._ The PRD wants document behaviour: Save, Discard, an unsaved-changes indicator, autosave on an interval, and undo that survives saving (H1.6 to H1.7). Ten years of one household is roughly 30k transactions, a few MB.
 
-_Decision._ Opening a file loads everything into an immutable in-memory model. Edits change the model; saving serializes all of it. A CI test generates a synthetic heavy household (for example 10 years at 6,000 transactions a year with splits, rules, notes and audit entries), saves and reloads it, and checks file size and open time against two thresholds kept in one constants file: crossing the first warns, crossing the second fails the build. The same thresholds can drive an in-app warning later.
+_Decision._ Opening a file loads everything into an immutable in-memory model. Edits change the model; saving serializes all of it. File size and open time get a budget: two thresholds kept in one constants file, where crossing the first warns and crossing the second fails. They are measured against a synthetic heavy household (for example 10 years at 6,000 transactions a year with splits, rules, notes and audit entries). How and where that measurement runs belongs to the separate performance-testing initiative, which may not use the regular test setup. The same thresholds can drive an in-app warning later.
 
-_Consequences._ No database session to keep consistent with the UI; Discard is "drop the model". Memory and open time grow with history, which the size test watches.
+_Consequences._ No database session to keep consistent with the UI; Discard is "drop the model". Memory and open time grow with history, which the size and open-time budget watches.
 
 ## AD-2. The budget file is a zip of JSON and JSONL parts
 
@@ -155,14 +155,15 @@ _Decision._ Projects follow the `csharp_avalonia` standard: `Folio.Core` (all do
 
 Tests are grouped by what they check, and each kind runs on its own with `dotnet test tests/<Kind>.slnx`; `Folio.slnx` runs everything:
 
-| Kind               | Checks                                                                                                                         | Today                                              |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
-| Unit               | Pure functions and domain logic, with no UI, file system or network                                                            | `tests/Unit/Folio.Core.UnitTests`                  |
-| Integration        | The app itself and how it meets UI and I/O: the real app on Avalonia's headless platform, bindings, file and platform adapters | `tests/Integration/Folio.Desktop.IntegrationTests` |
-| Validation         | Structural constraints of the codebase: assembly references, where FluentAvalonia may appear, the test layout itself           | `tests/Validation/Folio.ValidationTests`           |
-| End-to-end (later) | Larger scenarios chained through the running app via the automation CLI (AD-16)                                                | Not yet created                                    |
+| Kind        | Checks                                                                                                                         | Today                                              |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| Unit        | Pure functions and domain logic, with no UI, file system or network                                                            | `tests/Unit/Folio.Core.UnitTests`                  |
+| Integration | The app itself and how it meets UI and I/O: the real app on Avalonia's headless platform, bindings, file and platform adapters | `tests/Integration/Folio.Desktop.IntegrationTests` |
+| Validation  | Structural constraints of the codebase: assembly references, where FluentAvalonia may appear, the test layout itself           | `tests/Validation/Folio.ValidationTests`           |
 
 A test project lives under `tests/<Kind>/`, its name ends in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`. `TestLayoutTests` in the validation project enforces this. View-model tests that need no UI are unit tests in a future `Folio.Desktop.UnitTests`.
+
+Performance and end-to-end stress testing are a separate initiative, not further kinds of this setup. Whether they use this test setup at all is part of that investigation.
 
 View-models use CommunityToolkit.Mvvm. DynamicData (with System.Reactive) is added only where views filter live: transaction search and filters, the account detail list and the rule-impact preview.
 
@@ -195,9 +196,9 @@ _Decision._
 - _Server._ When the app is started with `--automation`, a small HTTP server starts inside it, bound to `127.0.0.1` only, on a chosen or random port. Each session generates a random token, written to a file readable only by the current user; every request must carry it. Without the flag nothing listens. This keeps H1.12 intact.
 - _Surface._ Commands (the same command objects as the UI, through the same lock guard), read-only queries (months, transactions, totals, checklist state), and view-model actions (navigate, read the current view-model state as JSON, invoke a view-model command, take a screenshot of the window). Changes go through commands, never around them.
 - _CLI._ `Folio.Cli` builds a `folio` tool that finds a running app's port and token and calls the server, printing JSON for agents and readable text for people. Example verbs: `status`, `open`, `import`, `query`, `ui navigate`, `ui state`, `ui invoke`, `ui screenshot`.
-- _Headless._ `--headless --automation` runs the real app on Avalonia's headless platform with Skia rendering, so CI and agents can run end-to-end scenarios and take screenshots with no display.
+- _Headless._ `--headless --automation` runs the real app on Avalonia's headless platform with Skia rendering, so CI and agents can drive the app and take screenshots with no display.
 - _Projects._ The server lives in `Folio.Automation`, referenced by `Folio.Desktop`. It sits outside Core so the domain never depends on HTTP.
 
 _Open, settled in its plan:_ HTTP stack (ASP.NET Core Kestrel minimal APIs versus the built-in `HttpListener`; Kestrel is the default choice for robustness, at the cost of the ASP.NET Core shared framework in the app); whether release builds include the server (proposed: included, but inert without the flag); the exact API shape and versioning.
 
-_Consequences._ End-to-end tests and agent validation use the real app and the real command path. The server is a security surface, so it gets its own threat checks: loopback binding, token on every request, no static files, request size limits.
+_Consequences._ Agent validation, and end-to-end testing if that initiative chooses it, use the real app and the real command path. The server is a security surface, so it gets its own threat checks: loopback binding, token on every request, no static files, request size limits.
