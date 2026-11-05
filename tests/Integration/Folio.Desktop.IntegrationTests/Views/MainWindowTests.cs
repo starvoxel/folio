@@ -20,7 +20,7 @@ namespace Folio.Desktop.IntegrationTests.Views;
 public class MainWindowTests
 {
     [AvaloniaFact]
-    public void Show_WithViewModel_BindsTitle()
+    public void Show_ViewModelAsDataContext_BindsTitleText()
     {
         MainWindow window = new() { DataContext = new MainWindowViewModel() };
 
@@ -33,7 +33,7 @@ public class MainWindowTests
     }
 
     [AvaloniaFact]
-    public void Theme_Loaded_ProvidesWinUITokenBrush()
+    public void TryFindResource_WinUITokenKeyAfterShow_ReturnsBrush()
     {
         MainWindow window = new() { DataContext = new MainWindowViewModel() };
         window.Show();

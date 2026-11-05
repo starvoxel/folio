@@ -17,7 +17,7 @@ public class FluentIsolationTests
     private static readonly string[] FluentMarkers = ["FluentAvalonia", "using:FluentAvalonia"];
 
     [Fact]
-    public void DesktopSources_OutsideUiFluent_DoNotReferenceFluentAvalonia()
+    public void SourceFiles_OutsideUIFluentFolder_DoNotReferenceFluentAvalonia()
     {
         string desktopRoot = Path.Combine(RepositoryRoot.Find(), "src", "Folio.Desktop");
         string allowedRoot = Path.Combine(desktopRoot, "UI", "Fluent") + Path.DirectorySeparatorChar;
