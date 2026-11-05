@@ -36,27 +36,19 @@ dotnet format Folio.slnx --verify-no-changes
 
 ### Kinds of test
 
-A test's kind is decided by the most expensive resource it touches, not by how much code it covers:
+There are three kinds of test, decided by the most expensive resource a test touches. Each runs on its own:
 
-| Kind         | Rule                                                                                                                                                                                                                                               | Examples                                                                                                                          |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Unit         | Runs in one process and gives the same result every time. No real file system, network or Avalonia platform; time comes from a controllable clock (`TimeProvider`). Several real classes may work together, as long as everything stays in memory. | Domain rules, the classifier, a `.folio` round trip through a `MemoryStream`                                                      |
-| Integration  | Stays on one machine: a real temporary folder on disk, Avalonia's headless platform, loopback HTTP.                                                                                                                                                | Views and bindings, saving to disk, the automation server, the few view-models with logic of their own                            |
-| Architecture | Structural rules of the codebase itself (fitness functions).                                                                                                                                                                                       | Core never references the UI, FluentAvalonia only under `UI/Fluent/`, unit tests never reference Avalonia, test layout and naming |
+- **Unit**: in memory, one process; no real file system, network or Avalonia platform.
+- **Integration**: one machine; real temporary folders, Avalonia's headless platform, loopback HTTP.
+- **Architecture**: structural rules of the codebase itself.
 
-- Property-based, snapshot and sample-file tests are techniques, not kinds: they go wherever their resources put them, usually Unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
-- View-models stay thin. When one needs more than a trivial test, its logic belongs in Core and is unit tested there.
-- Each kind lives under `tests/<Kind>/`, its project names end in `<Kind>Tests`, and it is listed in `tests/<Kind>.slnx` and `Folio.slnx`. Architecture tests enforce this, and that unit-test projects never reference Avalonia; the rest of the unit rule is checked in review.
-- CI runs architecture tests first because they are the cheapest.
-- Tagging tests across kinds (for example slow or visual tests) may come later; it is not set up.
-- Performance and end-to-end stress testing are a separate initiative; how and where they run is still to be investigated.
-
-Test methods are named `{Subject}_{Condition}_{ExpectedResult}`, for example `Parse_EmptyInput_ReturnsEmptyResult`; the rules are in `TestNamingTests`, which also enforces the three-part shape.
+The full rules for test kinds, layout and naming are in [project-standards.md](project-standards.md). Performance and end-to-end stress testing are a separate initiative.
 
 ## Documentation
 
-| Where                                                                          | What                                                                |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area |
-| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                  |
-| `plans/`                                                                       | Approved implementation plans (none yet)                            |
+| Where                                                                          | What                                                                                                  |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                                   |
+| [project-standards.md](project-standards.md)                                   | Project rules that refine or override the ai-foundation coding standards (stack, UI, naming, testing) |
+| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                                                    |
+| `plans/`                                                                       | Approved implementation plans (none yet)                                                              |
