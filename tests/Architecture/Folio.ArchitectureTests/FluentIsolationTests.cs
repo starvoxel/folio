@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace Folio.ValidationTests.Architecture;
+namespace Folio.ArchitectureTests;
 
 /// <summary>
 /// Guards AD-15: FluentAvalonia is used only under src/Folio.Desktop/UI/Fluent/, so the theme and its

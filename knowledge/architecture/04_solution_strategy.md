@@ -34,19 +34,19 @@ Folio.slnx
 │   ├── Folio.Automation       (planned) loopback HTTP server exposing commands, queries and UI actions
 │   └── Folio.Cli              (planned) `folio` command-line client
 └── tests/                     one folder and one solution file per kind of test (AD-14)
-    ├── Unit/                  Folio.Core.UnitTests: pure logic, the bulk of the tests
-    ├── Integration/           Folio.Desktop.IntegrationTests: headless app, bindings, I/O adapters
-    └── Validation/            Folio.ValidationTests: structural rules of the codebase
+    ├── Unit/                  Folio.Core.UnitTests: in-memory, one process; the bulk of the tests
+    ├── Integration/           Folio.Desktop.IntegrationTests: real disk, headless app, loopback
+    └── Architecture/          Folio.ArchitectureTests: structural rules of the codebase
 ```
 
 ## Technology choices at a glance
 
-| Concern                  | Choice                                                                                                                                        | Decision     |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| File format              | Zip of JSON and JSONL parts with a manifest and checksums, System.Text.Json source generation                                                 | AD-2         |
-| Money                    | `Money` value type over `long` cents with checked arithmetic                                                                                  | AD-7         |
-| MVVM                     | CommunityToolkit.Mvvm; DynamicData only for live-filtered collections                                                                         | AD-14        |
-| Theme and shell controls | FluentAvalonia 3.1, isolated behind app wrappers                                                                                              | AD-15        |
-| Tables                   | DataGrid where sorting or editing is needed; TableView for small read-only tables                                                             | AD-15, risks |
-| Charts                   | Custom-drawn controls behind chart view-models                                                                                                | AD-13        |
-| Testing                  | xUnit v3 in three separately runnable kinds (unit, integration, validation); Avalonia.Headless.XUnit; the automation CLI for end-to-end later | AD-14, AD-16 |
+| Concern                  | Choice                                                                                                                                          | Decision     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| File format              | Zip of JSON and JSONL parts with a manifest and checksums, System.Text.Json source generation                                                   | AD-2         |
+| Money                    | `Money` value type over `long` cents with checked arithmetic                                                                                    | AD-7         |
+| MVVM                     | CommunityToolkit.Mvvm; DynamicData only for live-filtered collections                                                                           | AD-14        |
+| Theme and shell controls | FluentAvalonia 3.1, isolated behind app wrappers                                                                                                | AD-15        |
+| Tables                   | DataGrid where sorting or editing is needed; TableView for small read-only tables                                                               | AD-15, risks |
+| Charts                   | Custom-drawn controls behind chart view-models                                                                                                  | AD-13        |
+| Testing                  | xUnit v3 in three separately runnable kinds (unit, integration, architecture); Avalonia.Headless.XUnit; the automation CLI for end-to-end later | AD-14, AD-16 |

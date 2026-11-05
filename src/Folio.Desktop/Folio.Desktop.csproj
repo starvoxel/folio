@@ -2,7 +2,7 @@
   <!--
     Avalonia + FluentAvalonia views and view-models, plus thin platform adapters.
     FluentAvalonia types may only be used under UI/Fluent/ (AD-15; enforced by
-    tests/Validation/Folio.ValidationTests/Architecture/FluentIsolationTests.cs).
+    tests/Architecture/Folio.ArchitectureTests/FluentIsolationTests.cs).
   -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
