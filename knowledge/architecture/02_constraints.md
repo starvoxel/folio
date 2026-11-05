@@ -28,7 +28,7 @@ key_files:
 
 ## Pinned stack
 
-Versions are exact and live in `Directory.Packages.props` (Central Package Management with transitive pinning). FluentAvalonia declares Avalonia ranges with no upper bound, so these pins are what keep the two compatible.
+Versions are exact and live in `Directory.Packages.props` (Central Package Management with transitive pinning). FluentAvalonia declares Avalonia ranges with no upper bound, so only these exact pins keep the two compatible.
 
 | Package                                                                                             | Version                                                              |
 | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
@@ -45,7 +45,7 @@ Do not move to Avalonia 12.2 until FluentAvalonia supports it and the Fluent2 th
 
 The project follows the ai-foundation standards `csharp_base` and `csharp_avalonia` (`.aiconfig.json`). The build enforces what it can: nullable reference types, warnings as errors, explicit types instead of `var`, file-scoped namespaces, no primary constructors, explicit access modifiers, naming rules and XML docs on public members (`.editorconfig`, `Directory.Build.props`).
 
-Folio's implementation conventions on top of those standards (currently the test kinds, layout and naming) are in [project-standards.md](../../project-standards.md), which ai-foundation loads last. The stack, architecture rules and product rules stay with their owners (this section, the decisions in section 09 and the PRD); generic naming rules belong in the ai-foundation standards themselves.
+Folio's implementation conventions on top of those standards are in [project-standards.md](../../project-standards.md), which ai-foundation loads last. Today that file covers the test kinds, layout and naming. The stack, architecture rules and product rules stay with their owners: this section, the decisions in section 09, and the PRD. Generic naming rules belong in the ai-foundation standards themselves.
 
 Deviations from the shared ai-foundation standards, and how each is handled until the standards change:
 
