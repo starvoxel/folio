@@ -1,4 +1,0 @@
-<!-- Validation tests only. Run with: dotnet test tests/Validation.slnx -->
-<Solution>
-  <Project Path="Validation/Folio.ValidationTests/Folio.ValidationTests.csproj" />
-</Solution>

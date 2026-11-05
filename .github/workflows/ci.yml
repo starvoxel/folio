@@ -38,16 +38,17 @@ jobs:
       - name: Build (warnings are errors)
         run: dotnet build Folio.slnx --configuration Release --no-restore
 
+      - name: Architecture tests
+        run: dotnet test tests/Architecture.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Architecture
+
       - name: Unit tests
+        if: success() || failure()
         run: dotnet test tests/Unit.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Unit
 
       - name: Integration tests
         if: success() || failure()
         run: dotnet test tests/Integration.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Integration
 
-      - name: Validation tests
-        if: success() || failure()
-        run: dotnet test tests/Validation.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Validation
 
       - name: Upload test results
         if: always()

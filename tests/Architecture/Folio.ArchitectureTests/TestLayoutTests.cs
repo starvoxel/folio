@@ -8,7 +8,7 @@
 
 using System.Xml.Linq;
 
-namespace Folio.ValidationTests.Architecture;
+namespace Folio.ArchitectureTests;
 
 /// <summary>
 /// Guards the test layout: every test project sits under tests/{Kind}/, is named *.{Kind}Tests, and is
@@ -16,7 +16,7 @@ namespace Folio.ValidationTests.Architecture;
 /// </summary>
 public class TestLayoutTests
 {
-    private static readonly string[] Kinds = ["Unit", "Integration", "Validation"];
+    private static readonly string[] Kinds = ["Unit", "Integration", "Architecture"];
 
     [Fact]
     public void TestProjects_UnderTestsFolder_FollowKindLayout()
@@ -39,7 +39,7 @@ public class TestLayoutTests
 
             if (!Kinds.Contains(kind))
             {
-                problems.Add($"{relative}: not under tests/Unit, tests/Integration or tests/Validation");
+                problems.Add($"{relative}: not under tests/Unit, tests/Integration or tests/Architecture");
                 continue;
             }
 

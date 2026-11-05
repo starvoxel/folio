@@ -8,20 +8,20 @@
 
 using System.Text.RegularExpressions;
 
-namespace Folio.ValidationTests.Architecture;
+namespace Folio.ArchitectureTests;
 
 /// <summary>
 /// Guards the test naming convention. A test method is named <c>{Subject}_{Condition}_{ExpectedResult}</c>:
 /// three PascalCase parts joined by underscores.
 /// <list type="bullet">
-/// <item><description>Subject: the member under test (<c>Parse</c>, <c>Show</c>), or for validation tests the artefact
+/// <item><description>Subject: the member under test (<c>Parse</c>, <c>Show</c>), or for architecture tests the artefact
 /// being checked (<c>ReferencedAssemblies</c>, <c>SourceFiles</c>).</description></item>
 /// <item><description>Condition: the input, state or scope, as a noun phrase (<c>EmptyInput</c>,
 /// <c>ViewModelAsDataContext</c>, <c>CoreAssembly</c>); <c>DefaultState</c> when there is none.</description></item>
 /// <item><description>ExpectedResult: what happens, as a present-tense verb phrase (<c>ReturnsEmptyResult</c>,
 /// <c>ThrowsArgumentException</c>, <c>ExcludeUIFrameworks</c>).</description></item>
 /// </list>
-/// Test classes are named <c>{ClassUnderTest}Tests</c>, or <c>{Rule}Tests</c> for validation tests. This test checks
+/// Test classes are named <c>{ClassUnderTest}Tests</c>, or <c>{Rule}Tests</c> for architecture tests. This test checks
 /// the three-part shape; review checks the wording.
 /// </summary>
 public partial class TestNamingTests

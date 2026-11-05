@@ -2,7 +2,7 @@
   <!--
     All domain logic: model, classifier, commands, change sets, lock guard, undo, file format.
     Must never reference Avalonia, FluentAvalonia or Folio.Desktop (AD-14; enforced by
-    tests/Validation/Folio.ValidationTests/Architecture/CoreDependencyTests.cs).
+    tests/Architecture/Folio.ArchitectureTests/CoreDependencyTests.cs).
   -->
   <PropertyGroup>
     <RootNamespace>Folio.Core</RootNamespace>
