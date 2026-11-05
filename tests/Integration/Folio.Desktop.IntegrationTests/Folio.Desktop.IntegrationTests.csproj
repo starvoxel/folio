@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Integration tests: the real app on Avalonia's headless platform, bindings, views, and I/O adapters.
+    Run with: dotnet test tests/Integration.slnx
+  -->
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Folio.Desktop.Tests</RootNamespace>
+    <RootNamespace>Folio.Desktop.IntegrationTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Folio.Desktop\Folio.Desktop.csproj" />
+    <ProjectReference Include="..\..\..\src\Folio.Desktop\Folio.Desktop.csproj" />
   </ItemGroup>
 </Project>

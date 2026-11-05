@@ -12,7 +12,7 @@ using Avalonia.Headless.XUnit;
 using Folio.Desktop.ViewModels;
 using Folio.Desktop.Views;
 
-namespace Folio.Desktop.Tests.Views;
+namespace Folio.Desktop.IntegrationTests.Views;
 
 /// <summary>
 /// Smoke tests that the app, its theme and the main window load headlessly.

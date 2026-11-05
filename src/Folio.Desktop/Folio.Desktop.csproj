@@ -2,7 +2,7 @@
   <!--
     Avalonia + FluentAvalonia views and view-models, plus thin platform adapters.
     FluentAvalonia types may only be used under UI/Fluent/ (AD-15; enforced by
-    tests/Folio.Desktop.Tests/Architecture/FluentIsolationTests.cs).
+    tests/Validation/Folio.ValidationTests/Architecture/FluentIsolationTests.cs).
   -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -28,6 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Folio.Desktop.Tests" />
+    <InternalsVisibleTo Include="Folio.Desktop.IntegrationTests" />
   </ItemGroup>
 </Project>
