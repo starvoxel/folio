@@ -13,7 +13,7 @@ key_files: []
 ```
                         ┌──────────────────────────────┐
   Household member ────▶│                              │──▶ Budget file (.budget, zip of JSON/JSONL)
-  (desktop UI)          │   Month-End Finance Reviewer │◀── (local disk or a synced folder)
+  (desktop UI)          │           Closeout           │◀── (local disk or a synced folder)
                         │                              │
   Bank CSV exports ────▶│                              │──▶ Backups (local app-data folder)
   (read only)           │                              │

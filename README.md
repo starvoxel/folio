@@ -1,7 +1,5 @@
 # Closeout
 
-Codename for the Month-End Finance Reviewer.
-
 A desktop app a household opens once a month to import every account's transactions from CSV, check them, and see where the money went, how it compares to normal, and how net worth is moving. Closing a month locks its numbers so they stop moving.
 
 Financial data stays in a budget file on your own computers. There are no bank logins and nothing leaves the file unless you opt in.

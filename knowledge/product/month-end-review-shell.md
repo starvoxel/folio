@@ -1,6 +1,6 @@
 # PRD area H: App shell and settings
 
-Part of [Month-End Spending Review](month-end-review.md). The app works like a document editor: open a budget file, work in it, and it saves itself.
+Part of [Closeout](month-end-review.md). The app works like a document editor: open a budget file, work in it, and it saves itself.
 
 | ID    | Requirement                                                                                                                                                                                                                                               | Priority |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

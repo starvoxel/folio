@@ -16,5 +16,5 @@ public sealed class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// Gets the window title.
     /// </summary>
-    public string Title { get; } = "Month-End Review";
+    public string Title { get; } = "Closeout";
 }

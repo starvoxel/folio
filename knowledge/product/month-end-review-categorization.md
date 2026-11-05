@@ -1,6 +1,6 @@
 # PRD area C: Categorization
 
-Part of [Month-End Spending Review](month-end-review.md). Rules categorize on arrival; every manual fix can become a rule so fixes shrink over time.
+Part of [Closeout](month-end-review.md). Rules categorize on arrival; every manual fix can become a rule so fixes shrink over time.
 
 | ID    | Requirement                                                                                                                                                                                                                                     | Priority |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

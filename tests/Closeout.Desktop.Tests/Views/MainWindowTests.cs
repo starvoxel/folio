@@ -28,8 +28,8 @@ public class MainWindowTests
 
         TextBlock? title = window.FindControl<TextBlock>("TitleText");
         Assert.NotNull(title);
-        Assert.Equal("Month-End Review", title.Text);
-        Assert.Equal("Month-End Review", window.Title);
+        Assert.Equal("Closeout", title.Text);
+        Assert.Equal("Closeout", window.Title);
     }
 
     [AvaloniaFact]

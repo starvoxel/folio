@@ -1,6 +1,6 @@
 # PRD area T: Transfers, savings and excluded accounts
 
-Part of [Month-End Spending Review](month-end-review.md). Money moving between our own accounts is never spending; where it goes decides whether it counts as savings or drops out.
+Part of [Closeout](month-end-review.md). Money moving between our own accounts is never spending; where it goes decides whether it counts as savings or drops out.
 
 | ID    | Requirement                                                                                                                                                                                                                       | Priority |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

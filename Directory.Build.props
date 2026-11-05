@@ -10,7 +10,7 @@
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Company>Starvoxel</Company>
-    <Product>Month-End Finance Reviewer</Product>
+    <Product>Closeout</Product>
     <Copyright>Copyright (c) Starvoxel. All rights reserved.</Copyright>
   </PropertyGroup>
 

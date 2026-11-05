@@ -1,6 +1,6 @@
 # PRD area I: Importing
 
-Part of [Month-End Spending Review](month-end-review.md). Each CSV belongs to one account; nothing is added until the user confirms a preview.
+Part of [Closeout](month-end-review.md). Each CSV belongs to one account; nothing is added until the user confirms a preview.
 
 | ID    | Requirement                                                                                                                                                                                                                                                 | Priority |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |

@@ -1,4 +1,4 @@
-# Design notes: Month-End Spending Review
+# Design notes: Closeout
 
 Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/Month-End_Financial_Review-v1.html) (v1, updated from the PRD; earlier draft of 2026-11-03 replaced). It is a reference for look and behavior, not code to port: the implementation is Avalonia with FluentAvalonia controls and its theme resources, so use the theme's resource keys instead of copying hex values or CSS. Requirements stay in [month-end-review.md](month-end-review.md); where this prototype differs from them, see [Differences from the PRD](#differences-from-the-prd).
 
@@ -34,7 +34,7 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 
 ## Shell
 
-- Left `NavigationView` headed "Month-End Review", filling the window height.
+- Left `NavigationView` headed "Closeout", filling the window height. The prototype predates the product name and still shows "Month-End Review" and "Month-End Spending Review"; the app uses "Closeout".
 - Items in order: Overview, Transactions, Reporting, Net worth, Accounts, Rules & categories (Review is not a nav item, per H1.4). Settings is the footer item.
 - Top bar: file name and "Saved automatically" with a "sample data" tag, Undo, Redo, Import CSV, and the month picker (ComboBox of months).
 - Content max width about 1240, 20px vertical rhythm between sections, cards in auto-fit grids (210 and 440 minimum column widths).
