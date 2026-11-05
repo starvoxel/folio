@@ -6,7 +6,7 @@ Financial data stays in a budget file on your own computers. There are no bank l
 
 ## Status
 
-The architecture is decided and the solution is scaffolded. There are no features yet.
+The architecture is decided and the solution is scaffolded. There are no features yet. The next step is the stack spike in [plans/](plans/).
 
 ## Stack
 
@@ -51,4 +51,4 @@ The full rules for test kinds, layout and naming are in [project-standards.md](p
 | [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                                                           |
 | [project-standards.md](project-standards.md)                                   | Folio's implementation conventions on top of the ai-foundation standards (currently: testing)                                 |
 | [knowledge/architecture/](knowledge/architecture/)                             | arc42 architecture docs; decisions are in [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md) |
-| `plans/`                                                                       | Approved implementation plans (none yet)                                                                                      |
+| [plans/](plans/)                                                               | Implementation plans                                                                                                          |
