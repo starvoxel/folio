@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  build-and-test:
-    name: Build and test (${{ matrix.os }})
+  testing:
+    name: Testing (${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
