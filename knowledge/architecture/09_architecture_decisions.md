@@ -205,12 +205,16 @@ _Context._ Agents and automated tests need to drive the running app and check re
 
 _Decision._
 
-- _Server._ When the app is started with `--automation`, a small HTTP server starts inside it, bound to `127.0.0.1` only, on a chosen or random port. Each session generates a random token, written to a file readable only by the current user; every request must carry it. Without the flag nothing listens. This keeps H1.12 intact.
+- _Server._ When the app is started with `--automation`, a small HTTP server starts inside it, bound to `127.0.0.1` only, on a chosen or random port. Each session generates a random token, written to a file readable only by the current user; every request must carry it. Without the flag nothing listens. This keeps H1.12 intact. In release builds the flag alone is not enough; see below.
 - _Surface._ Commands (the same command objects as the UI, through the same lock guard), read-only queries (months, transactions, totals, checklist state), and view-model actions (navigate, read the current view-model state as JSON, invoke a view-model command, take a screenshot of the window). Changes go through commands, never around them.
 - _CLI._ `Folio.Cli` builds a `folio` tool that finds a running app's port and token and calls the server, printing JSON for agents and readable text for people. Example verbs: `status`, `open`, `import`, `query`, `ui navigate`, `ui state`, `ui invoke`, `ui screenshot`.
 - _Headless._ `--headless --automation` runs the real app on Avalonia's headless platform with Skia rendering, so CI and agents can drive the app and take screenshots with no display.
 - _Projects._ The server lives in `Folio.Automation`, referenced by `Folio.Desktop`. It sits outside Core so the domain never depends on HTTP.
 
-_Open, settled in its plan:_ HTTP stack (ASP.NET Core Kestrel minimal APIs versus the built-in `HttpListener`; Kestrel is the default choice for robustness, at the cost of the ASP.NET Core shared framework in the app); whether release builds include the server (proposed: included, but inert without the flag); the exact API shape and versioning.
+_HTTP stack._ The built-in `HttpListener`, which adds no dependency. A probe on 2026-11-05 showed it serving a headless Avalonia 12.1.5 app over loopback. Kestrel minimal APIs replace it behind the same handlers only if a non-admin Windows user cannot listen on loopback without a URL reservation.
 
-_Consequences._ Agent validation, and end-to-end testing if that initiative chooses it, use the real app and the real command path. The server is a security surface, so it gets its own threat checks: loopback binding, token on every request, no static files, request size limits.
+_Release builds._ They include the server for long-term debugging, but enabling it must take a deliberate, secure step beyond the flag, so an attacker cannot easily turn it on. Debug and test builds need only the flag. The proposed mechanism is a signed, time-limited unlock file: the app ships a public key, and the server starts only with `--automation` and an unlock signed by the developer key that has not expired (at most seven days) and may be tied to one machine. While it runs, the app shows a banner and writes an audit-log entry. The alternative is an in-app setting with confirmation, banner and expiry, which needs no key management but is easier to switch on. The spike plan decides between them.
+
+_Open, settled in the spike plan:_ the release unlock mechanism; the exact API shape and versioning.
+
+_Consequences._ Agent validation, and end-to-end testing if that initiative chooses it, use the real app and the real command path. The server is a security surface, so it gets its own threat checks: loopback binding, a token on every request, a `Host` header that must match the loopback address and port, rejection of browser requests (any `Origin` header) and no CORS headers, no static files, and request size limits.
