@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Validation tests: structural constraints of the codebase itself (assembly references, where
+    FluentAvalonia may appear, test layout). They read assemblies and source files, not app behaviour.
+    Run with: dotnet test tests/Validation.slnx
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Folio.ValidationTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Folio.Core\Folio.Core.csproj" />
+  </ItemGroup>
+</Project>

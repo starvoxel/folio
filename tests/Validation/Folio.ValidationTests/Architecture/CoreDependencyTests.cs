@@ -8,7 +8,7 @@
 
 using System.Reflection;
 
-namespace Folio.Core.Tests.Architecture;
+namespace Folio.ValidationTests.Architecture;
 
 /// <summary>
 /// Guards AD-14: Folio.Core holds the domain and never depends on the UI.
@@ -20,7 +20,7 @@ public class CoreDependencyTests
     [Fact]
     public void CoreAssembly_ReferencedAssemblies_ExcludeUiFrameworks()
     {
-        Assembly core = typeof(CoreAssembly).Assembly;
+        Assembly core = typeof(Folio.Core.CoreAssembly).Assembly;
 
         List<string> offending = core.GetReferencedAssemblies()
             .Select(reference => reference.Name ?? string.Empty)
@@ -28,11 +28,5 @@ public class CoreDependencyTests
             .ToList();
 
         Assert.Empty(offending);
-    }
-
-    [Fact]
-    public void Name_CoreAssembly_ReturnsFolioCore()
-    {
-        Assert.Equal("Folio.Core", CoreAssembly.Name);
     }
 }
