@@ -31,7 +31,7 @@ One household, several members sharing one budget file. All members have equal a
 | Data sources   | CSV only                                                                                                                                                                                                                                  |
 | Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up                                                                                      |
 | Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                                                                                                     |
-| Currency       | CAD only                                                                                                                                                                                                                                  |
+| Currency       | One currency, in dollars; all accounts are assumed to use the same currency                                                                                                                                                               |
 | Concurrency    | Two simultaneous editors not handled                                                                                                                                                                                                      |
 
 ## Success measures
@@ -77,7 +77,7 @@ Months are calendar months; statements are not. Each transaction is filed under 
 | Opt-in online merchant lookup                  | Research first, then decide |
 | Two people editing at once                     | Not handled in v1           |
 | Direct bank connections                        | Out of scope                |
-| Currencies other than CAD                      | Out of scope                |
+| More than one currency                         | Out of scope                |
 | Phone or web apps                              | Out of scope for now        |
 
 ## Assumptions and open questions
@@ -91,6 +91,6 @@ Resolved: the budget file format is a zip of JSON and JSONL parts (decided 2026-
 Assumptions made while detailing the areas (each is a stated default, change freely):
 
 1. Each area's detailing was done from the write-up alone; requirements the write-up did not specify are labelled in that area's doc under "Assumptions".
-2. Amounts are stored and compared in exact CAD cents; no floating point.
+2. All accounts use the same currency. Amounts are stored and compared in exact cents of that currency; no floating point.
 3. A "month" is the calendar month of the transaction's posted date.
 4. Autosave never changes a locked month; the only path to change one is reopen.
