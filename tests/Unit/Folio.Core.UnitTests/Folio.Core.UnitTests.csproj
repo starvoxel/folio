@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!-- Unit tests: pure logic in Folio.Core, no UI, no file system, no network. Run with: dotnet test tests/Unit.slnx -->
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Folio.Core.Tests</RootNamespace>
+    <RootNamespace>Folio.Core.UnitTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Folio.Core\Folio.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\Folio.Core\Folio.Core.csproj" />
   </ItemGroup>
 </Project>

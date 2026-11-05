@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <!-- Test projects: xUnit test classes are public by convention and do not need XML docs. -->
-  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>false</IsPackable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
