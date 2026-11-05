@@ -1,6 +1,6 @@
 {
-  "project_name": "Month-End Finance Reviewer",
-  "project_shortname": "MEFR",
+  "project_name": "Folio",
+  "project_shortname": "FOL",
   "standards": {
     "engineering": [
       "csharp", "avalonia"

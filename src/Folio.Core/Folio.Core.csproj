@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    All domain logic: model, classifier, commands, change sets, lock guard, undo, file format.
+    Must never reference Avalonia, FluentAvalonia or Folio.Desktop (AD-14; enforced by
+    tests/Folio.Core.Tests/Architecture/CoreDependencyTests.cs).
+  -->
+  <PropertyGroup>
+    <RootNamespace>Folio.Core</RootNamespace>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Folio.Core.Tests" />
+  </ItemGroup>
+</Project>

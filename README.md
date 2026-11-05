@@ -1,4 +1,4 @@
-# Month-End Finance Reviewer
+# Folio
 
 A desktop app a household opens once a month to import every account's transactions from CSV, check them, and see where the money went, how it compares to normal, and how net worth is moving. Closing a month locks its numbers so they stop moving.
 
@@ -6,16 +6,34 @@ Financial data stays in a budget file on your own computers. There are no bank l
 
 ## Status
 
-Pre-implementation. The product requirements are written; no code exists yet.
+The solution is scaffolded; no features yet.
 
-## Planned stack
+## Stack
 
-C# desktop app built with Avalonia and the FluentAvalonia design system (Windows, macOS, Linux). Coding standards are `csharp_base` and `csharp_avalonia`, configured in [.aiconfig.json](.aiconfig.json).
+C# desktop app on .NET 10 with Avalonia 12.1 and the FluentAvalonia design system (Windows, macOS, Linux), MVVM with CommunityToolkit.Mvvm, tests with xUnit v3 and Avalonia headless. Exact versions are pinned in [Directory.Packages.props](Directory.Packages.props). Coding standards are `csharp_base` and `csharp_avalonia`, configured in [.aiconfig.json](.aiconfig.json).
+
+## Build and test
+
+Needs the .NET 10 SDK (see [global.json](global.json)).
+
+```
+dotnet build Folio.slnx
+dotnet test Folio.slnx
+dotnet run --project src/Folio.Desktop
+dotnet format Folio.slnx --verify-no-changes
+```
+
+| Project                     | Holds                                                                                     |
+| --------------------------- | ----------------------------------------------------------------------------------------- |
+| `src/Folio.Core`            | All domain logic; never references the UI                                                 |
+| `src/Folio.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `UI/Fluent/` |
+| `tests/Folio.Core.Tests`    | Domain and architecture tests                                                             |
+| `tests/Folio.Desktop.Tests` | View-model and headless UI tests                                                          |
 
 ## Documentation
 
-| Where | What |
-| ----- | ---- |
+| Where                                                                          | What                                                                |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
 | [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area |
-| `knowledge/architecture/` | arc42 architecture docs (none yet) |
-| `plans/` | Approved implementation plans (none yet) |
+| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                  |
+| `plans/`                                                                       | Approved implementation plans (none yet)                            |

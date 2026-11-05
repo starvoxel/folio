@@ -1,0 +1,14 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Folio.Desktop"
+             x:Class="Folio.Desktop.App"
+             RequestedThemeVariant="Default">
+  <Application.DataTemplates>
+    <local:ViewLocator />
+  </Application.DataTemplates>
+
+  <Application.Styles>
+    <!-- The theme is owned by UI/Fluent (AD-15); screens only reference WinUI token keys. -->
+    <StyleInclude Source="avares://Folio.Desktop/UI/Fluent/AppStyles.axaml" />
+  </Application.Styles>
+</Application>
