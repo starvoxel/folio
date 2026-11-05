@@ -45,9 +45,9 @@ Do not move to Avalonia 12.2 until FluentAvalonia supports it and the Fluent2 th
 
 The project follows the ai-foundation standards `csharp_base` and `csharp_avalonia` (`.aiconfig.json`). The build enforces what it can: nullable reference types, warnings as errors, explicit types instead of `var`, file-scoped namespaces, no primary constructors, explicit access modifiers, naming rules and XML docs on public members (`.editorconfig`, `Directory.Build.props`).
 
-Folio's own rules, which refine or override those standards, are in [project-standards.md](../../project-standards.md), which ai-foundation loads last. That file covers the stack and theme, FluentAvalonia isolation, menus, acronym and field naming, and the test kinds, layout and naming. This section records only why the project departs from the shared standards.
+Folio's implementation conventions on top of those standards (currently the test kinds, layout and naming) are in [project-standards.md](../../project-standards.md), which ai-foundation loads last. The stack, architecture rules and product rules stay with their owners (this section, the decisions in section 09 and the PRD); generic naming rules belong in the ai-foundation standards themselves.
 
-Deviations from the shared ai-foundation standards. Each is in force through `project-standards.md` and is also proposed upstream:
+Deviations from the shared ai-foundation standards, and how each is handled until the standards change:
 
 | Standard says                                                     | This project                                                                                                                 | Status                                                                                                                       |
 | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
