@@ -6,7 +6,7 @@ Financial data stays in a budget file on your own computers. There are no bank l
 
 ## Status
 
-The solution is scaffolded; no features yet.
+Architecture decided and the solution scaffolded; no features yet.
 
 ## Stack
 
@@ -32,8 +32,8 @@ dotnet format Folio.slnx --verify-no-changes
 
 ## Documentation
 
-| Where                                                                          | What                                                                |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area |
-| `knowledge/architecture/`                                                      | arc42 architecture docs (none yet)                                  |
-| `plans/`                                                                       | Approved implementation plans (none yet)                            |
+| Where                                                                          | What                                                                                                                          |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                                                           |
+| [knowledge/architecture/](knowledge/architecture/)                             | arc42 architecture docs; decisions are in [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md) |
+| `plans/`                                                                       | Approved implementation plans (none yet)                                                                                      |
