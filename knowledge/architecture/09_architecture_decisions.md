@@ -5,7 +5,7 @@ lifecycle: draft
 tags: [decisions, adr]
 key_files:
   - Directory.Packages.props
-  - src/MEFR.Desktop/UI/Fluent/AppStyles.axaml
+  - src/Closeout.Desktop/UI/Fluent/AppStyles.axaml
 ---
 
 > The architecture decisions agreed with Jeremy on 2026-11-05, each with its reason and what it costs. Numbering is stable; a superseded decision is marked, not deleted.
@@ -151,13 +151,13 @@ _Alternatives kept in reserve_ (all MIT, Avalonia 12): ScottPlot.Avalonia 5.1, O
 
 ## AD-14. Solution layout and MVVM toolkit
 
-_Decision._ Projects follow the `csharp_avalonia` standard: `MEFR.Core` (all domain logic, never references the UI), `MEFR.Desktop` (views, view-models and thin adapters), `MEFR.Core.Tests` and `MEFR.Desktop.Tests`. Layers inside Core are namespaces (`MEFR.Core.Domain`, `MEFR.Core.Commands`, `MEFR.Core.Persistence`, …), not extra projects. Automation and CLI projects are added by AD-16.
+_Decision._ Projects follow the `csharp_avalonia` standard: `Closeout.Core` (all domain logic, never references the UI), `Closeout.Desktop` (views, view-models and thin adapters), `Closeout.Core.Tests` and `Closeout.Desktop.Tests`. Layers inside Core are namespaces (`Closeout.Core.Domain`, `Closeout.Core.Commands`, `Closeout.Core.Persistence`, …), not extra projects. Automation and CLI projects are added by AD-16.
 
 View-models use CommunityToolkit.Mvvm. DynamicData (with System.Reactive) is added only where views filter live: transaction search and filters, the account detail list and the rule-impact preview.
 
 _Why CommunityToolkit over ReactiveUI._ It is Avalonia's template default and the docs call it the recommended framework. The project's hard logic is in Core, so view-models are thin and simple to test. Its API is small and stable, which suits agent-written code. ReactiveUI shipped three breaking major versions in 2026 (v24 to v26). ReactiveUI would win if most screens became stream-heavy; even then, wait for its API to settle.
 
-_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. Enforced by `tests/MEFR.Core.Tests/Architecture/CoreDependencyTests.cs`.
+_Consequences._ CommunityToolkit has one main maintainer; most of it is generated code over a frozen API, so it can be kept or replaced by a small base class if it stalls. Enforced by `tests/Closeout.Core.Tests/Architecture/CoreDependencyTests.cs`.
 
 ## AD-15. FluentAvalonia is isolated behind app wrappers
 
@@ -166,9 +166,9 @@ _Context._ FluentAvalonia 3.1 is the only source of the shell controls the desig
 _Decision._ Build on FluentAvalonia 3.1 with Avalonia 12.1.5, and contain it:
 
 1. Screens reference only WinUI token keys (`TextFillColor*`, `*FillColor*`, `*StrokeColor*`, `ControlCornerRadius`, `OverlayCornerRadius`) through `DynamicResource`, never FluentAvalonia-specific or `SystemControl*` keys.
-2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/MEFR.Desktop/UI/Fluent/AppStyles.axaml`.
+2. One app-owned theme file sets the accent (#0078D4), font and app aliases such as `App.CardBrush`. Today that is `src/Closeout.Desktop/UI/Fluent/AppStyles.axaml`.
 3. FluentAvalonia controls are used only through wrappers: `AppShell` (NavigationView, with our own navigation-item model), `IDialogService` (ContentDialog, with multi-step logic in view-models), `AppBanner` (InfoBar) and `AppIcon` (symbol name → font glyph now, a path later).
-4. No FluentAvalonia type or namespace appears outside `src/MEFR.Desktop/UI/Fluent/`. Enforced by `tests/MEFR.Desktop.Tests/Architecture/FluentIsolationTests.cs`.
+4. No FluentAvalonia type or namespace appears outside `src/Closeout.Desktop/UI/Fluent/`. Enforced by `tests/Closeout.Desktop.Tests/Architecture/FluentIsolationTests.cs`.
 5. Charts read colours from the same token keys and redraw on theme change.
 
 _Revisit when_ Avalonia 12.2 ships. If FluentAvalonia supports it and offers a controls-only mode, use Fluent2 for the base theme and FluentAvalonia for its shell controls. If FluentAvalonia stays inactive and breaks, use Fluent2 plus our own shell controls, possibly forked from FluentAvalonia's MIT code. Either way the change stays inside `UI/Fluent/`.
@@ -183,9 +183,9 @@ _Decision._
 
 - _Server._ When the app is started with `--automation`, a small HTTP server starts inside it, bound to `127.0.0.1` only, on a chosen or random port. Each session generates a random token, written to a file readable only by the current user; every request must carry it. Without the flag nothing listens. This keeps H1.12 intact.
 - _Surface._ Commands (the same command objects as the UI, through the same lock guard), read-only queries (months, transactions, totals, checklist state), and view-model actions (navigate, read the current view-model state as JSON, invoke a view-model command, take a screenshot of the window). Changes go through commands, never around them.
-- _CLI._ `MEFR.Cli` builds a `mefr` tool that finds a running app's port and token and calls the server, printing JSON for agents and readable text for people. Example verbs: `status`, `open`, `import`, `query`, `ui navigate`, `ui state`, `ui invoke`, `ui screenshot`.
+- _CLI._ `Closeout.Cli` builds a `closeout` tool that finds a running app's port and token and calls the server, printing JSON for agents and readable text for people. Example verbs: `status`, `open`, `import`, `query`, `ui navigate`, `ui state`, `ui invoke`, `ui screenshot`.
 - _Headless._ `--headless --automation` runs the real app on Avalonia's headless platform with Skia rendering, so CI and agents can run end-to-end scenarios and take screenshots with no display.
-- _Projects._ The server lives in `MEFR.Automation`, referenced by `MEFR.Desktop`. It sits outside Core so the domain never depends on HTTP.
+- _Projects._ The server lives in `Closeout.Automation`, referenced by `Closeout.Desktop`. It sits outside Core so the domain never depends on HTTP.
 
 _Open, settled in its plan:_ HTTP stack (ASP.NET Core Kestrel minimal APIs versus the built-in `HttpListener`; Kestrel is the default choice for robustness, at the cost of the ASP.NET Core shared framework in the app); whether release builds include the server (proposed: included, but inert without the flag); the exact API shape and versioning.
 

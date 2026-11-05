@@ -9,11 +9,11 @@
 using Avalonia;
 using Avalonia.Headless;
 
-using MEFR.Desktop.Tests;
+using Closeout.Desktop.Tests;
 
 [assembly: AvaloniaTestApplication(typeof(TestAppBuilder))]
 
-namespace MEFR.Desktop.Tests;
+namespace Closeout.Desktop.Tests;
 
 /// <summary>
 /// Builds the real application on Avalonia's headless platform for UI tests.

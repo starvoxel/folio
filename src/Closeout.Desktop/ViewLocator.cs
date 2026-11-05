@@ -9,9 +9,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
-using MEFR.Desktop.ViewModels;
+using Closeout.Desktop.ViewModels;
 
-namespace MEFR.Desktop;
+namespace Closeout.Desktop;
 
 /// <summary>
 /// Resolves a view for a view-model from an explicit registration table. It uses no reflection, so it

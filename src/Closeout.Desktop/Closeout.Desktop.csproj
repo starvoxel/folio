@@ -2,12 +2,12 @@
   <!--
     Avalonia + FluentAvalonia views and view-models, plus thin platform adapters.
     FluentAvalonia types may only be used under UI/Fluent/ (AD-15; enforced by
-    tests/MEFR.Desktop.Tests/Architecture/FluentIsolationTests.cs).
+    tests/Closeout.Desktop.Tests/Architecture/FluentIsolationTests.cs).
   -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MEFR.Desktop</RootNamespace>
-    <AssemblyName>MEFR.Desktop</AssemblyName>
+    <RootNamespace>Closeout.Desktop</RootNamespace>
+    <AssemblyName>Closeout.Desktop</AssemblyName>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ApplicationManifest Condition="Exists('app.manifest')">app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MEFR.Core\MEFR.Core.csproj" />
+    <ProjectReference Include="..\Closeout.Core\Closeout.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MEFR.Desktop.Tests" />
+    <InternalsVisibleTo Include="Closeout.Desktop.Tests" />
   </ItemGroup>
 </Project>

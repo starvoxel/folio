@@ -47,8 +47,8 @@ Spike code that proves a point and is worth keeping goes into `src/`. Throwaway 
 
 ### 5. Automation server, CLI and headless mode
 
-- Does: create `MEFR.Automation` and `MEFR.Cli`; decide the HTTP stack (Kestrel minimal APIs versus `HttpListener`); `--automation` starts a loopback-only server with a per-session token file readable only by the user; endpoints for `status`, `ui navigate`, `ui state` and `ui screenshot`; `--headless --automation` runs on the headless platform; the `mefr` CLI finds the running app and calls these.
-- Acceptance criteria: without `--automation` nothing listens (checked); the server refuses requests without the token and refuses non-loopback connections; `mefr ui navigate Reporting` then `mefr ui screenshot` produces a PNG of the Reporting placeholder from a headless run in CI.
+- Does: create `Closeout.Automation` and `Closeout.Cli`; decide the HTTP stack (Kestrel minimal APIs versus `HttpListener`); `--automation` starts a loopback-only server with a per-session token file readable only by the user; endpoints for `status`, `ui navigate`, `ui state` and `ui screenshot`; `--headless --automation` runs on the headless platform; the `closeout` CLI finds the running app and calls these.
+- Acceptance criteria: without `--automation` nothing listens (checked); the server refuses requests without the token and refuses non-loopback connections; `closeout ui navigate Reporting` then `closeout ui screenshot` produces a PNG of the Reporting placeholder from a headless run in CI.
 - Verified by: integration tests in CI that start the headless app, drive it through the CLI and check the JSON and the PNG; a test that the port is closed without the flag.
 
 ### 6. Fluent2 look-ahead (throwaway)

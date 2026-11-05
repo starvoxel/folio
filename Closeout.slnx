@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Closeout.Core/Closeout.Core.csproj" />
+    <Project Path="src/Closeout.Desktop/Closeout.Desktop.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Closeout.Core.Tests/Closeout.Core.Tests.csproj" />
+    <Project Path="tests/Closeout.Desktop.Tests/Closeout.Desktop.Tests.csproj" />
+  </Folder>
+</Solution>

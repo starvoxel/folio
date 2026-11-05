@@ -60,7 +60,7 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 
 ## FluentAvalonia component mapping
 
-FluentAvalonia 3.x (pinned 3.1.0) prefixes its own controls with `FA` (`FANavigationView`, `FAContentDialog`, `FAInfoBar`, `FAComboBox`), so older samples will not compile as written. Screens never use these types directly: they go through the app's wrappers under `src/MEFR.Desktop/UI/Fluent/` ([AD-15](../architecture/09_architecture_decisions.md#ad-15-fluentavalonia-is-isolated-behind-app-wrappers)). The Charts row below is decided by AD-13: custom-drawn controls behind chart view-models.
+FluentAvalonia 3.x (pinned 3.1.0) prefixes its own controls with `FA` (`FANavigationView`, `FAContentDialog`, `FAInfoBar`, `FAComboBox`), so older samples will not compile as written. Screens never use these types directly: they go through the app's wrappers under `src/Closeout.Desktop/UI/Fluent/` ([AD-15](../architecture/09_architecture_decisions.md#ad-15-fluentavalonia-is-isolated-behind-app-wrappers)). The Charts row below is decided by AD-13: custom-drawn controls behind chart view-models.
 
 | Prototype                                                       | Avalonia / FluentAvalonia                                                                                          |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |

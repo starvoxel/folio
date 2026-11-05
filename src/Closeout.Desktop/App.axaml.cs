@@ -10,10 +10,10 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-using MEFR.Desktop.ViewModels;
-using MEFR.Desktop.Views;
+using Closeout.Desktop.ViewModels;
+using Closeout.Desktop.Views;
 
-namespace MEFR.Desktop;
+namespace Closeout.Desktop;
 
 /// <summary>
 /// The Avalonia application: loads styles and creates the main window.

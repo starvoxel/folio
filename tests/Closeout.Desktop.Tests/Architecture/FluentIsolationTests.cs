@@ -6,10 +6,10 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace MEFR.Desktop.Tests.Architecture;
+namespace Closeout.Desktop.Tests.Architecture;
 
 /// <summary>
-/// Guards AD-15: FluentAvalonia is used only under src/MEFR.Desktop/UI/Fluent/, so the theme and its
+/// Guards AD-15: FluentAvalonia is used only under src/Closeout.Desktop/UI/Fluent/, so the theme and its
 /// controls can be replaced without touching screens.
 /// </summary>
 public class FluentIsolationTests
@@ -19,7 +19,7 @@ public class FluentIsolationTests
     [Fact]
     public void DesktopSources_OutsideUiFluent_DoNotReferenceFluentAvalonia()
     {
-        string desktopRoot = Path.Combine(FindRepositoryRoot(), "src", "MEFR.Desktop");
+        string desktopRoot = Path.Combine(FindRepositoryRoot(), "src", "Closeout.Desktop");
         string allowedRoot = Path.Combine(desktopRoot, "UI", "Fluent") + Path.DirectorySeparatorChar;
 
         List<string> offending = Directory
@@ -56,11 +56,11 @@ public class FluentIsolationTests
     private static string FindRepositoryRoot()
     {
         DirectoryInfo? directory = new(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "MEFR.slnx")))
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Closeout.slnx")))
         {
             directory = directory.Parent;
         }
 
-        return directory?.FullName ?? throw new InvalidOperationException("MEFR.slnx not found above the test output directory.");
+        return directory?.FullName ?? throw new InvalidOperationException("Closeout.slnx not found above the test output directory.");
     }
 }

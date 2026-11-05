@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MEFR.Core.Tests</RootNamespace>
+    <RootNamespace>Closeout.Core.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MEFR.Core\MEFR.Core.csproj" />
+    <ProjectReference Include="..\..\src\Closeout.Core\Closeout.Core.csproj" />
   </ItemGroup>
 </Project>

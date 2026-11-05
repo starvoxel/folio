@@ -1,4 +1,6 @@
-# Month-End Finance Reviewer
+# Closeout
+
+Codename for the Month-End Finance Reviewer.
 
 A desktop app a household opens once a month to import every account's transactions from CSV, check them, and see where the money went, how it compares to normal, and how net worth is moving. Closing a month locks its numbers so they stop moving.
 
@@ -17,18 +19,18 @@ C# desktop app on .NET 10 with Avalonia 12.1 and the FluentAvalonia design syste
 Needs the .NET 10 SDK (see [global.json](global.json)).
 
 ```
-dotnet build MEFR.slnx
-dotnet test MEFR.slnx
-dotnet run --project src/MEFR.Desktop
-dotnet format MEFR.slnx --verify-no-changes
+dotnet build Closeout.slnx
+dotnet test Closeout.slnx
+dotnet run --project src/Closeout.Desktop
+dotnet format Closeout.slnx --verify-no-changes
 ```
 
-| Project                    | Holds                                                                                     |
-| -------------------------- | ----------------------------------------------------------------------------------------- |
-| `src/MEFR.Core`            | All domain logic; never references the UI                                                 |
-| `src/MEFR.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `UI/Fluent/` |
-| `tests/MEFR.Core.Tests`    | Domain and architecture tests                                                             |
-| `tests/MEFR.Desktop.Tests` | View-model and headless UI tests                                                          |
+| Project                        | Holds                                                                                     |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| `src/Closeout.Core`            | All domain logic; never references the UI                                                 |
+| `src/Closeout.Desktop`         | Avalonia views, view-models and platform adapters; FluentAvalonia only under `UI/Fluent/` |
+| `tests/Closeout.Core.Tests`    | Domain and architecture tests                                                             |
+| `tests/Closeout.Desktop.Tests` | View-model and headless UI tests                                                          |
 
 ## Documentation
 

@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-namespace MEFR.Desktop.ViewModels;
+namespace Closeout.Desktop.ViewModels;
 
 /// <summary>
 /// View-model for the main window. Placeholder until the shell is built.

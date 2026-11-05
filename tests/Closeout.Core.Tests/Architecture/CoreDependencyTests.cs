@@ -8,14 +8,14 @@
 
 using System.Reflection;
 
-namespace MEFR.Core.Tests.Architecture;
+namespace Closeout.Core.Tests.Architecture;
 
 /// <summary>
-/// Guards AD-14: MEFR.Core holds the domain and never depends on the UI.
+/// Guards AD-14: Closeout.Core holds the domain and never depends on the UI.
 /// </summary>
 public class CoreDependencyTests
 {
-    private static readonly string[] ForbiddenPrefixes = ["Avalonia", "FluentAvalonia", "MEFR.Desktop", "CommunityToolkit"];
+    private static readonly string[] ForbiddenPrefixes = ["Avalonia", "FluentAvalonia", "Closeout.Desktop", "CommunityToolkit"];
 
     [Fact]
     public void CoreAssembly_ReferencedAssemblies_ExcludeUiFrameworks()
@@ -31,8 +31,8 @@ public class CoreDependencyTests
     }
 
     [Fact]
-    public void Name_CoreAssembly_ReturnsMEFRCore()
+    public void Name_CoreAssembly_ReturnsCloseoutCore()
     {
-        Assert.Equal("MEFR.Core", CoreAssembly.Name);
+        Assert.Equal("Closeout.Core", CoreAssembly.Name);
     }
 }
