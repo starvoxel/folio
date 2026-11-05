@@ -22,7 +22,7 @@ key_files:
 | Storage      | One local budget file opened like a document; may sit in a shared or synced folder                                                              | PRD constraints      |
 | Data sources | CSV only; no bank connections                                                                                                                   | PRD constraints      |
 | Network      | None by default; online lookups are opt-in and limited to services that neither keep nor sell data                                              | PRD H1.12            |
-| Currency     | CAD only, exact cents, no floating point                                                                                                        | PRD assumption 2     |
+| Currency     | One currency, in dollars and cents; all accounts are assumed to use the same currency. Exact cents, no floating point                           | PRD assumption 2     |
 | Concurrency  | One editor at a time; two simultaneous editors are not handled                                                                                  | PRD constraints      |
 | Licences     | All dependencies MIT or equivalent; no paid Avalonia products (they add per-seat cost and a licence check that conflicts with the privacy goal) | Decision, 2026-11-05 |
 
