@@ -1,0 +1,31 @@
+<Project>
+  <!--
+    Central Package Management: every version is pinned exactly here (architecture decision AD-14 and
+    the stack pins in knowledge/architecture/02_constraints.md). FluentAvalonia declares open-ended
+    Avalonia ranges, so these exact pins are what keep the two in step. Do not move to Avalonia 12.2
+    until FluentAvalonia supports it (knowledge/architecture/11_risks.md).
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="UI">
+    <PackageVersion Include="Avalonia" Version="12.1.5" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.5" />
+    <PackageVersion Include="Avalonia.Skia" Version="12.1.5" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.5" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
+    <PackageVersion Include="FluentAvaloniaUI" Version="3.1.0" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+  <ItemGroup Label="Testing">
+    <PackageVersion Include="Avalonia.Headless" Version="12.1.5" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.5" />
+    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+    <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+  </ItemGroup>
+</Project>
