@@ -6,7 +6,6 @@ name: Update lock files
 # diff in the job log and uploaded as an artifact; apply it to a branch and commit it.
 on:
   workflow_dispatch:
-  pull_request: # TEMPORARY: remove before merge; only here to get the first run from a branch.
 
 permissions:
   contents: read
