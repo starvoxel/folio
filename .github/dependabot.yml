@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      avalonia:
+        patterns:
+          - "Avalonia*"
+    ignore:
+      # Pinned until FluentAvalonia supports Avalonia 12.2 (see Directory.Packages.props).
+      - dependency-name: "Avalonia*"
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
