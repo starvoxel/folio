@@ -7,22 +7,25 @@
   -->
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- One version for every Avalonia package that ships in lockstep, so they cannot drift apart.
+         Avalonia.Controls.DataGrid is versioned separately and stays pinned on its own. -->
+    <AvaloniaVersion>12.1.5</AvaloniaVersion>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
 
   <ItemGroup Label="UI">
-    <PackageVersion Include="Avalonia" Version="12.1.5" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.1.5" />
-    <PackageVersion Include="Avalonia.Skia" Version="12.1.5" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.1.5" />
+    <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Skia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
     <PackageVersion Include="FluentAvaloniaUI" Version="3.1.0" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
 
   <ItemGroup Label="Testing">
-    <PackageVersion Include="Avalonia.Headless" Version="12.1.5" />
-    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.5" />
+    <PackageVersion Include="Avalonia.Headless" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
     <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.2" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
