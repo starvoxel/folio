@@ -13,7 +13,7 @@
 set -uo pipefail
 
 DOTNET_VERSION="10.0.404"
-DOTNET_SHA512="PASTE_SHA512_HERE"
+DOTNET_SHA512="577d0eb17fec33d029104c5c63a1ab0accc3e28776274abef2218dbac5af18d2109b5406d26b31d76f5c245215e3ba0926a94c20246c672c41847c9e1eb1dc50"
 DOTNET_INSTALL_DIR="${DOTNET_INSTALL_DIR:-/usr/share/dotnet}"
 DOTNET_LINK_DIR="${DOTNET_LINK_DIR:-/usr/local/bin}"
 DOTNET_URL="${DOTNET_URL:-https://builds.dotnet.microsoft.com/dotnet/Sdk/${DOTNET_VERSION}/dotnet-sdk-${DOTNET_VERSION}-linux-x64.tar.gz}"
