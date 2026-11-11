@@ -16,5 +16,5 @@ Regenerate the fixtures (the result must match `fixtures/SHA256SUMS`):
 
 ```bash
 python3 -I tools/generate-fixtures.py
-sha256sum -c fixtures/SHA256SUMS
+cd fixtures && sha256sum -c SHA256SUMS
 ```
