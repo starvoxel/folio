@@ -89,7 +89,7 @@ Section 1 of the PRD and AD-1 to AD-12 put almost all the difficulty in the doma
 | Web UI with a .NET backend process (Electron or a local web host) | Unchanged, but the UI talks to it over a local channel; AD-16's loopback server could become the main API | Medium. A new UI project and a bridge; loopback token and `Host` checks become core security |
 | Rust, Kotlin, Dart or Python end to end                           | Rewritten                                                                                               | High. The architecture decisions would need redoing, and the risk of changing money rules   |
 
-The third direction is the only one I would treat as a clear no without a strong reason: the domain rules are the product.
+Correction (2026-11-11): I first called the third direction a clear no on cost. That overstated it. The repo holds about 686 lines of C# in 7 files, mostly scaffold, and `Folio.Core` is an empty assembly marker. The architecture decisions are mostly language-neutral; what would be redone is their C#-specific parts (money and date types, CommunityToolkit.Mvvm, the analyzers and the `csharp_base` standards). A TypeScript stack is a serious option, covered in section 9.
 
 ---
 
@@ -120,6 +120,89 @@ Until then, the isolation already in AD-13 and AD-15 is the hedge: charts sit be
 2. Is a heavier runtime (Electron) acceptable if it removes the grid, chart and testing gaps?
 3. Would you rather stay in .NET and keep `Folio.Core` as is, or is a rewrite of the Core acceptable if the language is more interesting to you?
 4. Should a small throwaway prototype (the Transactions grid with a chart in two candidate stacks) be added to the stack spike as a comparison, like the planned TableView comparison?
+
+---
+
+## 9. Follow-up research: TypeScript desktop options (2026-11-11)
+
+Requested after the brief above: the shortlist is Avalonia versus a TypeScript stack, probably Electron. Desktop is the focus; web is wanted later; mobile is optional. A research agent read primary sources (Electron, Tauri, Deno and Playwright docs and source via raw GitHub; package metadata from npm). It captured no live network traffic, so every phone-home conclusion comes from reading source and docs.
+
+### 9.1 Does Electron phone home?
+
+Verified in Electron's source (`shell/browser/browser_process_impl.cc` and related files): stock Electron has no Chromium component updater, no Safe Browsing, no variations seed fetch, no network-time service and no GCM. Its metrics consent is hard-coded false. The crash reporter does nothing until JavaScript calls `crashReporter.start()`. The auto-updater does nothing until the app sets a feed URL. Geolocation needs an API key the app must supply.
+
+Two environmental leaks remain:
+- _Spellcheck dictionaries._ Downloaded from a Google CDN by default (documented). No typed text is sent. Fix: set a dictionary URL or disable spellcheck.
+- _System proxy auto-detect (WPAD)._ Plausible on Windows when the OS has automatic detection on. Whether Electron's default path issues the request was not verified. Fix: `--no-proxy-server`.
+
+Minimal hardening set (the agent's synthesis from source, not an official checklist): never start the crash reporter; no auto-updater, and make update checks a user action; `no-proxy-server`; a deny-all request filter and permission handler; serve the UI from a custom protocol with a strict CSP; set or disable spellcheck; no `GOOGLE_API_KEY`; block navigation and external opens; set production fuses (with a possible need for a separate E2E build, see 9.4).
+
+Verdict: an Electron app can credibly meet "nothing leaves the computer unless opted in", if the app enforces it three ways: configuration, request blocking, and a CI network-capture test. Recommended capture test: a Linux job in a no-route network namespace plus `strace` on connects, a second run through a capturing proxy and `tcpdump` over a five-minute idle window, and an in-app Playwright request assertion. Rerun it on every Electron bump. The Windows and macOS capture tooling on hosted runners is unverified.
+
+Tauri: core has no telemetry, and the updater plugin acts only when called, with mandatory signatures. The exposure is the OS web view. On Windows, WebView2 has Microsoft diagnostic data and updates itself outside the app's control (secondary source, page unreadable); wry already disables SmartScreen. macOS and Linux web view network behavior was not verified.
+
+### 9.2 Tauri versus Avalonia on cross-platform weakness
+
+Tauri's real weakness is the three web engines (WebView2, WKWebView, WebKitGTK) that the app does not pin. That affects pixel regression, mixed-script text rendering and table performance, and the runner image or OS can change the baseline without any dependency changing. Avalonia draws everything itself and renders the same on each OS. Electron pins Chromium in `package.json`, so it matches Avalonia on consistency.
+
+Tauri testing is better than first reported:
+- WebdriverIO's `@wdio/tauri-service` works on Windows, Linux and macOS through an embedded WebDriver server (verified in Tauri's current docs).
+- `tauri-driver` covers Windows and Linux.
+- Stock Playwright cannot drive Tauri on macOS or Linux. The community `tauri-playwright` plugin bridges the gap but is under a year old.
+- Both options are young, and Tauri still needs Rust commands for file locking and atomic writes.
+
+### 9.3 Other TypeScript desktop options
+
+| Option                  | Status (read 2026-11-11)                                                         | Notes                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Electron                | v45.3.0 on Chromium 156, released 2026-11-10; MIT                                | Full Node `fs`, Chromium accessibility tree on all OSes, Playwright support (experimental per secondary sources) |
+| Tauri 2                 | 2.12.5; 3.0 alpha in progress; MIT or Apache 2.0                                 | Smallest footprint (hello-world figures only); Rust for native work                                   |
+| Electrobun              | v2.0.6; MIT; README signals one primary maintainer                               | Bun main process; no Playwright integration found                                                     |
+| Neutralino              | Active; MIT; solo maintainer                                                     | Small; no Playwright integration found                                                                |
+| NW.js                   | 0.119.2; MIT                                                                     | Chromium-sized; Selenium path unverified                                                              |
+| Wails v3                | GA 2026-10-26; MIT                                                               | Go backend, not TypeScript domain code                                                                |
+| Deno desktop            | Shipped in Deno 2.9; experimental per secondary sources                          | Updater polls a configured URL; default setting not verified                                          |
+| React Native Windows/macOS | Microsoft-backed                                                              | No Linux target found; not HTML, so none of the web grid and chart libraries                         |
+| Capacitor with Electron | Community plugin last released 2023                                              | Stale; use Electron directly                                                                         |
+| Browser-only PWA        | Platform feature                                                                 | See 9.5                                                                                              |
+
+### 9.4 Risks and unknowns
+
+Electron plus TypeScript:
+1. Footprint (roughly 85 to 100+ MB installers, from hello-world blog figures) and Chromium security updates every one to two weeks. Mitigation: the no-network capture on every bump.
+2. Hardening drift if a later change re-enables a crash reporter, updater or permission default.
+3. Playwright's Electron support is experimental, and a fuse-hardened build may reject test attach. A separate E2E build would mean the tested binary is not the shipped one. Not confirmed; Playwright's Electron docs were unreadable in the sandbox.
+4. Screenshot baselines are per OS (Playwright names them per browser and platform), so three baseline sets are needed, and mixed-script fonts differ per OS.
+5. A Node-enabled main process plus a preload bridge is a security surface. Treat imported CSVs as untrusted.
+
+Tauri plus TypeScript:
+1. Unpinned web view versions (section 9.2).
+2. Windows WebView2 diagnostic data and runtime updates are outside the app's control.
+3. E2E tooling is under a year old.
+4. Two languages, with locking and atomic writes in Rust that agents must write and review.
+5. Unknown: how well WKWebView and WebKitGTK expose their accessibility trees to automation.
+
+### 9.5 Web and mobile reach
+
+A TypeScript domain package and UI could be shared with a web build from any of these. The web version would lose:
+- The File System Access API, which is Chromium-only, with no Firefox or Safari support and no sign of that changing.
+- A user-visible file that autosaves in place; OPFS is a private store, so the fallback is open by upload and save by download.
+- Native menus, OS file locks and atomic rename.
+- Storage that the browser cannot evict.
+
+The recommended shape is a platform-neutral core with a `FileStore` interface (open, save, lock, back up) and desktop and web implementations. Mobile would be Capacitor or Tauri mobile (stability unverified) around the same UI.
+
+### 9.6 UI libraries (npm metadata, read 2026-11-11)
+
+All free and updated in 2026: Fluent UI React v9 (9.75.2, MIT), TanStack Table with TanStack Virtual (MIT), AG Grid Community (36.3.0, MIT; some features Enterprise-only, not fully checked), ECharts (6.1.0, Apache 2.0), Recharts, visx, D3, Chart.js, fast-check (4.10.2) and fflate or zip.js for the file format. Fluent v9's `DataGrid` README does not mention virtualization, so test it with 10,000 rows or pair a virtualizer. A broader survey of design systems is in 9.7.
+
+### 9.7 Design systems beyond Fluent (secondary sources)
+
+Most-used React options: shadcn/ui (copy-in, fastest growing; upstream fixes do not arrive automatically), MUI (usage leader; MUI X data grid features such as multi-sort, column pinning and row grouping need paid tiers), Ant Design (usual pick for dashboards; free Table, Form and Tree), Mantine (fast rising; no grid equivalent to MUI X), and unstyled primitives (Radix, now slowed; Base UI as active successor; React Aria as the most accessibility-rigorous). Company systems IBM Carbon, Atlassian, Polaris and Primer are free; no source compared them on dense tables. Rankings come from SEO blogs and no source tested table accessibility. A claim that shadcn/ui made Base UI its default in July 2026 is single-source and should be checked against its changelog.
+
+### 9.8 Not verified
+
+Live network traffic from any shipped app; Electron's WPAD behavior and renderer crash upload path; WebView2's privacy page; Playwright's Electron docs and fuse requirements; measured size and memory for a real data-heavy app on any option; AG Grid Community feature boundaries; whether Tauri's WebKit views expose a usable accessibility tree.
 
 ---
 
