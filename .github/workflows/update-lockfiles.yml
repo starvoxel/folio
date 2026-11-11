@@ -1,0 +1,46 @@
+name: Update lock files
+
+# Regenerates every packages.lock.json on a GitHub runner with the SDK from global.json, so hashes of
+# SDK-supplied packages (such as Microsoft.NET.ILLink.Tasks) match what CI restores. Run it after a
+# dependency change or when locked-mode restore fails with NU1403 or NU1004. The result is printed as a
+# diff in the job log and uploaded as an artifact; apply it to a branch and commit it.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regenerate:
+    name: Regenerate lock files
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up .NET (version from global.json)
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          global-json-file: global.json
+
+      - name: Show SDK version
+        run: dotnet --version
+
+      - name: Regenerate lock files
+        run: |
+          git ls-files '*packages.lock.json' | xargs rm -f
+          dotnet restore Folio.slnx --force-evaluate
+
+      - name: Show changes
+        run: |
+          git add -N .
+          git diff --stat
+          git diff -- '*packages.lock.json'
+
+      - name: Upload lock files
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lock-files
+          path: "**/packages.lock.json"
