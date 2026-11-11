@@ -28,11 +28,10 @@ jobs:
         with:
           global-json-file: global.json
           cache: true
-          # Central Package Management pins every version here, so it is the cache key.
-          cache-dependency-path: Directory.Packages.props
+          cache-dependency-path: "**/packages.lock.json"
 
-      - name: Restore
-        run: dotnet restore Folio.slnx
+      - name: Restore (locked mode: fails if a packages.lock.json is out of date)
+        run: dotnet restore Folio.slnx --locked-mode
 
       - name: Check formatting
         if: matrix.os == 'ubuntu-latest'
