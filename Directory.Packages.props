@@ -23,7 +23,7 @@
   <ItemGroup Label="Testing">
     <PackageVersion Include="Avalonia.Headless" Version="12.1.5" />
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.5" />
-    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+    <PackageVersion Include="xunit.v3" Version="4.0.3" />
     <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.2" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.1" />
