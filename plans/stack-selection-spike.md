@@ -18,7 +18,9 @@ Selection spikes answer questions where the answer is uncertain and would change
 
 - Candidates: Avalonia and Electron with TypeScript. Tauri joins only if Electron fails the privacy or footprint gate (G1, G5).
 - Decision rule: pass/fail gates first. A candidate that fails a gate is out. Among those that pass, choose on build effort, then on Jeremy's judgement.
-- Execution: one agent session per stack, in parallel, each on its own branch, against the same slice spec and the same time box.
+- Execution: one separate, full session per stack, each started and resumed by Jeremy himself (not subagents), on its own branch, against the same slice spec. A session can be resumed and continued until it passes the gates or reports it is blocked.
+- Gate thresholds are accepted as proposed, except idle memory, which is a loose ceiling (G5).
+- Design system: Fluent in both slices. Avalonia uses FluentAvalonia (the pinned 3.1.0 on Avalonia 12.1.5); Electron uses Fluent UI React v9. Only the Fluent look is compared; a design-system change is a separate question.
 
 ## Scope
 
@@ -47,7 +49,7 @@ A candidate must pass every gate. Thresholds are proposals for Jeremy to adjust 
 | G2  | Grid at scale                 | 10,000 rows scroll without visible stalls (proposed: no frame over 100 ms while scrolling); memory after scrolling the whole grid stays under 400 MB with no sustained growth; sorting any column takes under 500 ms; selection and the side panel work.        |
 | G3  | Testable and agent-drivable   | In CI on Linux and one other OS, a test launches the real window, navigates to each page, reads the page's state as structured data, takes a screenshot, and exits cleanly. Two consecutive Linux runs match within a stated pixel tolerance. The dialog takes keyboard focus on open on Linux and Windows. |
 | G4  | Charts                        | The donut and bar chart render in light and dark, click-through opens the matching rows, and the legend rows can be reached and activated by keyboard.                                                                                                    |
-| G5  | Footprint                     | Recorded for every candidate; fails only above a hard ceiling (proposed: installer over 250 MB, cold start to a usable window over 5 seconds on a CI-class machine, or idle memory over 400 MB).                                                           |
+| G5  | Footprint                     | Recorded for every candidate; fails only above a hard ceiling: installer over 250 MB, cold start to a usable window over 5 seconds on a CI-class machine, or idle memory over 800 MB (a loose ceiling, set to catch only extreme cases). The 400 MB limit in G2 is about the grid and is unchanged. |
 | G6  | Licences and cost             | Every dependency the slice needs is MIT or equivalent and free. No paid component is needed for any slice feature.                                                                                                                                         |
 
 ## Measurements recorded for every candidate
@@ -73,8 +75,8 @@ Among candidates that pass every gate: lower effort wins; if effort is close, Je
   - `spike/slice-avalonia` and `spike/slice-electron`: one per stack. Neither merges. Because they have no commits of their own yet, each is fast-forwarded to the base once milestone 0 is committed there.
 - This plan stays on the `claude/relaxed-volta-biy41e` branch until approved. Milestone 0 copies the spec and gates into the base branch so the sessions do not depend on it.
 - The Avalonia branch starts empty, so its session copies the pinned versions and project layout it needs from `main` (global.json, Directory.Packages.props, the `src/` scaffold) as a starting point.
-- Time box (proposed): one working session per candidate. Both stop at the same wall-clock limit so effort is comparable. A candidate that has not passed all gates when time runs out reports where it stopped and why.
-- Each session keeps a plain effort log (what it tried, what failed, time spent) and fills in the same results template when it ends.
+- Sessions: Jeremy starts one full session per branch with the kickoff prompt in that branch's `prompts/` folder. They are ordinary sessions, resumable with the usual controls, not subagents. A session stops when its slice passes the gates or it reports it is blocked and why.
+- Effort comparison: because sessions can be resumed, effort is counted as active working time and the number of prompts and corrections from Jeremy, not a wall-clock limit. Each session keeps a plain effort log (what it tried, what failed, time spent, every prompt Jeremy had to give) and fills in the same results template when it ends.
 - Avalonia starts from the existing scaffold and its pinned versions. Electron starts from a current Electron, TypeScript, Vite and Playwright setup. Library choices inside each slice are the agent's, within gate G6, and are recorded.
 - After both finish, one review pass compares the results against the gates, writes [the results brief](../knowledge/research/stack-selection-results.md) and proposes a decision. Jeremy decides. The decision goes into [the architecture decisions](../knowledge/architecture/09_architecture_decisions.md) and updates the constraints and risks.
 
@@ -127,7 +129,4 @@ Not started. Each list is revisited after the decision, and only the chosen path
 
 ## Open questions
 
-- Are the gate thresholds right, especially the 100 ms frame limit, the 500 ms sort time and the footprint ceilings? [Jeremy, before milestone 0]
-- What is the time box per candidate? [Jeremy, before milestone 1]
-- Should the Avalonia slice use FluentAvalonia, or Avalonia's built-in theme, given the plan to compare maintenance risk? [Jeremy, before milestone 1]
-- Which design system does the Electron slice use: Fluent UI React to match the prototype, or another? [Jeremy, before milestone 1]
+None open. Thresholds, session model and design system were settled by Jeremy on 2026-11-11 (see Decisions). Remaining step: Jeremy's approval of this plan.
