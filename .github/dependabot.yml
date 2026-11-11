@@ -1,0 +1,38 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      avalonia:
+        patterns:
+          - "Avalonia*"
+      # Everything else, split by update type. The first matching group wins, so Avalonia and
+      # FluentAvalonia (which the Avalonia pin tracks) never land in these two.
+      patches:
+        update-types: [patch]
+        exclude-patterns:
+          - "Avalonia*"
+          - "FluentAvalonia*"
+      minors:
+        update-types: [minor]
+        exclude-patterns:
+          - "Avalonia*"
+          - "FluentAvalonia*"
+    ignore:
+      # Pinned until FluentAvalonia supports Avalonia 12.2 (see Directory.Packages.props).
+      - dependency-name: "Avalonia*"
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      patches:
+        update-types: [patch]
+      minors:
+        update-types: [minor]
