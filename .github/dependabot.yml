@@ -8,6 +8,18 @@ updates:
       avalonia:
         patterns:
           - "Avalonia*"
+      # Everything else, split by update type. The first matching group wins, so Avalonia and
+      # FluentAvalonia (which the Avalonia pin tracks) never land in these two.
+      patches:
+        update-types: [patch]
+        exclude-patterns:
+          - "Avalonia*"
+          - "FluentAvalonia*"
+      minors:
+        update-types: [minor]
+        exclude-patterns:
+          - "Avalonia*"
+          - "FluentAvalonia*"
     ignore:
       # Pinned until FluentAvalonia supports Avalonia 12.2 (see Directory.Packages.props).
       - dependency-name: "Avalonia*"
