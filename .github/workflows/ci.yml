@@ -27,9 +27,11 @@ jobs:
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
           global-json-file: global.json
+          cache: true
+          cache-dependency-path: "**/packages.lock.json"
 
-      - name: Restore
-        run: dotnet restore Folio.slnx
+      - name: Restore (locked mode, fails if a packages.lock.json is out of date)
+        run: dotnet restore Folio.slnx --locked-mode
 
       - name: Check formatting
         if: matrix.os == 'ubuntu-latest'
@@ -48,7 +50,6 @@ jobs:
       - name: Integration tests
         if: success() || failure()
         run: dotnet test tests/Integration.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Integration
-
 
       - name: Upload test results
         if: always()
