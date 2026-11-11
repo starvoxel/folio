@@ -6,6 +6,8 @@
 | Approved by |            |
 | Created     | 2026-11-11 |
 
+> Blocked on the stack decision in [stack-selection-spike.md](stack-selection-spike.md). The driver, runners and baselines below assume Avalonia and the AD-16 automation server; they change if Electron with TypeScript is chosen.
+
 ## Goal
 
 A small, fast regression suite that runs the real Folio app and checks it still works. Its first job is to tell us whether a Dependabot update (Avalonia, FluentAvalonia, DataGrid, .NET packages, GitHub Actions) broke the app. Its longer-term job is UI regression testing, with the same automation CLI used for precise manipulation and UI analysis. It must be free, run on GitHub, and make new scenarios cheap to add.

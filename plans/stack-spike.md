@@ -2,7 +2,7 @@
 
 | Field       | Value      |
 | ----------- | ---------- |
-| Status      | Approved   |
+| Status      | Paused (see [stack-selection-spike.md](stack-selection-spike.md)) |
 | Approved by | Jeremy     |
 | Created     | 2026-11-05 |
 
