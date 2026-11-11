@@ -1,0 +1,38 @@
+[
+ {
+  "id": "acc-chequing",
+  "name": "Everyday Chequing",
+  "type": "Chequing",
+  "provider": "RBC"
+ },
+ {
+  "id": "acc-savings",
+  "name": "Emergency Savings",
+  "type": "Savings",
+  "provider": "EQ Bank"
+ },
+ {
+  "id": "acc-visa",
+  "name": "Rewards Visa",
+  "type": "Credit card",
+  "provider": "TD"
+ },
+ {
+  "id": "acc-mc",
+  "name": "Travel Mastercard",
+  "type": "Credit card",
+  "provider": "Tangerine"
+ },
+ {
+  "id": "acc-invest",
+  "name": "Brokerage",
+  "type": "Investment",
+  "provider": "Questrade"
+ },
+ {
+  "id": "acc-line",
+  "name": "Line of Credit",
+  "type": "Debt",
+  "provider": "CTFS"
+ }
+]

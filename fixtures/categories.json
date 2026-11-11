@@ -1,0 +1,137 @@
+[
+ {
+  "id": "income",
+  "name": "Income",
+  "parent_id": null
+ },
+ {
+  "id": "income-pay",
+  "name": "Paycheque",
+  "parent_id": "income"
+ },
+ {
+  "id": "income-other",
+  "name": "Other income",
+  "parent_id": "income"
+ },
+ {
+  "id": "housing",
+  "name": "Housing",
+  "parent_id": null
+ },
+ {
+  "id": "housing-rent",
+  "name": "Rent and mortgage",
+  "parent_id": "housing"
+ },
+ {
+  "id": "housing-utilities",
+  "name": "Utilities",
+  "parent_id": "housing"
+ },
+ {
+  "id": "groceries",
+  "name": "Groceries",
+  "parent_id": null
+ },
+ {
+  "id": "groceries-store",
+  "name": "Supermarket",
+  "parent_id": "groceries"
+ },
+ {
+  "id": "groceries-market",
+  "name": "Markets and bakeries",
+  "parent_id": "groceries"
+ },
+ {
+  "id": "dining",
+  "name": "Dining out",
+  "parent_id": null
+ },
+ {
+  "id": "dining-restaurant",
+  "name": "Restaurants",
+  "parent_id": "dining"
+ },
+ {
+  "id": "dining-coffee",
+  "name": "Coffee",
+  "parent_id": "dining"
+ },
+ {
+  "id": "transport",
+  "name": "Transport",
+  "parent_id": null
+ },
+ {
+  "id": "transport-fuel",
+  "name": "Fuel",
+  "parent_id": "transport"
+ },
+ {
+  "id": "transport-transit",
+  "name": "Transit",
+  "parent_id": "transport"
+ },
+ {
+  "id": "health",
+  "name": "Health",
+  "parent_id": null
+ },
+ {
+  "id": "health-pharmacy",
+  "name": "Pharmacy",
+  "parent_id": "health"
+ },
+ {
+  "id": "shopping",
+  "name": "Shopping",
+  "parent_id": null
+ },
+ {
+  "id": "shopping-online",
+  "name": "Online",
+  "parent_id": "shopping"
+ },
+ {
+  "id": "shopping-home",
+  "name": "Home and garden",
+  "parent_id": "shopping"
+ },
+ {
+  "id": "entertainment",
+  "name": "Entertainment",
+  "parent_id": null
+ },
+ {
+  "id": "entertainment-subs",
+  "name": "Subscriptions",
+  "parent_id": "entertainment"
+ },
+ {
+  "id": "travel",
+  "name": "Travel",
+  "parent_id": null
+ },
+ {
+  "id": "travel-flights",
+  "name": "Flights and hotels",
+  "parent_id": "travel"
+ },
+ {
+  "id": "savings",
+  "name": "Savings",
+  "parent_id": null
+ },
+ {
+  "id": "savings-transfer",
+  "name": "Savings transfers",
+  "parent_id": "savings"
+ },
+ {
+  "id": "uncategorized",
+  "name": "Uncategorized",
+  "parent_id": null
+ }
+]
