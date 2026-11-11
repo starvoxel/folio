@@ -30,7 +30,7 @@ jobs:
           cache: true
           cache-dependency-path: "**/packages.lock.json"
 
-      - name: Restore (locked mode: fails if a packages.lock.json is out of date)
+      - name: Restore (locked mode, fails if a packages.lock.json is out of date)
         run: dotnet restore Folio.slnx --locked-mode
 
       - name: Check formatting
