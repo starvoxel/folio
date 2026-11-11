@@ -4,6 +4,7 @@ updates:
     directory: /
     schedule:
       interval: weekly
+      day: monday
     groups:
       avalonia:
         patterns:
@@ -31,6 +32,7 @@ updates:
     directory: /
     schedule:
       interval: weekly
+      day: monday
     groups:
       patches:
         update-types: [patch]
