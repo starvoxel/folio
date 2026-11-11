@@ -67,8 +67,12 @@ Among candidates that pass every gate: lower effort wins; if effort is close, Je
 
 ## Execution
 
-- Two parallel agent sessions, one per candidate, each started from the same base branch holding this plan, the slice spec and the fixture data.
-- Branches: `spike/slice-avalonia` and `spike/slice-electron`. Neither merges.
+- Two parallel agent sessions, one per candidate, each started from the same base branch holding the slice spec, the gates and the fixture data.
+- Branches (created 2026-11-11, all three empty and sharing one empty commit with no history from `main`, so spike code stays out of the real codebase):
+  - `spike/stack-selection-base`: milestone 0 puts the slice spec, gates, results template, fixture generator and fixtures here.
+  - `spike/slice-avalonia` and `spike/slice-electron`: one per stack. Neither merges. Because they have no commits of their own yet, each is fast-forwarded to the base once milestone 0 is committed there.
+- This plan stays on the `claude/relaxed-volta-biy41e` branch until approved. Milestone 0 copies the spec and gates into the base branch so the sessions do not depend on it.
+- The Avalonia branch starts empty, so its session copies the pinned versions and project layout it needs from `main` (global.json, Directory.Packages.props, the `src/` scaffold) as a starting point.
 - Time box (proposed): one working session per candidate. Both stop at the same wall-clock limit so effort is comparable. A candidate that has not passed all gates when time runs out reports where it stopped and why.
 - Each session keeps a plain effort log (what it tried, what failed, time spent) and fills in the same results template when it ends.
 - Avalonia starts from the existing scaffold and its pinned versions. Electron starts from a current Electron, TypeScript, Vite and Playwright setup. Library choices inside each slice are the agent's, within gate G6, and are recorded.
