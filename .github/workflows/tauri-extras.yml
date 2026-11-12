@@ -143,7 +143,9 @@ jobs:
             tauri/e2e/package-lock.json
       - run: |
           npm ci
-          (cd e2e; npm ci)
+          Push-Location e2e
+          npm ci
+          Pop-Location
           New-Item -ItemType Directory -Force test-results | Out-Null
       - name: Build the shipped binary and the test binary
         shell: bash
