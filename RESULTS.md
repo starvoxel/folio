@@ -2,7 +2,7 @@
 
 - Stack and exact versions: .NET SDK 10.0.404 locally (global.json pins 10.0.100, roll forward latestFeature; CI uses setup-dotnet 10.0.x), Avalonia 12.1.5 (Avalonia, Desktop, Skia, Headless), Avalonia.Controls.DataGrid 12.1.2, SkiaSharp 3.119.4 (test CLI only)
 - Design system and version: FluentAvaloniaUI 3.1.0
-- Date range of the work: 2026-11-11 23:49 UTC to 2026-11-12 about 00:50 UTC (one session, about 1 h of active time plus CI waits)
+- Date range of the work: 2026-11-11 23:49 UTC to 2026-11-12 00:19 UTC (one session, about 30 min wall clock by the session clock, including waits)
 - Commit measured: see the CI run linked below (run 3, commit `9b90a89`); the local numbers come from the same code before the CI-only workflow edits. Evidence: https://github.com/starvoxel/folio/actions/runs/43125343508
 
 Code is in `avalonia/` (`Slice/` app, `Cli/` test client and G3 scenario, scripts `bench.sh`, `g1-privacy.sh`, `shots.sh`, `run-slice.sh`). Strict analyzers and warnings-as-errors were relaxed for the spike (three obsolete-API warnings remain: `TextBox.Watermark`, `Bitmap.Save`). Evidence files are in `avalonia/evidence/`; the rest is in the CI artifacts (`linux-evidence`, `windows-evidence`, `g1-evidence`).
@@ -43,7 +43,7 @@ Limits of the G2 measurement: scrolling is programmatic (`ScrollIntoView`, 8 row
 
 ## Effort
 
-- Active working time: about 1 h 15 min from the first command to the final push, including roughly 25 min of waiting on a 5-minute capture, builds and CI. See `EFFORT-LOG.md`.
+- Active working time: about 30 min of wall clock by the session clock (23:49 to 00:19 UTC), including the 5-minute capture and CI waits. See `EFFORT-LOG.md`.
 - Number of prompts or corrections the user had to give: 1 (the kickoff prompt). No corrections.
 - Where most time went: getting Avalonia 12 / FluentAvalonia 3 APIs right from the compiler (about 6 fix rounds, no docs read), the test scenario and its keyboard handling, and the G1 and CI plumbing.
 
