@@ -2,7 +2,7 @@
 
 Both slices are built and have a `RESULTS.md`. A review of the two found measurements that are not comparable, things neither session measured, and open questions in each. This follow-up closes the gaps that could change the decision. It is not a new feature build.
 
-Read `SLICE-SPEC.md` first (hard constraints and working rules still apply), then your own `RESULTS.md`. Continue on your own branch. Do not use subagents. Do not change the verdicts already in `RESULTS.md`; report new findings in `FOLLOWUP-RESULTS.md` (copy `FOLLOWUP-RESULTS-TEMPLATE.md`). If a new finding shows an earlier statement was wrong, add a "Corrections" section at the top of `FOLLOWUP-RESULTS.md` and say so plainly.
+Read `SLICE-SPEC.md` first (hard constraints and working rules still apply), then your own `RESULTS.md`. Continue on your own branch. Do not use subagents unless your own prompt says Jeremy has approved them for a specific item. Do not change the verdicts already in `RESULTS.md`; report new findings in `FOLLOWUP-RESULTS.md` (copy `FOLLOWUP-RESULTS-TEMPLATE.md`). If a new finding shows an earlier statement was wrong, add a "Corrections" section at the top of `FOLLOWUP-RESULTS.md` and say so plainly.
 
 ## Why this follow-up exists
 
