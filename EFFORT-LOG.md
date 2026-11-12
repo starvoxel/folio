@@ -14,3 +14,5 @@ Times are UTC from the session clock. Prompts or corrections from the user: **1*
 - 00:02 FINDING for G1/G6: transitive package Avalonia.BuildServices 11.3.2 ships an MSBuild task that POSTs build-time usage data (hashed project name, machine GUID, OS, CI flag) to av-build-tel-api-v1.avaloniaui.net on every build unless AVALONIA_TELEMETRY_OPTOUT=1. README says build-time only. Set the variable in CI. Our earlier local builds did not set it.
 - 00:02 Headless: all 44 checks pass using HeadlessWindowExtensions.KeyPress for input.
 - 00:02 G2 first bench on Xvfb: worst frame 64.6 ms, RSS 258 MB after two passes, no growth, sorts under 160 ms to rendered frame. Stock DataGrid, no alternative needed.
+- 00:19 CI run 3 green on Linux (44/44 x2, headless 44/44, dark, bench) and Windows (real keys 43/43). Earlier runs failed: artifact upload hit root-owned 0600 files from the sudo capture (fixed with chown), and the informational synthetic-key Windows run fails 3 checks by design (continue-on-error).
+- 00:19 Captured prototype screenshots with Playwright (iframe, data-theme attribute for dark) and built side-by-sides. Wrote RESULTS.md.
