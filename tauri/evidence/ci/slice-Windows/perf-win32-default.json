@@ -1,0 +1,190 @@
+{
+  "platform": "win32",
+  "pid": 6788,
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "sortMsWorstPerColumn": {
+    "date": 26.69999999995343,
+    "description": 28.700000000186265,
+    "account": 28.19999999995343,
+    "category": 27.80000000004657,
+    "amount": 27.0999999998603
+  },
+  "passes": [
+    {
+      "durationMs": 9384.200000000092,
+      "frames": 601,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 15.799999999999272
+    },
+    {
+      "durationMs": 9369.800000000048,
+      "frames": 601,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 15.80000000000291
+    },
+    {
+      "durationMs": 9367.10000000005,
+      "frames": 601,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 15.700000000004366
+    }
+  ],
+  "selectionMs": 13.5,
+  "soakWorstFrameMs": 15.80000000000291,
+  "points": {
+    "P0": {
+      "metric": "private working set (MB), total working set (MB)",
+      "app": {
+        "primaryMB": 4.3,
+        "secondaryMB": 30.9,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 89.4,
+        "secondaryMB": 331.9,
+        "processes": 7
+      },
+      "detail": [
+        "folio[6788]:4",
+        "msedgewebview2[6748]:26",
+        "msedgewebview2#1[6072]:2",
+        "msedgewebview2#2[6480]:11",
+        "msedgewebview2#3[908]:6",
+        "msedgewebview2#4[1260]:3",
+        "msedgewebview2#5[8096]:38"
+      ],
+      "webviewByCommandLine": 6,
+      "descendantCount": 7,
+      "notDescendants": []
+    },
+    "P1": {
+      "metric": "private working set (MB), total working set (MB)",
+      "app": {
+        "primaryMB": 4.4,
+        "secondaryMB": 31.1,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 95.7,
+        "secondaryMB": 353.4,
+        "processes": 7
+      },
+      "detail": [
+        "folio[6788]:4",
+        "msedgewebview2[6748]:27",
+        "msedgewebview2#1[6072]:2",
+        "msedgewebview2#2[6480]:9",
+        "msedgewebview2#3[908]:6",
+        "msedgewebview2#4[1260]:3",
+        "msedgewebview2#5[8096]:45"
+      ],
+      "webviewByCommandLine": 6,
+      "descendantCount": 7,
+      "notDescendants": []
+    },
+    "P2": {
+      "metric": "private working set (MB), total working set (MB)",
+      "app": {
+        "primaryMB": 4.4,
+        "secondaryMB": 31.1,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 151.6,
+        "secondaryMB": 423.4,
+        "processes": 7
+      },
+      "detail": [
+        "folio[6788]:4",
+        "msedgewebview2[6748]:27",
+        "msedgewebview2#1[6072]:2",
+        "msedgewebview2#2[6480]:9",
+        "msedgewebview2#3[908]:6",
+        "msedgewebview2#4[1260]:3",
+        "msedgewebview2#5[8096]:100"
+      ],
+      "webviewByCommandLine": 6,
+      "descendantCount": 7,
+      "notDescendants": []
+    },
+    "P3": {
+      "metric": "private working set (MB), total working set (MB)",
+      "app": {
+        "primaryMB": 4.4,
+        "secondaryMB": 31.1,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 153.1,
+        "secondaryMB": 425.4,
+        "processes": 7
+      },
+      "detail": [
+        "folio[6788]:4",
+        "msedgewebview2[6748]:27",
+        "msedgewebview2#1[6072]:2",
+        "msedgewebview2#2[6480]:9",
+        "msedgewebview2#3[908]:6",
+        "msedgewebview2#4[1260]:3",
+        "msedgewebview2#5[8096]:102"
+      ],
+      "webviewByCommandLine": 6,
+      "descendantCount": 7,
+      "notDescendants": []
+    },
+    "P4": {
+      "metric": "private working set (MB), total working set (MB)",
+      "app": {
+        "primaryMB": 3.9,
+        "secondaryMB": 29.9,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 96.3,
+        "secondaryMB": 363.5,
+        "processes": 7
+      },
+      "detail": [
+        "folio[6788]:4",
+        "msedgewebview2[6748]:25",
+        "msedgewebview2#1[6072]:2",
+        "msedgewebview2#2[6480]:8",
+        "msedgewebview2#3[908]:6",
+        "msedgewebview2#4[1260]:3",
+        "msedgewebview2#5[8096]:49"
+      ],
+      "webviewByCommandLine": 6,
+      "descendantCount": 7,
+      "notDescendants": []
+    },
+    "P5": {
+      "metric": "private working set (MB), total working set (MB)",
+      "app": {
+        "primaryMB": 2.9,
+        "secondaryMB": 16.3,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 83.1,
+        "secondaryMB": 215.3,
+        "processes": 7
+      },
+      "detail": [
+        "folio[6788]:3",
+        "msedgewebview2[6748]:13",
+        "msedgewebview2#1[6072]:2",
+        "msedgewebview2#2[6480]:5",
+        "msedgewebview2#3[908]:3",
+        "msedgewebview2#4[1260]:2",
+        "msedgewebview2#5[8096]:54"
+      ],
+      "webviewByCommandLine": 6,
+      "descendantCount": 7,
+      "notDescendants": []
+    }
+  },
+  "rowsAfterSoak": 10000
+}
