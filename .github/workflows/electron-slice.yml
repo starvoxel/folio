@@ -71,8 +71,10 @@ jobs:
         run: |
           if [ -d prev-shots ]; then node scripts/compare-shots.mjs prev-shots test-results/shots/linux "$SHOT_TOLERANCE"; else echo "no previous run to compare with (first run)"; fi
       - name: Save screenshots for the next workflow run
+        if: always()
         run: rm -rf prev-shots && cp -r test-results/shots/linux prev-shots
       - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        if: always()
         with:
           path: electron/prev-shots
           key: shots-linux-${{ github.run_id }}
