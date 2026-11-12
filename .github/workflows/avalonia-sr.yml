@@ -1,6 +1,9 @@
 name: avalonia-sr
 
 on:
+  push:
+    branches: [spike/slice-avalonia]
+    paths: ['.github/workflows/avalonia-sr.yml']
   workflow_dispatch:
 
 permissions:
