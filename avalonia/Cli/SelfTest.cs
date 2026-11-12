@@ -22,6 +22,7 @@ public static class SelfTest
         return JsonSerializer.Deserialize<JsonElement>(t);
     }
     static bool _osKeys;
+    [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr h);
     [DllImport("user32.dll")] static extern void keybd_event(byte vk, byte scan, uint flags, UIntPtr extra);
     /// <summary>Send a key: with --oskeys a real OS-level key (xdotool on Linux/X11, keybd_event on Windows), otherwise the app's synthetic routed key.</summary>
     static async Task Key(string key)
@@ -138,6 +139,7 @@ public static class SelfTest
             var fpsi = new ProcessStartInfo("xdotool") { UseShellExecute = false }; foreach (var x in new[] { "search", "--onlyvisible", "--name", "Folio", "windowfocus", "--sync" }) fpsi.ArgumentList.Add(x);
             using var fpr = Process.Start(fpsi)!; await fpr.WaitForExitAsync();
         }
+        if (_osKeys && OperatingSystem.IsWindows()) { p.Refresh(); SetForegroundWindow(p.MainWindowHandle); await Task.Delay(500); }
         Check("keys are sent as " + (_osKeys ? "real OS key events" : "synthetic routed events"), true);
         // 4. Keyboard: Tab from the top of Reporting until a legend row has focus, then Enter
         await Invoke(new { action = "filter" });
@@ -188,6 +190,16 @@ public static class SelfTest
         Check("request with a foreign Host is not served (HttpListener answers 404, the app also checks Host)", hostCode is 400 or 403 or 404, "status " + hostCode);
         Check("valid request is accepted (200)", await Raw(m => m.Headers.Add("X-Folio-Token", _token)) == 200);
         if (!OperatingSystem.IsWindows()) Check("discovery file is user-only (0600)", (File.GetUnixFileMode(disc) & (UnixFileMode.GroupRead | UnixFileMode.GroupWrite | UnixFileMode.OtherRead | UnixFileMode.OtherWrite)) == 0, File.GetUnixFileMode(disc).ToString());
+
+        // 7b. Optional idle period (G1 capture): the app sits untouched while a capture runs outside.
+        if (a.IndexOf("--idle") is var ii and >= 0)
+        {
+            var secs = int.Parse(a[ii + 1]); var idleSw = Stopwatch.StartNew();
+            Console.WriteLine($"idling {secs}s");
+            while (idleSw.Elapsed.TotalSeconds < secs) await Task.Delay(1000);
+            var m = (await Get("/status")).GetProperty("metrics");
+            Check($"app still responsive after {secs}s idle", true, "metrics " + m);
+        }
 
         // 8. Clean exit
         await Post("/quit", new { });

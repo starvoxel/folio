@@ -67,6 +67,7 @@ public sealed class MainWindow : Window
         Content = _nav;
         Opened += (_, _) =>
         {
+            Activate();
             Navigate("Overview");
             // Usable window = opened, data loaded, first frame requested after layout.
             RequestAnimationFrame(_ => RequestAnimationFrame(_ =>

@@ -1,0 +1,157 @@
+name: avalonia-slice
+
+on:
+  push:
+    branches: [spike/slice-avalonia]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  AVALONIA_TELEMETRY_OPTOUT: '1' # Avalonia.BuildServices sends build-time usage data unless this is set (see RESULTS.md, G1)
+
+jobs:
+  linux:
+    name: Linux real window (Xvfb), G2 bench, G3
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Install Xvfb and xdotool
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool
+      - name: Verify fixtures
+        run: cd fixtures && sha256sum -c SHA256SUMS
+      - name: Build (clean, timed)
+        working-directory: avalonia
+        run: |
+          start=$(date +%s)
+          dotnet build Slice -c Release
+          dotnet build Cli -c Release
+          echo "clean build seconds (Slice + Cli, includes restore): $(( $(date +%s) - start ))" | tee ../build-time.txt
+      - name: G3 selftest run 1 (real window, real OS keys)
+        working-directory: avalonia
+        run: xvfb-run -a -s "-screen 0 1440x900x24" Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/run1 --oskeys
+      - name: G3 selftest run 2 (consecutive)
+        working-directory: avalonia
+        run: xvfb-run -a -s "-screen 0 1440x900x24" Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/run2 --oskeys
+      - name: Compare run 1 and run 2 screenshots (tolerance 0.1 percent of pixels)
+        working-directory: avalonia
+        run: |
+          rc=0
+          for f in ../out/run1/*.png; do Cli/bin/Release/net10.0/folio-slice-cli diff "$f" "../out/run2/$(basename "$f")" --tolerance 0.001 | tee -a ../out/compare.txt || rc=1; done
+          exit $rc
+      - name: Compare with the previous successful workflow run (best effort)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: avalonia
+        run: |
+          prev=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow avalonia-slice.yml --branch spike/slice-avalonia --status success --limit 1 --json databaseId --jq '.[0].databaseId')
+          if [ -z "$prev" ] || [ "$prev" = "null" ]; then echo "no previous successful run yet" | tee ../out/compare-previous.txt; exit 0; fi
+          gh run download "$prev" --repo "$GITHUB_REPOSITORY" -n linux-evidence -D ../prev
+          rc=0
+          for f in ../out/run1/*.png; do Cli/bin/Release/net10.0/folio-slice-cli diff "$f" "../prev/out/run1/$(basename "$f")" --tolerance 0.001 | tee -a ../out/compare-previous.txt || rc=1; done
+          exit $rc
+      - name: G3 selftest in headless mode (extra, not the G3 evidence)
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/headless --headless
+      - name: G3 selftest in dark theme
+        working-directory: avalonia
+        run: xvfb-run -a -s "-screen 0 1440x900x24" Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/dark --oskeys --theme dark
+      - name: G2 bench (scroll twice, sort every column) and cold start
+        working-directory: avalonia
+        run: xvfb-run -a -s "-screen 0 1440x900x24" ./bench.sh ../out/bench
+      - name: Publish size and dependency counts
+        working-directory: avalonia
+        run: |
+          dotnet publish Slice -c Release -r linux-x64 --self-contained -o ../out/publish
+          du -sm ../out/publish | tee ../out/publish-size.txt
+          (cd ../out && zip -qr publish.zip publish && ls -l publish.zip | tee publish-zip-size.txt)
+          rm -rf ../out/publish ../out/publish.zip
+          dotnet list Slice package --include-transitive > ../out/packages.txt
+          dotnet list Slice package --include-transitive --format json > ../out/packages.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: linux-evidence
+          path: |
+            out/
+            build-time.txt
+  windows:
+    name: Windows real window, G3 and bench
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Build (clean, timed)
+        shell: bash
+        working-directory: avalonia
+        run: |
+          start=$(date +%s)
+          dotnet build Slice -c Release
+          dotnet build Cli -c Release
+          echo "clean build seconds (Slice + Cli, includes restore): $(( $(date +%s) - start ))" | tee ../build-time.txt
+      - name: G3 selftest run 1 (real window, real OS keys)
+        shell: bash
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli.exe selftest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/run1 --oskeys
+      - name: G3 selftest run 2 (synthetic keys, in case OS keys cannot reach the window on this runner)
+        if: always()
+        shell: bash
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli.exe selftest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/run2
+      - name: G2 bench and cold start
+        if: always()
+        shell: bash
+        working-directory: avalonia
+        env:
+          SLICE_BIN: ${{ github.workspace }}/avalonia/Slice/bin/Release/net10.0/FolioSlice.exe
+        run: |
+          sed -i 's#folio-slice-cli"#folio-slice-cli.exe"#' bench.sh
+          ./bench.sh ../out/bench
+      - name: Publish size
+        if: always()
+        shell: bash
+        working-directory: avalonia
+        run: |
+          dotnet publish Slice -c Release -r win-x64 --self-contained -o ../out/publish
+          du -sm ../out/publish | tee ../out/publish-size.txt
+          rm -rf ../out/publish
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: windows-evidence
+          path: |
+            out/
+            build-time.txt
+  privacy:
+    name: Linux network capture (G1)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Install capture tools
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool tcpdump strace iproute2
+      - name: Build
+        working-directory: avalonia
+        run: |
+          dotnet build Slice -c Release
+          dotnet build Cli -c Release
+      - name: Capture (loopback-only namespace, then five-minute idle with tcpdump and strace)
+        working-directory: avalonia
+        run: sudo -E env "PATH=$PATH" "DOTNET_ROOT=${DOTNET_ROOT:-$HOME/.dotnet}" ./g1-privacy.sh ../out/g1 300
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: g1-evidence
+          path: out/g1/
