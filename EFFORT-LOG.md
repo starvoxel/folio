@@ -16,3 +16,13 @@ Times are UTC from the session clock. Prompts or corrections from the user: **1*
 - 00:02 G2 first bench on Xvfb: worst frame 64.6 ms, RSS 258 MB after two passes, no growth, sorts under 160 ms to rendered frame. Stock DataGrid, no alternative needed.
 - 00:19 CI run 3 green on Linux (44/44 x2, headless 44/44, dark, bench) and Windows (real keys 43/43). Earlier runs failed: artifact upload hit root-owned 0600 files from the sudo capture (fixed with chown), and the informational synthetic-key Windows run fails 3 checks by design (continue-on-error).
 - 00:19 Captured prototype screenshots with Playwright (iframe, data-theme attribute for dark) and built side-by-sides. Wrote RESULTS.md.
+
+## Follow-up (FOLLOWUP-SPEC.md, Avalonia items)
+- 01:14 Started. Copied the follow-up files. Installed at-spi2-core, python3-gi, strace, tcpdump, iproute2 (apt works through the proxy).
+- 01:25 A1: first AT-SPI dump showed only the 7 navigation items; no page content at all. Cause confirmed by swapping FANavigationView for a plain ListBox (--plain-nav): the whole page, including the DataGrid, then appears. Fix (--a11y-fix): host the page content beside the nav pane instead of as its Content.
+- 01:45 A1: DataGrid rows had no name, no selected state; Avalonia's AT-SPI layer has no Table interface at all, and DataGridRowAutomationPeer has no selection provider. Workaround: LoadingRow sets AutomationProperties.Name, PositionInSet and SizeOfSet; "selected" appended to the name. About 30 lines in total. Time spent on A1 fixes: about 40 minutes.
+- 01:55 Failure: Windows follow-up job lost its memory summary because the tee target dir did not exist; fixed (mkdir -p).
+- 02:00 A2: read the BuildServices source, decoded a real payload file, ran clean builds in a loopback-only namespace for four variants. Failure: the first A2 script run had no DOTNET_ROOT in a fresh shell, and an early a11y run raced the AT-SPI bus start (needed a 4 s wait).
+- 02:20 A3/A4: downloaded the CI artifacts by signed URL and compared screenshots across separate workflow runs.
+- 02:30 A5: first Windows sampler run saw zero rows for the app, including loopback. Reason: HttpListener sockets belong to HTTP.sys (System), not the app process. Added a validation output so the sampler's visibility is shown, not assumed.
+- Prompts or corrections needed from the user in this follow-up: 1 (the follow-up prompt only). Platform stop-hook reminders to commit were followed.
