@@ -28,7 +28,7 @@ func walk(_ e: AXUIElement, _ d: Int) {
     var line = String(repeating: " ", count: d) + "\(role)\(sub.isEmpty ? "" : "/" + sub) | title='\(title)' | desc='\(desc)' | value='\(val.prefix(80))'"
     if !sel.isEmpty { line += " | selected=\(sel)" }
     if foc == "1" { line += " | FOCUSED" }
-    for k in ["AXRowCount", "AXColumnCount", "AXRowIndexRange", "AXColumnIndexRange", "AXIndex"] { if let x = attr(e, k) { line += " | \(k)=\(x)" } }
+    for k in ["AXRows", "AXSelectedRows", "AXColumns", "AXRowCount", "AXColumnCount", "AXRowIndexRange", "AXColumnIndexRange", "AXIndex"] { if let x = attr(e, k) { if let arr = x as? [Any] { line += " | \(k)=[\(arr.count) items]" } else { line += " | \(k)=\(x)" } } }
     let kids = (attr(e, "AXChildren") as? [AXUIElement]) ?? []
     line += " | children=\(kids.count)"
     print(line)

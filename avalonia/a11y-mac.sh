@@ -9,6 +9,7 @@ pid=$(cat "$out/app.pid")
 dump() { "$out/ax-dump" "$pid" 30 12 > "$out/$1.txt" 2>&1; }
 "$C" navigate Transactions > /dev/null; sleep 2; dump transactions
 "$C" invoke '{"action":"select","id":"tx-00002"}' > /dev/null; sleep 1; dump transactions-selected
+"$C" invoke '{"action":"scrollEnd"}' > /dev/null; sleep 2; dump transactions-end
 "$C" navigate Reporting > /dev/null; sleep 2; dump reporting
 "$C" navigate Settings > /dev/null; sleep 2; dump settings
 "$C" invoke '{"action":"openDialog"}' > /dev/null; sleep 2; dump dialog

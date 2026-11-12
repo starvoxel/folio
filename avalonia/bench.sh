@@ -7,7 +7,7 @@ out="$1"; mkdir -p "$out"
 export FOLIO_DISCOVERY="$out/discovery.json"
 C="$here/Cli/bin/Release/net10.0/folio-slice-cli"
 start=$(date +%s%N)
-"$here/run-slice.sh" "$out"
+"$here/run-slice.sh" "$out" "${@:2}"
 "$C" wait-ready > "$out/ready.json"
 echo "cold start wall ms: $(( ($(date +%s%N) - start) / 1000000 ))" | tee "$out/coldstart.txt"
 sleep 3

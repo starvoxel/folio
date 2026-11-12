@@ -5,7 +5,6 @@
              RequestedThemeVariant="Default">
   <Application.Styles>
     <fa:FluentAvaloniaTheme />
-    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
     <Style Selector="DataGridColumnHeader">
       <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
       <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />

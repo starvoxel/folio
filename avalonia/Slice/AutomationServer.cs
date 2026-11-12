@@ -137,6 +137,7 @@ public sealed class AutomationServer
             case "filter": _w.OpenTransactions(new Filter { Search = S("search") ?? "", AccountId = S("accountId"), CategoryId = S("categoryId"), Month = S("month"), Direction = S("direction") }); break;
             case "sort": _w.Transactions.Sort(S("column")!, S("direction") == "desc" ? ListSortDirection.Descending : ListSortDirection.Ascending); break;
             case "select": _w.Transactions.Select(S("id")!); break;
+            case "scrollEnd": _w.Transactions.ScrollToEnd(); break;
             case "clickDonut": _w.Reporting.ClickDonut(S("key")!); break;
             case "clickBar": _w.Reporting.ClickBar(S("month")!, S("direction")!); break;
             case "openDialog": _ = _w.Settings.OpenDialogAsync(); break;

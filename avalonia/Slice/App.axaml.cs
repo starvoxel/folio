@@ -6,7 +6,17 @@ namespace Slice;
 
 public sealed class App : Application
 {
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+        // The DataGrid theme is included from code so the same source builds against the stock package and ProDataGrid (which names its theme .v2).
+#if PRODATAGRID
+        const string theme = "avares://Avalonia.Controls.DataGrid/Themes/Fluent.v2.xaml";
+#else
+        const string theme = "avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml";
+#endif
+        Styles.Insert(1, new Avalonia.Markup.Xaml.Styling.StyleInclude(new Uri("avares://FolioSlice/")) { Source = new Uri(theme) });
+    }
 
     public override void OnFrameworkInitializationCompleted()
     {

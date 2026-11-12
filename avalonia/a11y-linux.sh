@@ -16,6 +16,7 @@ PY="${ATSPI_PYTHON:-/usr/bin/python3.12}"
 dump() { "$PY" "$HERE/tools/atspi_dump.py" --app Avalonia --max-depth 30 --max-children "${3:-12}" ${2:-} > "$OUT/$1.json" 2> "$OUT/$1.err"; }
 "$C" navigate Transactions > /dev/null; sleep 2; dump transactions
 "$C" invoke "{\"action\":\"select\",\"id\":\"tx-00002\"}" > /dev/null; sleep 1; dump transactions-selected
+"$C" invoke '{"action":"scrollEnd"}' > /dev/null; sleep 2; dump transactions-end
 "$C" navigate Reporting > /dev/null; sleep 2; dump reporting "" 25
 "$C" navigate Settings > /dev/null; sleep 2; dump settings
 "$C" invoke "{\"action\":\"openDialog\"}" > /dev/null; sleep 2; dump dialog; dump dialog-focus --focus

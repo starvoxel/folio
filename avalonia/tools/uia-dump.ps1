@@ -20,11 +20,13 @@ function Describe($e) {
   try { $gi = $e.GetCurrentPattern([System.Windows.Automation.GridItemPattern]::Pattern); $s += " | GRIDITEM row={0} col={1}" -f $gi.Current.Row, $gi.Current.Column } catch {}
   try { $si = $e.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern); $s += " | SELECTED={0}" -f $si.Current.IsSelected } catch {}
   try { $v = $e.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern); $s += " | value='{0}'" -f $v.Current.Value } catch {}
+  $s += (RawProp $e 30152 "PositionInSet") + (RawProp $e 30153 "SizeOfSet")
   if ($c.HasKeyboardFocus) { $s += " | HAS-KEYBOARD-FOCUS" } elseif ($c.IsKeyboardFocusable) { $s += " | focusable" }
   if ($c.IsOffscreen) { $s += " | offscreen" }
   return $s
 }
 $walker = [System.Windows.Automation.TreeWalker]::RawViewWalker
+function RawProp($e, $id, $label) { try { $pr = [System.Windows.Automation.AutomationProperty]::LookupById($id); if ($pr -ne $null) { $v = $e.GetCurrentPropertyValue($pr, $true); if ($v -ne [System.Windows.Automation.AutomationElement]::NotSupported) { return " | $label=$v" } } } catch {} ; return "" }
 function Walk($e, $depth, $sb, $max) {
   if ($depth -gt 30) { return }
   [void]$sb.AppendLine((" " * $depth) + (Describe $e))
@@ -45,6 +47,7 @@ function Dump($name, $max = 12) {
 }
 & $Cli navigate Transactions | Out-Null; Start-Sleep 2; Dump "transactions"
 & $Cli invoke '{"action":"select","id":"tx-00002"}' | Out-Null; Start-Sleep 1; Dump "transactions-selected"
+& $Cli invoke '{"action":"scrollEnd"}' | Out-Null; Start-Sleep 2; Dump "transactions-end"
 & $Cli navigate Reporting | Out-Null; Start-Sleep 2; Dump "reporting" 25
 & $Cli navigate Settings | Out-Null; Start-Sleep 2; Dump "settings"
 & $Cli invoke '{"action":"openDialog"}' | Out-Null; Start-Sleep 2; Dump "dialog"

@@ -15,7 +15,7 @@ public sealed class TransactionsPage
     private readonly MainWindow _w;
     private readonly Store _s;
     public Control View { get; }
-    public DataGrid Grid { get; } = new();
+    public TableHost Table { get; }
     private readonly TextBox _search = new() { Watermark = "Search description or note", MinWidth = 260 };
     private readonly ComboBox _acct = new() { MinWidth = 180 };
     private readonly ComboBox _cat = new() { MinWidth = 200 };
@@ -28,52 +28,19 @@ public sealed class TransactionsPage
     private List<TxRow> _shown = new();
     private string _sortCol = "Date"; private ListSortDirection _sortDir = ListSortDirection.Ascending;
     private bool _suppress;
-    public TxRow? Selected => Grid.SelectedItem as TxRow;
+    public TxRow? Selected => Table.Selected;
     public List<TxRow> Shown => _shown;
 
     public TransactionsPage(MainWindow w)
     {
         _w = w; _s = w.Store;
-        Grid.AutoGenerateColumns = false; Grid.IsReadOnly = true; Grid.SelectionMode = DataGridSelectionMode.Single;
-        Grid.CanUserSortColumns = true; Grid.CanUserReorderColumns = false; Grid.GridLinesVisibility = DataGridGridLinesVisibility.Horizontal;
-        Grid.HorizontalAlignment = HorizontalAlignment.Stretch; Grid.VerticalAlignment = VerticalAlignment.Stretch;
-        Avalonia.Automation.AutomationProperties.SetName(Grid, "Transactions table");
-        Grid.Columns.Add(new DataGridTextColumn { Header = "Date", Binding = new Binding("Date"), Width = new DataGridLength(110), Tag = "Date" });
-        Grid.Columns.Add(new DataGridTextColumn { Header = "Description", Binding = new Binding("Description"), Width = new DataGridLength(1, DataGridLengthUnitType.Star), MinWidth = 220, Tag = "Description" });
-        Grid.Columns.Add(new DataGridTextColumn { Header = "Account", Binding = new Binding("Account"), Width = new DataGridLength(160), Tag = "Account" });
-        Grid.Columns.Add(new DataGridTextColumn { Header = "Category", Binding = new Binding("Category"), Width = new DataGridLength(140), Tag = "Category" });
-        Grid.Columns.Add(new DataGridTemplateColumn
+        Table = TableHost.Create(w, w.Opt.Table);
+        Table.SortRequested += name =>
         {
-            Header = "Amount", Width = new DataGridLength(130), Tag = "Amount", SortMemberPath = "AmountCents",
-            CellTemplate = new FuncDataTemplate<TxRow>((r, _) => new TextBlock { Text = r?.AmountText, HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 0) }),
-        });
-        Grid.Sorting += (_, e) =>
-        {
-            e.Handled = true; // we sort ourselves so the cost is measurable and the data stays integer cents
-            var name = (string)e.Column.Tag!;
             var dir = _sortCol == name && _sortDir == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             Sort(name, dir);
         };
-        if (w.Opt.A11yFix)
-        {
-            // Rows have no text of their own in the accessibility tree; give each realized row a readable name and its position.
-            Grid.LoadingRow += (_, e) =>
-            {
-                if (e.Row.DataContext is TxRow r)
-                {
-                    Avalonia.Automation.AutomationProperties.SetName(e.Row, RowName(r, e.Row.IsSelected));
-                    Avalonia.Automation.AutomationProperties.SetPositionInSet(e.Row, e.Row.Index + 1);
-                    Avalonia.Automation.AutomationProperties.SetSizeOfSet(e.Row, _shown.Count);
-                }
-            };
-        }
-        Grid.SelectionChanged += (_, _) =>
-        {
-            if (w.Opt.A11yFix)
-                foreach (var row in Avalonia.VisualTree.VisualExtensions.GetVisualDescendants(Grid).OfType<DataGridRow>())
-                    if (row.DataContext is TxRow rr) Avalonia.Automation.AutomationProperties.SetName(row, RowName(rr, row.IsSelected));
-            if (!_suppress) UpdateDetails();
-        };
+        Table.SelectionChanged += () => { if (!_suppress) UpdateDetails(); };
 
         _acct.ItemsSource = new[] { "All accounts" }.Concat(_s.Accounts.Select(a => a.Name)).ToList(); _acct.SelectedIndex = 0;
         var cats = new List<string> { "All categories" };
@@ -89,7 +56,7 @@ public sealed class TransactionsPage
         foreach (var c in bar.Children) c.Margin = new Thickness(0, 0, 8, 8);
         var left = new DockPanel { Margin = new Thickness(24, 0, 12, 16) };
         DockPanel.SetDock(bar, Dock.Top); DockPanel.SetDock(_chip, Dock.Top);
-        left.Children.Add(bar); left.Children.Add(_chip); left.Children.Add(Grid);
+        left.Children.Add(bar); left.Children.Add(_chip); left.Children.Add(Table.View);
         var details = new Border
         {
             Width = 320, Padding = new Thickness(16), Margin = new Thickness(0, 0, 24, 16), CornerRadius = new CornerRadius(8), BorderThickness = new Thickness(1),
@@ -104,9 +71,6 @@ public sealed class TransactionsPage
         Refresh();
         UpdateDetails();
     }
-
-    // The DataGrid row peer has no selected state of its own, so the state is part of the accessible name.
-    private static string RowName(TxRow r, bool selected) => $"{r.Date}, {r.Description}, {r.Account}, {r.Category}, {r.AmountText}" + (selected ? ", selected" : "");
 
     private string? CatIdAt(int i)
     {
@@ -151,11 +115,9 @@ public sealed class TransactionsPage
 
     public void Refresh()
     {
-        var keep = Selected?.Id;
         _shown = Sorted(_s.Rows.Where(r => _f.Matches(r, _s)), _sortCol, _sortDir).ToList();
         _suppress = true;
-        Grid.ItemsSource = _shown;
-        if (keep is not null) { var r = _shown.FirstOrDefault(x => x.Id == keep); if (r is not null) Grid.SelectedItem = r; }
+        Table.SetItems(_shown);
         _suppress = false;
         _count.Text = $"{_shown.Count:N0} of {_s.Rows.Count:N0} rows";
         _chip.Text = _f.Month is null && _f.Direction is null ? "" : $"Filtered by: {string.Join(", ", new[] { _f.Month, _f.Direction == "in" ? "money in" : _f.Direction == "out" ? "money out" : null }.Where(x => x is not null))}";
@@ -166,7 +128,7 @@ public sealed class TransactionsPage
 
     private void UpdateSortGlyph()
     {
-        foreach (var c in Grid.Columns) c.Header = (string)c.Tag! + ((string)c.Tag! == _sortCol ? (_sortDir == ListSortDirection.Ascending ? " ▲" : " ▼") : "");
+        Table.SetSortGlyph(_sortCol, _sortDir);
     }
 
     public void Sort(string col, ListSortDirection dir) { _sortCol = col; _sortDir = dir; Refresh(); }
@@ -180,7 +142,8 @@ public sealed class TransactionsPage
         return new { column = col, direction = dir.ToString(), computeAndAssignMs = Math.Round(compute, 1), toRenderedFrameMs = Math.Round(sw.Elapsed.TotalMilliseconds, 1), rows = _shown.Count };
     }
 
-    public void Select(string id) { var r = _shown.FirstOrDefault(x => x.Id == id); Grid.SelectedItem = r; if (r is not null) Grid.ScrollIntoView(r, Grid.Columns[0]); }
+    public void Select(string id) { var r = _shown.FirstOrDefault(x => x.Id == id); Table.Selected = r; if (r is not null) Table.ScrollTo(r, 0); }
+    public void ScrollToEnd() => Table.ScrollToEnd();
 
     private void UpdateDetails()
     {
@@ -204,7 +167,7 @@ public sealed class TransactionsPage
             if (last is { } l) frames.Add((t - l).TotalMilliseconds);
             last = t;
             if (idx >= rows.Count) { tcs.TrySetResult(); return; }
-            Grid.ScrollIntoView(rows[Math.Min(idx, rows.Count - 1)], Grid.Columns[1]);
+            Table.ScrollTo(rows[Math.Min(idx, rows.Count - 1)], 1);
             idx += step;
             _w.RequestAnimationFrame(Tick);
         }
@@ -231,6 +194,7 @@ public sealed class TransactionsPage
         selected = Selected is null ? null : new { id = Selected.Id, description = Selected.Description, date = Selected.Date, amountCents = Selected.AmountCents, amount = Selected.AmountText, account = Selected.Account, category = Selected.Category, mainCategory = _s.MainName(Selected.MainCategoryId), note = Selected.Note },
         detailsPanel = new { title = _dTitle.Text, body = _dBody.Text },
         firstRows = _shown.Take(5).Select(r => new { r.Id, r.Date, r.Description, r.Account, r.Category, amountCents = r.AmountCents, amount = r.AmountText }),
-        columns = Grid.Columns.Select(c => (string)c.Tag!),
+        columns = Table.ColumnNames,
+        table = Table.GetType().Name,
     };
 }

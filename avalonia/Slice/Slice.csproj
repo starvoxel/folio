@@ -6,12 +6,16 @@
     <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(DataGridImpl)' == 'pro'">
+    <DefineConstants>$(DefineConstants);PRODATAGRID</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" />
     <PackageReference Include="Avalonia.Desktop" />
     <PackageReference Include="Avalonia.Skia" />
     <PackageReference Include="Avalonia.Headless" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Condition="'$(DataGridImpl)' != 'pro'" />
+    <PackageReference Include="ProDataGrid" Condition="'$(DataGridImpl)' == 'pro'" />
     <PackageReference Include="FluentAvaloniaUI" />
   </ItemGroup>
   <ItemGroup Condition="'$(TelemetryVariant)' == 'exclude'">

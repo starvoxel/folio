@@ -59,6 +59,7 @@ public static class SelfTest
         var psi = new ProcessStartInfo(exe) { UseShellExecute = false };
         foreach (var x in new[] { "--data", data, "--automation", "--discovery", disc, "--theme", theme }) psi.ArgumentList.Add(x);
         if (a.Contains("--headless")) psi.ArgumentList.Add("--headless");
+        for (var i = 0; i < a.Count - 1; i++) if (a[i] == "--extra-arg") psi.ArgumentList.Add(a[i + 1]);
         var sw = Stopwatch.StartNew();
         using var p = Process.Start(psi)!;
         JsonElement status = default;

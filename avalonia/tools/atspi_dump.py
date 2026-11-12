@@ -38,6 +38,10 @@ def info(o, depth, a):
             n = o.get_text_iface().get_character_count()
             d["text"] = o.get_text_iface().get_text(0, min(n, 200))
     except Exception: pass
+    try:
+        at = o.get_attributes()
+        if at: d["attributes"] = dict(at)
+    except Exception: pass
     d["child_count"] = o.get_child_count()
     if depth < a.max_depth:
         kids = []
