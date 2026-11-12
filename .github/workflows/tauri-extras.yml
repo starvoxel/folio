@@ -3,6 +3,7 @@ name: tauri-extras
 on:
   push:
     branches: [spike/slice-tauri]
+    paths-ignore: ['*.md', 'tauri/evidence/**', 'EFFORT-LOG.md']
   workflow_dispatch:
 
 permissions:
