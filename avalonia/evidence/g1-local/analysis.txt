@@ -1,0 +1,37 @@
+--- strace-netns.log: 4886 network syscalls
+address families used by connect/sendto/bind:
+     21 sa_family=AF_INET
+      8 sa_family=AF_NETLINK
+     14 sa_family=AF_UNIX
+connect/sendto/sendmsg to an AF_INET/AF_INET6 address that is not loopback:
+  none
+--- strace-idle.log: 4942 network syscalls
+address families used by connect/sendto/bind:
+     25 sa_family=AF_INET
+      8 sa_family=AF_NETLINK
+     14 sa_family=AF_UNIX
+connect/sendto/sendmsg to an AF_INET/AF_INET6 address that is not loopback:
+  none
+--- tcpdump (all interfaces, whole capture incl. this machine's other traffic):
+3010
+non-loopback packets:
+00:01:53.112224 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37086: Flags [P.], seq 3245662638:3245662686, ack 552370132, win 11470, options [nop,nop,TS val 3552615879 ecr 3408709049], length 48
+00:01:53.112281 eth0  Out IP 192.0.2.2.37086 > 160.79.104.10.443: Flags [.], ack 48, win 94, options [nop,nop,TS val 3408710115 ecr 3552615879], length 0
+00:01:54.281138 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37086: Flags [P.], seq 48:90, ack 1, win 11470, options [nop,nop,TS val 3552617048 ecr 3408710115], length 42
+00:01:54.281182 eth0  Out IP 192.0.2.2.37086 > 160.79.104.10.443: Flags [.], ack 90, win 94, options [nop,nop,TS val 3408711284 ecr 3552617048], length 0
+00:01:54.464754 eth0  Out IP 192.0.2.2.39846 > 34.149.66.165.443: Flags [P.], seq 1112467418:1112474378, ack 426228725, win 75, options [nop,nop,TS val 2323063940 ecr 2987628605], length 6960
+00:01:54.464997 eth0  In  IP 34.149.66.165.443 > 192.0.2.2.39846: Flags [.], ack 6960, win 409, options [nop,nop,TS val 2987662691 ecr 2323063940], length 0
+00:01:54.553844 eth0  In  IP 34.149.66.165.443 > 192.0.2.2.39846: Flags [P.], seq 1:364, ack 6960, win 409, options [nop,nop,TS val 2987662780 ecr 2323063940], length 363
+00:01:54.553889 eth0  Out IP 192.0.2.2.39846 > 34.149.66.165.443: Flags [.], ack 364, win 75, options [nop,nop,TS val 2323064029 ecr 2987662780], length 0
+00:01:55.871426 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37086: Flags [P.], seq 90:129, ack 1, win 11470, options [nop,nop,TS val 3552618638 ecr 3408711284], length 39
+00:01:55.871472 eth0  Out IP 192.0.2.2.37086 > 160.79.104.10.443: Flags [.], ack 129, win 94, options [nop,nop,TS val 3408712874 ecr 3552618638], length 0
+00:01:56.935986 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37086: Flags [P.], seq 129:165, ack 1, win 11470, options [nop,nop,TS val 3552619703 ecr 3408712874], length 36
+00:01:56.936024 eth0  Out IP 192.0.2.2.37086 > 160.79.104.10.443: Flags [.], ack 165, win 94, options [nop,nop,TS val 3408713938 ecr 3552619703], length 0
+00:01:57.327176 eth0  Out IP 192.0.2.2.38288 > 160.79.104.10.443: Flags [.], ack 1918287662, win 73, options [nop,nop,TS val 4228779396 ecr 4050504665], length 0
+00:01:57.327369 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.38288: Flags [.], ack 1, win 397, options [nop,nop,TS val 4050519768 ecr 4228734180], length 0
+00:01:58.323152 eth0  Out IP 192.0.2.2.37770 > 160.79.104.10.443: Flags [P.], seq 1372957272:1372985633, ack 3774390841, win 75, options [nop,nop,TS val 2241406250 ecr 1776437359], length 28361
+00:01:58.323525 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37770: Flags [.], ack 28361, win 1078, options [nop,nop,TS val 1776473116 ecr 2241406250], length 0
+00:01:58.391233 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37770: Flags [P.], seq 1:514, ack 28361, win 1185, options [nop,nop,TS val 1776473183 ecr 2241406250], length 513
+00:01:58.391266 eth0  Out IP 192.0.2.2.37770 > 160.79.104.10.443: Flags [.], ack 514, win 75, options [nop,nop,TS val 2241406318 ecr 1776473183], length 0
+00:01:58.493992 eth0  In  IP 160.79.104.10.443 > 192.0.2.2.37086: Flags [P.], seq 165:207, ack 1, win 11470, options [nop,nop,TS val 3552621261 ecr 3408713938], length 42
+00:01:58.494033 eth0  Out IP 192.0.2.2.37086 > 160.79.104.10.443: Flags [.], ack 207, win 94, options [nop,nop,TS val 3408715496 ecr 3552621261], length 0
