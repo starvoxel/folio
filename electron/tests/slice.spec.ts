@@ -202,6 +202,8 @@ test('settings dialog: focus lands inside, Tab cycles, Escape closes', async () 
   let s = await state(L.page);
   expect(s.dialog.open).toBe(true);
   expect(s.dialog.focusInside).toBe(true);
+  await L.page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished))); // let the open animation end
+  await settle(L.page);
   await L.page.screenshot({ path: path.join(shotDir, 'dialog-open.png') });
   // Tab cycles inside the dialog.
   for (let i = 0; i < 6; i++) {
