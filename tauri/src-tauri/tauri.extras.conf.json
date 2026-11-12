@@ -1,0 +1,10 @@
+{
+  "app": {
+    "security": {
+      "capabilities": [
+        "main",
+        { "identifier": "extras", "description": "Extras build only: listen for the native drop event the Rust side re-emits, and call the native dialog command", "windows": ["main"], "permissions": ["core:event:allow-listen", "core:event:allow-unlisten", "allow-open-csv-dialog"] }
+      ]
+    }
+  }
+}
