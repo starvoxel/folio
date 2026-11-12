@@ -6,6 +6,11 @@ on:
   push:
     branches: [spike/slice-electron]
   workflow_dispatch:
+    inputs:
+      only:
+        description: 'Run only one job group (sr = screen reader); empty runs everything'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -18,6 +23,7 @@ defaults:
 jobs:
   # F1: memory points P0..P5, default and with Chromium accessibility forced on, per OS.
   f1-memory:
+    if: ${{ inputs.only == '' }}
     name: F1 memory (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -53,6 +59,7 @@ jobs:
 
   # F2 + E3: the G3 scenario on every OS, with the test binary (Playwright Electron mode) and with the exact release binary (pipe driver).
   g3-matrix:
+    if: ${{ inputs.only == '' }}
     name: G3 scenario (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -108,6 +115,7 @@ jobs:
 
   # F3: what the operating system's accessibility API reports.
   a11y-platform:
+    if: ${{ inputs.only == '' }}
     name: F3 platform a11y (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -144,6 +152,7 @@ jobs:
 
   # F2: best-effort network observation on macOS.
   macos-network:
+    if: ${{ inputs.only == '' }}
     name: F2 macOS network observation
     runs-on: macos-latest
     steps:
@@ -166,6 +175,7 @@ jobs:
 
   # E1: which variants make a non-loopback connect() or send packets, with real IPv6 available.
   e1-matrix:
+    if: ${{ inputs.only == '' }}
     name: E1 connect() matrix (Linux, IPv6 sink)
     runs-on: ubuntu-24.04
     steps:
@@ -188,6 +198,7 @@ jobs:
 
   # E2: Chromium sandbox on Linux, and what a deb / AppImage needs.
   e2-sandbox:
+    if: ${{ inputs.only == '' }}
     name: E2 sandbox (ubuntu-24.04)
     runs-on: ubuntu-24.04
     steps:
@@ -212,6 +223,7 @@ jobs:
 
   # E5: ASAR integrity fuse on Windows, whether Chromium's sandbox is on for the Windows release build, installer size.
   e5-windows:
+    if: ${{ inputs.only == '' }}
     name: E5 Windows (asar fuse, sandbox, installer)
     runs-on: windows-2025
     steps:
@@ -259,6 +271,7 @@ jobs:
 
   # F3 stretch: a real screen reader (Guidepup: NVDA on Windows, VoiceOver on macOS). Time-boxed; failure is a finding.
   screen-reader:
+    if: ${{ inputs.only == '' || inputs.only == 'sr' }}
     name: F3 stretch screen reader (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -285,7 +298,8 @@ jobs:
         working-directory: electron/scripts/sr
         run: |
           npm install
-          npx @guidepup/setup --ci 2>&1 | tail -30
+          npx @guidepup/setup setup --ci 2>&1 | tail -30
+          if [ "$RUNNER_OS" = Windows ]; then npx @guidepup/setup install nvda 2>&1 | tail -30; fi
       - name: Run the screen reader scenario
         continue-on-error: true
         run: |

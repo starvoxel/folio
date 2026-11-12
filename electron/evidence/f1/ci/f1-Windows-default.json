@@ -7,12 +7,12 @@
   "points": {
     "P0": {
       "primaryName": "private working set",
-      "primaryMB": 95.7,
+      "primaryMB": 95,
       "secondaryName": "total working set",
-      "secondaryMB": 314.6,
+      "secondaryMB": 313.6,
       "processes": 5,
       "detail": [
-        "Folio:40",
+        "Folio:39",
         "Folio#1:12",
         "Folio#2:7",
         "Folio#3:36",
@@ -21,23 +21,23 @@
     },
     "P1": {
       "primaryName": "private working set",
-      "primaryMB": 104.4,
+      "primaryMB": 104.2,
       "secondaryName": "total working set",
-      "secondaryMB": 334.1,
+      "secondaryMB": 333.7,
       "processes": 5,
       "detail": [
         "Folio:40",
         "Folio#1:12",
         "Folio#2:7",
-        "Folio#3:46",
+        "Folio#3:45",
         "cmd:1"
       ]
     },
     "P2": {
       "primaryName": "private working set",
-      "primaryMB": 160.5,
+      "primaryMB": 160.9,
       "secondaryName": "total working set",
-      "secondaryMB": 394.8,
+      "secondaryMB": 395.7,
       "processes": 5,
       "detail": [
         "Folio:32",
@@ -49,43 +49,43 @@
     },
     "P3": {
       "primaryName": "private working set",
-      "primaryMB": 163.1,
+      "primaryMB": 161.5,
       "secondaryName": "total working set",
-      "secondaryMB": 396.5,
+      "secondaryMB": 393.9,
       "processes": 5,
       "detail": [
         "Folio:31",
         "Folio#1:12",
         "Folio#2:7",
-        "Folio#3:113",
+        "Folio#3:112",
         "cmd:1"
       ]
     },
     "P4": {
       "primaryName": "private working set",
-      "primaryMB": 102.9,
+      "primaryMB": 104,
       "secondaryName": "total working set",
-      "secondaryMB": 301.1,
+      "secondaryMB": 299.5,
       "processes": 5,
       "detail": [
         "Folio:29",
         "Folio#1:11",
         "Folio#2:7",
-        "Folio#3:55",
+        "Folio#3:56",
         "cmd:1"
       ]
     },
     "P5": {
       "primaryName": "private working set",
-      "primaryMB": 72,
+      "primaryMB": 66.6,
       "secondaryName": "total working set",
-      "secondaryMB": 145.9,
+      "secondaryMB": 140.5,
       "processes": 5,
       "detail": [
         "Folio:7",
         "Folio#1:6",
         "Folio#2:3",
-        "Folio#3:56",
+        "Folio#3:50",
         "cmd:1"
       ]
     }

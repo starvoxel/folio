@@ -1,0 +1,56 @@
+{
+  "label": "baseline-rep2",
+  "platform": "linux",
+  "soak": 20,
+  "idleS": 60,
+  "args": [
+    "--no-sandbox"
+  ],
+  "points": {
+    "P1": {
+      "primaryName": "PSS",
+      "primaryMB": 333.9,
+      "secondaryName": "RSS",
+      "secondaryMB": 611.1,
+      "processes": 6,
+      "detail": [
+        "Folio:92",
+        "Folio:26",
+        "Folio:15",
+        "Folio:92",
+        "Folio:14",
+        "Folio:95"
+      ]
+    },
+    "P3": {
+      "primaryName": "PSS",
+      "primaryMB": 403.8,
+      "secondaryName": "RSS",
+      "secondaryMB": 687.6,
+      "processes": 6,
+      "detail": [
+        "Folio:83",
+        "Folio:26",
+        "Folio:15",
+        "Folio:170",
+        "Folio:14",
+        "Folio:96"
+      ]
+    },
+    "P4": {
+      "primaryName": "PSS",
+      "primaryMB": 329.6,
+      "secondaryName": "RSS",
+      "secondaryMB": 609.9,
+      "processes": 6,
+      "detail": [
+        "Folio:81",
+        "Folio:26",
+        "Folio:15",
+        "Folio:101",
+        "Folio:14",
+        "Folio:93"
+      ]
+    }
+  }
+}

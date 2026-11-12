@@ -1,0 +1,729 @@
+AXIsProcessTrusted=true
+[AXApplication] title='Folio'
+  [AXWindow] subrole=AXStandardWindow title='Folio' focused=false
+    [AXGroup] title='Folio' value= selected=false focused=false rows=0
+      [AXGroup] value= selected=false focused=false rows=0
+        [AXGroup] value= selected=false focused=false rows=0
+          [AXGroup] value= selected=false focused=false rows=0
+            [AXGroup] value= selected=false focused=false rows=0
+              [AXGroup] value= selected=false focused=false rows=0
+                [AXScrollArea] focused=false
+                  [AXWebArea] title='Folio' value= selected=false focused=false rows=0 columns=0
+                    [AXGroup] value= selected=false focused=false rows=0 columns=0
+                      [AXGroup] subrole=AXLandmarkNavigation title='Main navigation' desc='Main navigation' value= selected=false focused=false rows=0 columns=0
+                        [AXGroup] value= selected=false focused=false rows=0 columns=0
+                          [AXStaticText] value=Folio selected=false focused=false rows=0 columns=0
+                        [AXGroup] value= selected=false focused=false rows=0 columns=0
+                          [AXButton] title='Overview' value= selected=false focused=false rows=0 columns=0
+                          [AXButton] title='Transactions' value= selected=false focused=false rows=0 columns=0
+                          [AXButton] title='Reporting' value= selected=false focused=false rows=0 columns=0
+                          [AXButton] title='Net worth' value= selected=false focused=false rows=0 columns=0
+                          [AXButton] title='Accounts' value= selected=false focused=false rows=0 columns=0
+                          [AXButton] title='Rules & categories' value= selected=false focused=false rows=0 columns=0
+                        [AXButton] title='Settings' value= selected=false focused=false rows=0 columns=0
+                      [AXGroup] subrole=AXLandmarkBanner value= selected=false focused=false rows=0 columns=0
+                        [AXStaticText] value=Household 2026.folio selected=false focused=false rows=0 columns=0
+                        [AXStaticText] value=Saved automatically selected=false focused=false rows=0 columns=0
+                        [AXButton] title='Undo (not in this slice)' desc='Undo (not in this slice)' value= selected=false focused=false rows=0 columns=0
+                        [AXButton] title='Redo (not in this slice)' desc='Redo (not in this slice)' value= selected=false focused=false rows=0 columns=0
+                        [AXButton] title='Import CSV' value= selected=false focused=false rows=0 columns=0
+                        [AXPopUpButton] title='Month (placeholder)' desc='Month (placeholder)' value=March 2026 selected=false focused=false rows=0 columns=0
+                        [AXPopUpButton] title='Menu' desc='Menu' value= selected=false focused=false rows=0 columns=0
+                      [AXGroup] subrole=AXLandmarkMain title='Transactions' desc='Transactions' value= selected=false focused=false rows=0 columns=0
+                        [AXHeading] title='Transactions' value=1 selected=false focused=false rows=0 columns=0
+                          [AXStaticText] value=Transactions selected=false focused=false rows=0 columns=0
+                        [AXStaticText] value=10,000 transactions selected=false focused=false rows=0 columns=0
+                        [AXTextField] title='Search transactions' desc='Search transactions' value= selected=false focused=false rows=0 columns=0
+                        [AXPopUpButton] title='Account filter' desc='Account filter' value=All accounts selected=false focused=false rows=0 columns=0
+                          [AXMenuItem] value=All accounts selected=true focused=false rows=0 columns=0
+                        [AXPopUpButton] title='Category filter' desc='Category filter' value=All categories selected=false focused=false rows=0 columns=0
+                          [AXMenuItem] value=All categories selected=true focused=false rows=0 columns=0
+                        [AXGroup] value= selected=false focused=false rows=0 columns=0
+                          [AXTable] title='Transactions' desc='Transactions' value= selected=false focused=false rows=23 columns=5
+                            [AXRow] title='Date Description Account Category Amount' value= selected=false focused=false index=0 rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Date' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Description' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Account' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Category' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Amount' value= selected=false focused=false rows=0 columns=0
+                            [AXGroup] title='Transaction rows' desc='Transaction rows' value= selected=false focused=false rows=0 columns=0
+                              [AXGroup] value= selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Aeroflot Аэрофлот #4389 Travel Mastercard Flights and hotels -$135.41' value= selected=false focused=false index=1 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Aeroflot Аэрофлот #4389 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Flights and hotels selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$135.41 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Air Canada Rewards Visa Flights and hotels -$480.98' value= selected=false focused=false index=2 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Air Canada selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Flights and hotels selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$480.98 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 AliExpress 全球速卖通 Travel Mastercard Online -$15.34' value= selected=false focused=false index=3 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=AliExpress 全球速卖通 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Online selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$15.34 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Amazon.ca Marketplace #9770 Rewards Visa Online -$239.51' value= selected=true focused=true index=4 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Amazon.ca Marketplace #9770 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Online selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$239.51 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Café Olimpico #7718 Everyday Chequing Coffee -$7.43' value= selected=false focused=false index=5 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Café Olimpico #7718 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$7.43 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 GO Transit Rewards Visa Transit -$128.95' value= selected=false focused=false index=6 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=GO Transit selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Transit selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$128.95 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Hydro One Rewards Visa Utilities -$295.85' value= selected=false focused=false index=7 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Hydro One selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Utilities selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$295.85 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Noodle House 麵屋 Travel Mastercard Restaurants -$22.34' value= selected=false focused=false index=8 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Noodle House 麵屋 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Restaurants selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$22.34 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Noodle House 麵屋 Travel Mastercard Restaurants -$18.07' value= selected=false focused=false index=9 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Noodle House 麵屋 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Restaurants selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$18.07 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Payroll Acme Ltd Everyday Chequing Paycheque $3,383.62' value= selected=false focused=false index=10 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Payroll Acme Ltd selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Paycheque selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=$3,383.62 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Pharmaprix Rewards Visa Pharmacy -$10.07' value= selected=false focused=false index=11 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Pharmaprix selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Pharmacy selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$10.07 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Refund 退款 #5730 Everyday Chequing Other income $241.36' value= selected=false focused=false index=12 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Refund 退款 #5730 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Other income selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=$241.36 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Shell Station Travel Mastercard Fuel -$37.88' value= selected=false focused=false index=13 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Shell Station selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Fuel selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$37.88 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Sobeys Everyday Chequing Supermarket -$45.72' value= selected=false focused=false index=14 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Sobeys selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Supermarket selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$45.72 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Sobeys #5630 Travel Mastercard Supermarket -$268.74' value= selected=false focused=false index=15 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Sobeys #5630 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Supermarket selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$268.74 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Sobeys #7905 Rewards Visa Supermarket -$76.26' value= selected=false focused=false index=16 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Sobeys #7905 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Supermarket selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$76.26 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 TTC Presto reload Everyday Chequing Transit -$81.55' value= selected=false focused=false index=17 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=TTC Presto reload selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Transit selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$81.55 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 TTC Presto reload #6800 Rewards Visa Transit -$71.71' value= selected=false focused=false index=18 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=TTC Presto reload #6800 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Transit selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$71.71 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Tim Hortons Rewards Visa Coffee -$6.97' value= selected=false focused=false index=19 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Tim Hortons selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$6.97 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Virement épargne Everyday Chequing Savings transfers -$362.67' value= selected=false focused=false index=20 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Virement épargne selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Savings transfers selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$362.67 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Кофейня Бодрое утро Travel Mastercard Coffee -$7.46' value= selected=false focused=false index=21 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Кофейня Бодрое утро selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$7.46 selected=false focused=false rows=0 columns=0
+                                [AXRow] title='2026-01-01 Кофейня Бодрое утро Rewards Visa Coffee -$6.63' value= selected=false focused=false index=22 rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Кофейня Бодрое утро selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                                  [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                    [AXStaticText] value=-$6.63 selected=false focused=false rows=0 columns=0
+                            [AXColumn] value= selected=false focused=false index=0 rows=23 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Date' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                            [AXColumn] value= selected=false focused=false index=1 rows=23 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Description' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Aeroflot Аэрофлот #4389 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Air Canada selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=AliExpress 全球速卖通 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Amazon.ca Marketplace #9770 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Café Olimpico #7718 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=GO Transit selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Hydro One selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Noodle House 麵屋 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Noodle House 麵屋 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Payroll Acme Ltd selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Pharmaprix selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Refund 退款 #5730 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Shell Station selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Sobeys selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Sobeys #5630 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Sobeys #7905 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=TTC Presto reload selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=TTC Presto reload #6800 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Tim Hortons selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Virement épargne selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Кофейня Бодрое утро selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Кофейня Бодрое утро selected=false focused=false rows=0 columns=0
+                            [AXColumn] value= selected=false focused=false index=2 rows=23 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Account' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Everyday Chequing selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Travel Mastercard selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                            [AXColumn] value= selected=false focused=false index=3 rows=23 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Category' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Flights and hotels selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Flights and hotels selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Online selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Online selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Transit selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Utilities selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Restaurants selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Restaurants selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Paycheque selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Pharmacy selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Other income selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Fuel selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Supermarket selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Supermarket selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Supermarket selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Transit selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Transit selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Savings transfers selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=Coffee selected=false focused=false rows=0 columns=0
+                            [AXColumn] value= selected=false focused=false index=4 rows=23 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Amount' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$135.41 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$480.98 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$15.34 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$239.51 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:5 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$7.43 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:6 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$128.95 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:7 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$295.85 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:8 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$22.34 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:9 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$18.07 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:10 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=$3,383.62 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:11 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$10.07 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:12 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=$241.36 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:13 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$37.88 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:14 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$45.72 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:15 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$268.74 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:16 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$76.26 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:17 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$81.55 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:18 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$71.71 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:19 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$6.97 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:20 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$362.67 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:21 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$7.46 selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:22 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXStaticText] value=-$6.63 selected=false focused=false rows=0 columns=0
+                            [AXGroup] value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Date' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:1 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Description' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:2 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Account' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:3 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Category' value= selected=false focused=false rows=0 columns=0
+                              [AXCell] value= selected=false focused=false rows=0 columns=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:1 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:4 length:1 type = kAXValueCFRangeType}
+                                [AXButton] title='Amount' value= selected=false focused=false rows=0 columns=0
+                        [AXGroup] subrole=AXLandmarkComplementary title='Transaction details' desc='Transaction details' value= selected=false focused=false rows=0 columns=0
+                          [AXList] subrole=AXDefinitionList value= selected=false focused=false rows=0 columns=0
+                            [AXHeading] title='Amazon.ca Marketplace #9770' value=2 selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Amazon.ca Marketplace #9770 selected=false focused=false rows=0 columns=0
+                            [AXGroup] value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=-$239.51 selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXTerm title='Date' value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Date selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXDefinition value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=2026-01-01 selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXTerm title='Account' value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Account selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXDefinition value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Rewards Visa selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=  selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=( selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=TD selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=) selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXTerm title='Category' value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Category selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXDefinition value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Shopping › Online selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXTerm title='Note' value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=Note selected=false focused=false rows=0 columns=0
+                            [AXGroup] subrole=AXDefinition value= selected=false focused=false rows=0 columns=0
+                              [AXStaticText] value=No note selected=false focused=false rows=0 columns=0
+              [AXGroup] value= selected=false focused=false rows=0
+    [AXButton] subrole=AXCloseButton focused=false
+    [AXButton] subrole=AXFullScreenButton focused=false
+      [AXGroup] focused=false
+        [AXGroup] focused=false
+    [AXButton] subrole=AXMinimizeButton focused=false
+  [AXMenuBar] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+    [AXMenuBarItem] title='Apple' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+      [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='About This Mac' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='System Information' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='System Settings…, 1 update' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='App Store' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Recent Items' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Applications' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Installer' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Show “Installer” in Finder' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='System Settings' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Show “System Settings” in Finder' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Documents' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='AnkaGuestAddons.pkg' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Show “AnkaGuestAddons.pkg” in Finder' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Servers' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Macintosh HD' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Clear Menu' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Force Quit…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Force Quit Folio' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Sleep' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Restart…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Restart' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Shut Down…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Shut Down' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Lock Screen' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Log Out Anka…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Log Out Anka' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+    [AXMenuBarItem] title='Folio' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+      [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='About folio-electron-spike' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Services' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Activity Monitor' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Allocations & Leaks' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='File Activity' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='System Trace' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Time Profile Active Application' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Time Profile App Under Mouse' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Time Profile Entire System' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Toggle Instruments Recording' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Services Settings…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Hide folio-electron-spike' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Hide Others' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Show All' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Quit folio-electron-spike' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Quit and Keep Windows' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+    [AXMenuBarItem] title='File' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+      [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Close Window' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Close All' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+    [AXMenuBarItem] title='Edit' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+      [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Undo' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Redo' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Cut' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Copy' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Paste' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Paste and Match Style' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Delete' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Select All' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Substitutions' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Show Substitutions' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Smart Quotes' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Smart Dashes' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Text Replacement' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Speech' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Start Speaking' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Stop Speaking' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='AutoFill' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Contact…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Passwords…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Credit Card…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Start Dictation…' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Emoji & Symbols' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+    [AXMenuBarItem] title='View' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+      [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Reload' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Force Reload' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Toggle Developer Tools' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Actual Size' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Zoom In' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Zoom Out' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Toggle Full Screen' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+    [AXMenuBarItem] title='Window' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+      [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Minimize' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Minimize All' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Zoom' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Zoom All' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Fill' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Center' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Enter Full Screen' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Move & Resize' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Halves' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Left' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Right' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Top' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Bottom' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Quarters' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Top Left' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Top Right' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Bottom Left' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Bottom Right' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Arrange' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Left & Right' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Left & Quarters' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Right & Left' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Right & Quarters' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Top & Bottom' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Top & Quarters' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Bottom & Top' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Bottom & Quarters' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Quarters' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Return to Previous Size' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Full Screen Tile' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+          [AXMenu] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Left of Screen' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+            [AXMenuItem] title='Right of Screen' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Remove Window from Set' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Bring All to Front' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Arrange in Front' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}
+        [AXMenuItem] title='Folio' selected=false focused=false index=0 rowRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType} colRange=<AXValue 0xc73431d10> {value = location:0 length:0 type = kAXValueCFRangeType}

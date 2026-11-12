@@ -1,0 +1,12 @@
+01-overview-nav: exit 0 39 nodes -> ci-out/a11y-platform/01-overview-nav.txt /home/runner/work/folio/folio/electron/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+02-transactions-no-selection: exit 0 415 nodes -> ci-out/a11y-platform/02-transactions-no-selection.txt /home/runner/work/folio/folio/electron/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+03-transactions-row-selected: exit 0 438 nodes -> ci-out/a11y-platform/03-transactions-row-selected.txt /home/runner/work/folio/folio/electron/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+04-transactions-scrolled-far: exit 0 559 nodes -> ci-out/a11y-platform/04-transactions-scrolled-far.txt /home/runner/work/folio/folio/electron/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+05-reporting: exit 0 215 nodes -> ci-out/a11y-platform/05-reporting.txt /home/runner/work/folio/folio/electron/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+06-dialog-open: exit 0 20 nodes -> ci-out/a11y-platform/06-dialog-open.txt /home/runner/work/folio/folio/electron/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))

@@ -1,0 +1,6 @@
+01-overview-nav: exit 0 39 nodes -> ci-out\a11y-platform\01-overview-nav.txt 
+02-transactions-no-selection: exit 0 312 nodes -> ci-out\a11y-platform\02-transactions-no-selection.txt 
+03-transactions-row-selected: exit 0 335 nodes -> ci-out\a11y-platform\03-transactions-row-selected.txt 
+04-transactions-scrolled-far: exit 0 445 nodes -> ci-out\a11y-platform\04-transactions-scrolled-far.txt 
+05-reporting: exit 0 202 nodes -> ci-out\a11y-platform\05-reporting.txt 
+06-dialog-open: exit 0 22 nodes -> ci-out\a11y-platform\06-dialog-open.txt 

@@ -10,73 +10,73 @@
   "points": {
     "P0": {
       "primaryName": "PSS",
-      "primaryMB": 345.6,
+      "primaryMB": 345.2,
       "secondaryName": "RSS",
-      "secondaryMB": 706.8,
+      "secondaryMB": 709.1,
       "processes": 6,
       "detail": [
         "Folio:99",
-        "Folio:28",
+        "Folio:29",
         "Folio:18",
         "Folio:85",
         "Folio:18",
-        "Folio:98"
+        "Folio:97"
       ]
     },
     "P1": {
       "primaryName": "PSS",
-      "primaryMB": 365.2,
+      "primaryMB": 364.4,
       "secondaryName": "RSS",
-      "secondaryMB": 733.3,
+      "secondaryMB": 735.5,
       "processes": 6,
       "detail": [
         "Folio:100",
-        "Folio:28",
+        "Folio:29",
         "Folio:18",
-        "Folio:101",
+        "Folio:100",
         "Folio:18",
         "Folio:100"
       ]
     },
     "P2": {
       "primaryName": "PSS",
-      "primaryMB": 437.7,
+      "primaryMB": 435.7,
       "secondaryName": "RSS",
-      "secondaryMB": 812.3,
+      "secondaryMB": 813.2,
       "processes": 6,
       "detail": [
         "Folio:100",
-        "Folio:28",
+        "Folio:29",
         "Folio:18",
-        "Folio:173",
+        "Folio:172",
         "Folio:18",
         "Folio:100"
       ]
     },
     "P3": {
       "primaryName": "PSS",
-      "primaryMB": 430.3,
+      "primaryMB": 429.3,
       "secondaryName": "RSS",
-      "secondaryMB": 803,
+      "secondaryMB": 807,
       "processes": 6,
       "detail": [
-        "Folio:92",
-        "Folio:28",
+        "Folio:91",
+        "Folio:29",
         "Folio:18",
-        "Folio:176",
+        "Folio:175",
         "Folio:18",
-        "Folio:99"
+        "Folio:100"
       ]
     },
     "P4": {
       "primaryName": "PSS",
-      "primaryMB": 357.8,
+      "primaryMB": 356.6,
       "secondaryName": "RSS",
-      "secondaryMB": 729.2,
+      "secondaryMB": 731,
       "processes": 6,
       "detail": [
-        "Folio:90",
-        "Folio:28",
+        "Folio:89",
+        "Folio:29",
         "Folio:18",
         "Folio:107",
         "Folio:18",
@@ -85,17 +85,17 @@
     },
     "P5": {
       "primaryName": "PSS",
-      "primaryMB": 381.8,
+      "primaryMB": 374.9,
       "secondaryName": "RSS",
-      "secondaryMB": 753.7,
+      "secondaryMB": 749.7,
       "processes": 6,
       "detail": [
         "Folio:90",
-        "Folio:28",
+        "Folio:29",
         "Folio:18",
-        "Folio:130",
+        "Folio:124",
         "Folio:18",
-        "Folio:98"
+        "Folio:97"
       ]
     }
   }

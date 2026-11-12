@@ -9,92 +9,92 @@
   "points": {
     "P0": {
       "primaryName": "PSS",
-      "primaryMB": 352.8,
+      "primaryMB": 349.3,
       "secondaryName": "RSS",
-      "secondaryMB": 718.8,
+      "secondaryMB": 706.6,
       "processes": 6,
       "detail": [
-        "Folio:100",
+        "Folio:99",
         "Folio:29",
         "Folio:18",
-        "Folio:84",
-        "Folio:18",
-        "Folio:105"
+        "Folio:83",
+        "Folio:17",
+        "Folio:103"
       ]
     },
     "P1": {
       "primaryName": "PSS",
-      "primaryMB": 369.2,
+      "primaryMB": 366.2,
       "secondaryName": "RSS",
-      "secondaryMB": 742.7,
+      "secondaryMB": 730.6,
       "processes": 6,
       "detail": [
-        "Folio:100",
+        "Folio:99",
         "Folio:29",
         "Folio:18",
-        "Folio:98",
-        "Folio:18",
-        "Folio:107"
+        "Folio:97",
+        "Folio:17",
+        "Folio:106"
       ]
     },
     "P2": {
       "primaryName": "PSS",
-      "primaryMB": 442.1,
+      "primaryMB": 439.2,
       "secondaryName": "RSS",
-      "secondaryMB": 819.8,
+      "secondaryMB": 808.3,
       "processes": 6,
       "detail": [
-        "Folio:100",
+        "Folio:99",
         "Folio:29",
         "Folio:18",
-        "Folio:172",
-        "Folio:18",
-        "Folio:106"
+        "Folio:171",
+        "Folio:17",
+        "Folio:105"
       ]
     },
     "P3": {
       "primaryName": "PSS",
-      "primaryMB": 434,
+      "primaryMB": 428.2,
       "secondaryName": "RSS",
-      "secondaryMB": 814,
+      "secondaryMB": 797.4,
       "processes": 6,
       "detail": [
-        "Folio:91",
+        "Folio:90",
         "Folio:29",
         "Folio:18",
-        "Folio:171",
-        "Folio:18",
-        "Folio:107"
+        "Folio:170",
+        "Folio:17",
+        "Folio:105"
       ]
     },
     "P4": {
       "primaryName": "PSS",
-      "primaryMB": 361.9,
+      "primaryMB": 359.3,
       "secondaryName": "RSS",
-      "secondaryMB": 738.5,
+      "secondaryMB": 727.1,
       "processes": 6,
       "detail": [
         "Folio:89",
         "Folio:29",
         "Folio:18",
-        "Folio:105",
-        "Folio:18",
-        "Folio:104"
+        "Folio:104",
+        "Folio:17",
+        "Folio:103"
       ]
     },
     "P5": {
       "primaryName": "PSS",
-      "primaryMB": 382.6,
+      "primaryMB": 377.2,
       "secondaryName": "RSS",
-      "secondaryMB": 759.1,
+      "secondaryMB": 745,
       "processes": 6,
       "detail": [
         "Folio:89",
         "Folio:29",
         "Folio:18",
-        "Folio:124",
-        "Folio:18",
-        "Folio:105"
+        "Folio:121",
+        "Folio:17",
+        "Folio:103"
       ]
     }
   }

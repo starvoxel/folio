@@ -1,0 +1,415 @@
+[application] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=doDefault|showContextMenu
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=RootView ACTIONS=doDefault|showContextMenu
+    [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NonClientView ACTIONS=doDefault|showContextMenu
+      [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NativeFrameView ACTIONS=doDefault|showContextMenu
+        [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=ClientView ACTIONS=doDefault|showContextMenu
+          [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+            [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+                [panel] name='' states=ENABLED attrs=class=WebView ACTIONS=doDefault|showContextMenu
+                  [panel] name='' states=ENABLED attrs=class=NativeViewHost ACTIONS=doDefault|showContextMenu
+                [document web] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=#document ACTIONS=doDefault|showContextMenu
+                  [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=id=root;tag=div ACTIONS=click|showContextMenu
+                    [landmark] name='Main navigation' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-InlineDrawer rkjj3x6 fui-Drawer fui-NavDrawer nav ___s6p6od0 f1xteiwb f1vgc2s3 fvfyk4 f1exhnwo f1ctqxl6 f3gca8 f12j6lm0;tag=div;xml-roles=navigation ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=brand;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Folio' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-NavDrawerBody fui-DrawerBody ri6rvx7 ___1t51h4r fif7vu7 f3gca8 f22iagw f1vx9l62 f1j0q4x9;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [push button] name='Overview' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Transactions' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=fui-NavItem rdi7s9k ___i5hilb0 f1mdlcz9 fpil94b f90z1up f2ic3ny f1xz7mvd f3i5gj0 fi4v1pz f1tvrmnx f1p1ggug f3b9emi f13zj6fq f1ak99p5 fmnu42u fk6fouc fkhj508 fl43uef f1i3iumi;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Reporting' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Net worth' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Accounts' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Rules & categories' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                      [push button] name='Settings' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                    [landmark] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=topbar;tag=header;xml-roles=banner ACTIONS=clickAncestor|showContextMenu
+                      [static] name='Household 2026.folio' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [static] name='Saved automatically' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [push button] name='Undo (not in this slice)' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [push button] name='Redo (not in this slice)' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [push button] name='Import CSV' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [combo box] name='Month (placeholder)' states=SHOWING,VISIBLE attrs=class=fui-Select__select ___1y4aodd fqrijq1 f4ikngz fy0fskl f15xbau f1jj8ep1 fm9niy ft85np5 f1couhl3 f1ewtqcl f1s2aq7o fdrzuqr fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi f1c21dwh f9dbb4x f3qs60o fwd1oij f5u9ap2;posinset=1;setsize=1;tag=select ACTIONS=open|showContextMenu
+                        [menu] name='' states=ENABLED attrs=setsize=1;tag=div ACTIONS=doDefault|showContextMenu
+                          [menu item] name='March 2026' states=FOCUSABLE attrs=posinset=1;setsize=1;tag=option ACTIONS=select|showContextMenu
+                      [push button] name='Menu' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___clxrxh0 fhovq9v f1p3nwhy f11589ue f1q5o8ev f1pdflbu fkfq4zb f1t94bn6 f1s2uweq fr80ssc f1ukrpxl fecsdlb fnwyq0v ft1hn21 fuxngvv fy5bs14 f1q1yqic fhvnf4x fb6swo4 f1klyf7k f232fm2 fwga7ee f1nhwcv0 f1gm6xmp f1xxsver f1v3eptx fivsta0 fd4bjan f3m6zum f18ktai2 fwbmr0d f44c6la;id=menu_r_3_;tag=button ACTIONS=open|showContextMenu
+                    [landmark] name='Transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=content;tag=main;xml-roles=main ACTIONS=clickAncestor|showContextMenu
+                      [heading] name='Transactions' states=ENABLED,SHOWING,VISIBLE attrs=level=1;tag=h1 ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Transactions' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [static] name='10,000 transactions' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [entry] name='Search transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE,EDITABLE attrs=class=fui-Input__input r12stul0;tag=input ACTIONS=activate|showContextMenu
+                      [combo box] name='Account filter' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Select__select ___13fmaul fqrijq1 f1c1zstj fm9niy ft85np5 f1couhl3 f1ewtqcl f19n0e5 f1k6fduh fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi fxugw4r fvcxoqz f1ub3y4t flmw63s f1m52nbi fvs00aa f1assf6x fqhmt4z f4ruux4;posinset=1;setsize=7;tag=select ACTIONS=open|showContextMenu
+                        [menu] name='' states=ENABLED attrs=setsize=7;tag=div ACTIONS=doDefault|showContextMenu
+                          [menu item] name='All accounts' states=SELECTED,FOCUSABLE,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=posinset=1;setsize=7;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Everyday Chequing' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=2;setsize=7;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Emergency Savings' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=3;setsize=7;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Rewards Visa' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=4;setsize=7;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Travel Mastercard' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=5;setsize=7;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Brokerage' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=6;setsize=7;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Line of Credit' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=7;setsize=7;tag=option ACTIONS=select|showContextMenu
+                      [combo box] name='Category filter' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Select__select ___13fmaul fqrijq1 f1c1zstj fm9niy ft85np5 f1couhl3 f1ewtqcl f19n0e5 f1k6fduh fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi fxugw4r fvcxoqz f1ub3y4t flmw63s f1m52nbi fvs00aa f1assf6x fqhmt4z f4ruux4;posinset=1;setsize=28;tag=select ACTIONS=open|showContextMenu
+                        [menu] name='' states=ENABLED attrs=setsize=28;tag=div ACTIONS=doDefault|showContextMenu
+                          [menu item] name='All categories' states=SELECTED,FOCUSABLE,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=posinset=1;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Income' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=2;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Paycheque' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=3;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Other income' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=4;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Housing' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=5;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Rent and mortgage' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=6;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Utilities' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=7;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Groceries' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=8;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Supermarket' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=9;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Markets and bakeries' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=10;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Dining out' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=11;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Restaurants' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=12;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Coffee' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=13;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Transport' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=14;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Fuel' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=15;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Transit' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=16;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Health' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=17;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Pharmacy' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=18;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Shopping' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=19;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Online' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=20;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Home and garden' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=21;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Entertainment' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=22;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Subscriptions' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=23;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Travel' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=24;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Flights and hotels' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=25;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Savings' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=26;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='\u2003Savings transfers' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=27;setsize=28;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='Uncategorized' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=28;setsize=28;tag=option ACTIONS=select|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=card grid-card;tag=section ACTIONS=clickAncestor|showContextMenu
+                        [table] name='Transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=grid;colcount=5;rowcount=10001;tag=div;xml-roles=grid TABLE rows=30 cols=5 ACTIONS=clickAncestor|showContextMenu
+                          [table row] name='Date Description Account Category Amount' states=ENABLED,SHOWING,VISIBLE attrs=class=grid-head;tag=div;xml-roles=row ACTIONS=clickAncestor|showContextMenu
+                            [column header] name='Date' states=ENABLED,SHOWING,VISIBLE attrs=class=cell head;sort=ascending;tag=div;xml-roles=columnheader ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='Date' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=head-btn;tag=button ACTIONS=press|showContextMenu
+                            [column header] name='Description' states=ENABLED,SHOWING,VISIBLE attrs=class=cell head;tag=div;xml-roles=columnheader ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='Description' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=head-btn;tag=button ACTIONS=press|showContextMenu
+                            [column header] name='Account' states=ENABLED,SHOWING,VISIBLE attrs=class=cell head;tag=div;xml-roles=columnheader ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='Account' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=head-btn;tag=button ACTIONS=press|showContextMenu
+                            [column header] name='Category' states=ENABLED,SHOWING,VISIBLE attrs=class=cell head;tag=div;xml-roles=columnheader ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='Category' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=head-btn;tag=button ACTIONS=press|showContextMenu
+                            [column header] name='Amount' states=ENABLED,SHOWING,VISIBLE attrs=class=cell head right;tag=div;xml-roles=columnheader ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='Amount' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=head-btn;tag=button ACTIONS=press|showContextMenu
+                          [section] name='Transaction rows' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-body;tag=div ACTIONS=clickAncestor|showContextMenu|scrollBackward|scrollDown|scrollForward|scrollLeft|scrollRight|scrollUp
+                            [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=div ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Aeroflot Аэрофлот #4389 Travel Mastercard Flights and hotels -$135.41' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00001;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Aeroflot Аэрофлот #4389' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Aeroflot Аэрофлот #4389' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Flights and hotels' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Flights and hotels' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$135.41' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$135.41' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Air Canada Rewards Visa Flights and hotels -$480.98' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00002;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Air Canada' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Air Canada' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Flights and hotels' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Flights and hotels' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$480.98' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$480.98' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 AliExpress 全球速卖通 Travel Mastercard Online -$15.34' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00003;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='AliExpress 全球速卖通' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='AliExpress 全球速卖通' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Online' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Online' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$15.34' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$15.34' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Amazon.ca Marketplace #9770 Rewards Visa Online -$239.51' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00004;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Amazon.ca Marketplace #9770' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Amazon.ca Marketplace #9770' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Online' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Online' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$239.51' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$239.51' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Café Olimpico #7718 Everyday Chequing Coffee -$7.43' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00005;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Café Olimpico #7718' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Café Olimpico #7718' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Coffee' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Coffee' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$7.43' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$7.43' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 GO Transit Rewards Visa Transit -$128.95' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00006;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='GO Transit' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='GO Transit' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Transit' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Transit' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$128.95' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$128.95' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Hydro One Rewards Visa Utilities -$295.85' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00007;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Hydro One' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Hydro One' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Utilities' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Utilities' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$295.85' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$295.85' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Noodle House 麵屋 Travel Mastercard Restaurants -$22.34' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00008;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Noodle House 麵屋' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Noodle House 麵屋' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Restaurants' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Restaurants' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$22.34' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$22.34' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Noodle House 麵屋 Travel Mastercard Restaurants -$18.07' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00009;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Noodle House 麵屋' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Noodle House 麵屋' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Restaurants' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Restaurants' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$18.07' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$18.07' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Payroll Acme Ltd Everyday Chequing Paycheque $3,383.62' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00010;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Payroll Acme Ltd' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Payroll Acme Ltd' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Paycheque' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Paycheque' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='$3,383.62' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num pos;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='$3,383.62' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Pharmaprix Rewards Visa Pharmacy -$10.07' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00011;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Pharmaprix' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Pharmaprix' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Pharmacy' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Pharmacy' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$10.07' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$10.07' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Refund 退款 #5730 Everyday Chequing Other income $241.36' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00012;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Refund 退款 #5730' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Refund 退款 #5730' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Other income' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Other income' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='$241.36' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num pos;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='$241.36' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Shell Station Travel Mastercard Fuel -$37.88' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00013;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Shell Station' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Shell Station' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Fuel' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Fuel' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$37.88' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$37.88' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Sobeys Everyday Chequing Supermarket -$45.72' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00014;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Sobeys' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Sobeys' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Supermarket' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Supermarket' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$45.72' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$45.72' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Sobeys #5630 Travel Mastercard Supermarket -$268.74' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00015;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Sobeys #5630' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Sobeys #5630' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Supermarket' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Supermarket' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$268.74' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$268.74' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Sobeys #7905 Rewards Visa Supermarket -$76.26' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00016;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Sobeys #7905' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Sobeys #7905' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Supermarket' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Supermarket' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$76.26' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$76.26' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 TTC Presto reload Everyday Chequing Transit -$81.55' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00017;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='TTC Presto reload' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='TTC Presto reload' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Transit' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Transit' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$81.55' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$81.55' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 TTC Presto reload #6800 Rewards Visa Transit -$71.71' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00018;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='TTC Presto reload #6800' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='TTC Presto reload #6800' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Transit' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Transit' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$71.71' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$71.71' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Tim Hortons Rewards Visa Coffee -$6.97' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=class=grid-row;id=row-tx-00019;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Tim Hortons' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Tim Hortons' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Coffee' states=ENABLED,SHOWING,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Coffee' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$6.97' states=ENABLED,SHOWING,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$6.97' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Virement épargne Everyday Chequing Savings transfers -$362.67' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00020;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Virement épargne' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Virement épargne' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Savings transfers' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Savings transfers' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$362.67' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$362.67' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Кофейня Бодрое утро Travel Mastercard Coffee -$7.46' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00021;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Кофейня Бодрое утро' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Кофейня Бодрое утро' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Coffee' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Coffee' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$7.46' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$7.46' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 Кофейня Бодрое утро Rewards Visa Coffee -$6.63' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00022;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Кофейня Бодрое утро' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Кофейня Бодрое утро' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Coffee' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Coffee' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$6.63' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$6.63' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 مخبز الأمل Al Amal Bakery Everyday Chequing Markets and bakeries -$74.22' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00023;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='مخبز الأمل Al Amal Bakery' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='مخبز الأمل Al Amal Bakery' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Markets and bakeries' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Markets and bakeries' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$74.22' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$74.22' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 寿司 すしざんまい #5463 Travel Mastercard Restaurants -$68.19' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00024;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='寿司 すしざんまい #5463' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='寿司 すしざんまい #5463' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Restaurants' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Restaurants' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$68.19' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$68.19' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-01 珈琲館 Travel Mastercard Coffee -$10.06' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00025;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-01' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-01' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='珈琲館' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='珈琲館' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Coffee' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Coffee' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$10.06' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$10.06' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-02 Café Olimpico Travel Mastercard Coffee -$5.19' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00026;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-02' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-02' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Café Olimpico' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Café Olimpico' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Travel Mastercard' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Travel Mastercard' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Coffee' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Coffee' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$5.19' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$5.19' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-02 Costco Wholesale #2788 Everyday Chequing Supermarket -$223.16' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00027;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-02' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-02' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Costco Wholesale #2788' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Costco Wholesale #2788' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Everyday Chequing' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Everyday Chequing' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Supermarket' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Supermarket' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$223.16' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$223.16' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-02 DEBIT MEMO 88213 Rewards Visa Uncategorized -$30.42' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00028;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-02' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-02' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='DEBIT MEMO 88213' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='DEBIT MEMO 88213' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Uncategorized' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Uncategorized' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$30.42' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$30.42' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [table row] name='2026-01-02 Esso Rewards Visa Fuel -$63.22' states=SELECTABLE,ENABLED,VISIBLE attrs=class=grid-row;id=row-tx-00029;tag=div;xml-roles=row ACTIONS=click|showContextMenu
+                                [table cell] name='2026-01-02' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='2026-01-02' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Esso' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Esso' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Rewards Visa' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Rewards Visa' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='Fuel' states=ENABLED,VISIBLE attrs=class=cell;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='Fuel' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                                [table cell] name='-$63.22' states=ENABLED,VISIBLE attrs=class=cell right num;tag=div;xml-roles=gridcell ACTIONS=clickAncestor|showContextMenu
+                                  [static] name='-$63.22' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [landmark] name='Transaction details' states=ENABLED,SHOWING,VISIBLE attrs=class=card details;tag=aside;xml-roles=complementary ACTIONS=clickAncestor|showContextMenu
+                        [paragraph] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=muted;tag=p ACTIONS=clickAncestor|showContextMenu
+                          [static] name='Select a transaction to see its details.' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu

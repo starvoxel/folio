@@ -1,0 +1,27 @@
+﻿desktop child: name='' pid=5052 class='Shell_TrayWnd'
+desktop child: name='Folio' pid=5780 class='Chrome_WidgetWin_1'
+  -> using this window
+desktop child: name='C:\ProgramData\GitHub\HostedComputeAgent\hosted-compute-agent' pid=1416 class='CASCADIA_HOSTING_WINDOW_CLASS'
+desktop child: name='Program Manager' pid=5052 class='Progman'
+[Window] name='Folio' id='' class='Chrome_WidgetWin_1' focusable=False focused=True enabled=True offscreen=False 
+  [Pane] name='' id='' class='Intermediate D3D Window' focusable=False focused=False enabled=False offscreen=False 
+  [Pane] name='Folio' id='' class='RootView' focusable=False focused=False enabled=True offscreen=False 
+    [Pane] name='' id='' class='NonClientView' focusable=False focused=False enabled=True offscreen=False 
+      [Pane] name='' id='' class='WinFrameView' focusable=False focused=False enabled=True offscreen=False 
+        [Pane] name='' id='' class='ClientView' focusable=False focused=False enabled=True offscreen=False 
+          [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+              [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                [Document] name='' id='' class='WebView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='Chrome Legacy Window' id='39' class='Chrome_RenderWidgetHostHWND' focusable=False focused=False enabled=True offscreen=False 
+                  [Document] name='Folio' id='RootWebArea' class='' focusable=True focused=False enabled=True offscreen=False VALUE='folio://app/'
+                    [Group] name='' id='' class='fui-FluentProvider fui-FluentProvider_r_0_ fluent-root ___1bsm0mz f19n0e5 fxugw4r f1o700av fk6fouc fkhj508 figsok6 f1i3iumi f1euv43f f15twtuk f1vgc2s3 f1e31b4d f494woh' focusable=False focused=False enabled=True offscreen=False 
+                      [Window] name='Reset settings?' id='' class='fui-DialogSurface r1u3t6p6' focusable=True focused=False enabled=True offscreen=False 
+                        [Text] name='Reset settings?' id='dialog-title-_r_8_' class='fui-DialogTitle rxjm636 ___mh25s00 fsyjsko' focusable=False focused=False enabled=True offscreen=False 
+                          [Text] name='Reset settings?' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                        [Group] name='' id='' class='fui-DialogContent r1v5zwsm' focusable=False focused=False enabled=True offscreen=False 
+                          [Text] name='This returns the theme to System. Your budget data is not affected.' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Cancel' id='' class='fui-Button r1f29ykk' focusable=True focused=True enabled=True offscreen=False 
+                        [Button] name='Reset' id='' class='fui-Button r1f29ykk ___dhqv000 ffp7eso f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1phragk f15wkkf3 f1s2uweq fr80ssc f1ukrpxl fecsdlb f1rq72xc f1ksv2xa fhvnf4x fb6swo4 f1klyf7k f232fm2 f1d6mv4x f1nz3ub2 fag2qd2 fmvhcg7 f1o3dhpw f14bpyus fqc85l4 f1h3a8gf fkiggi6 f8gmj8i f1ap8nzx f1igan7k fjag8bx f1v3eptx f1ysmecq faulsx f79t15f fbtzoaq f8qmx7k fd4bjan f17t0x8g f194v5ow f1qgg65p fk7jm04 fhgccpy f32wu9k fu5nqqq f13prjl2 f1czftr5 f1nl83rv fixhny3 feygou5' focusable=True focused=False enabled=True offscreen=False 
+              [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
