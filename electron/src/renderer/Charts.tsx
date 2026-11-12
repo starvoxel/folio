@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
 import * as echarts from 'echarts/core';
 import { BarChart, PieChart } from 'echarts/charts';
-import { AriaComponent, GridComponent, TooltipComponent } from 'echarts/components';
+import { AriaComponent, GridComponent, LegendComponent, TitleComponent, TooltipComponent } from 'echarts/components';
 import { SVGRenderer } from 'echarts/renderers';
 import { formatCents, formatCentsWhole } from '../shared/money';
 import type { MonthFlow, Slice } from './model';
 import { monthShort } from './model';
 
-echarts.use([PieChart, BarChart, GridComponent, TooltipComponent, AriaComponent, SVGRenderer]);
+echarts.use([PieChart, BarChart, GridComponent, LegendComponent, TitleComponent, TooltipComponent, AriaComponent, SVGRenderer]);
 
 export const PALETTE = ['#0078D4', '#E3008C', '#00A88F', '#F7630C', '#8764B8', '#498205', '#C239B3', '#038387', '#986F0B', '#4F6BED', '#767676'];
 
