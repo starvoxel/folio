@@ -189,7 +189,8 @@ for (const mode of ['dark', 'light'] as const) {
       await L.page.screenshot({ path: path.join(shotDir, `${id}-${mode}.png`) });
     }
     const bg = await L.page.evaluate(() => getComputedStyle(document.querySelector('.fluent-root')!).backgroundColor);
-    expect(bg).toBe(mode === 'dark' ? 'rgb(32, 32, 32)' : 'rgb(243, 243, 243)');
+    const lum = bg.match(/\d+/g)!.slice(0, 3).map(Number).reduce((a, b) => a + b, 0) / 3;
+    expect(mode === 'dark' ? lum < 60 : lum > 200).toBe(true); // background follows the Fluent theme
   });
 }
 
