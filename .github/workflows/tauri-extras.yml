@@ -174,6 +174,7 @@ jobs:
           cd e2e; $env:CAPTURE_IDLE_S = '300'; $env:FOLIO_SPEC = './specs/capture.e2e.ts'; npx wdio run wdio.conf.ts 2>&1 | Select-String 'LAUNCHED|PAGE|USED|IDLE|passing|failing'
           cd ..; $sampler | Wait-Process -Timeout 200
           pktmon stop | Out-Null; pktmon etl2txt test-results/win-net/default-pktmon.etl -o test-results/win-net/default-pktmon.txt | Out-Null
+          pwsh -NoProfile -File scripts/pktmon-summary.ps1 -Txt test-results/win-net/default-pktmon.txt -Out test-results/win-net/default-pktmon-summary.txt
           Remove-Item test-results/win-net/default-pktmon.etl -ErrorAction SilentlyContinue
           Get-Content test-results/win-net/default/summary.txt
       - name: Same, with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS set to network-quieting Chromium switches
@@ -184,6 +185,7 @@ jobs:
           cd e2e; $env:CAPTURE_IDLE_S = '120'; $env:FOLIO_SPEC = './specs/capture.e2e.ts'; npx wdio run wdio.conf.ts 2>&1 | Select-String 'LAUNCHED|IDLE|passing|failing'
           cd ..; $sampler | Wait-Process -Timeout 120
           pktmon stop | Out-Null; pktmon etl2txt test-results/win-net/args-pktmon.etl -o test-results/win-net/args-pktmon.txt | Out-Null
+          pwsh -NoProfile -File scripts/pktmon-summary.ps1 -Txt test-results/win-net/args-pktmon.txt -Out test-results/win-net/args-pktmon-summary.txt
           Remove-Item test-results/win-net/args-pktmon.etl -ErrorAction SilentlyContinue
           Get-Content test-results/win-net/args/summary.txt
       - name: Shipped binary (no driver) launch and two minutes idle, default settings
@@ -194,7 +196,23 @@ jobs:
           pwsh -NoProfile -File scripts/win-net-sample.ps1 -Out test-results/win-net/shipped -Seconds 130
           Stop-Process -Id $app.Id -Force -ErrorAction SilentlyContinue
           pktmon stop | Out-Null; pktmon etl2txt test-results/win-net/shipped-pktmon.etl -o test-results/win-net/shipped-pktmon.txt | Out-Null
+          pwsh -NoProfile -File scripts/pktmon-summary.ps1 -Txt test-results/win-net/shipped-pktmon.txt -Out test-results/win-net/shipped-pktmon-summary.txt
           Remove-Item test-results/win-net/shipped-pktmon.etl -ErrorAction SilentlyContinue
+      - name: The one documented WebView2 telemetry-adjacent policy (ExperimentationAndConfigurationServiceControl=0), shipped binary, two minutes
+        run: |
+          $key = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\WebView2'
+          New-Item -Path $key -Force | Out-Null
+          New-ItemProperty -Path $key -Name 'ExperimentationAndConfigurationServiceControl' -Value 0 -PropertyType DWord -Force | Out-Null
+          Get-ItemProperty $key | Out-String | Tee-Object test-results/win-net/policy-set.txt
+          $env:FOLIO_DATA_DIR = "$env:GITHUB_WORKSPACE\fixtures"
+          $app = Start-Process src-tauri/target/release/folio.exe -PassThru
+          pwsh -NoProfile -File scripts/win-net-sample.ps1 -Out test-results/win-net/policy -Seconds 130
+          Stop-Process -Id $app.Id -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path $key -Recurse -Force
+      - name: Reverse lookup of the remote addresses seen from the web view
+        run: |
+          $ips = Get-ChildItem test-results/win-net -Recurse -Filter samples.csv | ForEach-Object { Import-Csv $_.FullName } | Where-Object { $_.scope -eq 'webview-tree' -and $_.remote -match '^\d' } | ForEach-Object { ($_.remote -split ':')[0] } | Sort-Object -Unique
+          $ips | ForEach-Object { $r = try { (Resolve-DnsName $_ -Type PTR -ErrorAction Stop | Select-Object -First 1 -ExpandProperty NameHost) } catch { 'no PTR record or lookup failed' }; "$_ -> $r" } | Tee-Object test-results/win-net/reverse-lookup.txt
       - name: Commit evidence to the branch
         if: always()
         shell: bash
