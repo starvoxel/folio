@@ -1,0 +1,56 @@
+[
+  {
+    "point": "P0 Overview 5s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 188.4,
+      "rss_mb": 211.3
+    }
+  },
+  {
+    "point": "P1 Transactions 5s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 215.9,
+      "rss_mb": 239.1
+    }
+  },
+  {
+    "point": "P2 after scroll 1 \u002B3s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 237.5,
+      "rss_mb": 260.9
+    }
+  },
+  {
+    "point": "P3 after scroll 2 \u002B3s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 235.4,
+      "rss_mb": 258.8
+    }
+  },
+  {
+    "point": "P4 after scroll 3 \u002B 20s idle",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 238,
+      "rss_mb": 261.9
+    }
+  },
+  {
+    "point": "P5 after soak (2 scrolls) \u002B 20s idle",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 249.5,
+      "rss_mb": 273.6
+    }
+  }
+]
