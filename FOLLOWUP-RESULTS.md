@@ -2,7 +2,7 @@
 
 Branch `spike/slice-tauri`. Everything below is marked **measured**, **not measured** (with a reason) or **inferred**. Raw evidence is under `tauri/evidence/ci/` (committed by the CI jobs) and `tauri/evidence/local-linux/`; `tauri/evidence/perf-history.txt` keeps the per-run numbers because each CI run overwrites the result files. `RESULTS.md` has the gates; this file has F1 memory, F2 macOS and F3 accessibility, as the follow-up spec asks.
 
-Runners: `ubuntu-24.04` (kernel 7.0.0-azure, WebKitGTK 2.52.6, no GPU, Xvfb), `windows-2025` (Windows Server 2025 build 26100, WebView2 156.0.4314.58), `macos-latest` (macOS 26.7.2, Apple silicon, WebKit 21624.5.1.11.3). Three complete workflow runs per OS gave the ranges below.
+Runners: `ubuntu-24.04` (kernel 7.0.0-azure, WebKitGTK 2.52.6, no GPU, Xvfb), `windows-2025` (Windows Server 2025 build 26100, WebView2 156.0.4314.58), `macos-latest` (macOS 26.7.2, Apple silicon, WebKit 21624.5.1.11.3). Four (Linux, Windows) or five (macOS) complete workflow runs gave the ranges below.
 
 ## Corrections to RESULTS.md
 
@@ -19,7 +19,7 @@ How every process of the web view was found, and how I know it is all of them:
 - **macOS.** The WebKit helpers (`com.apple.WebKit.WebContent`, `.Networking`, `.GPU`) are **not descendants** of the app (confirmed: `webkitHelpersNotDescendants` lists them in every sample). The tool records the existing `com.apple.WebKit.*` PIDs **before launch** (`memtree.mjs baseline`) and counts every one that is new while the app runs, plus the app and its descendants. On the hosted runner the pre-launch baseline held 0 to 7 helpers from other things; one early run showed 8 and 5 "processes" at P0 and P1 where a later run showed 3, so **the delta method is sensitive to unrelated WebKit activity on the machine** and P0/P1 on macOS carry that uncertainty (P2 onwards were 3 to 4 processes every time). Metric: `footprint -p <pid>` summed (physical footprint), `ps` RSS beside it. I have no second method (for example XPC parentage) to prove completeness; the delta is reasonable on a clean runner and is not proof.
 - App-only figure (what a naive tool reports) is given next to every all-process figure.
 
-**Headline table, accessibility off (measured, latest CI run; the ranges over three runs are in `RESULTS.md` and `perf-history.txt`).** All-process figures, with the app-only primary metric in the last column.
+**Headline table, accessibility off (measured, latest CI run; the ranges over the CI runs are in `RESULTS.md` and `perf-history.txt`).** All-process figures, with the app-only primary metric in the last column.
 
 | Point | Linux PSS (MB) | Linux RSS (MB) | Windows private WS (MB) | Windows total WS (MB) | macOS footprint (MB) | macOS RSS (MB) | App-only: Linux PSS / Win private / macOS footprint |
 | ----- | -------------- | -------------- | ----------------------- | --------------------- | -------------------- | -------------- | ------------------------------------------------- |
@@ -45,7 +45,7 @@ Linux with `WEBKIT_DISABLE_DMABUF_RENDERER=1` (measured, same job, same scenario
 
 **Against the 400 MB G2 limit, per metric (measured; "after scrolling" read as the worst of P2 to P5):**
 
-| Metric | Tauri worst point (three runs) | Verdict at 400 MB | Electron |
+| Metric | Tauri worst point (the CI runs) | Verdict at 400 MB | Electron |
 | ------ | ------------------------------ | ----------------- | -------- |
 | Linux PSS, default graphics | 563.7 (P2) to 589.5 (P5) | **Fail** | fail (440.7) |
 | Linux PSS, DMABUF renderer off | 315.4 (P3) | Pass | fail |
@@ -59,16 +59,16 @@ I did not redefine the limit. The all-process view is the honest one; the app-on
 
 **Accessibility forced on.** **Not measured.** Electron needed a `--force-renderer-accessibility` run because a screen reader turns Chromium's accessibility tree on. For the OS web views there is no such switch in the shipped app; WebView2 builds its UIA tree when a client asks, WebKitGTK when the AT-SPI bus is present, WKWebView when VoiceOver or an AX client attaches. My F3 runs attach a client but I did not record memory with it attached (the tree dump happens in a separate step). Whether a screen reader changes memory is **unknown** for all three.
 
-**Growth over the soak (P3 to P5, measured).** Linux default: +8, +11 and +41 MB in the three runs (PSS 561.3 to 569.3; 552.1 to 562.8; 548.6 to 589.5), so it does not clearly level off within 20 scrolls; the DMABUF-off variant is flat (-2, 0, -2 MB). Windows: private WS falls (153 to 82 MB; Windows trims idle working sets). macOS: footprint falls from the P3 peak (560 to 536 MB; 631 to 493; 641 to 509) but not to the P0 level. Not measured: soak beyond 20 scrolls.
+**Growth over the soak (P3 to P5, measured).** Linux default: +8, +11, +41 and +32 MB in the four runs (PSS 561.3 to 569.3; 552.1 to 562.8; 548.6 to 589.5; 538.5 to 570.9), so it does not clearly level off within 20 scrolls; the DMABUF-off variant is flat (-2, 0, -2 MB). Windows: private WS falls (153 to 82 MB; Windows trims idle working sets). macOS: footprint falls from the P3 peak (560 to 536 MB; 631 to 493; 641 to 509) but not to the P0 level. Not measured: soak beyond 20 scrolls.
 
-**Frames and sorts during these runs (measured):** Linux 17 to 46 ms worst frame (0 over 100 ms); Windows 16 ms; **macOS up to 285 ms, with 4 and 3 frames over 100 ms in two passes of one run and a 121 ms frame in the soak of another**. G2 says no frame over 100 ms; macOS did not meet that in 2 of 3 runs. Sort worst case: Linux 67 to 94 ms, Windows 27 to 47, macOS 30 to 60.
+**Frames and sorts during these runs (measured):** Linux 17 to 87 ms worst frame (0 over 100 ms in 12 passes); Windows 16 ms; **macOS up to 285 ms, with 4 and 3 frames over 100 ms in two passes of one run and a 121 ms frame in the soak of another**. G2 says no frame over 100 ms; macOS did not meet that in 2 of 5 runs. Sort worst case: Linux 67 to 94 ms, Windows 27 to 47, macOS 30 to 60.
 
 ## F2. macOS
 
 **Measured; it works on the free hosted runner.**
 - Build and start: `tauri build --bundles app,dmg` succeeded (110 to 144 s clean); the app starts and creates a real window on `macos-latest` (`macos-26-arm64`, 26.7.2) with no extra setup. The `.dmg` also built on the runner without trouble. The bundle is unsigned and was not opened by Gatekeeper (the test launches the inner binary). 
-- **Cold start (spawn to the first WebKit process present, shipped binary, no driver):** 205 to 947 ms over 15 samples in three runs (latest 556, 324, 260, 284, 331). Not Electron's definition (launch to ready, 808 to 1,188 ms there).
-- **G3 scenario:** 15/15 in the latest runs, twice in a job and across three workflow runs; the first run failed the dialog test because of my own test bug (see Corrections). Dialog opens with focus on Cancel (AX reports `AXApplicationDialog` and Cancel focused), Tab cycles (OS key events), Escape closes. **Real OS key events work on the hosted runner**: `osascript` with System Events `key code` ran without error; `AXIsProcessTrusted` returned true in the AX dump, so the runner grants the accessibility permission. Not run: native menu bar (not required), drag from the desktop, native dialogs.
+- **Cold start (spawn to the first WebKit process present, shipped binary, no driver):** 205 to 947 ms over 15 samples in the CI runs (latest 556, 324, 260, 284, 331). Not Electron's definition (launch to ready, 808 to 1,188 ms there).
+- **G3 scenario:** 15/15 in the latest runs, twice in a job and across four or five workflow runs; the first run failed the dialog test because of my own test bug (see Corrections). Dialog opens with focus on Cancel (AX reports `AXApplicationDialog` and Cancel focused), Tab cycles (OS key events), Escape closes. **Real OS key events work on the hosted runner**: `osascript` with System Events `key code` ran without error; `AXIsProcessTrusted` returned true in the AX dump, so the runner grants the accessibility permission. Not run: native menu bar (not required), drag from the desktop, native dialogs.
 - **Screenshots:** every page, light and dark, plus the dialog: `tauri/evidence/ci/slice-macOS/shots/darwin/` (11 files); uploaded as the `slice-macOS` artifact. Cross-run comparison at 0.1% tolerance: in-job 0 failures, against the previous workflow run 0 failures (latest runs). The runner's screen is small, so screenshots are about 1024 px wide.
 - **Memory:** F1 above. App-only 28 to 33 MB; all processes 89 to 641 MB.
 - **Network observation (measured, moderate to low confidence):** see `RESULTS.md`, Privacy, macOS: `tcpdump` for the whole job (132,038 packets, not attributable), `lsof -i` every 3 s over 5 minutes: only the app's own `127.0.0.1:4445` WebDriver listener, no non-loopback socket from the app or the WebKit helpers.
