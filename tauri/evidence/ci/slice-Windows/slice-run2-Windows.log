@@ -1,5 +1,5 @@
 
-Execution of 1 workers started at 2026-11-12T18:09:55.832Z
+Execution of 1 workers started at 2026-11-12T18:29:32.860Z
 
 [0-0] RUNNING in undefined - file:///D:/a/folio/folio/tauri/e2e/specs/slice.e2e.ts
 [0-0] PASSED in undefined - file:///D:/a/folio/folio/tauri/e2e/specs/slice.e2e.ts
@@ -7,7 +7,7 @@ Execution of 1 workers started at 2026-11-12T18:09:55.832Z
  "spec" Reporter:
 ------------------------------------------------------------------
 [msedge 156.0.0.0 windows #0-0] Running: msedge (v156.0.0.0) on windows
-[msedge 156.0.0.0 windows #0-0] Session ID: 4a4e44f2-8116-4db0-b7b3-14e5360da98b
+[msedge 156.0.0.0 windows #0-0] Session ID: 4a18c7b4-80cb-4099-936d-9f43f0fce625
 [msedge 156.0.0.0 windows #0-0]
 [msedge 156.0.0.0 windows #0-0] » specs\slice.e2e.ts
 [msedge 156.0.0.0 windows #0-0] Folio slice (Tauri, WebdriverIO embedded driver)
@@ -27,8 +27,8 @@ Execution of 1 workers started at 2026-11-12T18:09:55.832Z
 [msedge 156.0.0.0 windows #0-0]    ✓ theme light: charts and pages render
 [msedge 156.0.0.0 windows #0-0]    ✓ settings dialog: focus lands inside, Tab cycles, Escape closes
 [msedge 156.0.0.0 windows #0-0]
-[msedge 156.0.0.0 windows #0-0] 15 passing (9s)
+[msedge 156.0.0.0 windows #0-0] 15 passing (8.7s)
 
 
-Spec Files:	 1 passed, 1 total (100% completed) in 00:00:12  
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:11  
 

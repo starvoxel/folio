@@ -1,4 +1,4 @@
--rw-r--r-- 1 runneradmin 197121 1884160 Nov 12 18:04 src-tauri/target/release/bundle/msi/Folio_0.0.1_x64_en-US.msi
--rwxr-xr-x 1 runneradmin 197121 1411178 Nov 12 18:04 src-tauri/target/release/bundle/nsis/Folio_0.0.1_x64-setup.exe
--rwxr-xr-x 2 runneradmin 197121 3266560 Nov 12 18:04 src-tauri/target/release/folio
--rwxr-xr-x 2 runneradmin 197121 3266560 Nov 12 18:04 src-tauri/target/release/folio.exe
+-rw-r--r-- 1 runneradmin 197121 1884160 Nov 12 18:24 src-tauri/target/release/bundle/msi/Folio_0.0.1_x64_en-US.msi
+-rwxr-xr-x 1 runneradmin 197121 1411395 Nov 12 18:24 src-tauri/target/release/bundle/nsis/Folio_0.0.1_x64-setup.exe
+-rwxr-xr-x 2 runneradmin 197121 3266560 Nov 12 18:24 src-tauri/target/release/folio
+-rwxr-xr-x 2 runneradmin 197121 3266560 Nov 12 18:24 src-tauri/target/release/folio.exe
