@@ -31,7 +31,8 @@ for (const l of st) {
   const sock = sockets.get(`${c[1]} ${c[3]}`) ?? '?';
   const entry = `${l.trim()}\n      socket(${sock})`;
   // connect() on a datagram socket only selects a route; it emits no packet. Chromium uses it to probe IPv6 reachability.
-  if (c[2] === 'connect' && /SOCK_DGRAM/.test(sock)) notices.push(entry); else findings.push(entry);
+  const isKnownProbe = /inet_pton\(AF_INET6, "2001:4860:4860::8888"/.test(l) && /htons\(443\)/.test(l);
+  if (c[2] === 'connect' && /SOCK_DGRAM/.test(sock) && isKnownProbe) notices.push(entry); else findings.push(entry);
 }
 console.log(`text capture lines: ${pkts.length}; loopback: ${loop.length}; kernel IPv6 housekeeping on the namespace veth: ${kernel.length}; other (application) packets: ${app.length}`);
 console.log(`non-loopback connect/send syscalls in strace: ${findings.length} (plus ${notices.length} UDP route-probe connect() calls, no packet emitted)`);

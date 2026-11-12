@@ -1,0 +1,11 @@
+baseline | urls: ['RESOLVE http://127.0.0.1:9', 'http://127.0.0.1:9/disabled/en-us-10-2.bdic'] | ipv6 probe events: 1
+disable-only | urls: ['RESOLVE https://redirector.gvt1.com', 'RESOLVE https://rr4---sn-a5mlrnek.gvt1.com', 'https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-2.bdic'] | ipv6 probe events: 5
+disable-and-langs-empty | urls: - | ipv6 probe events: 0
+none | urls: ['RESOLVE https://redirector.gvt1.com', 'https://redirector.gvt1.com/edgedl/chrome/dict/en-us-10-2.bdic'] | ipv6 probe events: 3
+url-only | urls: ['RESOLVE http://127.0.0.1:9', 'http://127.0.0.1:9/disabled/en-us-10-2.bdic'] | ipv6 probe events: 1
+langs-empty-only | urls: - | ipv6 probe events: 0
+(url-only trigger + switches; each run 20 s, release-equivalent scratch app, net-log capture-mode Everything)
+url-only + --enable-features=EnableIPv6ReachabilityOverride | still 1 probe event, request alive
+url-only + --host-resolver-rules="MAP * ~NOTFOUND"          | still 1 probe event
+url-only + --disable-features=AsyncDns                      | still 1 probe event
+url-only + --disable-features=NetworkTimeServiceQuerying    | still 1 probe event

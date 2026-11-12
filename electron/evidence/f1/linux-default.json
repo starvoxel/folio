@@ -1,0 +1,101 @@
+{
+  "label": "default",
+  "platform": "linux",
+  "soak": 20,
+  "idleS": 60,
+  "args": [
+    "--no-sandbox"
+  ],
+  "points": {
+    "P0": {
+      "primaryName": "PSS",
+      "primaryMB": 346,
+      "secondaryName": "RSS",
+      "secondaryMB": 678.3,
+      "processes": 6,
+      "detail": [
+        "Folio:102",
+        "Folio:29",
+        "Folio:17",
+        "Folio:84",
+        "Folio:16",
+        "Folio:96"
+      ]
+    },
+    "P1": {
+      "primaryName": "PSS",
+      "primaryMB": 363.3,
+      "secondaryName": "RSS",
+      "secondaryMB": 704.6,
+      "processes": 6,
+      "detail": [
+        "Folio:102",
+        "Folio:29",
+        "Folio:17",
+        "Folio:100",
+        "Folio:16",
+        "Folio:98"
+      ]
+    },
+    "P2": {
+      "primaryName": "PSS",
+      "primaryMB": 440.7,
+      "secondaryName": "RSS",
+      "secondaryMB": 787.1,
+      "processes": 6,
+      "detail": [
+        "Folio:102",
+        "Folio:29",
+        "Folio:17",
+        "Folio:176",
+        "Folio:16",
+        "Folio:99"
+      ]
+    },
+    "P3": {
+      "primaryName": "PSS",
+      "primaryMB": 430.4,
+      "secondaryName": "RSS",
+      "secondaryMB": 774.9,
+      "processes": 6,
+      "detail": [
+        "Folio:94",
+        "Folio:29",
+        "Folio:17",
+        "Folio:175",
+        "Folio:16",
+        "Folio:98"
+      ]
+    },
+    "P4": {
+      "primaryName": "PSS",
+      "primaryMB": 356.8,
+      "secondaryName": "RSS",
+      "secondaryMB": 702.4,
+      "processes": 6,
+      "detail": [
+        "Folio:91",
+        "Folio:29",
+        "Folio:16",
+        "Folio:108",
+        "Folio:16",
+        "Folio:96"
+      ]
+    },
+    "P5": {
+      "primaryName": "PSS",
+      "primaryMB": 347.2,
+      "secondaryName": "RSS",
+      "secondaryMB": 723.8,
+      "processes": 6,
+      "detail": [
+        "Folio:87",
+        "Folio:28",
+        "Folio:16",
+        "Folio:128",
+        "Folio:15",
+        "Folio:73"
+      ]
+    }
+  }
+}

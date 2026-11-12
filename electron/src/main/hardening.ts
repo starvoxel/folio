@@ -37,9 +37,11 @@ export function hardenSession(ses: Session): void {
   ses.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
   ses.setPermissionCheckHandler(() => false);
   ses.setDevicePermissionHandler(() => false);
-  // Spellcheck would otherwise download dictionaries from a Google CDN.
+  // Spellcheck downloads its dictionary from a Google CDN (redirector.gvt1.com) at startup on Linux. Disabling spellcheck
+  // is NOT enough: that request still goes out, and the deny-all webRequest filter above does not see it (it is made by the
+  // browser process, not a web contents). Only an empty language list stops it. Found in the follow-up (E1); see FOLLOWUP-RESULTS.md.
   ses.setSpellCheckerEnabled(false);
-  ses.setSpellCheckerDictionaryDownloadURL('http://127.0.0.1:9/disabled/');
+  ses.setSpellCheckerLanguages([]);
 }
 
 export function hardenWebContents(wc: WebContents): void {
