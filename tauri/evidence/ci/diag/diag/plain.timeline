@@ -22,10 +22,10 @@ t=21s procs: 0 webkit, app alive: yes, windows: 1
 t=22s procs: 0 webkit, app alive: yes, windows: 1
 t=23s procs: 0 webkit, app alive: yes, windows: 1
 t=24s procs: 0 webkit, app alive: yes, windows: 1
-t=25s procs: 0 webkit, app alive: yes, windows: 2
-t=26s procs: 0 webkit, app alive: yes, windows: 2
+t=25s procs: 0 webkit, app alive: yes, windows: 1
+t=26s procs: 0 webkit, app alive: yes, windows: 1
 t=27s procs: 0 webkit, app alive: yes, windows: 2
 t=28s procs: 0 webkit, app alive: yes, windows: 2
 t=29s procs: 0 webkit, app alive: yes, windows: 2
 t=30s procs: 0 webkit, app alive: yes, windows: 2
-brightness 0.976343
+brightness 0
