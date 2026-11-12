@@ -85,7 +85,7 @@ jobs:
         run: ${{ matrix.run }} npx playwright test slice.spec.ts guard.spec.ts
       - name: Keep screenshots of driver 1
         if: always()
-        run: mkdir -p ci-out && cp -r test-results/shots/${{ matrix.plat }} ci-out/shots-electron-driver || true
+        run: mkdir -p ci-out && cp -r test-results/shots/${{ matrix.plat }} ci-out/shots-electron-driver || true; cp test-results/cold-start-*.json ci-out/cold-start-electron-driver.json || true
       - name: Slice and guard tests on the exact release binary (pipe driver)
         id: t2
         continue-on-error: true
@@ -95,7 +95,7 @@ jobs:
         run: ${{ matrix.run }} npx playwright test slice.spec.ts guard.spec.ts
       - name: Keep screenshots of driver 2
         if: always()
-        run: cp -r test-results/shots/${{ matrix.plat }} ci-out/shots-pipe-driver || true
+        run: cp -r test-results/shots/${{ matrix.plat }} ci-out/shots-pipe-driver || true; cp test-results/cold-start-*.json ci-out/cold-start-pipe-driver.json || true
       - name: Result summary
         if: always()
         run: |
