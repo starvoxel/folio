@@ -89,8 +89,8 @@ To make the app publish a tree I had to start an AT-SPI bus (`dbus-run-session`,
 | ------- | ---- | ---- | ------------- | ----- |
 | Nav item "Transactions" | push button | Transactions | FOCUSABLE | Actions: press. The nav is a `landmark` named "Main navigation" |
 | Settings footer item | push button | Settings | FOCUSABLE | same |
-| Top-bar menu button | push button | Menu | FOCUSABLE | Not reported as a menu button (no haspopup) |
-| Search box | entry | Search transactions | FOCUSABLE, EDITABLE | placeholder not exposed as name |
+| Top-bar menu button | push button | Menu | FOCUSABLE | Reported as a plain push button |
+| Search box | entry | Search transactions | FOCUSABLE, EDITABLE | |
 | Account / Category filter | combo box | Account filter / Category filter | children `menu item` options with `posinset` and `setsize` (7 and 28) | native `<select>` |
 | Grid container | table | Transactions | attrs `rowcount=10001`, `colcount=5`; **Table interface reports 30 rows** (41 after scrolling), i.e. only rendered rows | the 10,000-row size is available only as the ARIA attribute |
 | Column header | column header | Date etc. | attr `sort=ascending` on Date | each contains a push button |
@@ -109,8 +109,8 @@ The first attempt found no window because the top-level window belongs to a diff
 
 | Element | Control type | Name | Patterns / state | Notes |
 | ------- | ------------ | ---- | ---------------- | ----- |
-| Nav items, Settings, Menu button | Button | Transactions, Settings, Menu | focusable | Menu has no expand state |
-| Search, filters | Edit, ComboBox with option items | Search transactions; Account filter | | |
+| Nav items, Settings, Menu button | Button | Transactions, Settings, Menu | focusable | |
+| Search, filters | Edit, ComboBox | Search transactions; Account filter | focusable | |
 | Grid container | **DataGrid** | Transactions | **GridPattern and TablePattern rows=10001 cols=5** | the full size is announced |
 | Column header | DataItem | Date etc. | GridItem row 0, column 0 to 4 | |
 | Data row | DataItem | whole-row text | focusable; **SelectionItem IsSelected=True for the selected row**, focused=True | |
