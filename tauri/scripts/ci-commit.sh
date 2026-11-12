@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 dest=evidence/ci/$name
 mkdir -p "$dest"
 if [ -d test-results ]; then
-  (cd test-results && find . -type f \( -name '*.json' -o -name '*.txt' -o -name '*.log' -o -name '*.png' \) \
+  (cd test-results && find . -type f \( -name '*.json' -o -name '*.txt' -o -name '*.log' -o -name '*.png' -o -name '*.timeline' -o -name '*.xwininfo' \) \
      -not -path './wdio-logs/*' -not -path './prev-shots/*' -not -path './shots-run1/*' -print0 | xargs -0 -I{} cp --parents {} "../$dest/")
 fi
 for p in "$@"; do [ -e "$p" ] && cp -r --parents "$p" "$dest/"; done

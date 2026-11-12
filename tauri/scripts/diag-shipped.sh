@@ -9,9 +9,9 @@ run() { # label, env assignments...
 #!/bin/bash
 $BIN >"$OUT/$label.log" 2>&1 &
 APP=\$!
-for i in 1 2 3 4 5 6 7 8 9 10; do
-  sleep 3
-  echo "t=\$((i*3))s procs: \$(ps -eo pid,comm | grep -cE 'WebKit(Web|Network|GPU)Process') webkit, app alive: \$(kill -0 \$APP 2>/dev/null && echo yes || echo NO), windows: \$(xwininfo -root -tree | grep -cE 'Folio|folio')" >> "$OUT/$label.timeline"
+for i in \$(seq 1 30); do
+  sleep 1
+  echo "t=\${i}s procs: \$(ps -eo pid,comm | grep -cE 'WebKit(Web|Network|GPU)Process') webkit, app alive: \$(kill -0 \$APP 2>/dev/null && echo yes || echo NO), windows: \$(xwininfo -root -tree | grep -cE 'Folio|folio')" >> "$OUT/$label.timeline"
 done
 xwininfo -root -tree > "$OUT/$label.xwininfo"
 import -window root "$OUT/$label.png"; convert "$OUT/$label.png" -format 'brightness %[fx:mean]\n' info: >> "$OUT/$label.timeline"
