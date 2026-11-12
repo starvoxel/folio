@@ -497,7 +497,7 @@
                 [Tab] name='Tab bar' id='' class='EdgeTabStripRegionView' focusable=False focused=False enabled=True offscreen=False 
                   [Pane] name='' id='view_25' class='EdgeTabStrip' focusable=False focused=False enabled=True offscreen=False 
                     [Tab] name='' id='' class='EdgeTabContainerImpl' focusable=False focused=False enabled=True offscreen=False 
-                      [TabItem] name='Folio - Memory usage - 48.7 MB' id='view_24' class='EdgeTab' focusable=False focused=False enabled=True offscreen=False SELECTED=True
+                      [TabItem] name='Folio - Memory usage - 48.3 MB' id='view_24' class='EdgeTab' focusable=False focused=False enabled=True offscreen=False SELECTED=True
                         [Button] name='Mute tab' id='' class='AlertIndicatorButton' focusable=False focused=False enabled=False offscreen=False 
                         [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
                         [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
