@@ -38,7 +38,8 @@ async function scrollWholeGrid(page: import('@playwright/test').Page): Promise<P
 
 test('G2: 10,000-row grid: sort every column, scroll twice, memory', async () => {
   const L = await launch();
-  const { page, app } = L;
+  const { page } = L;
+  const app = L.app!; // perf test uses Electron metrics; needs the Playwright Electron driver
   await goto(page, 'Transactions');
   expect((await state(page)).transactions!.totalRows).toBe(10000);
 

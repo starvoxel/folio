@@ -1,0 +1,215 @@
+[application] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=doDefault|showContextMenu
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=RootView ACTIONS=doDefault|showContextMenu
+    [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NonClientView ACTIONS=doDefault|showContextMenu
+      [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NativeFrameView ACTIONS=doDefault|showContextMenu
+        [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=ClientView ACTIONS=doDefault|showContextMenu
+          [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+            [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+                [panel] name='' states=ENABLED attrs=class=WebView ACTIONS=doDefault|showContextMenu
+                  [panel] name='' states=ENABLED attrs=class=NativeViewHost ACTIONS=doDefault|showContextMenu
+                [document web] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=#document ACTIONS=doDefault|showContextMenu|scrollBackward|scrollDown|scrollForward|scrollLeft|scrollRight|scrollUp
+                  [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=id=root;tag=div ACTIONS=click|showContextMenu
+                    [landmark] name='Main navigation' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-InlineDrawer rkjj3x6 fui-Drawer fui-NavDrawer nav ___s6p6od0 f1xteiwb f1vgc2s3 fvfyk4 f1exhnwo f1ctqxl6 f3gca8 f12j6lm0;tag=div;xml-roles=navigation ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=brand;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Folio' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-NavDrawerBody fui-DrawerBody ri6rvx7 ___1t51h4r fif7vu7 f3gca8 f22iagw f1vx9l62 f1j0q4x9;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [push button] name='Overview' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Reporting' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=fui-NavItem rdi7s9k ___i5hilb0 f1mdlcz9 fpil94b f90z1up f2ic3ny f1xz7mvd f3i5gj0 fi4v1pz f1tvrmnx f1p1ggug f3b9emi f13zj6fq f1ak99p5 fmnu42u fk6fouc fkhj508 fl43uef f1i3iumi;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Net worth' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Accounts' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Rules & categories' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                      [push button] name='Settings' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                    [landmark] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=topbar;tag=header;xml-roles=banner ACTIONS=clickAncestor|showContextMenu
+                      [static] name='Household 2026.folio' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [static] name='Saved automatically' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [push button] name='Undo (not in this slice)' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [push button] name='Redo (not in this slice)' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [push button] name='Import CSV' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [combo box] name='Month (placeholder)' states=SHOWING,VISIBLE attrs=class=fui-Select__select ___1y4aodd fqrijq1 f4ikngz fy0fskl f15xbau f1jj8ep1 fm9niy ft85np5 f1couhl3 f1ewtqcl f1s2aq7o fdrzuqr fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi f1c21dwh f9dbb4x f3qs60o fwd1oij f5u9ap2;posinset=1;setsize=1;tag=select ACTIONS=open|showContextMenu
+                        [menu] name='' states=ENABLED attrs=setsize=1;tag=div ACTIONS=doDefault|showContextMenu
+                          [menu item] name='March 2026' states=FOCUSABLE attrs=posinset=1;setsize=1;tag=option ACTIONS=select|showContextMenu
+                      [push button] name='Menu' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___clxrxh0 fhovq9v f1p3nwhy f11589ue f1q5o8ev f1pdflbu fkfq4zb f1t94bn6 f1s2uweq fr80ssc f1ukrpxl fecsdlb fnwyq0v ft1hn21 fuxngvv fy5bs14 f1q1yqic fhvnf4x fb6swo4 f1klyf7k f232fm2 fwga7ee f1nhwcv0 f1gm6xmp f1xxsver f1v3eptx fivsta0 fd4bjan f3m6zum f18ktai2 fwbmr0d f44c6la;id=menu_r_3_;tag=button ACTIONS=open|showContextMenu
+                    [landmark] name='Reporting' states=ENABLED,SHOWING,VISIBLE attrs=class=content;tag=main;xml-roles=main ACTIONS=clickAncestor|showContextMenu
+                      [heading] name='Reporting' states=ENABLED,SHOWING,VISIBLE attrs=level=1;tag=h1 ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Reporting' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [combo box] name='Report month' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Select__select ___13fmaul fqrijq1 f1c1zstj fm9niy ft85np5 f1couhl3 f1ewtqcl f19n0e5 f1k6fduh fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi fxugw4r fvcxoqz f1ub3y4t flmw63s f1m52nbi fvs00aa f1assf6x fqhmt4z f4ruux4;posinset=3;setsize=12;tag=select ACTIONS=open|showContextMenu
+                        [menu] name='' states=ENABLED attrs=setsize=12;tag=div ACTIONS=doDefault|showContextMenu
+                          [menu item] name='January 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=1;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='February 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=2;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='March 2026' states=SELECTED,FOCUSABLE,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=posinset=3;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='April 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=4;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='May 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=5;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='June 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=6;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='July 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=7;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='August 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=8;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='September 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=9;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='October 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=10;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='November 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=11;setsize=12;tag=option ACTIONS=select|showContextMenu
+                          [menu item] name='December 2026' states=FOCUSABLE,SELECTABLE,ENABLED attrs=posinset=12;setsize=12;tag=option ACTIONS=select|showContextMenu
+                      [landmark] name='Spending by category, March 2026' states=ENABLED,SHOWING,VISIBLE attrs=class=card;tag=section;xml-roles=region ACTIONS=clickAncestor|showContextMenu
+                        [heading] name='Spending by category, March 2026' states=ENABLED,SHOWING,VISIBLE attrs=id=h-spend;level=2;tag=h2 ACTIONS=clickAncestor|showContextMenu
+                          [static] name='Spending by category, ' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [static] name='March 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                        [image] name='Donut chart of spending by main category. Use the legend list to open a category.' states=ENABLED,SHOWING,VISIBLE attrs=class=chart donut;tag=div;xml-roles=img ACTIONS=clickAncestor|showContextMenu
+                        [list] name='Spending legend' states=ENABLED,SHOWING,VISIBLE attrs=class=legend;setsize=10;tag=ul ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=1;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Housing: $27,090, 31 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Housing' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$27,090' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='31' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=2;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Groceries: $16,900, 19 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Groceries' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$16,900' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='19' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=3;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Shopping: $13,505, 15 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Shopping' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$13,505' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='15' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=4;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Savings: $9,858, 11 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Savings' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$9,858' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='11' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=5;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Dining out: $5,849, 7 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Dining out' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$5,849' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='7' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=6;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Travel: $5,351, 6 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Travel' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$5,351' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='6' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=7;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Transport: $4,929, 6 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Transport' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$4,929' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='6' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=8;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Uncategorized: $2,849, 3 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Uncategorized' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$2,849' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='3' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=9;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Health: $1,846, 2 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Health' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$1,846' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='2' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [list item] name='' states=ENABLED,SHOWING,VISIBLE attrs=level=1;posinset=10;setsize=10;tag=li ACTIONS=clickAncestor|showContextMenu
+                            [push button] name='Entertainment: $398, 0 percent. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=legend-row;tag=button ACTIONS=press|showContextMenu
+                              [static] name='Entertainment' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='$398' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='0' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                              [static] name='%' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [landmark] name='Money in vs money out, 2026' states=ENABLED,SHOWING,VISIBLE attrs=class=card;tag=section;xml-roles=region ACTIONS=clickAncestor|showContextMenu
+                        [heading] name='Money in vs money out, 2026' states=ENABLED,SHOWING,VISIBLE attrs=id=h-flow;level=2;tag=h2 ACTIONS=clickAncestor|showContextMenu
+                          [static] name='Money in vs money out, 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                        [image] name='Bar chart of money in and money out by month. Use the table below to open a month.' states=ENABLED,SHOWING,VISIBLE attrs=class=chart bars;tag=div;xml-roles=img ACTIONS=clickAncestor|showContextMenu
+                        [table] name='Money in and out by month. Activate an amount to show those transactions.' states=ENABLED,SHOWING,VISIBLE attrs=class=flow-table;tag=table TABLE rows=13 cols=3 ACTIONS=clickAncestor|showContextMenu
+                          [caption] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=sr-only;tag=caption ACTIONS=clickAncestor|showContextMenu
+                            [static] name='Money in and out by month. Activate an amount to show those transactions.' states=ENABLED,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [column header] name='Month' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='Month' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [column header] name='In' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='In' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [column header] name='Out' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='Out' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='January 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='January 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='January 2026 money in $26,959. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='January 2026 money in $26,959. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='January 2026 money out $61,084. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='January 2026 money out $61,084. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='February 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='February 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='February 2026 money in $38,676. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='February 2026 money in $38,676. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='February 2026 money out $78,856. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='February 2026 money out $78,856. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='March 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='March 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='March 2026 money in $46,952. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='March 2026 money in $46,952. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='March 2026 money out $88,575. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='March 2026 money out $88,575. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='April 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='April 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='April 2026 money in $60,166. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='April 2026 money in $60,166. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='April 2026 money out $76,274. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='April 2026 money out $76,274. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='May 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='May 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='May 2026 money in $36,117. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='May 2026 money in $36,117. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='May 2026 money out $74,717. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='May 2026 money out $74,717. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='June 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='June 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='June 2026 money in $49,359. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='June 2026 money in $49,359. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='June 2026 money out $80,322. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='June 2026 money out $80,322. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='July 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='July 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='July 2026 money in $61,430. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='July 2026 money in $61,430. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='July 2026 money out $87,011. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='July 2026 money out $87,011. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='August 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='August 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='August 2026 money in $62,093. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='August 2026 money in $62,093. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='August 2026 money out $81,622. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='August 2026 money out $81,622. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='September 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='September 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='September 2026 money in $56,190. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='September 2026 money in $56,190. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='September 2026 money out $77,823. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='September 2026 money out $77,823. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='October 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='October 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='October 2026 money in $62,528. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='October 2026 money in $62,528. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='October 2026 money out $75,830. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='October 2026 money out $75,830. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='November 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='November 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='November 2026 money in $43,204. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='November 2026 money in $43,204. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='November 2026 money out $76,738. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='November 2026 money out $76,738. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                          [table row] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=tr ACTIONS=clickAncestor|showContextMenu
+                            [row header] name='December 2026' states=ENABLED,SHOWING,VISIBLE attrs=tag=th ACTIONS=clickAncestor|showContextMenu
+                              [static] name='December 2026' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                            [table cell] name='December 2026 money in $56,658. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='December 2026 money in $56,658. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+                            [table cell] name='December 2026 money out $75,585. Show transactions' states=ENABLED,SHOWING,VISIBLE attrs=class=right;tag=td ACTIONS=clickAncestor|showContextMenu
+                              [push button] name='December 2026 money out $75,585. Show transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=link-btn num;tag=button ACTIONS=press|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu

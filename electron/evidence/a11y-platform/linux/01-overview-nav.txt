@@ -1,0 +1,39 @@
+[application] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=doDefault|showContextMenu
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=RootView ACTIONS=doDefault|showContextMenu
+    [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NonClientView ACTIONS=doDefault|showContextMenu
+      [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NativeFrameView ACTIONS=doDefault|showContextMenu
+        [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=ClientView ACTIONS=doDefault|showContextMenu
+          [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+            [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+                [panel] name='' states=ENABLED attrs=class=WebView ACTIONS=doDefault|showContextMenu
+                  [panel] name='' states=ENABLED attrs=class=NativeViewHost ACTIONS=doDefault|showContextMenu
+                [document web] name='Folio' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=#document ACTIONS=doDefault|showContextMenu
+                  [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=id=root;tag=div ACTIONS=click|showContextMenu
+                    [landmark] name='Main navigation' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-InlineDrawer rkjj3x6 fui-Drawer fui-NavDrawer nav ___s6p6od0 f1xteiwb f1vgc2s3 fvfyk4 f1exhnwo f1ctqxl6 f3gca8 f12j6lm0;tag=div;xml-roles=navigation ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=brand;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Folio' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-NavDrawerBody fui-DrawerBody ri6rvx7 ___1t51h4r fif7vu7 f3gca8 f22iagw f1vx9l62 f1j0q4x9;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [push button] name='Overview' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=fui-NavItem rdi7s9k ___i5hilb0 f1mdlcz9 fpil94b f90z1up f2ic3ny f1xz7mvd f3i5gj0 fi4v1pz f1tvrmnx f1p1ggug f3b9emi f13zj6fq f1ak99p5 fmnu42u fk6fouc fkhj508 fl43uef f1i3iumi;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Reporting' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Net worth' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Accounts' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                        [push button] name='Rules & categories' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                      [push button] name='Settings' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-NavItem rdi7s9k;tag=button ACTIONS=press|showContextMenu
+                    [landmark] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=topbar;tag=header;xml-roles=banner ACTIONS=clickAncestor|showContextMenu
+                      [static] name='Household 2026.folio' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [static] name='Saved automatically' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [push button] name='Undo (not in this slice)' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [push button] name='Redo (not in this slice)' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [push button] name='Import CSV' states=SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc;tag=button ACTIONS=click|showContextMenu
+                      [combo box] name='Month (placeholder)' states=SHOWING,VISIBLE attrs=class=fui-Select__select ___1y4aodd fqrijq1 f4ikngz fy0fskl f15xbau f1jj8ep1 fm9niy ft85np5 f1couhl3 f1ewtqcl f1s2aq7o fdrzuqr fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi f1c21dwh f9dbb4x f3qs60o fwd1oij f5u9ap2;posinset=1;setsize=1;tag=select ACTIONS=open|showContextMenu
+                        [menu] name='' states=ENABLED attrs=setsize=1;tag=div ACTIONS=doDefault|showContextMenu
+                          [menu item] name='March 2026' states=FOCUSABLE attrs=posinset=1;setsize=1;tag=option ACTIONS=select|showContextMenu
+                      [push button] name='Menu' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___clxrxh0 fhovq9v f1p3nwhy f11589ue f1q5o8ev f1pdflbu fkfq4zb f1t94bn6 f1s2uweq fr80ssc f1ukrpxl fecsdlb fnwyq0v ft1hn21 fuxngvv fy5bs14 f1q1yqic fhvnf4x fb6swo4 f1klyf7k f232fm2 fwga7ee f1nhwcv0 f1gm6xmp f1xxsver f1v3eptx fivsta0 fd4bjan f3m6zum f18ktai2 fwbmr0d f44c6la;id=menu_r_3_;tag=button ACTIONS=open|showContextMenu
+                    [landmark] name='Overview' states=ENABLED,SHOWING,VISIBLE attrs=class=content;tag=main;xml-roles=main ACTIONS=clickAncestor|showContextMenu
+                      [heading] name='Overview' states=ENABLED,SHOWING,VISIBLE attrs=level=1;tag=h1 ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Overview' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [paragraph] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=muted;tag=p ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Placeholder page for the stack spike.' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu

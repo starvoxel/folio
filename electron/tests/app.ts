@@ -3,6 +3,7 @@ import type { ElectronApplication, Page } from '@playwright/test';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
+import { launchViaPipe } from './pipe-driver';
 
 export const root = path.resolve(__dirname, '..');
 export const fixtures = path.resolve(root, '..', 'fixtures');
@@ -16,7 +17,9 @@ export function exePath(): string {
 }
 
 export interface Launched {
-  app: ElectronApplication;
+  /** Undefined when driving the release binary over --remote-debugging-pipe (no main-process access). */
+  app?: ElectronApplication;
+  close(): Promise<void>;
   page: Page;
   coldStartMs: number;
   exited: Promise<number | null>;
@@ -26,6 +29,12 @@ export interface Launched {
 export async function launch(extraEnv: Record<string, string> = {}): Promise<Launched> {
   const userData = fs.mkdtempSync(path.join(os.tmpdir(), 'folio-ud-'));
   const t0 = Date.now();
+  if (process.env.FOLIO_DRIVER === 'pipe') {
+    const env = { ...process.env, FOLIO_AUTOMATION: '1', FOLIO_DATA_DIR: fixtures, FOLIO_USER_DATA: userData, ...extraEnv } as Record<string, string>;
+    const pa = await launchViaPipe(exePath(), process.platform === 'linux' ? ['--no-sandbox'] : [], env);
+    await pa.page.waitForFunction(() => window.__folio?.getState().ready === true, null, { timeout: 30_000 });
+    return { page: pa.page, coldStartMs: Date.now() - t0, exited: pa.exited, userData, close: () => pa.close() };
+  }
   // --no-sandbox only on Linux CI/containers where the setuid chrome-sandbox helper is unavailable.
   const args = process.platform === 'linux' ? ['--no-sandbox'] : [];
   const app = await electron.launch({
@@ -39,7 +48,7 @@ export async function launch(extraEnv: Record<string, string> = {}): Promise<Lau
   const page = await app.firstWindow();
   await page.waitForFunction(() => window.__folio?.getState().ready === true, null, { timeout: 30_000 });
   const coldStartMs = Date.now() - t0;
-  return { app, page, coldStartMs, exited, userData };
+  return { app, page, coldStartMs, exited, userData, close: () => app.close() };
 }
 
 export async function state(page: Page) {

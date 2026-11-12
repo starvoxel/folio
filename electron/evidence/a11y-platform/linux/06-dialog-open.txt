@@ -1,0 +1,20 @@
+[application] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=doDefault|showContextMenu
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=class=RootView ACTIONS=doDefault|showContextMenu
+    [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NonClientView ACTIONS=doDefault|showContextMenu
+      [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=NativeFrameView ACTIONS=doDefault|showContextMenu
+        [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=ClientView ACTIONS=doDefault|showContextMenu
+          [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+            [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu
+                [panel] name='' states=ENABLED attrs=class=WebView ACTIONS=doDefault|showContextMenu
+                  [panel] name='' states=ENABLED attrs=class=NativeViewHost ACTIONS=doDefault|showContextMenu
+                [document web] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=#document ACTIONS=doDefault|showContextMenu
+                  [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-FluentProvider fui-FluentProvider_r_0_ fluent-root ___1bsm0mz f19n0e5 fxugw4r f1o700av fk6fouc fkhj508 figsok6 f1i3iumi f1euv43f f15twtuk f1vgc2s3 f1e31b4d f494woh;tag=div ACTIONS=click|showContextMenu
+                    [dialog] name='Reset settings?' states=FOCUSABLE,MODAL,ENABLED,SHOWING,VISIBLE attrs=class=fui-DialogSurface r1u3t6p6;tag=div;xml-roles=dialog ACTIONS=clickAncestor|showContextMenu
+                      [heading] name='Reset settings?' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-DialogTitle rxjm636 ___mh25s00 fsyjsko;id=dialog-title-_r_8_;level=2;tag=h2 ACTIONS=clickAncestor|showContextMenu
+                        [static] name='Reset settings?' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=fui-DialogContent r1v5zwsm;tag=div ACTIONS=clickAncestor|showContextMenu
+                        [static] name='This returns the theme to System. Your budget data is not affected.' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=clickAncestor|showContextMenu
+                      [push button] name='Cancel' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk;tag=button ACTIONS=press|showContextMenu
+                      [push button] name='Reset' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=class=fui-Button r1f29ykk ___dhqv000 ffp7eso f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1phragk f15wkkf3 f1s2uweq fr80ssc f1ukrpxl fecsdlb f1rq72xc f1ksv2xa fhvnf4x fb6swo4 f1klyf7k f232fm2 f1d6mv4x f1nz3ub2 fag2qd2 fmvhcg7 f1o3dhpw f14bpyus fqc85l4 f1h3a8gf fkiggi6 f8gmj8i f1ap8nzx f1igan7k fjag8bx f1v3eptx f1ysmecq faulsx f79t15f fbtzoaq f8qmx7k fd4bjan f17t0x8g f194v5ow f1qgg65p fk7jm04 fhgccpy f32wu9k fu5nqqq f13prjl2 f1czftr5 f1nl83rv fixhny3 feygou5;tag=button ACTIONS=press|showContextMenu
+              [panel] name='' states=ENABLED,SHOWING,VISIBLE attrs=class=View ACTIONS=doDefault|showContextMenu

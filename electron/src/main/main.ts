@@ -10,6 +10,13 @@ import type { AppConfig, Dataset } from '../shared/types';
 hardenBeforeReady();
 
 const automation = process.env['FOLIO_AUTOMATION'] === '1';
+// Chromium's remote-debugging switches (pipe or port) give full control of the app. They are available on every Chromium-based
+// binary and no fuse turns them off, so the app refuses to run with them unless automation was requested explicitly.
+// (The automation hook in the renderer is gated by the same environment variable.) See FOLLOWUP-RESULTS.md, E3.
+if (!automation && process.argv.some((a) => /^--(remote-debugging-(port|pipe)|remote-allow-origins|inspect(-brk)?(=|$)|inspect-port)/.test(a))) {
+  console.error('Remote debugging switches are refused unless FOLIO_AUTOMATION=1.');
+  app.exit(2);
+}
 if (process.env['FOLIO_USER_DATA']) app.setPath('userData', process.env['FOLIO_USER_DATA']);
 
 function dataDir(): string {
