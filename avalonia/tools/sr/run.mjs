@@ -25,6 +25,7 @@ try {
   const say = async (label, action) => { const before = (await sr.spokenPhraseLog()).length; await action(); await sleep(1500); const all = await sr.spokenPhraseLog(); log(`--- ${label}\n${all.slice(before).map((p) => '  > ' + p).join('\n') || '  (nothing announced)'}`); };
   await say('go to Transactions (through the automation endpoint)', async () => C('navigate', 'Transactions'));
   await say('focus the table (window activated, table focused)', async () => C('invoke', '{"action":"focusTable"}'));
+  try { await say('report current focus (NVDA+Tab style command)', () => sr.perform(sr.keyboardCommands.reportCurrentFocus)); } catch (e) { log('report-focus command unavailable: ' + String(e).slice(0, 200)); }
   for (let i = 1; i <= 4; i++) await say(`ArrowDown ${i} (real key through the screen reader)`, () => sr.press('ArrowDown'));
   await say('End key', () => sr.press('End'));
   await say('go to Settings and open the dialog', async () => { C('navigate', 'Settings'); await sleep(800); C('invoke', '{"action":"openDialog"}'); });

@@ -238,7 +238,7 @@ public sealed class ListTable : TableHost
     }
     public override void ScrollTo(TxRow r, int col) => _list.ScrollIntoView(r);
     public override void ScrollToEnd() { if (_rows.Count > 0) _list.ScrollIntoView(_rows[^1]); }
-    public override void FocusTable() => _list.Focus();
+    public override void FocusTable() { var i = Math.Max(0, _list.SelectedIndex); (_list.ContainerFromIndex(i) as Control ?? _list).Focus(); }
     public override void SetSortGlyph(string col, ListSortDirection dir)
     {
         for (var i = 0; i < Names.Length; i++) _heads[i].Content = Names[i] + (Names[i] == col ? (dir == ListSortDirection.Ascending ? " ▲" : " ▼") : "");
