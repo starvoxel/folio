@@ -1,1 +1,1 @@
--rwxr-xr-x 1 runner runner 80579064 Nov 12 18:43 /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/appimage/Folio_0.0.1_amd64.AppImage
+-rwxr-xr-x 1 runner runner 80579064 Nov 12 19:23 /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/appimage/Folio_0.0.1_amd64.AppImage

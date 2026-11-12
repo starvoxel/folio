@@ -1,7 +1,7 @@
 === driven-sink
-text capture lines: 736; loopback: 692; kernel IPv6 housekeeping on the namespace veth: 44; other (application) packets: 0
+text capture lines: 707; loopback: 663; kernel IPv6 housekeeping on the namespace veth: 44; other (application) packets: 0
 non-loopback connect/send syscalls in strace: 0 (plus 0 UDP route-probe connect() calls, no packet emitted)
-DNS queries for external names: 2 -> registry.npmjs.org, registry.npmjs.org.j0dt1v4j3kvu3apyzpie0zbfdh.ex.internal.cloudapp.net
+DNS queries for external names: 2 -> registry.npmjs.org, registry.npmjs.org.us-west-2.compute.internal
 === release-idle-noroute
 text capture lines: 0; loopback: 0; kernel IPv6 housekeeping on the namespace veth: 0; other (application) packets: 0
 non-loopback connect/send syscalls in strace: 0 (plus 0 UDP route-probe connect() calls, no packet emitted)
