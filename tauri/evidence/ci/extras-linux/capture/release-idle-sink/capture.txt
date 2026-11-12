@@ -1,45 +1,45 @@
-2026-11-12 17:27:49.015097 d0    Out IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
-2026-11-12 17:27:49.015103 d1    M   IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
-2026-11-12 17:27:49.078078 d1    Out IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
-2026-11-12 17:27:49.078083 d0    M   IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
-2026-11-12 17:27:49.414140 d1    Out IP6 :: > ff02::1:ff99:b062: ICMP6, neighbor solicitation, who has fe80::fccd:dbff:fe99:b062, length 32
-2026-11-12 17:27:49.414146 d0    M   IP6 :: > ff02::1:ff99:b062: ICMP6, neighbor solicitation, who has fe80::fccd:dbff:fe99:b062, length 32
-2026-11-12 17:27:49.606138 d0    Out IP6 :: > ff02::1:ff56:1a05: ICMP6, neighbor solicitation, who has fe80::2404:b5ff:fe56:1a05, length 32
-2026-11-12 17:27:49.606143 d1    M   IP6 :: > ff02::1:ff56:1a05: ICMP6, neighbor solicitation, who has fe80::2404:b5ff:fe56:1a05, length 32
-2026-11-12 17:27:50.438113 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
-2026-11-12 17:27:50.438119 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
-2026-11-12 17:27:50.438140 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:50.438141 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:50.630126 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
-2026-11-12 17:27:50.630132 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
-2026-11-12 17:27:50.630158 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:50.630159 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:50.838096 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
-2026-11-12 17:27:50.838103 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
-2026-11-12 17:27:51.014154 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
-2026-11-12 17:27:51.014164 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
-2026-11-12 17:27:54.278093 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:54.278100 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:55.110098 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:27:55.110104 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:01.766112 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:01.766120 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:03.302105 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:03.302111 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:17.126118 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:17.126127 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:19.686119 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:19.686125 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:47.334109 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:47.334116 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:51.942117 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:28:51.942126 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:29:48.774075 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:29:48.774081 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:29:56.966081 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:29:56.966087 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:31:47.558100 d1    Out IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:31:47.558106 d0    M   IP6 fe80::fccd:dbff:fe99:b062 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:32:12.134071 d0    Out IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
-2026-11-12 17:32:12.134081 d1    M   IP6 fe80::2404:b5ff:fe56:1a05 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:19.725058 d0    Out IP6 :: > ff02::1:ff7b:119b: ICMP6, neighbor solicitation, who has fe80::c0b2:5cff:fe7b:119b, length 32
+2026-11-12 18:17:19.725064 d1    M   IP6 :: > ff02::1:ff7b:119b: ICMP6, neighbor solicitation, who has fe80::c0b2:5cff:fe7b:119b, length 32
+2026-11-12 18:17:19.973070 d1    Out IP6 :: > ff02::1:ff75:eb8: ICMP6, neighbor solicitation, who has fe80::1c91:52ff:fe75:eb8, length 32
+2026-11-12 18:17:19.973076 d0    M   IP6 :: > ff02::1:ff75:eb8: ICMP6, neighbor solicitation, who has fe80::1c91:52ff:fe75:eb8, length 32
+2026-11-12 18:17:20.228998 d1    Out IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+2026-11-12 18:17:20.229003 d0    M   IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+2026-11-12 18:17:20.293004 d0    Out IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
+2026-11-12 18:17:20.293008 d1    M   IP6 :: > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
+2026-11-12 18:17:20.741095 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
+2026-11-12 18:17:20.741101 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
+2026-11-12 18:17:20.741116 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:20.741117 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:20.997030 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+2026-11-12 18:17:20.997037 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+2026-11-12 18:17:20.997057 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:20.997059 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:21.157009 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+2026-11-12 18:17:21.157014 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+2026-11-12 18:17:21.382017 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
+2026-11-12 18:17:21.382023 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::16: HBH ICMP6, multicast listener report v2, 2 group record(s), length 48
+2026-11-12 18:17:24.517023 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:24.517030 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:24.709025 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:24.709033 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:31.877024 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:31.877030 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:32.388993 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:32.388998 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:46.213010 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:46.213016 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:47.237017 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:17:47.237026 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:18:15.397026 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:18:15.397032 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:18:17.957024 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:18:17.957031 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:19:17.861009 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:19:17.861020 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:19:17.861014 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:19:17.861022 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:21:12.549020 d1    Out IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:21:12.549027 d0    M   IP6 fe80::1c91:52ff:fe75:eb8 > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:21:20.741014 d0    Out IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
+2026-11-12 18:21:20.741019 d1    M   IP6 fe80::c0b2:5cff:fe7b:119b > ff02::2: ICMP6, router solicitation, length 16
 

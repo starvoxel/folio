@@ -1,2 +1,4 @@
 
-(folio:17907): dbind-WARNING **: 17:16:31.289: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
+(folio:17880): dbind-WARNING **: 18:05:56.301: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
