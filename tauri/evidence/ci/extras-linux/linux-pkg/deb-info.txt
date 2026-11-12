@@ -1,5 +1,5 @@
 == deb: /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/deb/Folio_0.0.1_amd64.deb
--rw-r--r-- 1 runner runner 1683604 Nov 12 18:01 /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/deb/Folio_0.0.1_amd64.deb
+-rw-r--r-- 1 runner runner 1683604 Nov 12 18:41 /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/deb/Folio_0.0.1_amd64.deb
  Package: folio
  Version: 0.0.1
  Installed-Size: 3520

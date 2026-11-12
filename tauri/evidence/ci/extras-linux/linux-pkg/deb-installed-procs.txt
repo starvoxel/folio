@@ -1,36 +1,36 @@
 mean brightness (1.0 = blank white):
 0.976569
---- pid 17864: /bin/sh /usr/bin/xvfb-run -a -s -screen 0 1440x900x24 dbus-run-session -- /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/te
+--- pid 17952: /bin/sh /usr/bin/xvfb-run -a -s -screen 0 1440x900x24 dbus-run-session -- /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/te
 Uid:	1001	1001	1001	1001
 NoNewPrivs:	0
 Seccomp:	0
 Seccomp_filters:	0
 ns: user:[4026531837] pid:[4026531836] net:[4026531833]
---- pid 17877: dbus-run-session -- /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/test-results/linux-pkg /usr/bin/folio 
+--- pid 17965: dbus-run-session -- /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/test-results/linux-pkg /usr/bin/folio 
 Uid:	1001	1001	1001	1001
 NoNewPrivs:	0
 Seccomp:	0
 Seccomp_filters:	0
 ns: user:[4026531837] pid:[4026531836] net:[4026531833]
---- pid 17879: /bin/bash /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/test-results/linux-pkg /usr/bin/folio 
+--- pid 17967: /bin/bash /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/test-results/linux-pkg /usr/bin/folio 
 Uid:	1001	1001	1001	1001
 NoNewPrivs:	0
 Seccomp:	0
 Seccomp_filters:	0
 ns: user:[4026531837] pid:[4026531836] net:[4026531833]
---- pid 17880: /usr/bin/folio 
+--- pid 17968: /usr/bin/folio 
 Uid:	1001	1001	1001	1001
 NoNewPrivs:	0
 Seccomp:	0
 Seccomp_filters:	0
 ns: user:[4026531837] pid:[4026531836] net:[4026531833]
---- pid 17921: /usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess 1 14 
+--- pid 18009: /usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess 1 14 
 Uid:	1001	1001	1001	1001
 NoNewPrivs:	0
 Seccomp:	0
 Seccomp_filters:	0
 ns: user:[4026531837] pid:[4026531836] net:[4026531833]
---- pid 17948: /usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess 4 18 
+--- pid 18036: /usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess 4 16 
 Uid:	1001	1001	1001	1001
 NoNewPrivs:	0
 Seccomp:	0
