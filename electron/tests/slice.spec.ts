@@ -148,6 +148,7 @@ test('reporting: bar and legend click open filtered Transactions', async () => {
 
   // Click a slice in the SVG donut (hit-tested by zrender at coordinates).
   await goto(L.page, 'Reporting');
+  await L.page.locator('[data-testid="donut"]').scrollIntoViewIfNeeded();
   const box = (await L.page.locator('[data-testid="donut"]').boundingBox())!;
   // The first slice starts at 12 o'clock and runs clockwise: aim at 3 o'clock on the ring, inside slice 0 if it spans >25%.
   await L.page.mouse.click(box.x + box.width * 0.5 + box.width * 0.37, box.y + box.height * 0.5);
@@ -158,6 +159,7 @@ test('reporting: bar and legend click open filtered Transactions', async () => {
 
   // Click a bar: the month table buttons are the keyboard path; the SVG bar is the pointer path.
   await goto(L.page, 'Reporting');
+  await L.page.locator('[data-testid="bars"]').scrollIntoViewIfNeeded(); // small CI displays put the chart below the fold
   // Find the rendered SVG bars by colour (layout differs per OS/font, so no hard-coded geometry).
   const greens = await L.page.evaluate(() =>
     [...document.querySelectorAll('[data-testid="bars"] svg path')]

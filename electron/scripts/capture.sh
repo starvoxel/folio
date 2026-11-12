@@ -21,16 +21,25 @@ unshare --net --mount-proc bash -c '
     ip link set d1 up
     ip neigh add 10.99.0.1 lladdr 02:00:00:00:00:01 dev d0 nud permanent
     ip route add default via 10.99.0.1 dev d0
+    # IPv6 sink as well, where the kernel has IPv6 (GitHub runners do; the dev sandbox used for the spike does not).
+    if [ -d /proc/sys/net/ipv6 ]; then
+      ip -6 addr add fd99::2/64 dev d0 nodad || true
+      ip -6 neigh add fd99::1 lladdr 02:00:00:00:00:01 dev d0 nud permanent || true
+      ip -6 route add default via fd99::1 dev d0 || true
+    fi
   fi
   ip -br addr > "$CAP_OUT/interfaces.txt"; ip route > "$CAP_OUT/routes.txt" || true
   tcpdump -i any -n -tttt -w "$CAP_OUT/capture.pcap" >"$CAP_OUT/tcpdump.log" 2>&1 &
   TCPDUMP=$!
+  # Live text dump: interface names in it are correct (reading the pcap from outside the namespace maps interface indexes to the wrong names).
+  tcpdump -i any -n -l -tttt >"$CAP_OUT/capture.txt" 2>/dev/null &
+  TCPDUMP2=$!
   sleep 1
   set +e
   strace -f -tt -qq -e trace=network -o "$CAP_OUT/strace.log" "$@"
   rc=$?
   set -e
   sleep 1
-  kill -INT $TCPDUMP; wait $TCPDUMP 2>/dev/null || true
+  kill -INT $TCPDUMP $TCPDUMP2; wait $TCPDUMP $TCPDUMP2 2>/dev/null || true
   exit $rc
 ' capture-inner "$@"
