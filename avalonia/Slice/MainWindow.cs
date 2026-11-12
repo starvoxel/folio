@@ -63,8 +63,27 @@ public sealed class MainWindow : Window
         DockPanel.SetDock(bar, Dock.Top);
         root.Children.Add(bar);
         root.Children.Add(_host);
-        _nav.Content = root;
-        Content = _nav;
+        if (opt.PlainNav)
+        {
+            var lb = new ListBox { ItemsSource = Pages, Width = 200 };
+            lb.SelectionChanged += (_, _) => { if (lb.SelectedItem is string p) Show(p); };
+            DockPanel.SetDock(lb, Dock.Left);
+            var plain = new DockPanel(); plain.Children.Add(lb); plain.Children.Add(root);
+            Content = plain; Opened += (_, _) => lb.SelectedIndex = 1;
+        }
+        else if (opt.A11yFix)
+        {
+            // FANavigationView exposes only its items to UI automation, not its Content. Keep the pane, but host the
+            // page content next to it (overlaid on the empty content area) so it is a normal part of the window tree.
+            root.Margin = new Thickness(_nav.OpenPaneLength, 0, 0, 0);
+            var g = new Grid(); g.Children.Add(_nav); g.Children.Add(root);
+            Content = g;
+        }
+        else
+        {
+            _nav.Content = root;
+            Content = _nav;
+        }
         Opened += (_, _) =>
         {
             Activate();

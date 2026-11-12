@@ -53,6 +53,7 @@ public sealed class SettingsPage
             Content = new StackPanel { Spacing = 8, Children = { new TextBlock { Text = "This clears review marks for the selected month. Nothing else changes." }, new TextBox { Watermark = "Optional reason" } } },
             PrimaryButtonText = "Reset", CloseButtonText = "Cancel", DefaultButton = FAContentDialogButton.Close,
         };
+        if (_w.Opt.A11yFix) Avalonia.Automation.AutomationProperties.SetName(_dlg, "Reset this month's review? dialog");
         // Escape must close the dialog; the library does not guarantee that, so handle it here if needed.
         _dlg.KeyDown += (_, e) => { if (e.Key == Key.Escape) { _dlg?.Hide(FAContentDialogResult.None); e.Handled = true; } };
         var d = _dlg;

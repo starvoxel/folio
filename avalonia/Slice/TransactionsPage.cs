@@ -54,7 +54,26 @@ public sealed class TransactionsPage
             var dir = _sortCol == name && _sortDir == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             Sort(name, dir);
         };
-        Grid.SelectionChanged += (_, _) => { if (!_suppress) UpdateDetails(); };
+        if (w.Opt.A11yFix)
+        {
+            // Rows have no text of their own in the accessibility tree; give each realized row a readable name and its position.
+            Grid.LoadingRow += (_, e) =>
+            {
+                if (e.Row.DataContext is TxRow r)
+                {
+                    Avalonia.Automation.AutomationProperties.SetName(e.Row, RowName(r, e.Row.IsSelected));
+                    Avalonia.Automation.AutomationProperties.SetPositionInSet(e.Row, e.Row.Index + 1);
+                    Avalonia.Automation.AutomationProperties.SetSizeOfSet(e.Row, _shown.Count);
+                }
+            };
+        }
+        Grid.SelectionChanged += (_, _) =>
+        {
+            if (w.Opt.A11yFix)
+                foreach (var row in Avalonia.VisualTree.VisualExtensions.GetVisualDescendants(Grid).OfType<DataGridRow>())
+                    if (row.DataContext is TxRow rr) Avalonia.Automation.AutomationProperties.SetName(row, RowName(rr, row.IsSelected));
+            if (!_suppress) UpdateDetails();
+        };
 
         _acct.ItemsSource = new[] { "All accounts" }.Concat(_s.Accounts.Select(a => a.Name)).ToList(); _acct.SelectedIndex = 0;
         var cats = new List<string> { "All categories" };
@@ -85,6 +104,9 @@ public sealed class TransactionsPage
         Refresh();
         UpdateDetails();
     }
+
+    // The DataGrid row peer has no selected state of its own, so the state is part of the accessible name.
+    private static string RowName(TxRow r, bool selected) => $"{r.Date}, {r.Description}, {r.Account}, {r.Category}, {r.AmountText}" + (selected ? ", selected" : "");
 
     private string? CatIdAt(int i)
     {

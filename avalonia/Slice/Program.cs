@@ -11,6 +11,8 @@ public sealed class Options
     public bool Headless { get; set; }
     public string? Theme { get; set; }
     public string? DiscoveryFile { get; set; }
+    public bool A11yFix { get; set; }    // a11y fixes (see FOLLOWUP-RESULTS.md A1)
+    public bool PlainNav { get; set; }   // a11y experiment: no FANavigationView
     public int Width { get; set; } = 1440;
     public int Height { get; set; } = 900;
 }
@@ -35,6 +37,8 @@ public static class Program
             {
                 case "--data": o.DataDir = args[++i]; break;
                 case "--automation": o.Automation = true; break;
+                case "--a11y-fix": o.A11yFix = true; break;
+                case "--plain-nav": o.PlainNav = true; break;
                 case "--headless": o.Headless = true; break;
                 case "--theme": o.Theme = args[++i]; break;
                 case "--discovery": o.DiscoveryFile = args[++i]; break;

@@ -1,0 +1,21 @@
+{
+ "focused": {
+  "role": "push button",
+  "name": "Cancel",
+  "states": [
+   "enabled",
+   "focusable",
+   "focused",
+   "sensitive",
+   "showing",
+   "visible"
+  ],
+  "index_in_parent": 1,
+  "interfaces": [
+   "Accessible",
+   "Action",
+   "Component"
+  ],
+  "child_count": 1
+ }
+}
