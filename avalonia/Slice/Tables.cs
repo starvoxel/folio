@@ -25,6 +25,7 @@ public abstract class TableHost
     public abstract void SetSortGlyph(string col, ListSortDirection dir);
     public abstract IEnumerable<string> ColumnNames { get; }
     public abstract void ScrollToEnd();
+    public abstract void FocusTable();
     public event Action? SelectionChanged;
     public event Action<string>? SortRequested;
     protected void RaiseSelectionChanged() => SelectionChanged?.Invoke();
@@ -168,6 +169,7 @@ public sealed class DataGridTable : TableHost
     }
     public override void ScrollTo(TxRow r, int col) => _g.ScrollIntoView(r, _g.Columns[col]);
     public override void ScrollToEnd() { if (_rows.Count > 0) _g.ScrollIntoView(_rows[^1], _g.Columns[1]); }
+    public override void FocusTable() => _g.Focus();
     public override void SetSortGlyph(string col, ListSortDirection dir)
     {
         foreach (var c in _g.Columns) c.Header = (string)c.Tag! + ((string)c.Tag! == col ? (dir == ListSortDirection.Ascending ? " ▲" : " ▼") : "");
@@ -236,6 +238,7 @@ public sealed class ListTable : TableHost
     }
     public override void ScrollTo(TxRow r, int col) => _list.ScrollIntoView(r);
     public override void ScrollToEnd() { if (_rows.Count > 0) _list.ScrollIntoView(_rows[^1]); }
+    public override void FocusTable() => _list.Focus();
     public override void SetSortGlyph(string col, ListSortDirection dir)
     {
         for (var i = 0; i < Names.Length; i++) _heads[i].Content = Names[i] + (Names[i] == col ? (dir == ListSortDirection.Ascending ? " ▲" : " ▼") : "");

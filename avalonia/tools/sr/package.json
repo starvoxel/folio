@@ -1,0 +1,10 @@
+{
+  "name": "folio-avalonia-sr",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Real screen reader (NVDA on Windows, VoiceOver on macOS) via Guidepup, same scenario as the Electron slice. Isolated from the app.",
+  "dependencies": {
+    "@guidepup/guidepup": "0.40.0",
+    "@guidepup/setup": "0.29.3"
+  }
+}

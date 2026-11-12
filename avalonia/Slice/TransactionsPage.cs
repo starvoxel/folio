@@ -144,6 +144,7 @@ public sealed class TransactionsPage
 
     public void Select(string id) { var r = _shown.FirstOrDefault(x => x.Id == id); Table.Selected = r; if (r is not null) Table.ScrollTo(r, 0); }
     public void ScrollToEnd() => Table.ScrollToEnd();
+    public void FocusTable() => Table.FocusTable();
 
     private void UpdateDetails()
     {
