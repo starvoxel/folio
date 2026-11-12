@@ -1,0 +1,6 @@
+01-overview-nav: exit 0 180 nodes -> D:\a\folio\folio\tauri\test-results\a11y-platform\win32\01-overview-nav.txt 
+02-transactions-no-selection: exit 0 504 nodes -> D:\a\folio\folio\tauri\test-results\a11y-platform\win32\02-transactions-no-selection.txt 
+03-transactions-row-selected: exit 0 527 nodes -> D:\a\folio\folio\tauri\test-results\a11y-platform\win32\03-transactions-row-selected.txt 
+04-transactions-scrolled-far: exit 0 633 nodes -> D:\a\folio\folio\tauri\test-results\a11y-platform\win32\04-transactions-scrolled-far.txt 
+05-reporting: exit 0 368 nodes -> D:\a\folio\folio\tauri\test-results\a11y-platform\win32\05-reporting.txt 
+06-dialog-open: exit 0 188 nodes -> D:\a\folio\folio\tauri\test-results\a11y-platform\win32\06-dialog-open.txt 

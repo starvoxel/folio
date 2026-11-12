@@ -1,0 +1,180 @@
+﻿[Window] name='Folio' id='' class='Tauri Window' focusable=False focused=True enabled=True offscreen=False 
+  [Pane] name='' id='' class='WRY_WEBVIEW' focusable=False focused=True enabled=True offscreen=False 
+    [Pane] name='' id='' class='Chrome_WidgetWin_0' focusable=False focused=True enabled=True offscreen=False 
+      [Pane] name='Folio' id='' class='Chrome_WidgetWin_1' focusable=False focused=True enabled=True offscreen=False 
+        [Pane] name='' id='' class='Intermediate D3D Window' focusable=False focused=False enabled=False offscreen=False 
+        [Pane] name='Folio - Web content' id='' class='BrowserRootView' focusable=False focused=False enabled=True offscreen=False 
+          [Pane] name='' id='' class='NonClientView' focusable=False focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='EmbeddedBrowserFrameView' focusable=False focused=False enabled=True offscreen=False 
+              [Text] name='Untitled' id='view_9' class='Label' focusable=False focused=False enabled=True offscreen=False 
+              [Pane] name='' id='' class='BrowserCaptionButtonContainer' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Minimize' id='view_2' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Maximize' id='view_3' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Restore' id='view_4' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Close' id='view_7' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+              [Pane] name='' id='' class='BrowserView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='MainBackgroundRegionView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='TopContainerView' focusable=False focused=False enabled=True offscreen=False 
+                  [ToolBar] name='App bar' id='view_1000' class='EdgeToolbarView' focusable=False focused=False enabled=True offscreen=False 
+                    [Group] name='' id='' class='LocationBarView' focusable=False focused=False enabled=True offscreen=False 
+                      [Button] name='' id='' class='PermissionDashboardView' focusable=False focused=False enabled=True offscreen=False 
+                      [Image] name='Copilot' id='' class='EdgeCoworkOmniboxIdentityView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                      [Group] name='' id='' class='KeywordHintView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Button] name='' id='' class='ContentSettingImageView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='PageActionContainerView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='EdgePageActionIconContainerView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Search instead' id='' class='EdgeComposerSearchChatTurnaroundPageActionIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='EdgePageActionIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='To open this link, choose an app' id='' class='EdgeIntentPickerView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='App available. Install ' id='' class='EdgePwaInstallView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Show translate options' id='view_1022' class='TranslateIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='EdgePageActionIconView' focusable=False focused=False enabled=False offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=False offscreen=False 
+                        [Button] name='Update automatic profile switching preferences for this site' id='' class='EdgePageActionIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='View your virtual card number' id='' class='EdgeTokenizationIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Buy now pay later' id='' class='EdgeBNPLIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Save address?' id='' class='EdgeAutofillAiIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='More actions' id='' class='EdgeOverflowIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ReadAloudBarView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ContentsSeparator' focusable=False focused=False enabled=True offscreen=False 
+                [Group] name='Infobar Container' id='view_1063' class='InfoBarContainerView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='SidebarContentsSplitView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='SidebarContentsSplitView' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='' id='' class='MultiContentsView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Document] name='' id='view_1055' class='WebView' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='Chrome Legacy Window' id='520' class='Chrome_RenderWidgetHostHWND' focusable=False focused=False enabled=True offscreen=False 
+                          [Document] name='' id='RootWebArea' class='' focusable=False focused=True enabled=True offscreen=False VALUE=''
+                        [Pane] name='' id='' class='DataProtectionOverlayView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='view_1061' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Document] name='' id='view_1055' class='WebView' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Document] name='' id='view_1051' class='ContentsWebView' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='DataProtectionOverlayView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='view_1061' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='MultiContentsDropTargetView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                          [Text] name='Open in split screen' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='ContentsSeparator' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='view_1058' class='View' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='Side pane' id='' class='SidePaneRootContainer' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='Side pane' id='' class='HubWebViewContainerView' focusable=False focused=False enabled=True offscreen=False 
+                    [Document] name='' id='' class='HubWebView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='' id='' class='SidePaneRootContainerBackgroundAndBorderView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='ShadowOverlayView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ShadowFrameView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='SidePanel' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ContentParentView' focusable=False focused=False enabled=True offscreen=False 
+                  [Slider] name='Side Panel Resize Handle (draggable)' id='' class='SidePanelResizeArea' focusable=False focused=False enabled=True offscreen=False VALUE=''
+                [Tab] name='Tab bar' id='' class='EdgeTabStripRegionView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='view_25' class='EdgeTabStrip' focusable=False focused=False enabled=True offscreen=False 
+                    [Tab] name='' id='' class='EdgeTabContainerImpl' focusable=False focused=False enabled=True offscreen=False 
+                      [TabItem] name='Folio - Memory usage - 49.3 MB' id='view_24' class='EdgeTab' focusable=False focused=False enabled=True offscreen=False SELECTED=True
+                        [Button] name='Mute tab' id='' class='AlertIndicatorButton' focusable=False focused=False enabled=False offscreen=False 
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Close tab' id='view_27' class='EdgeTabCloseButton' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='ScrollView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrollView::Viewport' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrollCornerView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrollView::Viewport' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='' id='' class='TabStrip::EdgeTabDragContextImpl' focusable=False focused=False enabled=True offscreen=False 
+                  [Button] name='New Tab' id='view_28' class='EdgeNewTabButton' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='FrameGrabHandle' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='WindowedFindBarFocusProxyView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='EmbeddedBrowserDownloadView' focusable=False focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='EmbeddedBrowserTabRootView' focusable=True focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='TopContainerOverlayView' focusable=False focused=False enabled=True offscreen=False 

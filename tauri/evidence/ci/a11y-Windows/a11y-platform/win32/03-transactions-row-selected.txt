@@ -1,0 +1,527 @@
+﻿[Window] name='Folio' id='' class='Tauri Window' focusable=False focused=True enabled=True offscreen=False 
+  [Pane] name='' id='' class='Chrome_WidgetWin_1' focusable=False focused=False enabled=True offscreen=False 
+    [Pane] name='' id='' class='Intermediate D3D Window' focusable=False focused=False enabled=False offscreen=False 
+    [Pane] name='' id='' class='RootView' focusable=False focused=False enabled=True offscreen=False 
+      [ToolTip] name='Café Olimpico #7718' id='' class='TooltipViewAura' focusable=False focused=False enabled=True offscreen=False 
+  [Pane] name='' id='' class='WRY_WEBVIEW' focusable=False focused=True enabled=True offscreen=False 
+    [Pane] name='' id='' class='Chrome_WidgetWin_0' focusable=False focused=True enabled=True offscreen=False 
+      [Pane] name='Folio' id='' class='Chrome_WidgetWin_1' focusable=False focused=True enabled=True offscreen=False 
+        [Pane] name='' id='' class='Intermediate D3D Window' focusable=False focused=False enabled=False offscreen=False 
+        [Pane] name='Folio - Web content' id='' class='BrowserRootView' focusable=False focused=False enabled=True offscreen=False 
+          [Pane] name='' id='' class='NonClientView' focusable=False focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='EmbeddedBrowserFrameView' focusable=False focused=False enabled=True offscreen=False 
+              [Text] name='Untitled' id='view_9' class='Label' focusable=False focused=False enabled=True offscreen=False 
+              [Pane] name='' id='' class='BrowserCaptionButtonContainer' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Minimize' id='view_2' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Maximize' id='view_3' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Restore' id='view_4' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+                [Button] name='Close' id='view_7' class='EdgeWindowsCaptionButton' focusable=False focused=False enabled=True offscreen=False 
+              [Pane] name='' id='' class='BrowserView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='MainBackgroundRegionView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='TopContainerView' focusable=False focused=False enabled=True offscreen=False 
+                  [ToolBar] name='App bar' id='view_1000' class='EdgeToolbarView' focusable=False focused=False enabled=True offscreen=False 
+                    [Group] name='' id='' class='LocationBarView' focusable=False focused=False enabled=True offscreen=False 
+                      [Button] name='' id='' class='PermissionDashboardView' focusable=False focused=False enabled=True offscreen=False 
+                      [Image] name='Copilot' id='' class='EdgeCoworkOmniboxIdentityView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                      [Group] name='' id='' class='KeywordHintView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Button] name='' id='' class='ContentSettingImageView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='PageActionContainerView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='PageActionView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='EdgePageActionIconContainerView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Search instead' id='' class='EdgeComposerSearchChatTurnaroundPageActionIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='EdgePageActionIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='To open this link, choose an app' id='' class='EdgeIntentPickerView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='App available. Install ' id='' class='EdgePwaInstallView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Show translate options' id='view_1022' class='TranslateIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='' id='' class='EdgePageActionIconView' focusable=False focused=False enabled=False offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=False offscreen=False 
+                        [Button] name='Update automatic profile switching preferences for this site' id='' class='EdgePageActionIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='View your virtual card number' id='' class='EdgeTokenizationIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Buy now pay later' id='' class='EdgeBNPLIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='Save address?' id='' class='EdgeAutofillAiIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Button] name='More actions' id='' class='EdgeOverflowIconView' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                          [Text] name='' id='' class='AXVirtualView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                      [Text] name='' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ReadAloudBarView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ContentsSeparator' focusable=False focused=False enabled=True offscreen=False 
+                [Group] name='Infobar Container' id='view_1063' class='InfoBarContainerView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='SidebarContentsSplitView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='SidebarContentsSplitView' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='' id='' class='MultiContentsView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Document] name='' id='view_1055' class='WebView' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='Chrome Legacy Window' id='520' class='Chrome_RenderWidgetHostHWND' focusable=False focused=False enabled=True offscreen=False 
+                          [Document] name='Folio' id='RootWebArea' class='' focusable=True focused=False enabled=True offscreen=False VALUE='http://tauri.localhost/'
+                            [Group] name='' id='root' class='' focusable=False focused=False enabled=True offscreen=False 
+                              [Group] name='Main navigation' id='' class='fui-InlineDrawer rkjj3x6 fui-Drawer fui-NavDrawer nav ___s6p6od0 f1xteiwb f1vgc2s3 fvfyk4 f1exhnwo f1ctqxl6 f3gca8 f12j6lm0' focusable=False focused=False enabled=True offscreen=False 
+                                [Group] name='' id='' class='brand' focusable=False focused=False enabled=True offscreen=False 
+                                  [Text] name='Folio' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                [Group] name='' id='' class='fui-NavDrawerBody fui-DrawerBody ri6rvx7 ___1t51h4r fif7vu7 f3gca8 f22iagw f1vx9l62 f1j0q4x9' focusable=False focused=False enabled=True offscreen=False 
+                                  [Button] name='Overview' id='' class='fui-NavItem rdi7s9k' focusable=True focused=False enabled=True offscreen=False 
+                                  [Button] name='Transactions' id='' class='fui-NavItem rdi7s9k ___i5hilb0 f1mdlcz9 fpil94b f90z1up f2ic3ny f1xz7mvd f3i5gj0 fi4v1pz f1tvrmnx f1p1ggug f3b9emi f13zj6fq f1ak99p5 fmnu42u fk6fouc fkhj508 fl43uef f1i3iumi' focusable=True focused=True enabled=True offscreen=False 
+                                  [Button] name='Reporting' id='' class='fui-NavItem rdi7s9k' focusable=True focused=False enabled=True offscreen=False 
+                                  [Button] name='Net worth' id='' class='fui-NavItem rdi7s9k' focusable=True focused=False enabled=True offscreen=False 
+                                  [Button] name='Accounts' id='' class='fui-NavItem rdi7s9k' focusable=True focused=False enabled=True offscreen=False 
+                                  [Button] name='Rules & categories' id='' class='fui-NavItem rdi7s9k' focusable=True focused=False enabled=True offscreen=False 
+                                [Button] name='Settings' id='' class='fui-NavItem rdi7s9k' focusable=True focused=False enabled=True offscreen=False 
+                              [Group] name='' id='' class='topbar' focusable=False focused=False enabled=True offscreen=False 
+                                [Text] name='Household 2026.folio' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                [Text] name='Saved automatically' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                [Button] name='Undo (not in this slice)' id='' class='fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc' focusable=False focused=False enabled=False offscreen=False 
+                                [Button] name='Redo (not in this slice)' id='' class='fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc' focusable=False focused=False enabled=False offscreen=False 
+                                [Button] name='Import CSV' id='' class='fui-Button r1f29ykk ___8mdcu70 f1c21dwh f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f9ql6rf f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f19vpps7 fv5swzo f1al02dq f9r0db0 fhvnf4x fb6swo4 f1klyf7k f232fm2 f1uhomfy f1g9va8i fwgvudy fom6jww fa9u7a5 f1m71e0y fpmuzpx f168odog fdrzuqr f15x8b5r fphbwmw fy9mucy f14ptb23 f9dbb4x f3qs60o fwd1oij f5u9ap2 f1cyfu5x f127ot8j f19etb0b f4f984j f3d22hf fw441p0 fj8k9ua fifrq0d f196mwp7 f1l6uprw fnekfq fw24f3 f1nznrny fq8nxuu ftoixeo f1ao3jkc' focusable=False focused=False enabled=False offscreen=False 
+                                [ComboBox] name='Month (placeholder)' id='' class='fui-Select__select ___1y4aodd fqrijq1 f4ikngz fy0fskl f15xbau f1jj8ep1 fm9niy ft85np5 f1couhl3 f1ewtqcl f1s2aq7o fdrzuqr fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi f1c21dwh f9dbb4x f3qs60o fwd1oij f5u9ap2' focusable=False focused=False enabled=False offscreen=False VALUE='March 2026' EXPAND=Collapsed
+                                [Button] name='Menu' id='menu_r_3_' class='fui-Button r1f29ykk ___clxrxh0 fhovq9v f1p3nwhy f11589ue f1q5o8ev f1pdflbu fkfq4zb f1t94bn6 f1s2uweq fr80ssc f1ukrpxl fecsdlb fnwyq0v ft1hn21 fuxngvv fy5bs14 f1q1yqic fhvnf4x fb6swo4 f1klyf7k f232fm2 fwga7ee f1nhwcv0 f1gm6xmp f1xxsver f1v3eptx fivsta0 fd4bjan f3m6zum f18ktai2 fwbmr0d f44c6la' focusable=True focused=False enabled=True offscreen=False EXPAND=Collapsed
+                              [Group] name='Transactions' id='' class='content' focusable=False focused=False enabled=True offscreen=False 
+                                [Text] name='Transactions' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                  [Text] name='Transactions' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                [Text] name='10,000 transactions' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                [Edit] name='Search transactions' id='' class='fui-Input__input r12stul0' focusable=True focused=False enabled=True offscreen=False VALUE=''
+                                [ComboBox] name='Account filter' id='' class='fui-Select__select ___13fmaul fqrijq1 f1c1zstj fm9niy ft85np5 f1couhl3 f1ewtqcl f19n0e5 f1k6fduh fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi fxugw4r fvcxoqz f1ub3y4t flmw63s f1m52nbi fvs00aa f1assf6x fqhmt4z f4ruux4' focusable=True focused=False enabled=True offscreen=False VALUE='All accounts' EXPAND=Collapsed
+                                [ComboBox] name='Category filter' id='' class='fui-Select__select ___13fmaul fqrijq1 f1c1zstj fm9niy ft85np5 f1couhl3 f1ewtqcl f19n0e5 f1k6fduh fqerorx f6dzj5z f1qch9an f1g0x7ka fatbyko f1grzc83 f19shzzi f1d2rq10 f1e60jzv f154vowv fk6fouc fkhj508 figsok6 f1i3iumi fxugw4r fvcxoqz f1ub3y4t flmw63s f1m52nbi fvs00aa f1assf6x fqhmt4z f4ruux4' focusable=True focused=False enabled=True offscreen=False VALUE='All categories' EXPAND=Collapsed
+                                [Group] name='' id='' class='card grid-card' focusable=False focused=False enabled=True offscreen=False 
+                                  [DataGrid] name='Transactions' id='' class='grid' focusable=False focused=False enabled=True offscreen=False GRID rows=10001 cols=5 VALUE='' TABLE rows=10001 cols=5
+                                    [DataItem] name='Date Description Account Category Amount' id='' class='grid-head' focusable=False focused=False enabled=True offscreen=False 
+                                      [DataItem] name='Date' id='' class='cell head' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=0 col=0
+                                        [Button] name='Date' id='' class='head-btn' focusable=True focused=False enabled=True offscreen=False 
+                                      [DataItem] name='Description' id='' class='cell head' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=0 col=1
+                                        [Button] name='Description' id='' class='head-btn' focusable=True focused=False enabled=True offscreen=False 
+                                      [DataItem] name='Account' id='' class='cell head' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=0 col=2
+                                        [Button] name='Account' id='' class='head-btn' focusable=True focused=False enabled=True offscreen=False 
+                                      [DataItem] name='Category' id='' class='cell head' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=0 col=3
+                                        [Button] name='Category' id='' class='head-btn' focusable=True focused=False enabled=True offscreen=True 
+                                      [DataItem] name='Amount' id='' class='cell head right' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=0 col=4
+                                        [Button] name='Amount' id='' class='head-btn' focusable=True focused=False enabled=True offscreen=True 
+                                    [Group] name='Transaction rows' id='' class='grid-body' focusable=True focused=False enabled=True offscreen=False 
+                                      [Group] name='' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                        [DataItem] name='2026-01-01 Aeroflot Аэрофлот #4389 Travel Mastercard Flights and hotels -$135.41' id='row-tx-00001' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=1 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Aeroflot Аэрофлот #4389' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=1 col=1 SELECTED=False
+                                            [Text] name='Aeroflot Аэрофлот #4389' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=1 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Flights and hotels' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=1 col=3 SELECTED=False
+                                            [Text] name='Flights and hotels' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$135.41' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=1 col=4 SELECTED=False
+                                            [Text] name='-$135.41' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Air Canada Rewards Visa Flights and hotels -$480.98' id='row-tx-00002' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=2 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Air Canada' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=2 col=1 SELECTED=False
+                                            [Text] name='Air Canada' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=2 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Flights and hotels' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=2 col=3 SELECTED=False
+                                            [Text] name='Flights and hotels' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$480.98' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=2 col=4 SELECTED=False
+                                            [Text] name='-$480.98' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 AliExpress 全球速卖通 Travel Mastercard Online -$15.34' id='row-tx-00003' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=3 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='AliExpress 全球速卖通' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=3 col=1 SELECTED=False
+                                            [Text] name='AliExpress 全球速卖通' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=3 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Online' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=3 col=3 SELECTED=False
+                                            [Text] name='Online' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$15.34' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=3 col=4 SELECTED=False
+                                            [Text] name='-$15.34' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Amazon.ca Marketplace #9770 Rewards Visa Online -$239.51' id='row-tx-00004' class='grid-row selected' focusable=True focused=False enabled=True offscreen=False SELECTED=True
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=4 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Amazon.ca Marketplace #9770' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=4 col=1 SELECTED=False
+                                            [Text] name='Amazon.ca Marketplace #9770' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=4 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Online' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=4 col=3 SELECTED=False
+                                            [Text] name='Online' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$239.51' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=4 col=4 SELECTED=False
+                                            [Text] name='-$239.51' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Café Olimpico #7718 Everyday Chequing Coffee -$7.43' id='row-tx-00005' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=5 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Café Olimpico #7718' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=5 col=1 SELECTED=False
+                                            [Text] name='Café Olimpico #7718' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=5 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Coffee' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=5 col=3 SELECTED=False
+                                            [Text] name='Coffee' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$7.43' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=5 col=4 SELECTED=False
+                                            [Text] name='-$7.43' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 GO Transit Rewards Visa Transit -$128.95' id='row-tx-00006' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=6 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='GO Transit' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=6 col=1 SELECTED=False
+                                            [Text] name='GO Transit' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=6 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Transit' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=6 col=3 SELECTED=False
+                                            [Text] name='Transit' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$128.95' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=6 col=4 SELECTED=False
+                                            [Text] name='-$128.95' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Hydro One Rewards Visa Utilities -$295.85' id='row-tx-00007' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=7 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Hydro One' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=7 col=1 SELECTED=False
+                                            [Text] name='Hydro One' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=7 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Utilities' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=7 col=3 SELECTED=False
+                                            [Text] name='Utilities' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$295.85' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=7 col=4 SELECTED=False
+                                            [Text] name='-$295.85' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Noodle House 麵屋 Travel Mastercard Restaurants -$22.34' id='row-tx-00008' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=8 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Noodle House 麵屋' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=8 col=1 SELECTED=False
+                                            [Text] name='Noodle House 麵屋' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=8 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Restaurants' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=8 col=3 SELECTED=False
+                                            [Text] name='Restaurants' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$22.34' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=8 col=4 SELECTED=False
+                                            [Text] name='-$22.34' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Noodle House 麵屋 Travel Mastercard Restaurants -$18.07' id='row-tx-00009' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=9 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Noodle House 麵屋' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=9 col=1 SELECTED=False
+                                            [Text] name='Noodle House 麵屋' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=9 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Restaurants' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=9 col=3 SELECTED=False
+                                            [Text] name='Restaurants' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$18.07' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=9 col=4 SELECTED=False
+                                            [Text] name='-$18.07' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Payroll Acme Ltd Everyday Chequing Paycheque $3,383.62' id='row-tx-00010' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=10 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Payroll Acme Ltd' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=10 col=1 SELECTED=False
+                                            [Text] name='Payroll Acme Ltd' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=10 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Paycheque' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=10 col=3 SELECTED=False
+                                            [Text] name='Paycheque' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='$3,383.62' id='' class='cell right num pos' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=10 col=4 SELECTED=False
+                                            [Text] name='$3,383.62' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Pharmaprix Rewards Visa Pharmacy -$10.07' id='row-tx-00011' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=11 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Pharmaprix' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=11 col=1 SELECTED=False
+                                            [Text] name='Pharmaprix' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=11 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Pharmacy' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=11 col=3 SELECTED=False
+                                            [Text] name='Pharmacy' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$10.07' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=11 col=4 SELECTED=False
+                                            [Text] name='-$10.07' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Refund 退款 #5730 Everyday Chequing Other income $241.36' id='row-tx-00012' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=12 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Refund 退款 #5730' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=12 col=1 SELECTED=False
+                                            [Text] name='Refund 退款 #5730' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=12 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Other income' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=12 col=3 SELECTED=False
+                                            [Text] name='Other income' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='$241.36' id='' class='cell right num pos' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=12 col=4 SELECTED=False
+                                            [Text] name='$241.36' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Shell Station Travel Mastercard Fuel -$37.88' id='row-tx-00013' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=13 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Shell Station' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=13 col=1 SELECTED=False
+                                            [Text] name='Shell Station' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=13 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Fuel' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=13 col=3 SELECTED=False
+                                            [Text] name='Fuel' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$37.88' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=13 col=4 SELECTED=False
+                                            [Text] name='-$37.88' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Sobeys Everyday Chequing Supermarket -$45.72' id='row-tx-00014' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=14 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Sobeys' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=14 col=1 SELECTED=False
+                                            [Text] name='Sobeys' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=14 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Supermarket' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=14 col=3 SELECTED=False
+                                            [Text] name='Supermarket' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$45.72' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=14 col=4 SELECTED=False
+                                            [Text] name='-$45.72' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Sobeys #5630 Travel Mastercard Supermarket -$268.74' id='row-tx-00015' class='grid-row' focusable=True focused=False enabled=True offscreen=False SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=15 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Sobeys #5630' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=15 col=1 SELECTED=False
+                                            [Text] name='Sobeys #5630' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=False GRIDITEM row=15 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                          [DataItem] name='Supermarket' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=15 col=3 SELECTED=False
+                                            [Text] name='Supermarket' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$268.74' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=15 col=4 SELECTED=False
+                                            [Text] name='-$268.74' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Sobeys #7905 Rewards Visa Supermarket -$76.26' id='row-tx-00016' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=16 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Sobeys #7905' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=16 col=1 SELECTED=False
+                                            [Text] name='Sobeys #7905' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=16 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Supermarket' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=16 col=3 SELECTED=False
+                                            [Text] name='Supermarket' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$76.26' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=16 col=4 SELECTED=False
+                                            [Text] name='-$76.26' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 TTC Presto reload Everyday Chequing Transit -$81.55' id='row-tx-00017' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=17 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='TTC Presto reload' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=17 col=1 SELECTED=False
+                                            [Text] name='TTC Presto reload' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=17 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Transit' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=17 col=3 SELECTED=False
+                                            [Text] name='Transit' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$81.55' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=17 col=4 SELECTED=False
+                                            [Text] name='-$81.55' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 TTC Presto reload #6800 Rewards Visa Transit -$71.71' id='row-tx-00018' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=18 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='TTC Presto reload #6800' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=18 col=1 SELECTED=False
+                                            [Text] name='TTC Presto reload #6800' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=18 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Transit' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=18 col=3 SELECTED=False
+                                            [Text] name='Transit' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$71.71' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=18 col=4 SELECTED=False
+                                            [Text] name='-$71.71' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Tim Hortons Rewards Visa Coffee -$6.97' id='row-tx-00019' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=19 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Tim Hortons' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=19 col=1 SELECTED=False
+                                            [Text] name='Tim Hortons' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=19 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Coffee' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=19 col=3 SELECTED=False
+                                            [Text] name='Coffee' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$6.97' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=19 col=4 SELECTED=False
+                                            [Text] name='-$6.97' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Virement épargne Everyday Chequing Savings transfers -$362.67' id='row-tx-00020' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=20 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Virement épargne' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=20 col=1 SELECTED=False
+                                            [Text] name='Virement épargne' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=20 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Savings transfers' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=20 col=3 SELECTED=False
+                                            [Text] name='Savings transfers' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$362.67' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=20 col=4 SELECTED=False
+                                            [Text] name='-$362.67' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Кофейня Бодрое утро Travel Mastercard Coffee -$7.46' id='row-tx-00021' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=21 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Кофейня Бодрое утро' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=21 col=1 SELECTED=False
+                                            [Text] name='Кофейня Бодрое утро' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=21 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Coffee' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=21 col=3 SELECTED=False
+                                            [Text] name='Coffee' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$7.46' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=21 col=4 SELECTED=False
+                                            [Text] name='-$7.46' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 Кофейня Бодрое утро Rewards Visa Coffee -$6.63' id='row-tx-00022' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=22 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Кофейня Бодрое утро' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=22 col=1 SELECTED=False
+                                            [Text] name='Кофейня Бодрое утро' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Rewards Visa' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=22 col=2 SELECTED=False
+                                            [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Coffee' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=22 col=3 SELECTED=False
+                                            [Text] name='Coffee' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$6.63' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=22 col=4 SELECTED=False
+                                            [Text] name='-$6.63' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 مخبز الأمل Al Amal Bakery Everyday Chequing Markets and bakeries -$74.22' id='row-tx-00023' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=23 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='مخبز الأمل Al Amal Bakery' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=23 col=1 SELECTED=False
+                                            [Text] name='مخبز الأمل Al Amal Bakery' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Everyday Chequing' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=23 col=2 SELECTED=False
+                                            [Text] name='Everyday Chequing' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Markets and bakeries' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=23 col=3 SELECTED=False
+                                            [Text] name='Markets and bakeries' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$74.22' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=23 col=4 SELECTED=False
+                                            [Text] name='-$74.22' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 寿司 すしざんまい #5463 Travel Mastercard Restaurants -$68.19' id='row-tx-00024' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=24 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='寿司 すしざんまい #5463' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=24 col=1 SELECTED=False
+                                            [Text] name='寿司 すしざんまい #5463' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=24 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Restaurants' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=24 col=3 SELECTED=False
+                                            [Text] name='Restaurants' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$68.19' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=24 col=4 SELECTED=False
+                                            [Text] name='-$68.19' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                        [DataItem] name='2026-01-01 珈琲館 Travel Mastercard Coffee -$10.06' id='row-tx-00025' class='grid-row' focusable=True focused=False enabled=True offscreen=True SELECTED=False
+                                          [DataItem] name='2026-01-01' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=25 col=0 SELECTED=False
+                                            [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='珈琲館' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=25 col=1 SELECTED=False
+                                            [Text] name='珈琲館' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Travel Mastercard' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=25 col=2 SELECTED=False
+                                            [Text] name='Travel Mastercard' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='Coffee' id='' class='cell' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=25 col=3 SELECTED=False
+                                            [Text] name='Coffee' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                          [DataItem] name='-$10.06' id='' class='cell right num' focusable=False focused=False enabled=True offscreen=True GRIDITEM row=25 col=4 SELECTED=False
+                                            [Text] name='-$10.06' id='' class='' focusable=False focused=False enabled=True offscreen=True 
+                                [Group] name='Transaction details' id='' class='card details' focusable=False focused=False enabled=True offscreen=False 
+                                  [List] name='' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [Text] name='Amazon.ca Marketplace #9770' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Amazon.ca Marketplace #9770' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [Group] name='' id='' class='big num' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='-$239.51' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [ListItem] name='Date' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Date' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [Group] name='' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='2026-01-01' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [ListItem] name='Account' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Account' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [Group] name='' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Rewards Visa' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name=' ' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='(' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='TD' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name=')' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [ListItem] name='Category' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Category' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [Group] name='' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Shopping › Online' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [ListItem] name='Note' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='Note' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                    [Group] name='' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                                      [Text] name='No note' id='' class='' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='DataProtectionOverlayView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='view_1061' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Document] name='' id='view_1055' class='WebView' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Document] name='' id='view_1051' class='ContentsWebView' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='DataProtectionOverlayView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='view_1061' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='MultiContentsDropTargetView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                          [Text] name='Open in split screen' id='' class='Label' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='ContentsSeparator' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='view_1058' class='View' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='Side pane' id='' class='SidePaneRootContainer' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='Side pane' id='' class='HubWebViewContainerView' focusable=False focused=False enabled=True offscreen=False 
+                    [Document] name='' id='' class='HubWebView' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='NativeViewHost' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='' id='' class='SidePaneRootContainerBackgroundAndBorderView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='ShadowOverlayView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='CornerView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ShadowFrameView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='SidePanel' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='ContentParentView' focusable=False focused=False enabled=True offscreen=False 
+                  [Slider] name='Side Panel Resize Handle (draggable)' id='' class='SidePanelResizeArea' focusable=False focused=False enabled=True offscreen=False VALUE=''
+                [Tab] name='Tab bar' id='' class='EdgeTabStripRegionView' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='view_25' class='EdgeTabStrip' focusable=False focused=False enabled=True offscreen=False 
+                    [Tab] name='' id='' class='EdgeTabContainerImpl' focusable=False focused=False enabled=True offscreen=False 
+                      [TabItem] name='Folio - Memory usage - 49.3 MB' id='view_24' class='EdgeTab' focusable=False focused=False enabled=True offscreen=False SELECTED=True
+                        [Button] name='Mute tab' id='' class='AlertIndicatorButton' focusable=False focused=False enabled=False offscreen=False 
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Collaborator profile photo' id='' class='CollaboratorProfilePhoto' focusable=False focused=False enabled=True offscreen=False EXPAND=Collapsed
+                        [Button] name='Close tab' id='view_27' class='EdgeTabCloseButton' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='ScrollView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrollView::Viewport' focusable=False focused=False enabled=True offscreen=False 
+                          [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrollCornerView' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='ScrollView::Viewport' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                        [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                      [Pane] name='' id='' class='Separator' focusable=False focused=False enabled=True offscreen=False 
+                    [Pane] name='' id='' class='TabStrip::EdgeTabDragContextImpl' focusable=False focused=False enabled=True offscreen=False 
+                  [Button] name='New Tab' id='view_28' class='EdgeNewTabButton' focusable=False focused=False enabled=True offscreen=False 
+                  [Pane] name='' id='' class='FrameGrabHandle' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='View' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='ScrimView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='WindowedFindBarFocusProxyView' focusable=False focused=False enabled=True offscreen=False 
+                [Pane] name='' id='' class='EmbeddedBrowserDownloadView' focusable=False focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='EmbeddedBrowserTabRootView' focusable=True focused=False enabled=True offscreen=False 
+            [Pane] name='' id='' class='TopContainerOverlayView' focusable=False focused=False enabled=True offscreen=False 
