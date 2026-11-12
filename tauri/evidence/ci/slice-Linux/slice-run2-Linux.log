@@ -1,5 +1,5 @@
 
-Execution of 1 workers started at 2026-11-12T18:06:06.834Z
+Execution of 1 workers started at 2026-11-12T18:48:28.567Z
 
 [0-0] RUNNING in undefined - file:///specs/slice.e2e.ts
 [0-0] PASSED in undefined - file:///specs/slice.e2e.ts
@@ -7,7 +7,7 @@ Execution of 1 workers started at 2026-11-12T18:06:06.834Z
  "spec" Reporter:
 ------------------------------------------------------------------
 [WebKitGTK 605.1.15 linux #0-0] Running: WebKitGTK (v605.1.15) on linux
-[WebKitGTK 605.1.15 linux #0-0] Session ID: a7d131ea-1164-4ab7-83d2-e0a21c7dfdd5
+[WebKitGTK 605.1.15 linux #0-0] Session ID: 3552859a-9e70-466b-b2bb-4865c5e2b97d
 [WebKitGTK 605.1.15 linux #0-0]
 [WebKitGTK 605.1.15 linux #0-0] » specs/slice.e2e.ts
 [WebKitGTK 605.1.15 linux #0-0] Folio slice (Tauri, WebdriverIO embedded driver)
@@ -27,8 +27,8 @@ Execution of 1 workers started at 2026-11-12T18:06:06.834Z
 [WebKitGTK 605.1.15 linux #0-0]    ✓ theme light: charts and pages render
 [WebKitGTK 605.1.15 linux #0-0]    ✓ settings dialog: focus lands inside, Tab cycles, Escape closes
 [WebKitGTK 605.1.15 linux #0-0]
-[WebKitGTK 605.1.15 linux #0-0] 15 passing (6.7s)
+[WebKitGTK 605.1.15 linux #0-0] 15 passing (9.7s)
 
 
-Spec Files:	 1 passed, 1 total (100% completed) in 00:00:07  
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:11  
 

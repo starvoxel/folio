@@ -1,0 +1,6 @@
+  18628   18624       00:15 /bin/sh /usr/bin/xvfb-run -a -s -screen 0 1440x900x24 dbus-run-session -- /home/runner/work/_temp/idle.sh /home/runner/work/folio/folio/tauri/src-tauri/target/release/folio /home/runner/work/folio/folio/tauri/test-results
+  18641   18628       00:15 dbus-run-session -- /home/runner/work/_temp/idle.sh /home/runner/work/folio/folio/tauri/src-tauri/target/release/folio /home/runner/work/folio/folio/tauri/test-results
+  18643   18641       00:15 /bin/bash /home/runner/work/_temp/idle.sh /home/runner/work/folio/folio/tauri/src-tauri/target/release/folio /home/runner/work/folio/folio/tauri/test-results
+  18644   18643       00:15 /home/runner/work/folio/folio/tauri/src-tauri/target/release/folio
+  18683   18644       00:14 /usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess 1 13
+  18710   18644       00:14 /usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess 4 17
