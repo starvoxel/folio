@@ -171,7 +171,7 @@ describe('Folio slice (Tauri, WebdriverIO embedded driver)', () => {
     let s = await state();
     expect(s.dialog.open).toBe(true);
     expect(s.dialog.focusInside).toBe(true);
-    await browser.executeAsync((done: () => void) => { Promise.all(document.getAnimations().map((a) => a.finished)).then(done); });
+    await browser.executeAsync((done: () => void) => { Promise.all(document.getAnimations().map((a) => a.finished)).then(() => done()); });
     await settle();
     await shot('dialog-open.png');
     for (let i = 0; i < 6; i++) { await press('Tab'); expect((await state()).dialog.focusInside).toBe(true); }
