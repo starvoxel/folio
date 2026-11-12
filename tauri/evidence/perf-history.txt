@@ -1,0 +1,18 @@
+Per-run F1 and G2 numbers from the CI runs, taken from git history of tauri/evidence/ci/*/perf-*.json (later runs overwrite the files).
+"all" = whole web view (all processes), primary metric: Linux PSS MB, Windows private WS MB, macOS physical footprint MB. P0 P2 P3 P5.
+== slice-Linux/perf-linux-default.json
+9f26e09 17:05 UTC | all P0,P2,P3,P5 = [389.1, 563.7, 561.3, 569.3] | app-only P2 = 101.7 | secondary metric P2 = 741.2 | worst frame per scroll pass ms = [46, 31, 28] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 55 | slowest sort ms = 84
+292819c 17:33 UTC | all P0,P2,P3,P5 = [383.7, 542.8, 552.1, 562.8] | app-only P2 = 98.2 | secondary metric P2 = 719.5 | worst frame per scroll pass ms = [40, 38, 32] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 48 | slowest sort ms = 88
+c0c2265 18:21 UTC | all P0,P2,P3,P5 = [386.6, 547.7, 548.6, 589.5] | app-only P2 = 102.3 | secondary metric P2 = 725.2 | worst frame per scroll pass ms = [37, 28, 28] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 32 | slowest sort ms = 87
+== slice-Linux/perf-linux-dmabuf-off.json
+9f26e09 17:05 UTC | all P0,P2,P3,P5 = [232, 296.8, 303.7, 309] | app-only P2 = 82.2 | secondary metric P2 = 457.3 | worst frame per scroll pass ms = [20, 22, 17] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 36 | slowest sort ms = 70
+292819c 17:33 UTC | all P0,P2,P3,P5 = [235.9, 303.8, 315.4, 314.6] | app-only P2 = 86.2 | secondary metric P2 = 464.3 | worst frame per scroll pass ms = [17, 38, 21] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 34 | slowest sort ms = 79
+c0c2265 18:21 UTC | all P0,P2,P3,P5 = [233.8, 301.8, 310.5, 308.6] | app-only P2 = 83.9 | secondary metric P2 = 462.3 | worst frame per scroll pass ms = [20, 17, 17] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 18 | slowest sort ms = 94
+== slice-Windows/perf-win32-default.json
+96b5f71 18:17 UTC | all P0,P2,P3,P5 = [89.4, 151.6, 153.1, 83.1] | app-only P2 = 4.4 | secondary metric P2 = 423.4 | worst frame per scroll pass ms = [16, 16, 16] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 16 | slowest sort ms = 29
+ca7e4b2 18:36 UTC | all P0,P2,P3,P5 = [92, 152.7, 156.9, 85] | app-only P2 = 4.4 | secondary metric P2 = 425.8 | worst frame per scroll pass ms = [16, 16, 16] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 16 | slowest sort ms = 47
+a1a7cda 18:57 UTC | all P0,P2,P3,P5 = [89.2, 150.2, 151, 82.4] | app-only P2 = 4.3 | secondary metric P2 = 421.7 | worst frame per scroll pass ms = [16, 16, 16] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 16 | slowest sort ms = 29
+== slice-macOS/perf-darwin-default.json
+2c0e901 17:36 UTC | all P0,P2,P3,P5 = [96.6, 517.4, 641.5, 509.4] | app-only P2 = 32 | secondary metric P2 = 494.3 | worst frame per scroll pass ms = [52, 26, 22] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 121 | slowest sort ms = 39
+787a852 18:16 UTC | all P0,P2,P3,P5 = [113, 511.2, 631.3, 493.3] | app-only P2 = 33 | secondary metric P2 = 461.2 | worst frame per scroll pass ms = [60, 89, 76] frames over 100 ms = [0, 0, 0] | soak worst frame ms = 82 | slowest sort ms = 60
+045fb95 18:31 UTC | all P0,P2,P3,P5 = [89.4, 507.3, 560.3, 535.9] | app-only P2 = 33 | secondary metric P2 = 452.7 | worst frame per scroll pass ms = [285, 63, 179] frames over 100 ms = [4, 0, 3] | soak worst frame ms = 32 | slowest sort ms = 59
