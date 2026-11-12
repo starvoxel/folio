@@ -7,6 +7,13 @@ $cond = New-Object System.Windows.Automation.PropertyCondition($AE::ProcessIdPro
 $win = $null
 for ($i = 0; $i -lt 30 -and -not $win; $i++) { $win = $AE::RootElement.FindFirst([System.Windows.Automation.TreeScope]::Children, $cond); if (-not $win) { Start-Sleep -Seconds 1 } }
 $lines = New-Object System.Collections.Generic.List[string]
+if (-not $win) {
+  # Fall back to the window by class (Electron/Chromium top-level class) or title, and say what the desktop contains.
+  foreach ($c in $AE::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children, [System.Windows.Automation.Condition]::TrueCondition)) {
+    $lines.Add("desktop child: name='$($c.Current.Name)' pid=$($c.Current.ProcessId) class='$($c.Current.ClassName)'")
+    if (-not $win -and ($c.Current.ClassName -eq 'Chrome_WidgetWin_1' -or $c.Current.Name -eq 'Folio')) { $win = $c; $lines.Add("  -> using this window") }
+  }
+}
 if (-not $win) { $lines.Add("NO WINDOW for pid $ProcessId"); $lines | Set-Content -Encoding UTF8 $Out; exit 2 }
 $walker = [System.Windows.Automation.TreeWalker]::RawViewWalker
 $script:count = 0

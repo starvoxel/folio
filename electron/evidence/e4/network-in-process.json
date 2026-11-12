@@ -1,0 +1,54 @@
+{
+  "label": "network-in-process",
+  "platform": "linux",
+  "soak": 20,
+  "idleS": 60,
+  "args": [
+    "--no-sandbox",
+    "--enable-features=NetworkServiceInProcess2"
+  ],
+  "points": {
+    "P1": {
+      "primaryName": "PSS",
+      "primaryMB": 352.1,
+      "secondaryName": "RSS",
+      "secondaryMB": 614.5,
+      "processes": 5,
+      "detail": [
+        "Folio:108",
+        "Folio:20",
+        "Folio:103",
+        "Folio:18",
+        "Folio:102"
+      ]
+    },
+    "P3": {
+      "primaryName": "PSS",
+      "primaryMB": 416.8,
+      "secondaryName": "RSS",
+      "secondaryMB": 684.2,
+      "processes": 5,
+      "detail": [
+        "Folio:99",
+        "Folio:20",
+        "Folio:178",
+        "Folio:18",
+        "Folio:102"
+      ]
+    },
+    "P4": {
+      "primaryName": "PSS",
+      "primaryMB": 346.8,
+      "secondaryName": "RSS",
+      "secondaryMB": 612.2,
+      "processes": 5,
+      "detail": [
+        "Folio:97",
+        "Folio:20",
+        "Folio:111",
+        "Folio:18",
+        "Folio:100"
+      ]
+    }
+  }
+}

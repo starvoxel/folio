@@ -1,0 +1,57 @@
+{
+  "label": "v8-heap-96mb",
+  "platform": "linux",
+  "soak": 20,
+  "idleS": 60,
+  "args": [
+    "--no-sandbox",
+    "--js-flags=--max-old-space-size=96"
+  ],
+  "points": {
+    "P1": {
+      "primaryName": "PSS",
+      "primaryMB": 365.6,
+      "secondaryName": "RSS",
+      "secondaryMB": 697.8,
+      "processes": 6,
+      "detail": [
+        "Folio:103",
+        "Folio:29",
+        "Folio:16",
+        "Folio:101",
+        "Folio:16",
+        "Folio:101"
+      ]
+    },
+    "P3": {
+      "primaryName": "PSS",
+      "primaryMB": 419.2,
+      "secondaryName": "RSS",
+      "secondaryMB": 756,
+      "processes": 6,
+      "detail": [
+        "Folio:94",
+        "Folio:29",
+        "Folio:16",
+        "Folio:164",
+        "Folio:16",
+        "Folio:100"
+      ]
+    },
+    "P4": {
+      "primaryName": "PSS",
+      "primaryMB": 358.4,
+      "secondaryName": "RSS",
+      "secondaryMB": 694,
+      "processes": 6,
+      "detail": [
+        "Folio:92",
+        "Folio:29",
+        "Folio:16",
+        "Folio:107",
+        "Folio:16",
+        "Folio:98"
+      ]
+    }
+  }
+}

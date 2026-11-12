@@ -1,0 +1,93 @@
+{
+  "label": "default",
+  "platform": "win32",
+  "soak": 20,
+  "idleS": 60,
+  "args": [],
+  "points": {
+    "P0": {
+      "primaryName": "private working set",
+      "primaryMB": 95.7,
+      "secondaryName": "total working set",
+      "secondaryMB": 314.6,
+      "processes": 5,
+      "detail": [
+        "Folio:40",
+        "Folio#1:12",
+        "Folio#2:7",
+        "Folio#3:36",
+        "cmd:1"
+      ]
+    },
+    "P1": {
+      "primaryName": "private working set",
+      "primaryMB": 104.4,
+      "secondaryName": "total working set",
+      "secondaryMB": 334.1,
+      "processes": 5,
+      "detail": [
+        "Folio:40",
+        "Folio#1:12",
+        "Folio#2:7",
+        "Folio#3:46",
+        "cmd:1"
+      ]
+    },
+    "P2": {
+      "primaryName": "private working set",
+      "primaryMB": 160.5,
+      "secondaryName": "total working set",
+      "secondaryMB": 394.8,
+      "processes": 5,
+      "detail": [
+        "Folio:32",
+        "Folio#1:12",
+        "Folio#2:7",
+        "Folio#3:110",
+        "cmd:1"
+      ]
+    },
+    "P3": {
+      "primaryName": "private working set",
+      "primaryMB": 163.1,
+      "secondaryName": "total working set",
+      "secondaryMB": 396.5,
+      "processes": 5,
+      "detail": [
+        "Folio:31",
+        "Folio#1:12",
+        "Folio#2:7",
+        "Folio#3:113",
+        "cmd:1"
+      ]
+    },
+    "P4": {
+      "primaryName": "private working set",
+      "primaryMB": 102.9,
+      "secondaryName": "total working set",
+      "secondaryMB": 301.1,
+      "processes": 5,
+      "detail": [
+        "Folio:29",
+        "Folio#1:11",
+        "Folio#2:7",
+        "Folio#3:55",
+        "cmd:1"
+      ]
+    },
+    "P5": {
+      "primaryName": "private working set",
+      "primaryMB": 72,
+      "secondaryName": "total working set",
+      "secondaryMB": 145.9,
+      "processes": 5,
+      "detail": [
+        "Folio:7",
+        "Folio#1:6",
+        "Folio#2:3",
+        "Folio#3:56",
+        "cmd:1"
+      ]
+    }
+  }
+}

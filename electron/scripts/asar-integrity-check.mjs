@@ -1,5 +1,5 @@
 // E5: does the EnableEmbeddedAsarIntegrityValidation fuse work? Launch untouched (must start), then with one byte appended to app.asar (must refuse).
-// usage: node scripts/asar-integrity-check.mjs <packaged app dir>   (build with FOLIO_FUSE_ASAR_INTEGRITY=1 FOLIO_FUSE_INSPECT=1)
+// usage: node scripts/asar-integrity-check.mjs <packaged app dir> [executable name without .exe]   (build with FOLIO_FUSE_ASAR_INTEGRITY=1 FOLIO_FUSE_INSPECT=1)
 import { _electron as electron } from '@playwright/test';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url';
 const dir = path.resolve(process.argv[2]);
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixtures = path.resolve(here, '..', '..', 'fixtures');
-const exe = process.platform === 'win32' ? path.join(dir, 'Folio.exe') : path.join(dir, 'Folio');
+const name = process.argv[3] ?? 'Folio';
+const exe = process.platform === 'win32' ? path.join(dir, name + '.exe') : path.join(dir, name);
 const asar = path.join(dir, 'resources', 'app.asar');
 const args = process.platform === 'linux' ? ['--no-sandbox'] : [];
 async function tryLaunch(label) {

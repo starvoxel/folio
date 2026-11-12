@@ -1,0 +1,102 @@
+{
+  "label": "a11y-forced",
+  "platform": "linux",
+  "soak": 20,
+  "idleS": 60,
+  "args": [
+    "--no-sandbox",
+    "--force-renderer-accessibility"
+  ],
+  "points": {
+    "P0": {
+      "primaryName": "PSS",
+      "primaryMB": 345.6,
+      "secondaryName": "RSS",
+      "secondaryMB": 706.8,
+      "processes": 6,
+      "detail": [
+        "Folio:99",
+        "Folio:28",
+        "Folio:18",
+        "Folio:85",
+        "Folio:18",
+        "Folio:98"
+      ]
+    },
+    "P1": {
+      "primaryName": "PSS",
+      "primaryMB": 365.2,
+      "secondaryName": "RSS",
+      "secondaryMB": 733.3,
+      "processes": 6,
+      "detail": [
+        "Folio:100",
+        "Folio:28",
+        "Folio:18",
+        "Folio:101",
+        "Folio:18",
+        "Folio:100"
+      ]
+    },
+    "P2": {
+      "primaryName": "PSS",
+      "primaryMB": 437.7,
+      "secondaryName": "RSS",
+      "secondaryMB": 812.3,
+      "processes": 6,
+      "detail": [
+        "Folio:100",
+        "Folio:28",
+        "Folio:18",
+        "Folio:173",
+        "Folio:18",
+        "Folio:100"
+      ]
+    },
+    "P3": {
+      "primaryName": "PSS",
+      "primaryMB": 430.3,
+      "secondaryName": "RSS",
+      "secondaryMB": 803,
+      "processes": 6,
+      "detail": [
+        "Folio:92",
+        "Folio:28",
+        "Folio:18",
+        "Folio:176",
+        "Folio:18",
+        "Folio:99"
+      ]
+    },
+    "P4": {
+      "primaryName": "PSS",
+      "primaryMB": 357.8,
+      "secondaryName": "RSS",
+      "secondaryMB": 729.2,
+      "processes": 6,
+      "detail": [
+        "Folio:90",
+        "Folio:28",
+        "Folio:18",
+        "Folio:107",
+        "Folio:18",
+        "Folio:97"
+      ]
+    },
+    "P5": {
+      "primaryName": "PSS",
+      "primaryMB": 381.8,
+      "secondaryName": "RSS",
+      "secondaryMB": 753.7,
+      "processes": 6,
+      "detail": [
+        "Folio:90",
+        "Folio:28",
+        "Folio:18",
+        "Folio:130",
+        "Folio:18",
+        "Folio:98"
+      ]
+    }
+  }
+}

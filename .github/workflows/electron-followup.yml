@@ -78,7 +78,7 @@ jobs:
         run: |
           node scripts/package.mjs
           FOLIO_FUSE_INSPECT=1 FOLIO_OUT=out-test node scripts/package.mjs
-          if [ "$RUNNER_OS" = Linux ]; then cmp -l out/Folio-linux-x64/Folio out-test/Folio-linux-x64/Folio | wc -l | xargs echo "executable bytes differing:"; fi
+          if [ "$RUNNER_OS" = Linux ]; then (cmp -l out/Folio-linux-x64/Folio out-test/Folio-linux-x64/Folio || true) | wc -l | xargs echo "executable bytes differing:"; fi
       - name: Slice and guard tests on the test binary (Playwright Electron driver)
         id: t1
         continue-on-error: true
@@ -135,7 +135,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ci-out/a11y-platform
-          if [ "$RUNNER_OS" = Linux ]; then timeout 400 dbus-run-session -- ./scripts/atspi-run.sh ${{ matrix.exe }} ci-out/a11y-platform; else timeout 600 node scripts/a11y-platform.mjs ${{ matrix.exe }} ci-out/a11y-platform; fi
+          if [ "$RUNNER_OS" = Linux ]; then timeout 400 dbus-run-session -- ./scripts/atspi-run.sh ${{ matrix.exe }} ci-out/a11y-platform; else node scripts/a11y-platform.mjs ${{ matrix.exe }} ci-out/a11y-platform; fi
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
@@ -231,6 +231,12 @@ jobs:
         run: |
           mkdir -p ci-out
           node scripts/asar-integrity-check.mjs out-asar/Folio-win32-x64 2>&1 | tee ci-out/asar-integrity-win.txt
+      - name: ASAR integrity with electron-builder (embeds the digest), untouched then tampered
+        continue-on-error: true
+        run: |
+          npx electron-builder --win --dir --config scripts/builder-asar-test.json --publish never 2>&1 | tail -5
+          npx @electron/fuses read --app release-asar/win-unpacked/folio-spike.exe
+          node scripts/asar-integrity-check.mjs release-asar/win-unpacked folio-spike 2>&1 | tee ci-out/asar-integrity-win-builder.txt
       - name: Sandbox state of every process
         continue-on-error: true
         run: |

@@ -3,7 +3,8 @@
 # Sandboxed renderer = "Seccomp: 2" in /proc/<pid>/status. An app that cannot start its sandbox exits with a FATAL log line.
 label=$1; shift
 log=/tmp/sbx-$label.log
-xvfb-run -a "$@" >"$log" 2>&1 &
+setsid xvfb-run -a "$@" >"$log" 2>&1 &
+PG=$!
 sleep 12
 echo "=== $label: $*"
 echo "renderer processes:"
@@ -12,4 +13,4 @@ for pid in $(pgrep -f -- '--type=renderer'); do
 done
 n=$(pgrep -f -- '--type=renderer' | wc -l); [ "$n" = 0 ] && echo "  (none: app did not start a renderer)"
 echo "log (sandbox/fatal lines):"; grep -iE "sandbox|FATAL|namespace" "$log" | head -5 | sed 's/^/  /'
-pkill -f -- "--type=" ; pkill -f "$(basename "$1")" 2>/dev/null; sleep 2
+kill -- -$PG 2>/dev/null; sleep 1; kill -9 -- -$PG 2>/dev/null; sleep 1

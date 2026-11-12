@@ -1,0 +1,95 @@
+{
+  "label": "a11y-forced",
+  "platform": "win32",
+  "soak": 20,
+  "idleS": 60,
+  "args": [
+    "--force-renderer-accessibility"
+  ],
+  "points": {
+    "P0": {
+      "primaryName": "private working set",
+      "primaryMB": 96.4,
+      "secondaryName": "total working set",
+      "secondaryMB": 318.7,
+      "processes": 5,
+      "detail": [
+        "Folio:40",
+        "Folio#1:7",
+        "Folio#2:12",
+        "Folio#3:36",
+        "cmd:1"
+      ]
+    },
+    "P1": {
+      "primaryName": "private working set",
+      "primaryMB": 101.9,
+      "secondaryName": "total working set",
+      "secondaryMB": 334,
+      "processes": 5,
+      "detail": [
+        "Folio:41",
+        "Folio#1:7",
+        "Folio#2:12",
+        "Folio#3:42",
+        "cmd:1"
+      ]
+    },
+    "P2": {
+      "primaryName": "private working set",
+      "primaryMB": 168.2,
+      "secondaryName": "total working set",
+      "secondaryMB": 406.1,
+      "processes": 5,
+      "detail": [
+        "Folio:42",
+        "Folio#1:7",
+        "Folio#2:12",
+        "Folio#3:108",
+        "cmd:1"
+      ]
+    },
+    "P3": {
+      "primaryName": "private working set",
+      "primaryMB": 164.9,
+      "secondaryName": "total working set",
+      "secondaryMB": 400.7,
+      "processes": 5,
+      "detail": [
+        "Folio:34",
+        "Folio#1:7",
+        "Folio#2:12",
+        "Folio#3:112",
+        "cmd:1"
+      ]
+    },
+    "P4": {
+      "primaryName": "private working set",
+      "primaryMB": 109.2,
+      "secondaryName": "total working set",
+      "secondaryMB": 310.7,
+      "processes": 5,
+      "detail": [
+        "Folio:30",
+        "Folio#1:7",
+        "Folio#2:11",
+        "Folio#3:60",
+        "cmd:1"
+      ]
+    },
+    "P5": {
+      "primaryName": "private working set",
+      "primaryMB": 70.4,
+      "secondaryName": "total working set",
+      "secondaryMB": 147.6,
+      "processes": 5,
+      "detail": [
+        "Folio:9",
+        "Folio#1:3",
+        "Folio#2:6",
+        "Folio#3:52",
+        "cmd:1"
+      ]
+    }
+  }
+}

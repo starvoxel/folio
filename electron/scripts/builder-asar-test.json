@@ -1,0 +1,20 @@
+{
+  "appId": "invalid.example.folio.spike",
+  "productName": "Folio",
+  "executableName": "folio-spike",
+  "directories": { "output": "release-asar" },
+  "files": ["package.json", "dist/**"],
+  "electronDist": "node_modules/electron/dist",
+  "asar": true,
+  "electronFuses": {
+    "runAsNode": false,
+    "enableCookieEncryption": true,
+    "enableNodeOptionsEnvironmentVariable": false,
+    "enableNodeCliInspectArguments": true,
+    "enableEmbeddedAsarIntegrityValidation": true,
+    "onlyLoadAppFromAsar": true,
+    "grantFileProtocolExtraPrivileges": false
+  },
+  "win": { "target": "dir" },
+  "mac": { "target": "dir", "identity": null }
+}
