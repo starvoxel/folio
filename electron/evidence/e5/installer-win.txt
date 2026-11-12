@@ -1,0 +1,7 @@
+total 118764
+drwxr-xr-x 1 runneradmin 197121         0 Nov 12 02:55 .
+drwxr-xr-x 1 runneradmin 197121         0 Nov 12 02:54 ..
+-rwxr-xr-x 1 runneradmin 197121 121466196 Nov 12 02:55 Folio Setup 0.0.1.exe
+-rw-r--r-- 1 runneradmin 197121    129487 Nov 12 02:55 Folio Setup 0.0.1.exe.blockmap
+-rw-r--r-- 1 runneradmin 197121      7421 Nov 12 02:55 builder-debug.yml
+drwxr-xr-x 1 runneradmin 197121         0 Nov 12 02:54 win-unpacked

@@ -1,0 +1,84 @@
+### environment
+uid=1001(runner) gid=1001(runner) groups=1001(runner),4(adm),100(users),118(docker),999(systemd-journal)
+7.0.0-1017-azure
+Description:	Ubuntu 24.04.5 LTS
+kernel.apparmor_restrict_unprivileged_userns = 1
+kernel.unprivileged_userns_clone = 1
+unprivileged user namespaces: allowed
+-rwxr-xr-x 1 runner runner 15216 Nov 12 02:59 /home/runner/work/folio/folio/electron/out/Folio-linux-x64/chrome-sandbox
+
+### A. packaged app, ordinary user, no flags, chrome-sandbox not setuid
+=== A-default: /home/runner/work/folio/folio/electron/out/Folio-linux-x64/Folio --data-dir=/home/runner/work/folio/folio/fixtures
+renderer processes:
+  (none: app did not start a renderer)
+log (sandbox/fatal lines):
+  [2798:1112/025953.672535:FATAL:sandbox/linux/suid/client/setuid_sandbox_host.cc:172] The SUID sandbox helper binary was found, but is not configured correctly. Rather than run without sandboxing I'm aborting now. You need to make sure that /home/runner/work/folio/folio/electron/out/Folio-linux-x64/chrome-sandbox is owned by root and has mode 4755.
+
+### B. same, chrome-sandbox owned by root with mode 4755 (setuid helper)
+-rwsr-xr-x 1 root runner 15216 Nov 12 02:59 /home/runner/work/folio/folio/electron/out/Folio-linux-x64/chrome-sandbox
+=== B-setuid: /home/runner/work/folio/folio/electron/out/Folio-linux-x64/Folio --data-dir=/home/runner/work/folio/folio/fixtures
+renderer processes:
+  cmdline has --no-sandbox: 0
+  pid=2895 uid=1001 NoNewPrivs: 1 Seccomp: 2  userns=
+log (sandbox/fatal lines):
+
+### C. no setuid, but the AppArmor userns restriction switched off system-wide (sysctl)
+kernel.apparmor_restrict_unprivileged_userns = 0
+=== C-sysctl: /home/runner/work/folio/folio/electron/out/Folio-linux-x64/Folio --data-dir=/home/runner/work/folio/folio/fixtures
+renderer processes:
+  cmdline has --no-sandbox: 0
+  pid=3021 uid=1001 NoNewPrivs: 1 Seccomp: 2  userns=user:[4026532316]
+log (sandbox/fatal lines):
+kernel.apparmor_restrict_unprivileged_userns = 1
+
+### D. no setuid, restriction ON, an AppArmor profile that grants userns to this one binary
+profile loaded
+=== D-apparmor-profile: /home/runner/work/folio/folio/electron/out/Folio-linux-x64/Folio --data-dir=/home/runner/work/folio/folio/fixtures
+renderer processes:
+  cmdline has --no-sandbox: 0
+  pid=3151 uid=1001 NoNewPrivs: 1 Seccomp: 2  userns=user:[4026532317]
+log (sandbox/fatal lines):
+
+### E. electron-builder .deb installed with dpkg, run by the ordinary user
+-rw-r--r-- 1 runner runner 101049664 Nov 12 02:59 release-pkg/folio-electron-spike_0.0.1_amd64.deb
+Unpacking libsecret-1-0:amd64 (0.21.4-1build3) ...
+Selecting previously unselected package folio-electron-spike.
+Preparing to unpack .../folio-electron-spike_0.0.1_amd64.deb ...
+Unpacking folio-electron-spike (0.0.1) ...
+Selecting previously unselected package libappindicator3-1.
+Preparing to unpack .../libappindicator3-1_12.10.1+20.10.20200706.1-0ubuntu5_amd64.deb ...
+Unpacking libappindicator3-1 (12.10.1+20.10.20200706.1-0ubuntu5) ...
+Setting up libappindicator3-1 (12.10.1+20.10.20200706.1-0ubuntu5) ...
+Setting up libnotify4:amd64 (0.8.3-1build2) ...
+Setting up libsecret-common (0.21.4-1build3) ...
+Setting up libsecret-1-0:amd64 (0.21.4-1build3) ...
+Setting up folio-electron-spike (0.0.1) ...
+update-alternatives: using /opt/Folio/folio-spike to provide /usr/bin/folio-spike (folio-spike) in auto mode
+Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+-rwxr-xr-x+ 1 root root 15216 Nov 12 02:59 /opt/Folio/chrome-sandbox
+-rw-r--r-- 1 root root 235 Nov 12 03:00 /etc/apparmor.d/folio-spike
+=== E-deb: /usr/bin/folio-spike --data-dir=/home/runner/work/folio/folio/fixtures
+renderer processes:
+  cmdline has --no-sandbox: 0
+  pid=3454 uid=1001 NoNewPrivs: 1 Seccomp: 2  userns=user:[4026532316]
+log (sandbox/fatal lines):
+
+### F. electron-builder AppImage, ordinary user (--appimage-extract-and-run because the runner has no FUSE 2)
+-rwxr-xr-x 1 runner runner 126051196 Nov 12 02:59 release-pkg/Folio-0.0.1.AppImage
+=== F-appimage: release-pkg/Folio-0.0.1.AppImage --appimage-extract-and-run --data-dir=/home/runner/work/folio/folio/fixtures
+renderer processes:
+  cmdline has --no-sandbox: 1
+  pid=3579 uid=1001 NoNewPrivs: 1 Seccomp: 0  userns=user:[4026531837]
+log (sandbox/fatal lines):
+  /tmp/appimage_extracted_596341ed891e6fae620c4824155c37b3/chrome-sandbox

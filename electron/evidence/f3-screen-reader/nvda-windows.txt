@@ -1,0 +1,19 @@
+NVDA started
+--- go to Transactions (mouse click via Playwright)
+  (nothing announced)
+--- focus the grid body
+  (nothing announced)
+--- ArrowDown 1 in the grid (real key through the screen reader)
+  > clickable, row 2, Description, column 2, Aeroflot Аэрофлот number 4389
+--- ArrowDown 2 in the grid (real key through the screen reader)
+  > Account, column 3, Travel Mastercard
+--- ArrowDown 3 in the grid (real key through the screen reader)
+  > Category, column 4, Flights and hotels
+--- End key (jump to last row)
+  > s
+--- go to Settings and open the dialog
+  (nothing announced)
+--- Tab inside the dialog
+  > Reset, button
+--- Escape
+  > clickable, Main navigation, navigation landmark, button, Transactions

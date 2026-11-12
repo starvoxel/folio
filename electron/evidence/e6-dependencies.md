@@ -1,0 +1,6 @@
+# E6 raw facts (read 2026-11-12)
+Method: `git clone --bare --filter=blob:none --shallow-since=2025-11-12` of each default branch; `git shortlog -sn` and distinct author emails; GitHub search for open issues (type issue) and PRs; `npm view <pkg> time maintainers`.
+- electron/electron: 1757 commits, 142 distinct author emails, top author 288 (16%); 5 bot-like entries (claude[bot] 171); latest commit 2026-11-11; npm electron 45.3.0 2026-11-10; open issues 618, PRs 161; README cites OpenJS Foundation trademark policy; no FUNDING.yml.
+- microsoft/fluentui: 908 commits, 65 emails, top 210 (23%); "Fluent UI Build" 88, "Copilot" 34; latest commit 2026-11-11; npm 9.75.2 2026-11-10; open issues 467, PRs 370; Microsoft-owned npm accounts.
+- TanStack/virtual: 164 commits, 52 emails, top 47 (29%); github-actions[bot] 46; latest commit 2026-11-06; npm 3.14.26 2026-11-03; open issues 51, PRs 46; LICENSE "Copyright (c) 2021-present Tanner Linsley"; FUNDING.yml github: tannerlinsley; README sponsors/partners.
+- apache/echarts: 237 commits, 23 emails (28 names), top 100 (42%, 100pah); dependabot[bot] 20; latest commit 2026-10-04; npm 6.1.0 2026-05-19 (6.0.0 2025-07-30); open issues 1245, PRs 231; README references Apache policies; 8 npm publish accounts.

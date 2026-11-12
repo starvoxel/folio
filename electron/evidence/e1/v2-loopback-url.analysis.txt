@@ -1,0 +1,4 @@
+text capture lines: 32; loopback: 0; kernel IPv6 housekeeping on the namespace veth: 32; other (application) packets: 0
+non-loopback connect/send syscalls in strace: 0 (plus 1 UDP route-probe connect() calls, no packet emitted)
+NOTICE 3246  02:59:44.017401 connect(20, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2001:4860:4860::8888", &sin6_addr), sin6_scope_id=0}, 28 <unfinished ...>
+      socket(AF_INET6, SOCK_DGRAM, IPPROTO_IP )

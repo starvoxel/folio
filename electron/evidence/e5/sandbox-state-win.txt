@@ -1,0 +1,31 @@
+[
+ {
+  "pid": 4276,
+  "type": "Browser",
+  "name": null,
+  "sandboxed": false,
+  "integrityLevel": "high"
+ },
+ {
+  "pid": 932,
+  "type": "GPU",
+  "name": null,
+  "sandboxed": true,
+  "integrityLevel": "low"
+ },
+ {
+  "pid": 5876,
+  "type": "Utility",
+  "name": "Network Service",
+  "sandboxed": false,
+  "integrityLevel": "high"
+ },
+ {
+  "pid": 2404,
+  "type": "Tab",
+  "name": null,
+  "sandboxed": true,
+  "integrityLevel": "untrusted"
+ }
+]
+webPreferences actually in effect: [{"sandbox":true,"contextIsolation":true,"nodeIntegration":false}]

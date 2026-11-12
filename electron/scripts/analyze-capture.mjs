@@ -13,6 +13,8 @@ const isKernelV6 = (l) => /ICMP6, (neighbor (solicitation|advertisement)|router 
 const loop = pkts.filter(isLoop);
 const kernel = pkts.filter((l) => !isLoop(l) && isKernelV6(l));
 const app = pkts.filter((l) => !isLoop(l) && !isKernelV6(l));
+// Name lookups: a DNS query for an external name is an attempt to reach that name even when the resolver is a loopback stub (systemd-resolved at 127.0.0.53).
+const queries = [...new Set(pkts.map((l) => /\b(?:A|AAAA|HTTPS|SVCB|CNAME)\? ([A-Za-z0-9._-]+)\./.exec(l)?.[1]).filter((n) => n && !/^(localhost|[0-9.]+)$/.test(n)))];
 const st = fs.readFileSync(path.join(dir, 'strace.log'), 'utf8').split('\n');
 const sockets = new Map(); // "pid fd" -> socket() line
 const findings = [];
@@ -39,4 +41,5 @@ console.log(`non-loopback connect/send syscalls in strace: ${findings.length} (p
 for (const n of notices.slice(0, 5)) console.log('NOTICE ' + n);
 for (const l of app.slice(0, 20)) console.log('PKT  ' + l);
 for (const f of findings.slice(0, 20)) console.log('SYS  ' + f);
-process.exit(app.length || findings.length ? 1 : 0);
+console.log(`DNS queries for external names: ${queries.length}${queries.length ? ' -> ' + queries.join(', ') : ''}`);
+process.exit(app.length || findings.length || queries.length ? 1 : 0);

@@ -1,0 +1,40 @@
+Will install electron-builder@24.13.3, which is a breaking change
+node_modules/app-builder-lib/node_modules/@electron/universal/node_modules/minimatch
+node_modules/minimatch
+  @electron/asar  >=4.0.0
+  Depends on vulnerable versions of glob
+  Depends on vulnerable versions of minimatch
+  node_modules/@electron/asar
+    @electron/packager  >=19.0.0
+    Depends on vulnerable versions of @electron/asar
+    Depends on vulnerable versions of @electron/universal
+    node_modules/@electron/packager
+    @electron/universal  1.5.0 || >=2.0.0
+    Depends on vulnerable versions of @electron/asar
+    Depends on vulnerable versions of minimatch
+    node_modules/@electron/universal
+    node_modules/app-builder-lib/node_modules/@electron/universal
+      app-builder-lib  >=24.13.4-alpha.0
+      Depends on vulnerable versions of @electron/universal
+      Depends on vulnerable versions of dmg-builder
+      Depends on vulnerable versions of electron-builder-squirrel-windows
+      Depends on vulnerable versions of minimatch
+      node_modules/app-builder-lib
+        dmg-builder  >=24.13.4-alpha.0
+        Depends on vulnerable versions of app-builder-lib
+        node_modules/dmg-builder
+          electron-builder  19.25.0 || >=24.13.4-alpha.0
+          Depends on vulnerable versions of app-builder-lib
+          Depends on vulnerable versions of dmg-builder
+          node_modules/electron-builder
+        electron-builder-squirrel-windows  >=24.13.4-alpha.0
+        Depends on vulnerable versions of app-builder-lib
+        node_modules/electron-builder-squirrel-windows
+
+9 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force

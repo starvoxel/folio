@@ -1,0 +1,4 @@
+untouched app.asar: STARTED and reached ready in 1244 ms
+app.asar with one byte appended at the end: STARTED and reached ready in 913 ms
+app.asar with one letter changed inside a packed file (a comment): DID NOT START (Error: electron.launch: Process failed to launch!) after 192 ms
+RESULT: untouched starts; byte appended starts; file content tampered refused (enforced)

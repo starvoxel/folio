@@ -10,7 +10,7 @@
   "points": {
     "P0": {
       "primaryName": "PSS",
-      "primaryMB": 345.2,
+      "primaryMB": 345.6,
       "secondaryName": "RSS",
       "secondaryMB": 709.1,
       "processes": 6,
@@ -25,54 +25,54 @@
     },
     "P1": {
       "primaryName": "PSS",
-      "primaryMB": 364.4,
+      "primaryMB": 365,
       "secondaryName": "RSS",
-      "secondaryMB": 735.5,
+      "secondaryMB": 736,
       "processes": 6,
       "detail": [
         "Folio:100",
         "Folio:29",
         "Folio:18",
-        "Folio:100",
+        "Folio:101",
         "Folio:18",
-        "Folio:100"
+        "Folio:99"
       ]
     },
     "P2": {
       "primaryName": "PSS",
-      "primaryMB": 435.7,
+      "primaryMB": 437.3,
       "secondaryName": "RSS",
-      "secondaryMB": 813.2,
+      "secondaryMB": 812.3,
       "processes": 6,
       "detail": [
         "Folio:100",
         "Folio:29",
         "Folio:18",
-        "Folio:172",
+        "Folio:174",
         "Folio:18",
-        "Folio:100"
+        "Folio:99"
       ]
     },
     "P3": {
       "primaryName": "PSS",
-      "primaryMB": 429.3,
+      "primaryMB": 432.8,
       "secondaryName": "RSS",
-      "secondaryMB": 807,
+      "secondaryMB": 810.3,
       "processes": 6,
       "detail": [
-        "Folio:91",
+        "Folio:92",
         "Folio:29",
         "Folio:18",
-        "Folio:175",
+        "Folio:177",
         "Folio:18",
-        "Folio:100"
+        "Folio:99"
       ]
     },
     "P4": {
       "primaryName": "PSS",
-      "primaryMB": 356.6,
+      "primaryMB": 358.2,
       "secondaryName": "RSS",
-      "secondaryMB": 731,
+      "secondaryMB": 732.2,
       "processes": 6,
       "detail": [
         "Folio:89",
@@ -85,15 +85,15 @@
     },
     "P5": {
       "primaryName": "PSS",
-      "primaryMB": 374.9,
+      "primaryMB": 377.2,
       "secondaryName": "RSS",
-      "secondaryMB": 749.7,
+      "secondaryMB": 751.7,
       "processes": 6,
       "detail": [
         "Folio:90",
         "Folio:29",
         "Folio:18",
-        "Folio:124",
+        "Folio:125",
         "Folio:18",
         "Folio:97"
       ]
