@@ -1,0 +1,4 @@
+<Project>
+  <!-- A later definition of a target replaces the earlier one, so Avalonia.BuildServices' AvaloniaStats target does nothing. -->
+  <Target Name="AvaloniaStats" />
+</Project>

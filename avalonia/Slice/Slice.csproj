@@ -14,4 +14,8 @@
     <PackageReference Include="Avalonia.Controls.DataGrid" />
     <PackageReference Include="FluentAvaloniaUI" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TelemetryVariant)' == 'exclude'">
+    <!-- A2 experiment: a direct reference with all assets excluded stops the transitive build task from being imported. -->
+    <PackageReference Include="Avalonia.BuildServices" ExcludeAssets="all" />
+  </ItemGroup>
 </Project>

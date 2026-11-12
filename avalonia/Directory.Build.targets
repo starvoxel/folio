@@ -1,0 +1,4 @@
+<Project>
+  <!-- A2 experiment: redefine the telemetry target as a no-op. Imported only for the 'override' variant. -->
+  <Import Project="TelemetryOff.targets" Condition="'$(TelemetryVariant)' == 'override'" />
+</Project>
