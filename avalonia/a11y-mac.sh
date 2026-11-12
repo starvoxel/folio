@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # macOS accessibility hierarchy dumps of the running app via tools/ax-dump.swift. Usage: a11y-mac.sh <outdir> [app args...]
 set -uo pipefail
-here="$(cd "$(dirname "$0")" && pwd)"; out="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"; shift; mkdir -p "$out"
+here="$(cd "$(dirname "$0")" && pwd)"; mkdir -p "$1"; out="$(cd "$1" && pwd)"; shift; mkdir -p "$out"
 export FOLIO_DISCOVERY="$out/discovery.json"; C="$here/Cli/bin/Release/net10.0/folio-slice-cli"
 swiftc -O "$here/tools/ax-dump.swift" -o "$out/ax-dump" 2> "$out/swiftc.txt" || { echo "swiftc failed"; cat "$out/swiftc.txt"; exit 1; }
 "$here/run-slice.sh" "$out" --size 1440x900 "$@"; "$C" wait-ready > /dev/null; sleep 3
