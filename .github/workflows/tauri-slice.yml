@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   CARGO_TERM_COLOR: never
@@ -61,9 +61,9 @@ jobs:
           echo "shipped build + bundles: $(( $(date +%s) - start )) s" | tee test-results/build-time-${{ runner.os }}.txt
       - name: Sizes
         run: |
-          { find src-tauri/target/release/bundle -maxdepth 3 \( -name '*.deb' -o -name '*.rpm' -o -name '*.AppImage' -o -name '*.exe' -o -name '*.msi' -o -name '*.dmg' \) -exec ls -l {} \; ;
-            ls -l src-tauri/target/release/folio src-tauri/target/release/folio.exe 2>/dev/null;
-            du -sk src-tauri/target/release/bundle/macos/Folio.app 2>/dev/null; true; } | tee test-results/sizes-${{ runner.os }}.txt
+          { find src-tauri/target/release/bundle -maxdepth 3 \( -name '*.deb' -o -name '*.rpm' -o -name '*.AppImage' -o -name '*.exe' -o -name '*.msi' -o -name '*.dmg' \) -exec ls -l {} \; || true;
+            ls -l src-tauri/target/release/folio src-tauri/target/release/folio.exe 2>/dev/null || true;
+            du -sk src-tauri/target/release/bundle/macos/Folio.app 2>/dev/null || true; } | tee test-results/sizes-${{ runner.os }}.txt
       - name: Build the test binary (embedded WebDriver, off unless FOLIO_AUTOMATION=1)
         run: |
           start=$(date +%s)
@@ -131,6 +131,9 @@ jobs:
             else "$exe" >/dev/null 2>&1 & sleep 10; node scripts/memtree.mjs measure $(node scripts/memtree.mjs find folio) "$FOLIO_WEBKIT_BASELINE" | tee test-results/shipped-idle-${{ runner.os }}.json; kill %1 2>/dev/null || taskkill //F //IM folio.exe; fi ) || true
       - name: Cold start of the shipped binary (window to first render, 5 samples)
         run: node scripts/cold-start.mjs 2>&1 | tee test-results/cold-start-${{ runner.os }}.txt || true
+      - name: Commit evidence to the branch
+        if: always()
+        run: scripts/ci-commit.sh slice-${{ runner.os }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:

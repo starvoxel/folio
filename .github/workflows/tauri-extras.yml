@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   linux-g1-pkg:
@@ -58,6 +58,9 @@ jobs:
         run: |
           sudo chown -R "$USER" capture
           for d in driven-sink release-idle-noroute release-idle-sink; do echo "=== $d"; node scripts/analyze-capture.mjs capture/$d || true; done | tee test-results/capture-analysis.txt
+      - name: Commit evidence to the branch
+        if: always()
+        run: scripts/ci-commit.sh extras-linux capture/driven-sink/interfaces.txt capture/driven-sink/capture.txt capture/driven-sink/strace.log capture/release-idle-noroute/capture.txt capture/release-idle-noroute/strace.log capture/release-idle-sink/capture.txt capture/release-idle-sink/strace.log
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
@@ -111,6 +114,9 @@ jobs:
           else
             FOLIO_SPEC=./specs/a11y.e2e.ts npx wdio run wdio.conf.ts 2>&1 | tail -40
           fi
+      - name: Commit evidence to the branch
+        if: always()
+        run: scripts/ci-commit.sh a11y-${{ runner.os }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
