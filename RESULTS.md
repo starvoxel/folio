@@ -10,7 +10,7 @@ Everything is from this sandbox (Linux, Xvfb, software rendering) and the GitHub
 
 ## The short answer
 
-**Tauri meets the six gates' pass conditions except memory (G2) on two of three OSes, and it is not materially lighter than Electron in memory. It is dramatically smaller to install.**
+**Tauri passes G3 (testing), G4 (charts), G5 (footprint) and G6 (licences, with one flag), but fails G2 on memory on Linux (default graphics) and macOS, and on Windows under the total-working-set metric; macOS also misses the 100 ms frame limit in 2 of 5 runs; and on Windows the WebView2 runtime connects out while idle (G1). It is not materially lighter than Electron in memory, and heavier on macOS. It is dramatically smaller to install.**
 
 - **Size: yes, materially smaller.** Windows installer 1.4 MB (NSIS) against Electron's 121 MB; Linux `.deb` 1.7 MB against 101 MB; macOS `.dmg` 1.7 MB. The Linux AppImage is 81 MB (it bundles WebKitGTK) against Electron's 126 MB. Prices of the small size: the app depends on the OS web view (WebView2 must be installed or downloaded, `libwebkit2gtk-4.1` must be present for the deb), and the web view is whatever version the user has.
 - **Memory: no, once every web view process is counted.** The app's own process is tiny (4 MB on Windows, 28 to 33 MB on macOS, about 100 MB PSS on Linux), which is what a naive tool reports and what makes Tauri look light. The page runs in separate OS web view processes (found and counted on all three OSes, method below). Counting them, memory after scrolling the 10,000-row grid was, against Electron under the same metrics (CI runs, ranges over the CI runs):
