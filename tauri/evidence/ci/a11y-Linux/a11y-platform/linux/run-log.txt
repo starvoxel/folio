@@ -1,0 +1,12 @@
+01-overview-nav: exit 0 29 nodes -> /home/runner/work/folio/folio/tauri/test-results/a11y-platform/linux/01-overview-nav.txt /home/runner/work/folio/folio/tauri/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+02-transactions-no-selection: exit 0 404 nodes -> /home/runner/work/folio/folio/tauri/test-results/a11y-platform/linux/02-transactions-no-selection.txt /home/runner/work/folio/folio/tauri/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+03-transactions-row-selected: exit 0 414 nodes -> /home/runner/work/folio/folio/tauri/test-results/a11y-platform/linux/03-transactions-row-selected.txt /home/runner/work/folio/folio/tauri/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+04-transactions-scrolled-far: exit 0 535 nodes -> /home/runner/work/folio/folio/tauri/test-results/a11y-platform/linux/04-transactions-scrolled-far.txt /home/runner/work/folio/folio/tauri/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+05-reporting: exit 0 149 nodes -> /home/runner/work/folio/folio/tauri/test-results/a11y-platform/linux/05-reporting.txt /home/runner/work/folio/folio/tauri/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))
+06-dialog-open: exit 0 14 nodes -> /home/runner/work/folio/folio/tauri/test-results/a11y-platform/linux/06-dialog-open.txt /home/runner/work/folio/folio/tauri/scripts/atspi-dump.py:73: DeprecationWarning: Atspi.Action.get_action_name is deprecated
+  if ac and ac.get_n_actions(): extra.append('ACTIONS=' + '|'.join(ac.get_action_name(i) for i in range(ac.get_n_actions())))

@@ -1,0 +1,14 @@
+[application] name='folio' states= 
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=
+    [filler] name='' states=ENABLED,SHOWING,VISIBLE attrs=
+      [filler] name='' states= 
+        [filler] name='' states= attrs=
+          [scroll pane] name='' states=FOCUSED,FOCUSABLE,ENABLED attrs= ACTIONS=
+            [document web] name='Folio' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+              [menu] name='' states= attrs= ACTIONS=select
+                [menu item] name='March 2026' states=SELECTED,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+              [dialog] name='Reset settings?' states=FOCUSABLE,MODAL,ENABLED,SHOWING,VISIBLE attrs=tag=div;xml-roles=dialog ACTIONS=
+                [heading] name='Reset settings?' states=ENABLED,SHOWING,VISIBLE attrs=id=dialog-title-_r_8_;level=2;tag=h2 ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=div ACTIONS=
+                [push button] name='Cancel' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Reset' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press

@@ -1,0 +1,29 @@
+[application] name='folio' states= 
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=
+    [filler] name='' states=ENABLED,SHOWING,VISIBLE attrs=
+      [filler] name='' states= 
+        [filler] name='' states= attrs=
+          [scroll pane] name='' states=FOCUSABLE,ENABLED attrs= ACTIONS=
+            [document web] name='Folio' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+              [landmark] name='Main navigation' states=ENABLED,SHOWING,VISIBLE attrs=tag=div;xml-roles=navigation ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=div ACTIONS=
+                [push button] name='Overview' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE,ACTIVE attrs=tag=button ACTIONS=press
+                [push button] name='Transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Reporting' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Net worth' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Accounts' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Rules & categories' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Settings' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+              [landmark] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=header;xml-roles=banner ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                [push button] name='Undo (not in this slice)' states=SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Redo (not in this slice)' states=SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Import CSV' states=SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [combo box] name='Month (placeholder)' states=SHOWING,VISIBLE attrs=tag=select ACTIONS=select
+                  [menu] name='' states= attrs= ACTIONS=select
+                    [menu item] name='March 2026' states=SELECTED,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                [combo box] name='Menu' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=id=menu_r_3_;tag=button ACTIONS=select
+              [landmark] name='Overview' states=ENABLED,SHOWING,VISIBLE attrs=tag=main;xml-roles=main ACTIONS=
+                [heading] name='Overview' states=ENABLED,SHOWING,VISIBLE attrs=level=1;tag=h1 ACTIONS=
+                [paragraph] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=p ACTIONS=

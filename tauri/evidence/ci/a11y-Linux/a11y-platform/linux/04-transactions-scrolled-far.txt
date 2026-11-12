@@ -1,0 +1,535 @@
+[application] name='folio' states= 
+  [frame] name='Folio' states=ENABLED,SHOWING,VISIBLE,ACTIVE attrs=
+    [filler] name='' states=ENABLED,SHOWING,VISIBLE attrs=
+      [filler] name='' states= 
+        [filler] name='' states= attrs=
+          [scroll pane] name='' states=FOCUSED,FOCUSABLE,ENABLED attrs= ACTIONS=
+            [document web] name='Folio' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+              [landmark] name='Main navigation' states=ENABLED,SHOWING,VISIBLE attrs=tag=div;xml-roles=navigation ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=div ACTIONS=
+                [push button] name='Overview' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Transactions' states=FOCUSED,FOCUSABLE,ENABLED,SHOWING,VISIBLE,ACTIVE attrs=tag=button ACTIONS=press
+                [push button] name='Reporting' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Net worth' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Accounts' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Rules & categories' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Settings' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+              [landmark] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=header;xml-roles=banner ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                [push button] name='Undo (not in this slice)' states=SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Redo (not in this slice)' states=SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [push button] name='Import CSV' states=SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                [combo box] name='Month (placeholder)' states=SHOWING,VISIBLE attrs=tag=select ACTIONS=select
+                  [menu] name='' states= attrs= ACTIONS=select
+                    [menu item] name='March 2026' states=SELECTED,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                [combo box] name='Menu' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=id=menu_r_3_;tag=button ACTIONS=select
+              [landmark] name='Transactions' states=ENABLED,SHOWING,VISIBLE attrs=tag=main;xml-roles=main ACTIONS=
+                [heading] name='Transactions' states=ENABLED,SHOWING,VISIBLE attrs=level=1;tag=h1 ACTIONS=
+                [entry] name='Search transactions' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE,EDITABLE attrs=tag=input ACTIONS=activate
+                [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                [combo box] name='Account filter' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=select ACTIONS=select
+                  [menu] name='' states=ENABLED attrs= ACTIONS=select
+                    [menu item] name='All accounts' states=SELECTED,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Everyday Chequing' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Emergency Savings' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Rewards Visa' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Travel Mastercard' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Brokerage' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Line of Credit' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                [combo box] name='Category filter' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=select ACTIONS=select
+                  [menu] name='' states=ENABLED attrs= ACTIONS=select
+                    [menu item] name='All categories' states=SELECTED,SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Income' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Paycheque' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Other income' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Housing' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Rent and mortgage' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Utilities' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Groceries' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Supermarket' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Markets and bakeries' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Dining out' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Restaurants' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Coffee' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Transport' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Fuel' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Transit' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Health' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Pharmacy' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Shopping' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Online' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Home and garden' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Entertainment' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Subscriptions' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Travel' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Flights and hotels' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Savings' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='\u2003Savings transfers' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                    [menu item] name='Uncategorized' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=tag=option ACTIONS=
+                [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                [table] name='Transactions' states=ENABLED,SHOWING,VISIBLE,MULTISELECTABLE attrs=colcount=5;rowcount=10001;tag=div;xml-roles=grid TABLE rows=41 cols=5 ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=1;tag=div;xml-roles=row ACTIONS=
+                    [column header] name='' states=ENABLED,SHOWING,VISIBLE attrs=rowindex=1;sort=ascending;tag=div;xml-roles=columnheader ACTIONS=
+                      [push button] name='Date' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                    [column header] name='' states=ENABLED,SHOWING,VISIBLE attrs=rowindex=1;sort=none;tag=div;xml-roles=columnheader ACTIONS=
+                      [push button] name='Description' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                    [column header] name='' states=ENABLED,SHOWING,VISIBLE attrs=rowindex=1;sort=none;tag=div;xml-roles=columnheader ACTIONS=
+                      [push button] name='Account' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                    [column header] name='' states=ENABLED,SHOWING,VISIBLE attrs=rowindex=1;sort=none;tag=div;xml-roles=columnheader ACTIONS=
+                      [push button] name='Category' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                    [column header] name='' states=ENABLED,SHOWING,VISIBLE attrs=rowindex=1;sort=none;tag=div;xml-roles=columnheader ACTIONS=
+                      [push button] name='Amount' states=FOCUSABLE,ENABLED,SHOWING,VISIBLE attrs=tag=button ACTIONS=press
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05546;rowindex=5547;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5547;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Кофейня Бодрое утро #4126' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5547;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5547;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5547;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5547;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05547;rowindex=5548;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5548;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Фруктовый рынок Москва' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5548;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5548;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5548;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5548;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05548;rowindex=5549;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5549;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='寿司 すしざんまい' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5549;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5549;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5549;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5549;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05549;rowindex=5550;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5550;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='珈琲館' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5550;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5550;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5550;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5550;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05550;rowindex=5551;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5551;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='AliExpress 全球速卖通 #1505' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5551;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5551;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5551;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5551;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05551;rowindex=5552;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5552;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Bell Mobilité' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5552;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5552;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5552;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5552;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05552;rowindex=5553;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5553;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Café Olimpico' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5553;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5553;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5553;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5553;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05553;rowindex=5554;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5554;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Café Olimpico' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5554;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5554;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5554;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5554;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05554;rowindex=5555;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5555;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Café Olimpico #4186' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5555;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5555;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5555;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5555;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05555;rowindex=5556;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5556;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Costco Wholesale' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5556;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5556;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5556;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5556;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05556;rowindex=5557;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5557;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Home Depot' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5557;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5557;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5557;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5557;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05557;rowindex=5558;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5558;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Hydro One' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5558;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5558;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5558;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5558;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05558;rowindex=5559;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5559;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Hydro One #4299' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5559;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5559;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5559;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5559;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05559;rowindex=5560;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5560;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Loblaws #1042' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5560;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5560;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5560;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5560;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05560;rowindex=5561;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5561;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Loyer Gestion Érable' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5561;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5561;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5561;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5561;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05561;rowindex=5562;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5562;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Loyer Gestion Érable #1832' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5562;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5562;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5562;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5562;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05562;rowindex=5563;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5563;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Netflix' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5563;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5563;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5563;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5563;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05563;rowindex=5564;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5564;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Payroll Acme Ltd' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5564;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5564;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5564;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5564;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05564;rowindex=5565;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5565;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Sobeys' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5565;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5565;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5565;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5565;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05565;rowindex=5566;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5566;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='UNKNOWN MERCHANT ??? #6104' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5566;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5566;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5566;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5566;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05566;rowindex=5567;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5567;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Virement épargne #7469' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5567;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5567;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5567;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5567;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05567;rowindex=5568;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5568;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Wildberries Интернет-магазин' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5568;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5568;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5568;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5568;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05568;rowindex=5569;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5569;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='YouTube Premium' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5569;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5569;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5569;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5569;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05569;rowindex=5570;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5570;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='iCloud+ Storage #6791' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5570;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5570;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5570;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5570;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05570;rowindex=5571;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5571;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Кофейня Бодрое утро' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5571;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5571;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5571;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5571;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05571;rowindex=5572;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5572;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Кофейня Бодрое утро' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5572;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5572;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5572;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5572;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05572;rowindex=5573;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5573;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Кофейня Бодрое утро #5153' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5573;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5573;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5573;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5573;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05573;rowindex=5574;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5574;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='מסעדת הים Seaside' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5574;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5574;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5574;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5574;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05574;rowindex=5575;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5575;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='مخبز الأمل Al Amal Bakery #8444' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5575;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5575;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5575;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5575;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=id=row-tx-05575;rowindex=5576;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5576;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='ニトリ #9015' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5576;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5576;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5576;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,SHOWING,VISIBLE attrs=rowindex=5576;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,SHOWING,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05576;rowindex=5577;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5577;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='八百屋 田中' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5577;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5577;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5577;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5577;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05577;rowindex=5578;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5578;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='AliExpress 全球速卖通' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5578;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5578;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5578;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5578;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05578;rowindex=5579;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5579;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Amazon.ca Marketplace #5363' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5579;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5579;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5579;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5579;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05579;rowindex=5580;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5580;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Boulangerie Le Pain Doré' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5580;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5580;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5580;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5580;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05580;rowindex=5581;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5581;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Café Olimpico' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5581;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5581;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5581;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5581;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05581;rowindex=5582;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5582;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Costco Wholesale' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5582;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5582;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5582;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5582;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05582;rowindex=5583;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5583;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Disney+' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5583;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5583;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5583;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5583;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05583;rowindex=5584;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5584;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='GO Transit' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5584;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5584;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5584;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5584;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05584;rowindex=5585;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5585;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='Hydro One' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5585;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5585;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5585;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5585;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                  [table row] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=id=row-tx-05585;rowindex=5586;tag=div;xml-roles=row ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5586;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='IKEA Etobicoke #5931' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5586;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5586;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5586;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                    [table cell] name='' states=SELECTABLE,ENABLED,VISIBLE attrs=rowindex=5586;tag=div;xml-roles=gridcell ACTIONS=
+                      [section] name='' states=ENABLED,VISIBLE attrs= ACTIONS=
+                [landmark] name='Transaction details' states=ENABLED,SHOWING,VISIBLE attrs=tag=aside;xml-roles=complementary ACTIONS=
+                  [description list] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dl ACTIONS=
+                    [heading] name='Amazon.ca Marketplace #9770' states=ENABLED,SHOWING,VISIBLE attrs=level=2;tag=h2 ACTIONS=
+                    [section] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=div ACTIONS=
+                    [description term] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dt ACTIONS=
+                    [description value] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dd ACTIONS=
+                    [description term] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dt ACTIONS=
+                    [description value] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dd ACTIONS=
+                    [description term] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dt ACTIONS=
+                    [description value] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dd ACTIONS=
+                    [description term] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dt ACTIONS=
+                    [description value] name='' states=ENABLED,SHOWING,VISIBLE attrs=tag=dd ACTIONS=
