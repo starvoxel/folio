@@ -1,0 +1,75 @@
+{
+  "totalNodes": 619,
+  "sample": [
+    {
+      "role": "grid",
+      "name": "Transactions",
+      "props": "multiselectable=false readonly=false"
+    },
+    {
+      "role": "row",
+      "name": "Date Description Account Category Amount",
+      "props": ""
+    },
+    {
+      "role": "columnheader",
+      "name": "Date",
+      "props": "readonly=false required=false"
+    },
+    {
+      "role": "columnheader",
+      "name": "Description",
+      "props": "readonly=false required=false"
+    },
+    {
+      "role": "columnheader",
+      "name": "Account",
+      "props": "readonly=false required=false"
+    },
+    {
+      "role": "columnheader",
+      "name": "Category",
+      "props": "readonly=false required=false"
+    },
+    {
+      "role": "columnheader",
+      "name": "Amount",
+      "props": "readonly=false required=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 Aeroflot Аэрофлот #4389 Travel Mastercard Flights and hotels -$135.41",
+      "props": "selected=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 Air Canada Rewards Visa Flights and hotels -$480.98",
+      "props": "selected=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 AliExpress 全球速卖通 Travel Mastercard Online -$15.34",
+      "props": "selected=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 Amazon.ca Marketplace #9770 Rewards Visa Online -$239.51",
+      "props": "selected=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 Café Olimpico #7718 Everyday Chequing Coffee -$7.43",
+      "props": "selected=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 GO Transit Rewards Visa Transit -$128.95",
+      "props": "selected=false"
+    },
+    {
+      "role": "row",
+      "name": "2026-01-01 Hydro One Rewards Visa Utilities -$295.85",
+      "props": "selected=false"
+    }
+  ]
+}

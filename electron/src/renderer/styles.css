@@ -29,7 +29,7 @@
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body { font-family: var(--font); font-size: 14px; line-height: 20px; }
-.fluent-root { height: 100%; background: var(--solid-bg-base); color: var(--text-primary); font-family: var(--font); }
+html body .fluent-root { height: 100%; background: var(--solid-bg-base); color: var(--text-primary); font-family: var(--font); }
 .boot { padding: 24px; }
 .muted { color: var(--text-secondary); }
 .num { font-variant-numeric: tabular-nums; }
@@ -38,7 +38,7 @@ body { font-family: var(--font); font-size: 14px; line-height: 20px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); height: 100%; }
-.nav { height: 100%; background: transparent; }
+html body .nav { height: 100%; background: transparent; }
 .brand { font-size: 20px; line-height: 28px; font-weight: 600; padding: 12px 12px 4px; }
 .main { display: flex; flex-direction: column; min-width: 0; height: 100%; }
 .topbar { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px; border-bottom: 1px solid var(--divider); flex: none; }

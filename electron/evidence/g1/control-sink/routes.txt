@@ -1,0 +1,2 @@
+default via 10.99.0.1 dev d0 
+10.99.0.0/24 dev d0 proto kernel scope link src 10.99.0.2 

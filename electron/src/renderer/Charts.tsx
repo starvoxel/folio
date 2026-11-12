@@ -43,7 +43,7 @@ export function Donut(props: { slices: Slice[]; theme: ChartTheme; totalCents: n
       c.setOption(
         {
           animation: false,
-          aria: { enabled: true, decal: { show: false } },
+          aria: { enabled: false }, // ECharts' generated label reads raw cents; the legend list and table carry the data
           tooltip: { trigger: 'item', formatter: (p: { name: string; value: number; percent: number }) => `${p.name}: ${formatCents(p.value)} (${Math.round(p.percent)}%)` },
           title: { text: formatCentsWhole(totalCents), subtext: 'spent', left: 'center', top: '40%', textStyle: { color: theme.text, fontSize: 22, fontWeight: 600 }, subtextStyle: { color: theme.muted, fontSize: 12 } },
           series: [
@@ -78,7 +78,7 @@ export function InOutBars(props: { flows: MonthFlow[]; theme: ChartTheme; onPick
       c.setOption(
         {
           animation: false,
-          aria: { enabled: true },
+          aria: { enabled: false },
           tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: (ps: { seriesName: string; value: number; axisValue: string }[]) => ps.map((p) => `${p.seriesName}: ${formatCents(Math.round(p.value))}`).join('<br/>') },
           legend: { data: ['Money in', 'Money out'], textStyle: { color: theme.text }, top: 0 },
           grid: { left: 64, right: 16, top: 36, bottom: 28 },

@@ -1,0 +1,27 @@
+packets captured: 30; non-loopback packets: 30
+non-loopback connect/send syscalls in strace: 5
+PKT  00:07:54.949332 ifb1  Out IP 10.99.0.2.38810 > 93.184.216.34.80: Flags [S], seq 2116057410, win 64240, options [mss 1460,sackOK,TS val 2037011563 ecr 0,nop,wscale 10], length 0
+PKT  00:07:54.949338 ifb0  P   IP 10.99.0.2.38810 > 93.184.216.34.80: Flags [S], seq 2116057410, win 64240, options [mss 1460,sackOK,TS val 2037011563 ecr 0,nop,wscale 10], length 0
+PKT  00:07:55.950648 ifb1  Out IP 10.99.0.2.38810 > 93.184.216.34.80: Flags [S], seq 2116057410, win 64240, options [mss 1460,sackOK,TS val 2037012565 ecr 0,nop,wscale 10], length 0
+PKT  00:07:55.950660 ifb0  P   IP 10.99.0.2.38810 > 93.184.216.34.80: Flags [S], seq 2116057410, win 64240, options [mss 1460,sackOK,TS val 2037012565 ecr 0,nop,wscale 10], length 0
+PKT  00:07:56.974675 ifb1  Out IP 10.99.0.2.38810 > 93.184.216.34.80: Flags [S], seq 2116057410, win 64240, options [mss 1460,sackOK,TS val 2037013589 ecr 0,nop,wscale 10], length 0
+PKT  00:07:56.974686 ifb0  P   IP 10.99.0.2.38810 > 93.184.216.34.80: Flags [S], seq 2116057410, win 64240, options [mss 1460,sackOK,TS val 2037013589 ecr 0,nop,wscale 10], length 0
+PKT  00:07:57.960037 ifb1  Out IP 10.99.0.2.56661 > 8.8.8.8.53: 465+ AAAA? example.com. (29)
+PKT  00:07:57.960043 ifb0  P   IP 10.99.0.2.56661 > 8.8.8.8.53: 465+ AAAA? example.com. (29)
+PKT  00:07:59.962826 ifb1  Out IP 10.99.0.2.50671 > 8.8.4.4.53: 465+ AAAA? example.com. (29)
+PKT  00:07:59.962832 ifb0  P   IP 10.99.0.2.50671 > 8.8.4.4.53: 465+ AAAA? example.com. (29)
+PKT  00:08:01.964002 ifb1  Out IP 10.99.0.2.56661 > 8.8.8.8.53: 465+ AAAA? example.com. (29)
+PKT  00:08:01.964010 ifb0  P   IP 10.99.0.2.56661 > 8.8.8.8.53: 465+ AAAA? example.com. (29)
+PKT  00:08:03.966445 ifb1  Out IP 10.99.0.2.50671 > 8.8.4.4.53: 465+ AAAA? example.com. (29)
+PKT  00:08:03.966464 ifb0  P   IP 10.99.0.2.50671 > 8.8.4.4.53: 465+ AAAA? example.com. (29)
+PKT  00:08:05.968906 ifb1  Out IP 10.99.0.2.56661 > 8.8.8.8.53: 465+ AAAA? example.com. (29)
+PKT  00:08:05.968912 ifb0  P   IP 10.99.0.2.56661 > 8.8.8.8.53: 465+ AAAA? example.com. (29)
+PKT  00:08:07.971590 ifb1  Out IP 10.99.0.2.50671 > 8.8.4.4.53: 465+ AAAA? example.com. (29)
+PKT  00:08:07.971597 ifb0  P   IP 10.99.0.2.50671 > 8.8.4.4.53: 465+ AAAA? example.com. (29)
+PKT  00:08:09.974906 ifb1  Out IP 10.99.0.2.32810 > 8.8.8.8.53: 15834+ A? example.com. (29)
+PKT  00:08:09.974912 ifb0  P   IP 10.99.0.2.32810 > 8.8.8.8.53: 15834+ A? example.com. (29)
+SYS  4458  00:07:54.949282 connect(5, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr("93.184.216.34")}, 16) = -1 EINPROGRESS (Operation now in progress)
+SYS  4459  00:07:57.959835 connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("8.8.8.8")}, 16) = 0
+SYS  4459  00:07:59.962645 connect(4, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("8.8.4.4")}, 16) = 0
+SYS  4459  00:08:09.974752 connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("8.8.8.8")}, 16) = 0
+SYS  4459  00:08:11.977414 connect(4, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("8.8.4.4")}, 16) = 0

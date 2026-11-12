@@ -1,0 +1,40 @@
+- main "Reporting":
+  - heading "Reporting" [level=1]
+  - combobox "Report month":
+    - option "January 2026"
+    - option "February 2026"
+    - option "March 2026" [selected]
+    - option "April 2026"
+    - option "May 2026"
+    - option "June 2026"
+    - option "July 2026"
+    - option "August 2026"
+    - option "September 2026"
+    - option "October 2026"
+    - option "November 2026"
+    - option "December 2026"
+  - region "Spending by category, March 2026":
+    - heading "Spending by category, March 2026" [level=2]
+    - img "Donut chart of spending by main category. Use the legend list to open a category.":
+      - img
+    - list "Spending legend":
+      - listitem:
+        - 'button "Housing: $27,090, 31 percent. Show transactions"': Housing $27,090 31%
+      - listitem:
+        - 'button "Groceries: $16,900, 19 percent. Show transactions"': Groceries $16,900 19%
+      - listitem:
+        - 'button "Shopping: $13,505, 15 percent. Show transactions"': Shopping $13,505 15%
+      - listitem:
+        - 'button "Savings: $9,858, 11 percent. Show transactions"': Savings $9,858 11%
+      - listitem:
+        - 'button "Dining out: $5,849, 7 percent. Show transactions"': Dining out $5,849 7%
+      - listitem:
+        - 'button "Travel: $5,351, 6 percent. Show transactions"': Travel $5,351 6%
+      - listitem:
+        - 'button "Transport: $4,929, 6 percent. Show transactions"': Transport $4,929 6%
+      - listitem:
+        - 'button "Uncategorized: $2,849, 3 percent. Show transactions"': Uncategorized $2,849 3%
+      - listitem:
+        - 'button "Health: $1,846, 2 percent. Show transactions"': Health $1,846 2%
+      - listitem:
+        - 'button "Entertainment: $398, 0 percent. Show transactions"': Entertainment $398 0%

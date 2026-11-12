@@ -1,0 +1,173 @@
+name: electron-slice
+
+# Runs only for the Electron spike branch. Third-party actions are pinned to full commit SHAs.
+on:
+  push:
+    branches: [spike/slice-electron]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: electron
+
+env:
+  # Pixel tolerance for screenshot comparison: at most 0.1% of pixels may differ per image.
+  SHOT_TOLERANCE: '0.001'
+
+jobs:
+  linux:
+    name: G3 + G2 on Linux (Xvfb)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: electron/package-lock.json
+      - name: Install
+        run: |
+          start=$(date +%s)
+          npm ci
+          test -e node_modules/electron/dist/electron || node node_modules/electron/install.js
+          echo "npm ci + electron download: $(( $(date +%s) - start )) s"
+      - name: Typecheck and unit tests
+        run: npm run typecheck && npm run test:unit
+      - name: Clean build time
+        run: |
+          start=$(date +%s.%N)
+          npm run build >/dev/null
+          echo "clean build (vite + tsc): $(echo "$(date +%s.%N) - $start" | bc) s"
+      - name: Package release binary (fuses hardened) and test binary (only the Node inspect fuse differs)
+        run: |
+          node scripts/package.mjs
+          FOLIO_FUSE_INSPECT=1 FOLIO_OUT=out-test node scripts/package.mjs
+          echo "--- release fuses"; npx @electron/fuses read --app out/Folio-linux-x64/Folio
+          echo "--- test fuses";    npx @electron/fuses read --app out-test/Folio-linux-x64/Folio
+          cmp -l out/Folio-linux-x64/Folio out-test/Folio-linux-x64/Folio | wc -l | xargs echo "bytes differing between release and test executable:"
+          du -sm out/Folio-linux-x64 | xargs echo "unpacked release size (MB):"
+          (cd out && zip -qr ../folio-linux.zip Folio-linux-x64) && ls -l folio-linux.zip
+      - name: Install xvfb
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb
+      - name: Slice tests, run 1
+        run: xvfb-run -a -s "-screen 0 1440x900x24" npx playwright test slice.spec.ts
+      - name: Keep run 1 screenshots
+        run: mv test-results/shots/linux test-results/shots-run1
+      - name: Slice tests, run 2 (fresh launch)
+        run: xvfb-run -a -s "-screen 0 1440x900x24" npx playwright test slice.spec.ts
+      - name: Compare run 1 and run 2 screenshots
+        run: node scripts/compare-shots.mjs test-results/shots-run1 test-results/shots/linux "$SHOT_TOLERANCE"
+      - name: Restore screenshots from the previous workflow run
+        id: prev
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: electron/prev-shots
+          key: shots-linux-${{ github.run_id }}
+          restore-keys: shots-linux-
+      - name: Compare with the previous workflow run
+        run: |
+          if [ -d prev-shots ]; then node scripts/compare-shots.mjs prev-shots test-results/shots/linux "$SHOT_TOLERANCE"; else echo "no previous run to compare with (first run)"; fi
+      - name: Save screenshots for the next workflow run
+        run: rm -rf prev-shots && cp -r test-results/shots/linux prev-shots
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: electron/prev-shots
+          key: shots-linux-${{ github.run_id }}
+      - name: G2 grid performance (not a pass/fail tuned test; numbers are recorded)
+        continue-on-error: true
+        run: xvfb-run -a -s "-screen 0 1440x900x24" npx playwright test perf.spec.ts
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: linux-results
+          path: |
+            electron/test-results/
+            electron/folio-linux.zip
+          if-no-files-found: warn
+
+  windows:
+    name: G3 + G2 on Windows
+    runs-on: windows-2025
+    defaults:
+      run:
+        shell: bash
+        working-directory: electron
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: electron/package-lock.json
+      - name: Install
+        run: |
+          npm ci
+          test -e node_modules/electron/dist/electron.exe || node node_modules/electron/install.js
+      - run: npm run typecheck && npm run test:unit
+      - name: Package release and test binaries
+        run: |
+          node scripts/package.mjs
+          FOLIO_FUSE_INSPECT=1 FOLIO_OUT=out-test node scripts/package.mjs
+          npx @electron/fuses read --app out/Folio-win32-x64/Folio.exe
+          npx @electron/fuses read --app out-test/Folio-win32-x64/Folio.exe
+          powershell -NoProfile -Command "'{0:N1} MB unpacked release' -f ((Get-ChildItem out/Folio-win32-x64 -Recurse | Measure-Object Length -Sum).Sum/1MB)"
+      - name: Slice tests, run 1
+        run: npx playwright test slice.spec.ts
+      - name: Keep run 1 screenshots
+        run: mv test-results/shots/win32 test-results/shots-run1
+      - name: Slice tests, run 2
+        run: npx playwright test slice.spec.ts
+      - name: Compare run 1 and run 2 screenshots
+        run: node scripts/compare-shots.mjs test-results/shots-run1 test-results/shots/win32 "$SHOT_TOLERANCE"
+      - name: G2 grid performance
+        continue-on-error: true
+        run: npx playwright test perf.spec.ts
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: windows-results
+          path: electron/test-results/
+          if-no-files-found: warn
+
+  capture-linux:
+    name: G1 network capture on Linux (namespace, tcpdump, strace)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: electron/package-lock.json
+      - run: |
+          npm ci
+          test -e node_modules/electron/dist/electron || node node_modules/electron/install.js
+      - run: |
+          FOLIO_FUSE_INSPECT=1 FOLIO_OUT=out-test node scripts/package.mjs
+          node scripts/package.mjs
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb tcpdump strace iproute2
+      - name: Capture A, driven through every page then five minutes idle, outbound packets visible (sink route)
+        run: |
+          sudo env "PATH=$PATH" "HOME=$HOME" CAPTURE_IDLE_S=300 ./scripts/capture.sh sink capture/driven-sink \
+            xvfb-run -a -s "-screen 0 1440x900x24" node scripts/idle-capture.mjs out-test/Folio-linux-x64/Folio
+      - name: Capture B, release binary (inspect fuse off), launch and five minutes idle, loopback-only namespace
+        run: |
+          sudo env "PATH=$PATH" "HOME=$HOME" ./scripts/capture.sh noroute capture/release-idle-noroute \
+            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" out/Folio-linux-x64/Folio --no-sandbox --data-dir="$GITHUB_WORKSPACE/fixtures" || true
+      - name: Analyse
+        run: |
+          sudo chown -R "$USER" capture
+          node scripts/analyze-capture.mjs capture/driven-sink
+          node scripts/analyze-capture.mjs capture/release-idle-noroute
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: capture-linux
+          path: |
+            electron/capture/*/interfaces.txt
+            electron/capture/*/routes.txt
+            electron/capture/*/capture.pcap
+          if-no-files-found: warn

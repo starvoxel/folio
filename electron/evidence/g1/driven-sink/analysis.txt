@@ -1,0 +1,2 @@
+packets captured: 918; non-loopback packets: 0
+non-loopback connect/send syscalls in strace: 0

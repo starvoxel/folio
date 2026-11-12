@@ -1,0 +1,24 @@
+- grid "Transactions":
+  - row "Date Description Account Category Amount":
+    - columnheader "Date":
+      - button "Date"
+    - columnheader "Description":
+      - button "Description"
+    - columnheader "Account":
+      - button "Account"
+    - columnheader "Category":
+      - button "Category"
+    - columnheader "Amount":
+      - button "Amount"
+  - 'row "2026-01-01 Aeroflot Аэрофлот #4389 Travel Mastercard Flights and hotels -$135.41"':
+    - gridcell "2026-01-01"
+    - 'gridcell "Aeroflot Аэрофлот #4389"'
+    - gridcell "Travel Mastercard"
+    - gridcell "Flights and hotels"
+    - gridcell "-$135.41"
+  - row "2026-01-01 Air Canada Rewards Visa Flights and hotels -$480.98":
+    - gridcell "2026-01-01"
+    - gridcell "Air Canada"
+    - gridcell "Rewards Visa"
+    - gridcell "Flights and hotels"
+    - gridcell "-$480.98"

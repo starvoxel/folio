@@ -1,0 +1,42 @@
+{
+  "legendButtons": [
+    {
+      "role": "button",
+      "name": "Housing: $27,090, 31 percent. Show transactions",
+      "focusable": true
+    },
+    {
+      "role": "button",
+      "name": "Groceries: $16,900, 19 percent. Show transactions",
+      "focusable": true
+    },
+    {
+      "role": "button",
+      "name": "Shopping: $13,505, 15 percent. Show transactions",
+      "focusable": true
+    },
+    {
+      "role": "button",
+      "name": "Savings: $9,858, 11 percent. Show transactions",
+      "focusable": true
+    }
+  ],
+  "charts": [
+    {
+      "role": "image",
+      "name": "Donut chart of spending by main category. Use the legend list to open a category."
+    },
+    {
+      "role": "image",
+      "name": "Bar chart of money in and money out by month. Use the table below to open a month."
+    },
+    {
+      "role": "image",
+      "name": ""
+    },
+    {
+      "role": "SvgRoot",
+      "name": ""
+    }
+  ]
+}
