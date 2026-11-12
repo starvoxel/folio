@@ -21,7 +21,7 @@ export const config = {
   services: [['@wdio/tauri-service', { driverProvider: 'embedded' }]],
   framework: 'mocha',
   reporters: ['spec'],
-  mochaOpts: { ui: 'bdd', timeout: 120_000 },
+  mochaOpts: { ui: "bdd", timeout: 1_500_000 },
   logLevel: 'info',
   outputDir: path.join(here, '..', 'test-results', 'wdio-logs'),
 };

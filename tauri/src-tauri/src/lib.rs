@@ -68,6 +68,7 @@ fn open_csv_dialog() -> Result<Option<String>, String> {
 use extras::open_csv_dialog;
 
 pub fn run() {
+    #[allow(unused_mut)]
     let mut builder = tauri::Builder::default();
 
     #[cfg(feature = "automation")]

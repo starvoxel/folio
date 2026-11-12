@@ -1,0 +1,119 @@
+name: tauri-extras
+
+on:
+  push:
+    branches: [spike/slice-tauri]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-g1-pkg:
+    name: G1 capture, packaging and sandbox (ubuntu-24.04)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: tauri
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            tauri/package-lock.json
+            tauri/e2e/package-lock.json
+      - name: Prerequisites
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool rpm tcpdump strace iproute2 imagemagick gir1.2-webkit2-4.1 python3-gi fonts-noto-cjk fonts-noto-core
+          mkdir -p test-results
+      - run: |
+          npm ci
+          (cd e2e && npm ci)
+      - name: Build shipped bundles and the test binary
+        run: |
+          npm run build:ui
+          npx tauri build --bundles deb,rpm,appimage 2>&1 | tail -15
+          scripts/build-e2e.sh 2>&1 | tail -3
+      - name: WebKitGTK default settings (what wry leaves untouched)
+        run: xvfb-run -a python3 scripts/webkit-settings.py 2>&1 | grep -vi "warning\|critical" | tee test-results/webkit-settings-linux.txt
+      - name: Package install, launch, sandbox state
+        run: scripts/linux-pkg-check.sh test-results/linux-pkg
+      - name: Capture A, driven through every page then five minutes idle, outbound packets visible (sink route)
+        run: |
+          sudo env "PATH=$PATH" "HOME=$HOME" CAPTURE_IDLE_S=300 scripts/capture.sh sink capture/driven-sink scripts/capture-driven.sh 2>&1 | tail -30
+      - name: Capture B, shipped binary (no driver), launch and five minutes idle, loopback-only namespace
+        run: |
+          sudo env "PATH=$PATH" "HOME=$HOME" FOLIO_DATA_DIR="$GITHUB_WORKSPACE/fixtures" scripts/capture.sh noroute capture/release-idle-noroute \
+            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" src-tauri/target/release/folio || true
+      - name: Capture C, shipped binary, sink route, launch and five minutes idle
+        run: |
+          sudo env "PATH=$PATH" "HOME=$HOME" FOLIO_DATA_DIR="$GITHUB_WORKSPACE/fixtures" scripts/capture.sh sink capture/release-idle-sink \
+            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" src-tauri/target/release/folio || true
+      - name: Analyse
+        run: |
+          sudo chown -R "$USER" capture
+          for d in driven-sink release-idle-noroute release-idle-sink; do echo "=== $d"; node scripts/analyze-capture.mjs capture/$d || true; done | tee test-results/capture-analysis.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: extras-linux
+          path: |
+            tauri/test-results/**
+            !tauri/test-results/wdio-logs/**
+            tauri/capture/*/interfaces.txt
+            tauri/capture/*/routes.txt
+            tauri/capture/*/capture.txt
+            tauri/capture/*/strace.log
+          if-no-files-found: warn
+
+  a11y:
+    name: F3 platform accessibility tree (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-latest]
+    defaults:
+      run:
+        shell: bash
+        working-directory: tauri
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            tauri/package-lock.json
+            tauri/e2e/package-lock.json
+      - name: Linux prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool at-spi2-core python3-gi gir1.2-atspi-2.0 dbus-x11 fonts-noto-cjk fonts-noto-core
+      - run: |
+          npm ci
+          (cd e2e && npm ci)
+          mkdir -p test-results
+      - name: Build the test binary
+        run: scripts/build-e2e.sh 2>&1 | tail -3
+      - name: Dump the platform accessibility tree
+        run: |
+          cd e2e
+          if [ "$RUNNER_OS" = Linux ]; then
+            FOLIO_SPEC=./specs/a11y.e2e.ts dbus-run-session -- ../scripts/atspi-wrap.sh npx wdio run wdio.conf.ts 2>&1 | tail -40
+          else
+            FOLIO_SPEC=./specs/a11y.e2e.ts npx wdio run wdio.conf.ts 2>&1 | tail -40
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: a11y-${{ runner.os }}
+          path: tauri/test-results/a11y-platform/**
+          if-no-files-found: warn

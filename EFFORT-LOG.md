@@ -10,3 +10,4 @@ Times are UTC, 2026-11-12. Prompts or corrections from the user after the kickof
 - Second failure: `invoke` of a raw `Response` returns an ArrayBuffer, not a string. Fixed in the adapter.
 - Slice renders on Linux with no graphics workaround needed in this sandbox.
 - Mistake: committed tauri/e2e/node_modules (14.5k files, ~7 MB packed). Removed from the index in the next commit; history still contains it because a force-push was not allowed. A reviewer may squash.
+- CI run 1: bundling failed everywhere: tauri rejects bundle.category 'Office' (valid: e.g. Finance). Fixed.

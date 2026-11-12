@@ -63,7 +63,7 @@ jobs:
         run: |
           { find src-tauri/target/release/bundle -maxdepth 3 \( -name '*.deb' -o -name '*.rpm' -o -name '*.AppImage' -o -name '*.exe' -o -name '*.msi' -o -name '*.dmg' \) -exec ls -l {} \; ;
             ls -l src-tauri/target/release/folio src-tauri/target/release/folio.exe 2>/dev/null;
-            du -sk src-tauri/target/release/bundle/macos/Folio.app 2>/dev/null; } | tee test-results/sizes-${{ runner.os }}.txt
+            du -sk src-tauri/target/release/bundle/macos/Folio.app 2>/dev/null; true; } | tee test-results/sizes-${{ runner.os }}.txt
       - name: Build the test binary (embedded WebDriver, off unless FOLIO_AUTOMATION=1)
         run: |
           start=$(date +%s)
