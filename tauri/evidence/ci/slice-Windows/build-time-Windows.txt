@@ -1,2 +1,2 @@
 shipped build + bundles: 289 s
-e2e build: 285 s
+e2e build: 294 s

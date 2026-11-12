@@ -1,60 +1,60 @@
 {
   "platform": "win32",
-  "pid": 8792,
+  "pid": 5736,
   "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
   "sortMsWorstPerColumn": {
-    "date": 28.099999999976717,
-    "description": 28.69999999995343,
-    "account": 27.30000000004657,
-    "category": 28.100000000093132,
-    "amount": 28.30000000004657
+    "date": 73.80000000004657,
+    "description": 31.79999999993015,
+    "account": 27.099999999976717,
+    "category": 27.5,
+    "amount": 27.400000000023283
   },
   "passes": [
     {
-      "durationMs": 9385.7,
+      "durationMs": 9385.299999999952,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
       "worstFrameMs": 15.799999999999272
     },
     {
-      "durationMs": 9370.39999999998,
+      "durationMs": 9365.999999999978,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 15.700000000004366
+      "worstFrameMs": 15.799999999995634
     },
     {
-      "durationMs": 9371.9,
+      "durationMs": 9373.39999999995,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
       "worstFrameMs": 15.799999999995634
     }
   ],
-  "selectionMs": 9.699999999953434,
-  "soakWorstFrameMs": 15.800000000017462,
+  "selectionMs": 17.300000000046566,
+  "soakWorstFrameMs": 31.199999999982538,
   "points": {
     "P0": {
       "metric": "private working set (MB), total working set (MB)",
       "app": {
-        "primaryMB": 4,
-        "secondaryMB": 30.6,
+        "primaryMB": 4.2,
+        "secondaryMB": 30.7,
         "processes": 1
       },
       "all": {
-        "primaryMB": 89.2,
-        "secondaryMB": 331.4,
+        "primaryMB": 89.1,
+        "secondaryMB": 331.5,
         "processes": 7
       },
       "detail": [
-        "folio[8792]:4",
-        "msedgewebview2[8296]:26",
-        "msedgewebview2#1[6168]:2",
-        "msedgewebview2#2[5700]:11",
-        "msedgewebview2#3[8844]:6",
-        "msedgewebview2#4[7448]:3",
-        "msedgewebview2#5[8972]:38"
+        "folio[5736]:4",
+        "msedgewebview2[10100]:26",
+        "msedgewebview2#1[7472]:1",
+        "msedgewebview2#2[5936]:11",
+        "msedgewebview2#3[1504]:6",
+        "msedgewebview2#4[6900]:3",
+        "msedgewebview2#5[4224]:38"
       ],
       "webviewByCommandLine": 6,
       "descendantCount": 7,
@@ -63,23 +63,23 @@
     "P1": {
       "metric": "private working set (MB), total working set (MB)",
       "app": {
-        "primaryMB": 4.2,
-        "secondaryMB": 31.1,
+        "primaryMB": 4.3,
+        "secondaryMB": 31,
         "processes": 1
       },
       "all": {
-        "primaryMB": 95.7,
-        "secondaryMB": 353.2,
+        "primaryMB": 95.5,
+        "secondaryMB": 351.4,
         "processes": 7
       },
       "detail": [
-        "folio[8792]:4",
-        "msedgewebview2[8296]:27",
-        "msedgewebview2#1[6168]:2",
-        "msedgewebview2#2[5700]:9",
-        "msedgewebview2#3[8844]:6",
-        "msedgewebview2#4[7448]:3",
-        "msedgewebview2#5[8972]:45"
+        "folio[5736]:4",
+        "msedgewebview2[10100]:27",
+        "msedgewebview2#1[7472]:1",
+        "msedgewebview2#2[5936]:9",
+        "msedgewebview2#3[1504]:6",
+        "msedgewebview2#4[6900]:3",
+        "msedgewebview2#5[4224]:45"
       ],
       "webviewByCommandLine": 6,
       "descendantCount": 7,
@@ -88,23 +88,23 @@
     "P2": {
       "metric": "private working set (MB), total working set (MB)",
       "app": {
-        "primaryMB": 4.3,
+        "primaryMB": 4.4,
         "secondaryMB": 31.1,
         "processes": 1
       },
       "all": {
-        "primaryMB": 150.2,
-        "secondaryMB": 421.7,
+        "primaryMB": 153.4,
+        "secondaryMB": 424.9,
         "processes": 7
       },
       "detail": [
-        "folio[8792]:4",
-        "msedgewebview2[8296]:27",
-        "msedgewebview2#1[6168]:2",
-        "msedgewebview2#2[5700]:9",
-        "msedgewebview2#3[8844]:6",
-        "msedgewebview2#4[7448]:3",
-        "msedgewebview2#5[8972]:99"
+        "folio[5736]:4",
+        "msedgewebview2[10100]:27",
+        "msedgewebview2#1[7472]:2",
+        "msedgewebview2#2[5936]:9",
+        "msedgewebview2#3[1504]:6",
+        "msedgewebview2#4[6900]:3",
+        "msedgewebview2#5[4224]:102"
       ],
       "webviewByCommandLine": 6,
       "descendantCount": 7,
@@ -113,23 +113,23 @@
     "P3": {
       "metric": "private working set (MB), total working set (MB)",
       "app": {
-        "primaryMB": 4.3,
+        "primaryMB": 4.4,
         "secondaryMB": 31.1,
         "processes": 1
       },
       "all": {
-        "primaryMB": 151,
-        "secondaryMB": 423.1,
+        "primaryMB": 155.1,
+        "secondaryMB": 427.2,
         "processes": 7
       },
       "detail": [
-        "folio[8792]:4",
-        "msedgewebview2[8296]:27",
-        "msedgewebview2#1[6168]:2",
-        "msedgewebview2#2[5700]:9",
-        "msedgewebview2#3[8844]:6",
-        "msedgewebview2#4[7448]:3",
-        "msedgewebview2#5[8972]:100"
+        "folio[5736]:4",
+        "msedgewebview2[10100]:27",
+        "msedgewebview2#1[7472]:2",
+        "msedgewebview2#2[5936]:9",
+        "msedgewebview2#3[1504]:6",
+        "msedgewebview2#4[6900]:3",
+        "msedgewebview2#5[4224]:104"
       ],
       "webviewByCommandLine": 6,
       "descendantCount": 7,
@@ -139,22 +139,22 @@
       "metric": "private working set (MB), total working set (MB)",
       "app": {
         "primaryMB": 4.1,
-        "secondaryMB": 30.4,
+        "secondaryMB": 30.1,
         "processes": 1
       },
       "all": {
-        "primaryMB": 102.2,
-        "secondaryMB": 370,
+        "primaryMB": 99.9,
+        "secondaryMB": 368,
         "processes": 7
       },
       "detail": [
-        "folio[8792]:4",
-        "msedgewebview2[8296]:25",
-        "msedgewebview2#1[6168]:2",
-        "msedgewebview2#2[5700]:9",
-        "msedgewebview2#3[8844]:6",
-        "msedgewebview2#4[7448]:3",
-        "msedgewebview2#5[8972]:53"
+        "folio[5736]:4",
+        "msedgewebview2[10100]:25",
+        "msedgewebview2#1[7472]:2",
+        "msedgewebview2#2[5936]:9",
+        "msedgewebview2#3[1504]:6",
+        "msedgewebview2#4[6900]:3",
+        "msedgewebview2#5[4224]:52"
       ],
       "webviewByCommandLine": 6,
       "descendantCount": 7,
@@ -168,18 +168,18 @@
         "processes": 1
       },
       "all": {
-        "primaryMB": 82.4,
-        "secondaryMB": 213.1,
+        "primaryMB": 83.6,
+        "secondaryMB": 213.8,
         "processes": 7
       },
       "detail": [
-        "folio[8792]:3",
-        "msedgewebview2[8296]:13",
-        "msedgewebview2#1[6168]:2",
-        "msedgewebview2#2[5700]:5",
-        "msedgewebview2#3[8844]:3",
-        "msedgewebview2#4[7448]:2",
-        "msedgewebview2#5[8972]:54"
+        "folio[5736]:3",
+        "msedgewebview2[10100]:13",
+        "msedgewebview2#1[7472]:2",
+        "msedgewebview2#2[5936]:5",
+        "msedgewebview2#3[1504]:3",
+        "msedgewebview2#4[6900]:2",
+        "msedgewebview2#5[4224]:56"
       ],
       "webviewByCommandLine": 6,
       "descendantCount": 7,
