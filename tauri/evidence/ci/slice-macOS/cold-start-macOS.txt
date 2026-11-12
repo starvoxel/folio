@@ -1,1 +1,1 @@
-{"metric":"ms from spawn to first web view process present","samples":[556,324,260,284,331]}
+{"metric":"ms from spawn to first web view process present","samples":[602,385,702,814,1009]}

@@ -1,60 +1,60 @@
 {
   "platform": "darwin",
-  "pid": 12791,
+  "pid": 21277,
   "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)",
   "sortMsWorstPerColumn": {
-    "date": 59,
-    "description": 34,
-    "account": 32,
-    "category": 32,
-    "amount": 32
+    "date": 91,
+    "description": 42,
+    "account": 30,
+    "category": 29,
+    "amount": 26
   },
   "passes": [
     {
-      "durationMs": 11147,
-      "frames": 601,
-      "framesOver100ms": 4,
-      "longTasks": 0,
-      "worstFrameMs": 285
-    },
-    {
-      "durationMs": 10196,
+      "durationMs": 10317,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 63
+      "worstFrameMs": 79
     },
     {
-      "durationMs": 10538,
+      "durationMs": 10223,
       "frames": 601,
-      "framesOver100ms": 3,
+      "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 179
+      "worstFrameMs": 57
+    },
+    {
+      "durationMs": 10085,
+      "frames": 601,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 51
     }
   ],
-  "selectionMs": 67,
-  "soakWorstFrameMs": 32,
+  "selectionMs": 142,
+  "soakWorstFrameMs": 74,
   "points": {
     "P0": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
         "primaryMB": 28,
-        "secondaryMB": 100.5,
+        "secondaryMB": 101.4,
         "processes": 1
       },
       "all": {
-        "primaryMB": 89.4,
-        "secondaryMB": 227.8,
+        "primaryMB": 88.6,
+        "secondaryMB": 228.4,
         "processes": 3
       },
       "detail": [
-        "folio[12791]:28",
-        "com.apple.WebKit.Networking[12793]:5",
-        "com.apple.WebKit.WebContent[12794]:56"
+        "folio[21277]:28",
+        "com.apple.WebKit.Networking[21367]:6",
+        "com.apple.WebKit.WebContent[21370]:55"
       ],
       "webkitHelpersNotDescendants": [
-        12793,
-        12794
+        21367,
+        21370
       ],
       "baselineCount": 0
     },
@@ -62,114 +62,114 @@
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
         "primaryMB": 28,
-        "secondaryMB": 100.6,
+        "secondaryMB": 101.5,
         "processes": 1
       },
       "all": {
-        "primaryMB": 94.3,
-        "secondaryMB": 236.8,
+        "primaryMB": 95.5,
+        "secondaryMB": 237.4,
         "processes": 3
       },
       "detail": [
-        "folio[12791]:28",
-        "com.apple.WebKit.Networking[12793]:5",
-        "com.apple.WebKit.WebContent[12794]:61"
+        "folio[21277]:28",
+        "com.apple.WebKit.Networking[21367]:5",
+        "com.apple.WebKit.WebContent[21370]:62"
       ],
       "webkitHelpersNotDescendants": [
-        12793,
-        12794
+        21367,
+        21370
       ],
       "baselineCount": 0
     },
     "P2": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 33,
-        "secondaryMB": 105,
+        "primaryMB": 31,
+        "secondaryMB": 104.9,
         "processes": 1
       },
       "all": {
-        "primaryMB": 507.3,
-        "secondaryMB": 452.7,
+        "primaryMB": 497.5,
+        "secondaryMB": 467.2,
         "processes": 3
       },
       "detail": [
-        "folio[12791]:33",
-        "com.apple.WebKit.Networking[12793]:5",
-        "com.apple.WebKit.WebContent[12794]:469"
+        "folio[21277]:31",
+        "com.apple.WebKit.Networking[21367]:5",
+        "com.apple.WebKit.WebContent[21370]:461"
       ],
       "webkitHelpersNotDescendants": [
-        12793,
-        12794
+        21367,
+        21370
       ],
       "baselineCount": 0
     },
     "P3": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 33,
-        "secondaryMB": 105.1,
+        "primaryMB": 32,
+        "secondaryMB": 105,
         "processes": 1
       },
       "all": {
-        "primaryMB": 560.3,
-        "secondaryMB": 495.9,
+        "primaryMB": 637.5,
+        "secondaryMB": 471.6,
         "processes": 3
       },
       "detail": [
-        "folio[12791]:33",
-        "com.apple.WebKit.Networking[12793]:5",
-        "com.apple.WebKit.WebContent[12794]:522"
+        "folio[21277]:32",
+        "com.apple.WebKit.Networking[21367]:5",
+        "com.apple.WebKit.WebContent[21370]:600"
       ],
       "webkitHelpersNotDescendants": [
-        12793,
-        12794
+        21367,
+        21370
       ],
       "baselineCount": 0
     },
     "P4": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 30,
-        "secondaryMB": 102.5,
+        "primaryMB": 31,
+        "secondaryMB": 102.8,
         "processes": 1
       },
       "all": {
-        "primaryMB": 557.2,
-        "secondaryMB": 505.3,
+        "primaryMB": 651.5,
+        "secondaryMB": 473.4,
         "processes": 3
       },
       "detail": [
-        "folio[12791]:30",
-        "com.apple.WebKit.Networking[12793]:5",
-        "com.apple.WebKit.WebContent[12794]:522"
+        "folio[21277]:31",
+        "com.apple.WebKit.Networking[21367]:5",
+        "com.apple.WebKit.WebContent[21370]:615"
       ],
       "webkitHelpersNotDescendants": [
-        12793,
-        12794
+        21367,
+        21370
       ],
       "baselineCount": 0
     },
     "P5": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 27,
-        "secondaryMB": 97.6,
+        "primaryMB": 26,
+        "secondaryMB": 97.4,
         "processes": 1
       },
       "all": {
-        "primaryMB": 535.9,
-        "secondaryMB": 494.7,
+        "primaryMB": 545.9,
+        "secondaryMB": 462.6,
         "processes": 3
       },
       "detail": [
-        "folio[12791]:27",
-        "com.apple.WebKit.Networking[12793]:6",
-        "com.apple.WebKit.WebContent[12794]:503"
+        "folio[21277]:26",
+        "com.apple.WebKit.Networking[21367]:6",
+        "com.apple.WebKit.WebContent[21370]:514"
       ],
       "webkitHelpersNotDescendants": [
-        12793,
-        12794
+        21367,
+        21370
       ],
       "baselineCount": 0
     }

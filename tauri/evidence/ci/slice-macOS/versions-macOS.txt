@@ -1,7 +1,7 @@
 rustc 1.99.1 (58cf8f9c3 2026-10-13)
 cargo 1.99.1 (5f94df478 2026-08-27)
 v22.23.4
-Darwin sjc20-bb660-724d7728-d109-478e-887a-edba4b9831ad-72B7E5EF34E6.local 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:39:04 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_VMAPPLE arm64
+Darwin sat12-dp147-9552fc66-5a44-490e-8898-d274b9332b85-FE8F2824B430.local 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:39:04 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_VMAPPLE arm64
 ProductName:		macOS
 ProductVersion:		26.7.2
 BuildVersion:		25G332
