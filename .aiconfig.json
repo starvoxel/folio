@@ -3,7 +3,7 @@
   "project_shortname": "FOL",
   "standards": {
     "engineering": [
-      "csharp", "avalonia"
+      "javascript", "node"
     ],
     "all": []
   },

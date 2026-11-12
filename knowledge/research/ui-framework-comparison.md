@@ -2,7 +2,7 @@
 
 - _Date:_ 2026-11-11
 - _Requested by:_ Jeremy, while planning the regression suite
-- _Status:_ Exploration only. No decision, plan or implementation follows from this, and nothing here is approved. AD-13 to AD-16 and the stack spike stay as they are until a decision says otherwise.
+- _Status:_ Research behind the stack decision. Jeremy chose Electron with TypeScript on 2026-11-12 (AD-17); this brief records the options considered and the evidence, and is kept as history. Sections 1 to 8 predate the spike measurements and the decision.
 - _Question:_ Is Avalonia the right platform for Folio? How does it compare with other cross-platform C# frameworks and with non-C# options, judged on what the PRD and the HTML prototype need and not on the current stack?
 
 Evidence labels: _vendor claim_ means a framework's own documentation says so and I found no independent test. _Single source_ means one secondary blog or article. _UNVERIFIED_ means needs checking before anyone relies on it. All searches ran on 2026-11-11 and several results were third-party mirrors or undated, so versions and dates in them are leads, not facts. Nothing here was built or run.

@@ -1,6 +1,6 @@
 # Design notes: Folio
 
-Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/Month-End_Financial_Review-v1.html) (v1, updated from the PRD; earlier draft of 2026-11-03 replaced). It is a reference for look and behavior, not code to port: the implementation is Avalonia with FluentAvalonia controls and its theme resources, so use the theme's resource keys instead of copying hex values or CSS. Requirements stay in [month-end-review.md](month-end-review.md); where this prototype differs from them, see [Differences from the PRD](#differences-from-the-prd).
+Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/Month-End_Financial_Review-v1.html) (v1, updated from the PRD; earlier draft of 2026-11-03 replaced). It is a reference for look and behavior, not code to port: the implementation is React with Fluent UI React v9 and its theme tokens, so use the tokens instead of copying hex values or CSS where the two differ. Requirements stay in [month-end-review.md](month-end-review.md); where this prototype differs from them, see [Differences from the PRD](#differences-from-the-prd).
 
 ## Boards
 
@@ -13,33 +13,33 @@ Sample data is a file named "Household 2026.budget"; the new-file dialog default
 
 ## Visual foundations
 
-The prototype uses FluentAvalonia's own v2 resources: colours from `Fluentv2Colors.axaml` in [amwx/FluentAvalonia](https://github.com/amwx/FluentAvalonia), structural values from its Resources docs page, and its icon font. The accent is fixed "Windows blue" rather than the OS accent.
+The prototype uses Fluent 2 colours and structural values and the Fluent icon font, with a fixed "Windows blue" accent rather than the OS accent. The app uses Fluent UI React v9's `webLightTheme` and `webDarkTheme` with the brand ramp set around that accent. Where v9's neutral surfaces differ slightly from the prototype's greys (the page and navigation fills, measured in the stack-selection slice), the v9 theme wins unless a design review says otherwise.
 
-| Aspect          | Value                                                                                                                                                |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Accent          | #0078D4; hover #106EBE (dark #2B88D8); pressed #005A9E; light fill #DEECF9 (dark #004275)                                                            |
-| Page background | Base solid fill #F3F3F3 light, #202020 dark; cards are translucent white (light) or white at ~5% (dark) with a 1px card stroke                       |
-| Text            | Primary / secondary / tertiary / disabled as the Fluent text-fill ramp (black at ~89%, 62%, 45%, 36% in light; white at 100%, 77%, 53%, 36% in dark) |
-| Status colours  | Success #0F7B0F on #DFF6DD; caution #9D5D00 on #FFF4CE; critical #C42B1C on #FDE7E9 (dark: #6CCB5F, #FCE100, #FF99A4 on dark tints)                  |
-| Font            | Inter 400/500/600/700 in the prototype; Avalonia build should follow the project font decision (Inter or the platform default)                       |
-| Type scale      | Caption 12/16, body 14/20, body-strong 600, subtitle 20, title 28, title-large 40                                                                    |
-| Shape           | Control radius 4, overlay radius 8, pill 999                                                                                                         |
-| Spacing         | 4 / 8 / 12 / 16 / 24 / 32                                                                                                                            |
-| Controls        | Min height 32, button padding 11,5,11,6; flyout padding 16                                                                                           |
-| Icons           | Fluent icon font (FluentAvalonia's icon set)                                                                                                         |
-| Elevation       | Cards 0 1 2 at 6%; flyouts 0 8 16 at 14%                                                                                                             |
-| Themes          | Light, dark; Settings offers light / dark / system (H1.9)                                                                                            |
+| Aspect          | Value                                                                                                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accent          | #0078D4; hover #106EBE (dark #2B88D8); pressed #005A9E; light fill #DEECF9 (dark #004275)                                                                                           |
+| Page background | Base solid fill #F3F3F3 light, #202020 dark; cards are translucent white (light) or white at ~5% (dark) with a 1px card stroke                                                      |
+| Text            | Primary / secondary / tertiary / disabled as the Fluent text-fill ramp (black at ~89%, 62%, 45%, 36% in light; white at 100%, 77%, 53%, 36% in dark)                                |
+| Status colours  | Success #0F7B0F on #DFF6DD; caution #9D5D00 on #FFF4CE; critical #C42B1C on #FDE7E9 (dark: #6CCB5F, #FCE100, #FF99A4 on dark tints)                                                 |
+| Font            | Inter 400/500/600/700 in the prototype; the app follows the project font decision (Inter, or the system UI font; a bundled font also makes screenshots more stable across machines) |
+| Type scale      | Caption 12/16, body 14/20, body-strong 600, subtitle 20, title 28, title-large 40                                                                                                   |
+| Shape           | Control radius 4, overlay radius 8, pill 999                                                                                                                                        |
+| Spacing         | 4 / 8 / 12 / 16 / 24 / 32                                                                                                                                                           |
+| Controls        | Min height 32, button padding 11,5,11,6; flyout padding 16                                                                                                                          |
+| Icons           | Fluent System Icons (`@fluentui/react-icons`)                                                                                                                                       |
+| Elevation       | Cards 0 1 2 at 6%; flyouts 0 8 16 at 14%                                                                                                                                            |
+| Themes          | Light, dark; Settings offers light / dark / system (H1.9)                                                                                                                           |
 
-Implementation rule: map each token to the matching FluentAvalonia theme resource (for example text-primary → `TextFillColorPrimaryBrush`, card-bg → `CardBackgroundFillColorDefaultBrush`, solid-bg-base → `SolidBackgroundFillColorBaseBrush`, divider → `DividerStrokeColorDefaultBrush`) and verify the exact keys against the pinned FluentAvalonia version when building. Because the tokens are FluentAvalonia's own, the Avalonia app inherits them from the theme; define project resources only where the prototype adds its own (the status backgrounds).
+Implementation rule: take colours, text, radius and spacing from Fluent UI tokens (for example text-primary → `tokens.colorNeutralForeground1`, card-bg → `tokens.colorNeutralBackground1` with a `tokens.colorNeutralStroke2` border, divider → `tokens.colorNeutralStroke2`), verify the exact token names against the pinned `@fluentui/react-components` version when building, and define app tokens only where the prototype adds its own (the status backgrounds). Charts read their colours from the same tokens and redraw on theme change.
 
 ## Shell
 
-- Left `NavigationView` headed "Folio", filling the window height. The prototype predates the product name and still shows "Month-End Review" and "Month-End Spending Review"; the app uses "Folio".
+- Left navigation pane headed "Folio", filling the window height. The prototype predates the product name and still shows "Month-End Review" and "Month-End Spending Review"; the app uses "Folio".
 - Items in order: Overview, Transactions, Reporting, Net worth, Accounts, Rules & categories (Review is not a nav item, per H1.4). Settings is the footer item.
 - Top bar: file name and "Saved automatically" with a "sample data" tag, Undo, Redo, Import CSV, and the month picker (ComboBox of months).
 - Content max width about 1240, 20px vertical rhythm between sections, cards in auto-fit grids (210 and 440 minimum column widths).
 - Close is a page reached from Overview or Review, not a nav item; Overview stays selected while it is open.
-- Messages are full-width banners (InfoBar), not fixed-width popups, and confirm actions, for example "<Month> is closed and locked".
+- Messages are full-width banners (a message bar), not fixed-width popups, and confirm actions, for example "<Month> is closed and locked".
 
 ## Screens
 
@@ -58,23 +58,23 @@ Implementation rule: map each token to the matching FluentAvalonia theme resourc
 | Settings           | Provider profiles (columns, date format, money-out direction); transfer matching window; theme (Light, Dark, System); online category suggestions toggle shown as planned and off                                                                                                                                                                                                                                                                                                                                                |
 | Import dialog      | Drop zone plus Browse and recent downloads; provider detected from headers; column-mapping summary; preview table (date, description, amount, suggested category, status, Keep for duplicates); warning that locked-month rows are skipped and the account's new covered-through date; Back and Import                                                                                                                                                                                                                           |
 
-## FluentAvalonia component mapping
+## Fluent UI component mapping
 
-FluentAvalonia 3.x (pinned 3.1.0) prefixes its own controls with `FA` (`FANavigationView`, `FAContentDialog`, `FAInfoBar`, `FAComboBox`), so older samples will not compile as written. Screens never use these types directly: they go through the app's wrappers under `src/Folio.Desktop/UI/Fluent/` ([AD-15](../architecture/09_architecture_decisions.md#ad-15-fluentavalonia-is-isolated-behind-app-wrappers)). The Charts row below is decided by AD-13: custom-drawn controls behind chart view-models.
+Fluent UI React v9 supplies the components. Screens do not import Fluent directly: they use the app's own components, which wrap it ([AD-15](../architecture/09_architecture_decisions.md#ad-15-the-design-system-is-fluent-ui-react-v9-behind-app-components)). Charts are decided by AD-13: ECharts behind chart models. Tables are TanStack Virtual with Fluent table markup.
 
-| Prototype                                                       | Avalonia / FluentAvalonia                                                                                          |
-| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| NavigationView                                                  | `NavigationView` with menu and footer items                                                                        |
-| Button (standard, accent)                                       | `Button`, `Classes="accent"` for the primary action                                                                |
-| ComboBox (month, filters, provider)                             | `ComboBox`                                                                                                         |
-| TextBox (search, notes, forms)                                  | `TextBox`                                                                                                          |
-| ToggleSwitch (Full pass, month-end analysis, auto-open)         | `ToggleSwitch`                                                                                                     |
-| ToggleButton (tabs and segment choices)                         | `ToggleButton` or `TabStrip`/`TabView` where it is a real tab                                                      |
-| InfoBar (status banners, toasts, warnings)                      | `InfoBar`                                                                                                          |
-| Dialogs (new file, import, reopen confirmation)                 | `ContentDialog`                                                                                                    |
-| Cards, tiles                                                    | `Border` with card resources                                                                                       |
-| Tables                                                          | `DataGrid` (Transactions, Accounts, close balances, import preview)                                                |
-| Charts (donuts, money in vs out, category bars, net worth bars) | Not a stock control; library choice (for example a charting package vs custom drawing) is an architecture decision |
+| Prototype                                                       | Fluent UI React v9                                                                                   |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| NavigationView                                                  | `NavDrawer` with nav items and a footer item                                                         |
+| Button (standard, accent)                                       | `Button`, `appearance="primary"` for the primary action                                              |
+| ComboBox (month, filters, provider)                             | `Dropdown`, or `Combobox` where typing helps                                                         |
+| TextBox (search, notes, forms)                                  | `Input`, `Textarea`                                                                                  |
+| ToggleSwitch (Full pass, month-end analysis, auto-open)         | `Switch`                                                                                             |
+| ToggleButton (tabs and segment choices)                         | `ToggleButton`, or `TabList` where it is a real tab                                                  |
+| InfoBar (status banners, toasts, warnings)                      | `MessageBar`                                                                                         |
+| Dialogs (new file, import, reopen confirmation)                 | `Dialog`                                                                                             |
+| Cards, tiles                                                    | `Card`, or a container styled with card tokens                                                       |
+| Tables                                                          | Fluent `Table` markup with TanStack Virtual (Transactions, Accounts, close balances, import preview) |
+| Charts (donuts, money in vs out, category bars, net worth bars) | ECharts behind chart models (AD-13)                                                                  |
 
 ## Differences from the PRD
 

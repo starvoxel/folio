@@ -3,8 +3,7 @@ section: '04'
 title: 'Solution Strategy'
 lifecycle: draft
 tags: [strategy]
-key_files:
-  - Folio.slnx
+key_files: []
 ---
 
 > The handful of ideas the rest of the design follows from. Each links to its decision in [09_architecture_decisions.md](09_architecture_decisions.md).
@@ -17,36 +16,47 @@ key_files:
 
 3. _One classification entry point decides how every line counts, and its output is frozen at close._ The classifier asks the owning areas in a fixed order whether each transaction line is income, spending, savings, a neutral transfer, or excluded (AD-3, AD-6). Open months are classified live. Closing a month stores the results, and reports on locked months read the stored data, so those months cannot drift, even when the app's own code changes.
 
-4. _The domain knows nothing about the UI._ `Folio.Core` holds the model, classifier, rules, matching, commands, undo and file format, and is tested without a UI. `Folio.Desktop` is thin MVVM over it (AD-14). Tests enforce the boundary.
+4. _The domain knows nothing about the UI or the host._ The `core` package holds the model, classifier, rules, matching, commands, undo and file format. It is plain TypeScript with no Node, DOM or Electron imports, so it runs unchanged in the desktop app, in a Node command-line tool, and in a browser (AD-14, AD-19). Tests enforce the boundary.
 
-5. _The UI stack is isolated._ FluentAvalonia is used only under `UI/Fluent/`, screens use WinUI token keys only, and charts are custom-drawn behind view-models (AD-13, AD-15). This contains the risk of single-maintainer and deprecated dependencies.
+5. _The platform is one interface._ The renderer reaches the operating system only through a `HostApi` (dialogs, file reads and atomic writes, locks, backups, menus, drops). Electron implements it for the desktop, a mock implements it for tests, and a browser implementation can serve a read-only web build later. A server-backed store would be another `FileStore` behind the same door (AD-19).
 
-6. _The running app is drivable by machine._ An opt-in loopback automation server exposes the same commands, queries and view-model actions the UI uses, with a `folio` CLI and a headless mode for CI and agents (AD-16).
+6. _The running app and the core are drivable by machine._ Playwright drives the exact release binary through a debugging pipe, and a Node command-line tool runs the core without a window, so agents and CI can test both without clicking pixels or opening a network port (AD-16).
+
+7. _Privacy is checked, not assumed._ The renderer is sandboxed with no remote content, Electron's phone-home paths are switched off, and a CI capture verifies that nothing leaves the machine on every Electron update (AD-18).
 
 ## Solution structure
 
 ```
-Folio.slnx
-├── src/
-│   ├── Folio.Core             domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
-│   ├── Folio.Desktop          Avalonia + FluentAvalonia views and view-models; thin platform adapters
-│   │   └── UI/Fluent/         the only place FluentAvalonia types appear
-│   ├── Folio.Automation       (planned) loopback HTTP server exposing commands, queries and UI actions
-│   └── Folio.Cli              (planned) `folio` command-line client
-└── tests/                     one folder and one solution file per kind of test (AD-14)
-    ├── Unit/                  Folio.Core.UnitTests: in-memory, one process; the bulk of the tests
-    ├── Integration/           Folio.Desktop.IntegrationTests: real disk, headless app, loopback
-    └── Architecture/          Folio.ArchitectureTests: structural rules of the codebase
+folio/
+├── packages/
+│   ├── core                   domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
+│   ├── host-api               the HostApi and FileStore interfaces, plus an in-memory mock
+│   ├── renderer               React app: screens, chart models, app components
+│   │   └── src/ui/fluent/     the only place Fluent UI types appear
+│   └── cli                    Node command-line tool over the core, for agents and scripts
+├── apps/
+│   ├── desktop                Electron main process, preload bridge, hardening, packaging
+│   └── web                    (later) read-only browser host for the same renderer
+└── tests/
+    ├── integration/           real disk, a real browser engine for the renderer, loopback
+    ├── architecture/          structural rules of the codebase
+    └── e2e/                   Playwright against the packaged app
 ```
+
+Unit tests sit next to the code they test as `*.test.ts`. The scaffold plan ([app-scaffold.md](../../plans/app-scaffold.md)) fixes the exact package names and tooling.
 
 ## Technology choices at a glance
 
-| Concern                  | Choice                                                                                                                                          | Decision     |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| File format              | Zip of JSON and JSONL parts with a manifest and checksums, System.Text.Json source generation                                                   | AD-2         |
-| Money                    | `Money` value type over `long` cents with checked arithmetic                                                                                    | AD-7         |
-| MVVM                     | CommunityToolkit.Mvvm; DynamicData only for live-filtered collections                                                                           | AD-14        |
-| Theme and shell controls | FluentAvalonia 3.1, isolated behind app wrappers                                                                                                | AD-15        |
-| Tables                   | DataGrid where sorting or editing is needed; TableView for small read-only tables                                                               | AD-15, risks |
-| Charts                   | Custom-drawn controls behind chart view-models                                                                                                  | AD-13        |
-| Testing                  | xUnit v3 in three separately runnable kinds (unit, integration, architecture); Avalonia.Headless.XUnit; the automation CLI for end-to-end later | AD-14, AD-16 |
+| Concern       | Choice                                                                                                         | Decision     |
+| ------------- | -------------------------------------------------------------------------------------------------------------- | ------------ |
+| Stack         | Electron with React and TypeScript; Windows and macOS first; web later                                         | AD-17        |
+| File format   | Zip of JSON and JSONL parts with a manifest and checksums; fflate; schema validation at the boundary           | AD-2         |
+| Money         | Integer cents in a branded type, with checked arithmetic that throws instead of losing precision               | AD-7         |
+| UI state      | A core store read through `useSyncExternalStore`; components stay thin                                         | AD-14        |
+| Design system | Fluent UI React v9, behind app components                                                                      | AD-15        |
+| Tables        | TanStack Virtual with Fluent table markup                                                                      | AD-15        |
+| Charts        | ECharts behind chart models                                                                                    | AD-13        |
+| Host boundary | `HostApi` and `FileStore`; Electron, mock and (later) browser implementations                                  | AD-19        |
+| Testing       | Vitest (unit, integration), fast-check, dependency-cruiser (architecture), Playwright (end-to-end), a core CLI | AD-14, AD-16 |
+| Privacy       | Hardened renderer, fuses, deny-all requests, a CI network capture on every Electron update                     | AD-18        |
+| Packaging     | Windows installer and macOS disk image, unsigned for the household; no auto-update                             | AD-20        |

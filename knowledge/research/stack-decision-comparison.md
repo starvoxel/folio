@@ -2,7 +2,7 @@
 
 - _Date:_ 2026-11-12
 - _Requested by:_ Jeremy, after the selection slices and follow-ups
-- _Status:_ Recommendation for Jeremy's decision. Nothing here is approved, and no architecture decision, plan or constraint has been changed.
+- _Status:_ The recommendation was accepted: Jeremy chose Electron with TypeScript on 2026-11-12, and the decision is recorded as AD-17. This brief is kept as the evidence and the conditions attached to the choice.
 - _Sources:_ the measured results on the spike branches (`spike/slice-avalonia`, `spike/slice-electron`, `spike/slice-tauri`) and the research briefs ([framework brief](ui-framework-comparison.md), the Teams-for-Linux and Tauri research summarized in section 9 of that brief and below).
 
 Evidence labels: _measured_ means a spike session ran it on GitHub-hosted runners and the CI run was green (I checked the run conclusions, not the artifacts). _Agent-read_ means a research agent reported it from a primary source and I did not re-open it. _Inferred_ is my judgement. Everything measured was on runners with no GPU, a software renderer and, on macOS, a small VM display, so absolute numbers on real machines will differ.

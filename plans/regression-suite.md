@@ -6,96 +6,88 @@
 | Approved by |            |
 | Created     | 2026-11-11 |
 
-> Blocked on the stack decision in [stack-selection-spike.md](stack-selection-spike.md). The driver, runners and baselines below assume Avalonia and the AD-16 automation server; they change if Electron with TypeScript is chosen.
-
 ## Goal
 
-A small, fast regression suite that runs the real Folio app and checks it still works. Its first job is to tell us whether a Dependabot update (Avalonia, FluentAvalonia, DataGrid, .NET packages, GitHub Actions) broke the app. Its longer-term job is UI regression testing, with the same automation CLI used for precise manipulation and UI analysis. It must be free, run on GitHub, and make new scenarios cheap to add.
+A small, fast regression suite that runs the real Folio app and checks it still works. Its first job is to tell us whether a Dependabot update (Electron, React, Fluent UI, ECharts, TanStack, Playwright, GitHub Actions) broke the app or changed what it does on the network. Its longer-term job is UI regression testing with the same tools agents use to inspect the app. It must be free, run on GitHub, and make new scenarios cheap to add.
 
-## Decisions so far (Jeremy, 2026-11-11)
+## Decisions so far
 
-- Purpose: dependency-bump breakage first, UI regressions later.
-- Driver: the AD-16 automation server and `folio` CLI, against the real app with a real window (not `--headless`), so the suite sees actual rendering. The suite waits for AD-16 (stack spike milestone 5); no interim Avalonia.Headless suite is built.
-- Images: pixel comparison for proper regression. Baselines are Linux-only, on a pinned runner image. Other OSes run the same scenarios and save screenshots as artifacts, with no pixel failure.
-- Cadence: every PR on Linux; all three OSes nightly and on demand.
-- Repository is public, so hosted runners are free on all three OSes.
-- First scenarios: launch and main window; open or create a `.folio` file; import a provider CSV; dialogs and focus (FluentAvalonia #766).
+- Purpose: dependency-update breakage first, UI regressions later.
+- Driver: Playwright, attached to the packaged release binary through Chromium's debugging pipe, with the `window.__folio` state hook and the debugging guard of [AD-16](../knowledge/architecture/09_architecture_decisions.md#ad-16-testing-and-drivability-without-a-network-port). Domain-level scenarios run through the core CLI with no window.
+- Images: pixel comparison against baselines kept per operating system, because fonts and rendering differ by OS. Electron pins Chromium, so baselines move only when Electron is updated.
+- Platforms: Windows and macOS runners run the end-to-end suite; Linux runners run the fast kinds (lint, type check, architecture, unit, integration). Linux is not a v1 platform.
+- Cadence: a short smoke subset on every pull request, the full suite nightly and on demand.
+- The repository is public, so hosted runners are free on all three OSes.
+- First scenarios: launch and main window; open or create a `.folio` file; import a provider CSV; dialogs and focus.
 
 ## Scope
 
-- In: scenario project, CLI-driven test harness, screenshot comparison, CI workflows, a baseline-update workflow, Dependabot integration.
-- Out: performance and stress testing (separate initiative, see [the research brief](../knowledge/research/performance-and-e2e-testing.md)); real OS-level input automation (Appium, FlaUI), unless a later decision adds a few tests; visual testing on Windows and macOS.
+- In: the end-to-end suite, per-OS screenshot comparison, a baseline-update workflow, CI workflows, Dependabot gating, and the rule that every Electron update runs the privacy capture (AD-18).
+- Out: performance and stress testing (a separate initiative, see [the research brief](../knowledge/research/performance-and-e2e-testing.md)); OS-level accessibility drivers; Linux and web suites (later).
 
 ## Approach
 
 ### Harness
 
-- Scenarios are xUnit v3 tests in a new project outside the default `Folio.slnx` run (for example `tests/E2E/` with its own `E2E.slnx`). The `TestLayoutTests` architecture rule gets a fourth allowed kind, so this is an AD-14 amendment.
-- Each test starts the app with `--automation`, waits for the port and token file, drives it with the same calls the `folio` CLI makes (a small client library shared with `Folio.Cli`), then shuts it down. Tests never touch the UI tree directly, so a UI change breaks a scenario only where its behavior changed.
-- A scenario is a short method: open fixture, navigate, assert on `ui state` JSON, optionally `ui screenshot` and compare. Adding a scenario should not need new infrastructure.
-- Input data comes from the deterministic synthetic household generator and the provider CSV fixtures named in the research brief (prerequisites 1 and 5).
+- Playwright projects under `tests/e2e/` (AD-14), outside the default unit and integration run. Each test starts the packaged release binary with `FOLIO_AUTOMATION=1`, attaches through the debugging pipe relayed by the test process, drives the app by role, name and test ID, reads state through the hook, and closes the app.
+- A scenario is a short function: open a fixture, navigate, assert on the state JSON, optionally capture and compare a screenshot. Adding a scenario needs no new infrastructure.
+- Input data comes from the seeded synthetic household generator and the provider CSV fixtures named in the performance brief.
 
 ### Display
 
-- Linux: run under Xvfb (`xvfb-run`) so the app has a real window. The runner image is pinned (for example `ubuntu-24.04`, not `ubuntu-latest`) and the app's fonts are bundled, so rendering is stable.
-- Windows and macOS: hosted runners have a desktop session, so no extra setup. Whether macOS shows a window without a logged-in user is to be proven in a spike.
+- Windows and macOS hosted runners have a desktop session, so no extra setup. Whether macOS produces a real window on hosted runners was shown in the selection spike (it does, with a small display).
 
 ### Image comparison
 
-- Capture through `ui screenshot` at a fixed window size, scale and theme. Compare against baselines in `tests/E2E/Baselines/` with a small per-pixel tolerance and a failure threshold on the share of differing pixels. The comparer is small enough to write ourselves; Verify.Avalonia is not needed (Avalonia 12 support unverified).
-- On a failure the test uploads actual, expected and a diff image as artifacts.
-- Baselines update through a manual workflow (`workflow_dispatch`) that regenerates images on the pinned Linux runner and opens a PR, so the diff is reviewed like code.
-- Windows and macOS runs attach screenshots only.
+- Capture at a fixed window size, scale and theme. Compare with a small per-pixel tolerance and a failure threshold on the share of differing pixels (the spike used 0.1% and two consecutive runs matched). On failure upload actual, expected and a diff.
+- Baselines update through a manual workflow that regenerates images on the matching runner and opens a pull request, so changes are reviewed like code. Baselines change when Electron changes.
 
 ### CI
 
-- `e2e.yml`: on `pull_request`, Linux only, required check once stable. Nightly `schedule` and `workflow_dispatch` run the Linux, Windows and macOS matrix. Actions are pinned to commit SHAs like the existing workflows.
-- Dependabot: the suite becomes a required check for the minor groups and Avalonia PRs, which already stay manual. The patch group auto-merge keeps working only if the suite passes, since it needs the same required checks. Test results and screenshots upload as artifacts so a Dependabot PR can be reviewed without running it locally.
-- Flakiness policy: no retries that hide a failure; one automatic retry of the whole job at most, and a flaky scenario is fixed or removed, never skipped.
+- `e2e.yml`: the smoke subset on every pull request on Windows and macOS; the full suite nightly and on demand. Actions are pinned to commit SHAs.
+- Dependabot: Electron updates arrive in their own group and run the full suite and the privacy capture before merge. The patch group keeps its auto-merge, which waits on the same required checks.
+- Flakiness policy: no retries that hide a failure; at most one automatic retry of the whole job, and a flaky scenario is fixed or removed, never skipped.
 
 ## Milestones
 
-Depends on stack spike milestone 5 (automation server, CLI, `--headless` and windowed modes).
+Depends on the [app scaffold plan](app-scaffold.md), milestone 4 (the desktop app and its smoke test).
 
 ### 1. Harness and launch scenario
 
-- Does: the E2E project, the client library, app start and stop, and the first scenario (launch, main window renders, shell state is as expected).
-- Acceptance criteria: runs locally and on Linux CI under Xvfb in under a stated time (proposed 60 seconds); the architecture layout rule is amended.
-- Verified by: a green `e2e.yml` run on a PR.
+- Does: the Playwright harness, app start and stop, and the first scenario (launch, main window renders, shell state is as expected).
+- Acceptance criteria: runs locally and on Windows and macOS CI in under a stated time (proposed 90 seconds).
+- Verified by: a green `e2e.yml` run on a pull request.
 
 ### 2. Screenshot comparison and baselines
 
-- Does: fixed capture settings, the comparer, artifacts on failure, the baseline-update workflow, and baselines for the launch scenario in light and dark.
-- Acceptance criteria: two consecutive Linux runs produce no pixel failures; a deliberate one-pixel-group change fails with a diff artifact.
-- Verified by: those two runs and one intentional failure shown in the PR.
+- Does: fixed capture settings, the comparer, artifacts on failure, the baseline-update workflow, and baselines for the launch scenario in light and dark on each OS.
+- Acceptance criteria: two consecutive runs produce no pixel failures on each OS; a deliberate change fails with a diff artifact.
+- Verified by: those two runs and one intentional failure shown in the pull request.
 
 ### 3. File and import scenarios
 
 - Does: open or create a `.folio` file, and import a provider CSV, with assertions on state and key screenshots. Needs the file format (AD-2) and the CSV fixtures.
-- Acceptance criteria: each scenario passes on Linux; adding a scenario takes a single file.
+- Acceptance criteria: each scenario passes on both OSes; adding a scenario takes a single file.
 - Verified by: green CI.
 
 ### 4. Dialogs and focus
 
-- Does: scenarios that open dialogs and check keyboard focus (FluentAvalonia #766), plus a nightly check on all three OSes.
-- Acceptance criteria: the focus assertion fails against a build with the known bug, to show it can catch it.
-- Verified by: the nightly matrix result.
+- Does: scenarios that open dialogs and check keyboard focus, using real key events where the platform allows.
+- Acceptance criteria: the focus assertion fails against a deliberately broken dialog, to show it can catch a regression.
+- Verified by: the nightly result on both OSes.
 
-### 5. Three-OS nightly and Dependabot gating
+### 5. Dependabot gating
 
-- Does: the nightly Linux, Windows and macOS matrix, screenshot artifacts on the non-Linux runs, and the suite as a required check for manual Dependabot groups.
-- Acceptance criteria: nightly runs for a week without unexplained failures; a test Dependabot-style bump shows the check result on the PR.
+- Does: the suite and the privacy capture become required checks for the Electron group and the minor groups, and the patch group's auto-merge keeps waiting on them.
+- Acceptance criteria: a test Dependabot-style Electron bump shows the check results on the pull request; the suite runs clean for two weeks before it becomes required.
 - Verified by: the run history.
 
 ## Risks
 
-- AD-16 slips, and so does everything here. Mitigation: milestone 1 only needs the launch and state calls, which are the first part of the server.
-- Pixel diffs from font or renderer changes on a runner image update. Mitigation: pinned image, bundled fonts, tolerance, and a reviewed baseline-update workflow.
-- macOS and Windows runners may not give a usable window for screenshots. Mitigation: they only attach screenshots, and a spike in milestone 5 decides what they check.
-- A required check that flakes blocks every Dependabot PR. Mitigation: keep it out of the required set until it has run clean for two weeks.
+- A required check that flakes blocks every Dependabot pull request. Mitigation: keep it out of the required set until it has run clean for two weeks.
+- macOS and Windows runners have no GPU and a small display, so baselines come from a configuration unlike a real desktop. Mitigation: treat screenshots as regression guards between runs on the same runner image, not as proof of how the app looks on a user's machine; a runner-image update may require a baseline refresh.
 
 ## Open questions
 
 - Which window size, scale and theme set defines the baseline images? [Engineer, at milestone 2]
-- Does a windowed run under Xvfb support the focus checks for #766, or do those need Windows? [Engineer, at milestone 4]
-- Should the suite be a required check for all PRs or only Dependabot's? [Jeremy, after milestone 5]
+- Should the suite be a required check for all pull requests or only Dependabot's? [Jeremy, after milestone 5]
