@@ -20,7 +20,7 @@ const webviewUp = () => {
 const samples = [];
 for (let i = 0; i < 5; i++) {
   const t0 = Date.now();
-  const child = process.platform === 'linux' ? spawn('xvfb-run', ['-a', '-s', '-screen 0 1440x900x24', exe], { env, stdio: 'ignore' }) : spawn(exe, [], { env, stdio: 'ignore' });
+  const child = process.platform === 'linux' ? spawn('xvfb-run', ['-a', '-s', '-screen 0 1440x900x24', 'dbus-run-session', '--', exe], { env, stdio: 'ignore' }) : spawn(exe, [], { env, stdio: 'ignore' });
   let up = null;
   while (Date.now() - t0 < 15000) { if (webviewUp()) { up = Date.now() - t0; break; } await sleep(25); }
   samples.push(up);

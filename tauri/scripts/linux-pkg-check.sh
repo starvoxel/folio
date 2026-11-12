@@ -21,7 +21,7 @@ cat > "$OUT/probe-inner.sh" <<'INNER'
 # args: label out-dir command...
 label=$1; out=$2; shift 2
 "$@" >"$out/$label.log" 2>&1 &
-sleep 12
+sleep 15
 import -window root "$out/$label.png"
 { echo "mean brightness (1.0 = blank white):"; convert "$out/$label.png" -format "%[fx:mean]\n" info:
   for p in $(pgrep -f "WebKit(Web|Network|GPU)Process|bwrap|folio"); do
@@ -34,7 +34,7 @@ INNER
 chmod +x "$OUT/probe-inner.sh"
 probe() { # label, launch command words...
   local label=$1; shift
-  FOLIO_DATA_DIR=$FIX xvfb-run -a -s "-screen 0 1440x900x24" "$OUT/probe-inner.sh" "$label" "$OUT" "$@"
+  FOLIO_DATA_DIR=$FIX xvfb-run -a -s "-screen 0 1440x900x24" dbus-run-session -- "$OUT/probe-inner.sh" "$label" "$OUT" "$@"
 }
 probe deb-installed /usr/bin/folio
 cat "$OUT/deb-installed-procs.txt"

@@ -37,7 +37,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool rpm fonts-noto-cjk fonts-noto-core
+          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool rpm fonts-noto-cjk fonts-noto-core dbus-daemon x11-utils
       - name: Toolchain and web view versions
         run: |
           mkdir -p test-results
@@ -127,7 +127,7 @@ jobs:
         run: |
           export FOLIO_DATA_DIR="$GITHUB_WORKSPACE/fixtures"
           exe=src-tauri/target/release/folio; [ "$RUNNER_OS" = Windows ] && exe=src-tauri/target/release/folio.exe
-          ( if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" bash -c "$PWD/$exe >/dev/null 2>&1 & sleep 10; node scripts/memtree.mjs measure \$(node scripts/memtree.mjs find folio) | tee test-results/shipped-idle-${{ runner.os }}.json; kill %1"
+          ( if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" dbus-run-session -- bash -c "$PWD/$exe >/dev/null 2>&1 & sleep 10; node scripts/memtree.mjs measure \$(node scripts/memtree.mjs find folio) | tee test-results/shipped-idle-${{ runner.os }}.json; kill %1"
             else "$exe" >/dev/null 2>&1 & sleep 10; node scripts/memtree.mjs measure $(node scripts/memtree.mjs find folio) "$FOLIO_WEBKIT_BASELINE" | tee test-results/shipped-idle-${{ runner.os }}.json; kill %1 2>/dev/null || taskkill //F //IM folio.exe; fi ) || true
       - name: Cold start of the shipped binary (window to first render, 5 samples)
         run: node scripts/cold-start.mjs 2>&1 | tee test-results/cold-start-${{ runner.os }}.txt || true

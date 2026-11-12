@@ -29,7 +29,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool rpm tcpdump strace iproute2 imagemagick gir1.2-webkit2-4.1 python3-gi fonts-noto-cjk fonts-noto-core
+          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool rpm tcpdump strace iproute2 imagemagick dbus-daemon x11-utils gir1.2-webkit2-4.1 python3-gi fonts-noto-cjk fonts-noto-core
           mkdir -p test-results
       - run: |
           npm ci
@@ -49,11 +49,11 @@ jobs:
       - name: Capture B, shipped binary (no driver), launch and five minutes idle, loopback-only namespace
         run: |
           sudo env "PATH=$PATH" "HOME=$HOME" FOLIO_DATA_DIR="$GITHUB_WORKSPACE/fixtures" scripts/capture.sh noroute capture/release-idle-noroute \
-            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" src-tauri/target/release/folio || true
+            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" dbus-run-session -- src-tauri/target/release/folio || true
       - name: Capture C, shipped binary, sink route, launch and five minutes idle
         run: |
           sudo env "PATH=$PATH" "HOME=$HOME" FOLIO_DATA_DIR="$GITHUB_WORKSPACE/fixtures" scripts/capture.sh sink capture/release-idle-sink \
-            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" src-tauri/target/release/folio || true
+            timeout -s INT 330 xvfb-run -a -s "-screen 0 1440x900x24" dbus-run-session -- src-tauri/target/release/folio || true
       - name: Analyse
         run: |
           sudo chown -R "$USER" capture

@@ -11,3 +11,4 @@ Times are UTC, 2026-11-12. Prompts or corrections from the user after the kickof
 - Slice renders on Linux with no graphics workaround needed in this sandbox.
 - Mistake: committed tauri/e2e/node_modules (14.5k files, ~7 MB packed). Removed from the index in the next commit; history still contains it because a force-push was not allowed. A reviewer may squash.
 - CI run 1: bundling failed everywhere: tauri rejects bundle.category 'Office' (valid: e.g. Finance). Fixed.
+- Found: on the hosted ubuntu-24.04 runner the shipped binary stalls ~25 s before mapping its window (D-Bus default timeout; runner has /run/user/1001/bus but no DBUS_SESSION_BUS_ADDRESS). Under dbus-run-session or with no bus it takes 1 s. Evidence: tauri/evidence/ci/diag. Earlier 'no web view' captures of the shipped binary on CI were this stall (10-15 s waits).
