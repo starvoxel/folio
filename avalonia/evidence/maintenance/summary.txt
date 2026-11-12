@@ -1,0 +1,98 @@
+=== amwx/FluentAvalonia (since 2025-11-12T01:45:55Z)
+{"archived":false,"default_branch":"master","full_name":"amwx/FluentAvalonia","html_url":"https://github.com/amwx/FluentAvalonia","open_issues_and_prs":42,"pushed_at":"2026-08-22T17:37:48Z","stars":1624,"updated_at":"2026-11-10T16:36:30Z"}
+open issues (not PRs): 36
+open PRs: 6
+latest release (GitHub releases):
+latest tags:
+last commit: 2026-08-22T17:37:48Z	amwx	Merge pull request #768 from amwx/FA3.1\n\nFA 3.1
+commits in last 12 months: 193
+committers in last 12 months (by commits):
+    159 amwx
+     10 OleRoss
+      8 uniflare
+      5 chenjt2001
+      3 textGamex
+      3 Qianyiaz
+      1 lrs2187
+      1 lfeng1420
+      1 VNNCC
+      1 Furtys
+      1 ArchLeaders
+top committer: amwx; their 12 most recent issue/PR comments:
+2026-07-31T21:56:33Z https://github.com/amwx/FluentAvalonia/issues/748#issuecomment-5147806701 Seems to have been caused by #729, and I apparently missed that method became generic from that. As far as I know, changing back to `target.GetType()` is the correct solution, and still will be AOT/trimmer friendly. If you'd like to submit 
+2026-07-31T21:35:13Z https://github.com/amwx/FluentAvalonia/issues/756#issuecomment-5147669475 The suggested fixes look good to me. If you'd like to submit a PR I'll accept these changes. If not, I'll get to it in the next couple of days.
+2026-07-31T03:10:59Z https://github.com/amwx/FluentAvalonia/pull/760#issuecomment-5138827875 I will accept this change, however 1. The change should also be applied to `TaskDialog` as that is essentially the same as `ContentDialog` https://github.com/amwx/FluentAvalonia/blob/af36ebd3011c9a5cf8eaa735d65727b2071beaf7/src/FluentAval
+2026-07-26T15:59:07Z https://github.com/amwx/FluentAvalonia/issues/755#issuecomment-5084247320 This more than likely means you didn't add `FluentAvaloniaTheme` to your Application and no styles are loaded.
+2026-07-26T15:54:34Z https://github.com/amwx/FluentAvalonia/issues/757#issuecomment-5084230849 Good catch - a typo on my part and your fix matches WinUI correctly. I'll accept a PR if you're willing.
+2026-06-20T16:25:21Z https://github.com/amwx/FluentAvalonia/issues/742#issuecomment-4759002967 The plan was to support the minimum to get the control working for v3/Av12 and then fix up DataPackage to do more. The new DataTransfer API is the most over-engineered, complicated, confusing nonsense in 12.0 and I need to wrap my head arou
+2026-05-23T17:21:27Z https://github.com/amwx/FluentAvalonia/pull/729#issuecomment-4526058737 Thanks! If you could just retarget to `master` I can merge this for v3 stable.   Also just a note, if AOT/trimming is really your focus, you should avoid the paths that use `Activator.CreateInstance` and use `Frame.NavigateFromObject()` a
+2026-05-23T16:12:26Z https://github.com/amwx/FluentAvalonia/pull/728#issuecomment-4525903847 Pushing 1 final preview package. Addresses issues with #739, #740, and #741.  - FAAppWindow should now work properly and not do weird things with the caption buttons when styles are added (that's a weird one I still don't understand). It 
+2026-05-17T17:34:11Z https://github.com/amwx/FluentAvalonia/issues/739#issuecomment-4471822723 Funny enough, I ran into basically this exact same thing yesterday, realized it was from not specifying a specific data template and moved on thinking nothing of it (just a side effect of Avalonia's auto inherited data templates thing).  Fo
+2026-05-17T02:46:11Z https://github.com/amwx/FluentAvalonia/issues/737#issuecomment-4468979728 The Fluent v2 theme I have doesn't take any of my time anymore, so its not really a burden on me. I can say even if Avalonia takes on Fluent v2, FA will still host and ship with its own version and will not adopt Avalonia's. In a lot of the
+2026-05-16T17:40:58Z https://github.com/amwx/FluentAvalonia/pull/728#issuecomment-4467641482 preview3 is now released. Important things to note here: - `NumberBox` now supports `PlaceholderText`/`PlaceholderForeground` instead of the old `Watermark` property internally in the template - Avalonia's `ComboBox` now supports `IsEdita
+2026-05-15T23:56:53Z https://github.com/amwx/FluentAvalonia/pull/735#issuecomment-4464604167 Several things here: - First of all, thank you for wanting to contribute to FA.  - Please open an issue/feature request prior to PRs. This ensures the following doesn't need to happen - Please do not do "bulk fix" PRs, ensure the PR has 
+issues/discussions mentioning maintenance, support, future, abandoned, help wanted:
+2026-08-23T22:10:55Z #770 open Fix FATabView null checks https://github.com/amwx/FluentAvalonia/pull/770
+2026-06-20T16:17:57Z #655 closed FA Roadmap 2025 https://github.com/amwx/FluentAvalonia/issues/655
+2026-05-17T02:46:20Z #737 closed Could Avalonia’s Fluent v2 theme work affect FluentAvalonia’s future direction? https://github.com/amwx/FluentAvalonia/issues/737
+2026-04-26T17:16:02Z #725 closed AppWindow changes (v3) https://github.com/amwx/FluentAvalonia/pull/725
+2026-03-12T21:43:56Z #713 closed Update Avalonia libraries to 11.3.12 https://github.com/amwx/FluentAvalonia/pull/713
+2026-03-11T12:51:13Z #712 closed Update projects to .NET 10, including Android SDK to API 34. https://github.com/amwx/FluentAvalonia/pull/712
+2025-08-09T03:03:01Z #687 closed ColorPickerButton removed? https://github.com/amwx/FluentAvalonia/issues/687
+2024-12-23T17:58:19Z #627 closed Search for font instead of based off of OS https://github.com/amwx/FluentAvalonia/issues/627
+2023-08-06T02:23:58Z #238 closed FluentAvalonia v2 Roadmap https://github.com/amwx/FluentAvalonia/issues/238
+2023-06-01T20:03:57Z #381 closed v2-Release Candidate 1 https://github.com/amwx/FluentAvalonia/pull/381
+=== AvaloniaUI/Avalonia.Controls.DataGrid (since 2025-11-12T01:45:55Z)
+{"archived":false,"default_branch":"main","full_name":"AvaloniaUI/Avalonia.Controls.DataGrid","html_url":"https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid","open_issues_and_prs":168,"pushed_at":"2026-08-03T11:55:36Z","stars":49,"updated_at":"2026-10-10T21:12:39Z"}
+open issues (not PRs): 163
+open PRs: 5
+latest release (GitHub releases):
+12.1.2 2026-08-03T12:07:01Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/releases/tag/12.1.2
+12.1.0 2026-07-09T15:23:27Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/releases/tag/12.1.0
+12.0.1 2026-06-23T17:19:24Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/releases/tag/12.0.1
+latest tags:
+12.1.2
+12.1.0
+12.0.1
+12.0.0
+12.0.0-rc2
+last commit: 2026-08-03T11:11:37Z	MrJul	Merge pull request #256 from zrt2399/fix-scroll-chaining-layout-epsilon\n\nFix Dat
+commits in last 12 months: 65
+committers in last 12 months (by commits):
+     47 MrJul
+      7 zrt2399
+      5 grokys
+      3 kdurane
+      1 Дмитрий Мочалов
+      1 shatyuka
+      1 rabbitism
+top committer: MrJul; their 12 most recent issue/PR comments:
+2026-08-03T11:14:12Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/203#issuecomment-5165606906 Superseded by #243
+2026-08-03T11:13:09Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/240#issuecomment-5165597959 Thank you, but we aren't accepting new features for the DataGrid.
+2026-08-03T11:11:55Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/242#issuecomment-5165586529 Thank you, but we aren't accepting new features for the DataGrid.
+2026-06-23T17:21:31Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/235#issuecomment-4781727177 @kdurane The fixes are now released as part of `Avalonia.Controls.DataGrid` [12.0.1](https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/releases/tag/12.0.1)
+2026-06-23T15:38:53Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/issues/245#issuecomment-4780855495 Should be fixed by #243 
+2026-06-23T15:38:13Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/issues/121#issuecomment-4780849813 Should be fixed by #243 
+2026-05-28T13:38:25Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/239#issuecomment-4564525340 Thank you for your contribution.  However, we aren't accepting new features for the DataGrid: please read https://github.com/AvaloniaUI/Avalonia/discussions/18388.
+2026-05-28T13:27:20Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/225#issuecomment-4564409654 Thank you for your contribution.  However, we aren't accepting new features for the DataGrid: please read https://github.com/AvaloniaUI/Avalonia/discussions/18388.
+2026-05-28T13:25:57Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/203#issuecomment-4564398188 The two commits seem to address two different issues. Can you please split them and better explain what was the issue and the solution?
+2026-05-28T13:24:17Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/182#issuecomment-4564385215 Superseded by #238
+2026-03-06T16:07:36Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/issues/216#issuecomment-4012620344 There was some trouble with this release, and the wrong branch was used for DataGrid. Please use the new [12.0.0-preview2-2](https://www.nuget.org/packages/Avalonia.Controls.DataGrid/12.0.0-preview2-2) package instead.  Thanks for the repor
+2026-02-17T21:48:00Z https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/pull/208#issuecomment-3917248594 Superseded by #211
+issues/discussions mentioning maintenance, support, future, abandoned, help wanted:
+2025-10-07T17:03:44Z #155 open Avalonia DataGridColumn WidthProperty binding works differently than the fixed width value https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/issues/155
+2025-03-08T14:04:08Z #61 open Support summary rows (total rows) for DataGrid https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/issues/61
+=== nuget fluentavaloniaui
+3.0.0-preview3 2026-05-16 
+3.0.0-preview4 2026-05-23 
+3.0.0 2026-06-20 
+3.0.1 2026-07-06 
+3.0.2 2026-07-14 
+3.1.0 2026-08-22 
+=== nuget avalonia.controls.datagrid
+12.0.0-rc2 2026-03-31 
+12.0.0 2026-04-07 
+12.0.1 2026-06-23 
+12.1.0 2026-07-09 
+12.1.1 1900-01-01 
+12.1.2 2026-08-03 
