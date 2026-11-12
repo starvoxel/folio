@@ -1,1 +1,1 @@
-{"metric":"PSS (MB), RSS (MB)","app":{"primaryMB":60.8,"secondaryMB":89.8,"processes":1},"all":{"primaryMB":60.8,"secondaryMB":89.8,"processes":1},"detail":["folio[18289]:61"],"orphans":[]}
+{"metric":"PSS (MB), RSS (MB)","app":{"primaryMB":92.6,"secondaryMB":166.5,"processes":1},"all":{"primaryMB":377.4,"secondaryMB":550.7,"processes":3},"detail":["folio[18295]:93","WebKitNetworkPr[18336]:20","WebKitWebProces[18363]:265"],"orphans":[]}

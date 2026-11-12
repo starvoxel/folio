@@ -1,151 +1,151 @@
 {
   "platform": "linux",
-  "pid": 18036,
+  "pid": 18041,
   "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/60.5 Safari/605.1.15",
   "sortMsWorstPerColumn": {
-    "date": 79,
-    "description": 77,
-    "account": 73,
-    "category": 70,
-    "amount": 68
+    "date": 94,
+    "description": 89,
+    "account": 85,
+    "category": 85,
+    "amount": 81
   },
   "passes": [
     {
-      "durationMs": 8727.999999999998,
+      "durationMs": 8728,
+      "frames": 600,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 20
+    },
+    {
+      "durationMs": 8680,
       "frames": 600,
       "framesOver100ms": 0,
       "longTasks": 0,
       "worstFrameMs": 17
     },
     {
-      "durationMs": 8713,
+      "durationMs": 8682,
       "frames": 600,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 38
-    },
-    {
-      "durationMs": 8664,
-      "frames": 600,
-      "framesOver100ms": 0,
-      "longTasks": 0,
-      "worstFrameMs": 21
+      "worstFrameMs": 17
     }
   ],
-  "selectionMs": 86.99999999998545,
-  "soakWorstFrameMs": 34,
+  "selectionMs": 102,
+  "soakWorstFrameMs": 18,
   "points": {
     "P0": {
       "metric": "PSS (MB), RSS (MB)",
       "app": {
-        "primaryMB": 86,
-        "secondaryMB": 153.6,
+        "primaryMB": 83.8,
+        "secondaryMB": 151.3,
         "processes": 1
       },
       "all": {
-        "primaryMB": 235.9,
-        "secondaryMB": 395.4,
+        "primaryMB": 233.8,
+        "secondaryMB": 393.4,
         "processes": 3
       },
       "detail": [
-        "folio[18036]:86",
-        "WebKitNetworkPr[18069]:20",
-        "WebKitWebProces[18073]:130"
+        "folio[18041]:84",
+        "WebKitNetworkPr[18072]:20",
+        "WebKitWebProces[18076]:130"
       ],
       "orphans": []
     },
     "P1": {
       "metric": "PSS (MB), RSS (MB)",
       "app": {
-        "primaryMB": 86.1,
-        "secondaryMB": 153.7,
+        "primaryMB": 83.8,
+        "secondaryMB": 151.3,
         "processes": 1
       },
       "all": {
-        "primaryMB": 245.8,
-        "secondaryMB": 405.9,
+        "primaryMB": 243.5,
+        "secondaryMB": 403.6,
         "processes": 3
       },
       "detail": [
-        "folio[18036]:86",
-        "WebKitNetworkPr[18069]:20",
-        "WebKitWebProces[18073]:140"
+        "folio[18041]:84",
+        "WebKitNetworkPr[18072]:20",
+        "WebKitWebProces[18076]:140"
       ],
       "orphans": []
     },
     "P2": {
       "metric": "PSS (MB), RSS (MB)",
       "app": {
-        "primaryMB": 86.2,
-        "secondaryMB": 153.9,
+        "primaryMB": 83.9,
+        "secondaryMB": 151.5,
         "processes": 1
       },
       "all": {
-        "primaryMB": 303.8,
-        "secondaryMB": 464.3,
+        "primaryMB": 301.8,
+        "secondaryMB": 462.3,
         "processes": 3
       },
       "detail": [
-        "folio[18036]:86",
-        "WebKitNetworkPr[18069]:20",
-        "WebKitWebProces[18073]:198"
+        "folio[18041]:84",
+        "WebKitNetworkPr[18072]:20",
+        "WebKitWebProces[18076]:198"
       ],
       "orphans": []
     },
     "P3": {
       "metric": "PSS (MB), RSS (MB)",
       "app": {
-        "primaryMB": 86.3,
-        "secondaryMB": 154,
+        "primaryMB": 83.9,
+        "secondaryMB": 151.6,
         "processes": 1
       },
       "all": {
-        "primaryMB": 315.4,
-        "secondaryMB": 476,
+        "primaryMB": 310.5,
+        "secondaryMB": 471.2,
         "processes": 3
       },
       "detail": [
-        "folio[18036]:86",
-        "WebKitNetworkPr[18069]:20",
-        "WebKitWebProces[18073]:209"
+        "folio[18041]:84",
+        "WebKitNetworkPr[18072]:20",
+        "WebKitWebProces[18076]:207"
       ],
       "orphans": []
     },
     "P4": {
       "metric": "PSS (MB), RSS (MB)",
       "app": {
-        "primaryMB": 85.9,
-        "secondaryMB": 153.5,
+        "primaryMB": 83.5,
+        "secondaryMB": 151.1,
         "processes": 1
       },
       "all": {
-        "primaryMB": 293.4,
-        "secondaryMB": 453.8,
+        "primaryMB": 289,
+        "secondaryMB": 449.4,
         "processes": 3
       },
       "detail": [
-        "folio[18036]:86",
-        "WebKitNetworkPr[18069]:20",
-        "WebKitWebProces[18073]:188"
+        "folio[18041]:83",
+        "WebKitNetworkPr[18072]:20",
+        "WebKitWebProces[18076]:185"
       ],
       "orphans": []
     },
     "P5": {
       "metric": "PSS (MB), RSS (MB)",
       "app": {
-        "primaryMB": 86,
-        "secondaryMB": 153.7,
+        "primaryMB": 83.6,
+        "secondaryMB": 151.2,
         "processes": 1
       },
       "all": {
-        "primaryMB": 314.6,
-        "secondaryMB": 475.1,
+        "primaryMB": 308.6,
+        "secondaryMB": 469.1,
         "processes": 3
       },
       "detail": [
-        "folio[18036]:86",
-        "WebKitNetworkPr[18069]:20",
-        "WebKitWebProces[18073]:209"
+        "folio[18041]:84",
+        "WebKitNetworkPr[18072]:20",
+        "WebKitWebProces[18076]:205"
       ],
       "orphans": []
     }
