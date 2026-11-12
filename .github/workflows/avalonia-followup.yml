@@ -33,7 +33,7 @@ jobs:
           dotnet build Cli -c Release
       - name: F1 memory (PSS and RSS over the process tree; P0 to P5)
         working-directory: avalonia
-        run: xvfb-run -a -s "-screen 0 1440x900x24" Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory --measure-script ../tools/measure-memory.py | tee ../out/memory-summary.txt
+        run: mkdir -p ../out && xvfb-run -a -s "-screen 0 1440x900x24" Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory --measure-script ../tools/measure-memory.py | tee ../out/memory-summary.txt
       - name: F3 and A1 AT-SPI dumps, original app
         working-directory: avalonia
         env:
@@ -78,7 +78,7 @@ jobs:
       - name: F1 memory (private working set and total working set over the process tree)
         shell: bash
         working-directory: avalonia
-        run: Cli/bin/Release/net10.0/folio-slice-cli.exe memtest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/memory | tee ../out/memory-summary.txt
+        run: mkdir -p ../out && Cli/bin/Release/net10.0/folio-slice-cli.exe memtest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/memory | tee ../out/memory-summary.txt
       - name: F3 and A1 UI Automation dump, original app
         if: always()
         shell: pwsh
@@ -154,7 +154,7 @@ jobs:
       - name: F1 memory (footprint and RSS)
         continue-on-error: true
         working-directory: avalonia
-        run: Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory | tee ../out/memory-summary.txt
+        run: mkdir -p ../out && Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory | tee ../out/memory-summary.txt
       - name: F3 accessibility hierarchy
         continue-on-error: true
         working-directory: avalonia
