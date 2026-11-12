@@ -1,0 +1,2 @@
+tcpdump: data link type PKTAP
+tcpdump: listening on any, link-type PKTAP (Apple DLT_PKTAP), snapshot length 524288 bytes
