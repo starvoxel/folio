@@ -1,0 +1,6 @@
+total 60
+drwxr-xr-x 2 root root  4096 Nov 12 01:53 .
+drwxr-xr-x 3 root root  4096 Nov 12 01:53 ..
+-rw-r--r-- 1 root root   289 Nov 12 01:53 avalonia_build5b6213ce-96ea-4449-b93e-7968a1dc7bfb
+-rw-r--r-- 1 root root 42431 Nov 12 01:53 collector.log
+-rw-r--r-- 1 root root    16 Nov 12 01:53 id

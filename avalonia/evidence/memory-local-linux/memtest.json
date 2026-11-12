@@ -1,0 +1,92 @@
+[
+  {
+    "point": "P0 Overview 5s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 179.1,
+      "rss_mb": 210.5
+    }
+  },
+  {
+    "point": "P1 Transactions 5s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 202,
+      "rss_mb": 233.9
+    }
+  },
+  {
+    "point": "P2 after scroll 1 \u002B3s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 223.3,
+      "rss_mb": 255.2
+    }
+  },
+  {
+    "point": "P3 after scroll 2 \u002B3s",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 229.7,
+      "rss_mb": 261.6
+    }
+  },
+  {
+    "point": "P4 after scroll 3 \u002B 60s idle",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 227.5,
+      "rss_mb": 259.5
+    }
+  },
+  {
+    "point": "soak after 5 scrolls",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 250.1,
+      "rss_mb": 282.5
+    }
+  },
+  {
+    "point": "soak after 10 scrolls",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 248.5,
+      "rss_mb": 281.1
+    }
+  },
+  {
+    "point": "soak after 15 scrolls",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 257.2,
+      "rss_mb": 289.9
+    }
+  },
+  {
+    "point": "soak after 20 scrolls",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 259,
+      "rss_mb": 291.6
+    }
+  },
+  {
+    "point": "P5 after soak (20 scrolls) \u002B 60s idle",
+    "m": {
+      "os": "linux",
+      "processes": 1,
+      "pss_mb": 266.9,
+      "rss_mb": 291.5
+    }
+  }
+]

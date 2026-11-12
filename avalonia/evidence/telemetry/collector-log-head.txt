@@ -1,0 +1,4 @@
+[2026-11-12 01:56:52] Failed to send telemetry data. - HttpRequestException: Resource temporarily unavailable (av-build-tel-api-v1.avaloniaui.net:443)
+[2026-11-12 01:56:52] Failed to send telemetry data. - HttpRequestException: Resource temporarily unavailable (av-build-tel-api-v1.avaloniaui.net:443)
+[2026-11-12 01:56:52] Failed to send telemetry data. - HttpRequestException: Resource temporarily unavailable (av-build-tel-api-v1.avaloniaui.net:443)
+[2026-11-12 01:56:53] Failed to send telemetry data. - HttpRequestException: Resource temporarily unavailable (av-build-tel-api-v1.avaloniaui.net:4
