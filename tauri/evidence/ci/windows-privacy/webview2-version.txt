@@ -1,0 +1,5 @@
+WebView2 runtime 156.0.4314.58
+156.0.4314.58
+PlatformExperiencesHelper
+SetupMetrics
+installed runtime size MB: 871
