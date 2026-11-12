@@ -1,0 +1,24 @@
+NVDA started (app args: --a11y-fix --table c1)
+--- go to Transactions (through the automation endpoint)
+  (nothing announced)
+--- focus the table (window activated, table focused)
+  (nothing announced)
+--- report current focus (NVDA+Tab style command)
+  > Transactions table, data grid, focused
+--- ArrowDown 1 (real key through the screen reader)
+  > 
+--- ArrowDown 2 (real key through the screen reader)
+  > 
+--- ArrowDown 3 (real key through the screen reader)
+  > 
+--- ArrowDown 4 (real key through the screen reader)
+  > 
+--- End key
+  > 
+--- go to Settings and open the dialog
+  (nothing announced)
+--- Tab inside the dialog
+  > edit, Optional reason
+--- Escape
+  > 
+scenario wall seconds: 43

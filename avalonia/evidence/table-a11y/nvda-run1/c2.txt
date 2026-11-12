@@ -1,0 +1,22 @@
+NVDA started (app args: --a11y-fix --table c2)
+--- go to Transactions (through the automation endpoint)
+  (nothing announced)
+--- focus the table (window activated, table focused)
+  (nothing announced)
+--- ArrowDown 1 (real key through the screen reader)
+  > Overview, not selected
+--- ArrowDown 2 (real key through the screen reader)
+  > Transactions
+--- ArrowDown 3 (real key through the screen reader)
+  > Reporting, not selected
+--- ArrowDown 4 (real key through the screen reader)
+  > Net worth, not selected
+--- End key
+  > Rules and categories, not selected
+--- go to Settings and open the dialog
+  (nothing announced)
+--- Tab inside the dialog
+  > edit, Optional reason
+--- Escape
+  > Rules and categories, not selected
+scenario wall seconds: 32

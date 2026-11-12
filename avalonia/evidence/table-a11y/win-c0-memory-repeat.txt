@@ -1,0 +1,10 @@
+P0 Overview 5s {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":62.5,"total_ws_mb":149.7}
+P1 Transactions 5s {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":80.9,"total_ws_mb":175.4}
+P2 after scroll 1 +3s {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":148.1,"total_ws_mb":247.5}
+P3 after scroll 2 +3s {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":148.9,"total_ws_mb":248.6}
+P4 after scroll 3 + 60s idle {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":125.7,"total_ws_mb":221.8}
+soak after 5 scrolls {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":161.1,"total_ws_mb":219.3}
+soak after 10 scrolls {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":157.4,"total_ws_mb":208.4}
+soak after 15 scrolls {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":154.2,"total_ws_mb":204.3}
+soak after 20 scrolls {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":153.7,"total_ws_mb":200.9}
+P5 after soak (20 scrolls) + 60s idle {"os":"windows","processes":1,"names":["FolioSlice"],"private_ws_mb":146.7,"total_ws_mb":185.3}

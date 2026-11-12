@@ -1,0 +1,10 @@
+{"column":"Date","direction":"Ascending","computeAndAssignMs":9,"toRenderedFrameMs":104.6,"rows":10000}
+{"column":"Date","direction":"Descending","computeAndAssignMs":8.2,"toRenderedFrameMs":122.4,"rows":10000}
+{"column":"Description","direction":"Ascending","computeAndAssignMs":15.3,"toRenderedFrameMs":118.3,"rows":10000}
+{"column":"Description","direction":"Descending","computeAndAssignMs":7.5,"toRenderedFrameMs":118,"rows":10000}
+{"column":"Account","direction":"Ascending","computeAndAssignMs":7.3,"toRenderedFrameMs":115.7,"rows":10000}
+{"column":"Account","direction":"Descending","computeAndAssignMs":7.6,"toRenderedFrameMs":124.7,"rows":10000}
+{"column":"Category","direction":"Ascending","computeAndAssignMs":6.1,"toRenderedFrameMs":101.1,"rows":10000}
+{"column":"Category","direction":"Descending","computeAndAssignMs":6.8,"toRenderedFrameMs":121.9,"rows":10000}
+{"column":"Amount","direction":"Ascending","computeAndAssignMs":4.4,"toRenderedFrameMs":109.5,"rows":10000}
+{"column":"Amount","direction":"Descending","computeAndAssignMs":5,"toRenderedFrameMs":100.9,"rows":10000}

@@ -1,0 +1,24 @@
+NVDA started (app args: --a11y-fix --table c2)
+--- go to Transactions (through the automation endpoint)
+  (nothing announced)
+--- focus the table (window activated, table focused)
+  (nothing announced)
+--- report current focus (NVDA+Tab style command)
+  > 2026-01-01, Aeroflot Аэрофлот number 4389, Travel Mastercard, Flights and hotels, minus $135.41, list item, focused
+--- ArrowDown 1 (real key through the screen reader)
+  > 2026-01-01, Air Canada, Rewards Visa, Flights and hotels, minus $480.98
+--- ArrowDown 2 (real key through the screen reader)
+  > 2026-01-01, Ali Express 全球速卖通, Travel Mastercard, Online, minus $15.34
+--- ArrowDown 3 (real key through the screen reader)
+  > 2026-01-01, Amazon dot ca Marketplace number 9770, Rewards Visa, Online, minus $239.51
+--- ArrowDown 4 (real key through the screen reader)
+  > 2026-01-01, Café Olimpico number 7718, Everyday Chequing, Coffee, minus $7.43
+--- End key
+  > 2026-12-31, 珈琲館 number 1223, Everyday Chequing, Coffee, minus $4.79
+--- go to Settings and open the dialog
+  (nothing announced)
+--- Tab inside the dialog
+  > edit, Optional reason
+--- Escape
+  > 
+scenario wall seconds: 35

@@ -1,0 +1,10 @@
+P0 Overview 5s {"os":"macos","processes":1,"footprint_mb":151,"rss_mb":224.8}
+P1 Transactions 5s {"os":"macos","processes":1,"footprint_mb":165,"rss_mb":223.1}
+P2 after scroll 1 +3s {"os":"macos","processes":1,"footprint_mb":180,"rss_mb":221.5}
+P3 after scroll 2 +3s {"os":"macos","processes":1,"footprint_mb":181,"rss_mb":209.5}
+P4 after scroll 3 + 60s idle {"os":"macos","processes":1,"footprint_mb":181,"rss_mb":207}
+soak after 5 scrolls {"os":"macos","processes":1,"footprint_mb":183,"rss_mb":230.7}
+soak after 10 scrolls {"os":"macos","processes":1,"footprint_mb":180,"rss_mb":228}
+soak after 15 scrolls {"os":"macos","processes":1,"footprint_mb":185,"rss_mb":233}
+soak after 20 scrolls {"os":"macos","processes":1,"footprint_mb":185,"rss_mb":232.7}
+P5 after soak (20 scrolls) + 60s idle {"os":"macos","processes":1,"footprint_mb":184,"rss_mb":232.5}

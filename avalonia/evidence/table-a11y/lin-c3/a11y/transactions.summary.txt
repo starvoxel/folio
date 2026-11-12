@@ -1,0 +1,10 @@
+tree table | 'Transactions table' | states=focusable,showing | ifaces=['Accessible', 'Component', 'Selection'] | kids=22 | attrs={'explicit-name': 'true'}
+-- row-like nodes found: 12; header-like nodes: 0
+  table cell | '2026-01-01, Aeroflot Аэрофлот #4389, Travel Mastercard, Flights and hotels, -$135.41' | states=selectable,showing | ifaces=['Accessible', 'Action', 'Component'] | kids=1 | attrs={'explicit-name': 'true', 'posinset': '1', 'setsize': '10000'} | via 
+    panel | 'Border' | states=showing | ifaces=['Accessible', 'Component'] | kids=1
+  table cell | '2026-01-01, Air Canada, Rewards Visa, Flights and hotels, -$480.98' | states=selectable,showing | ifaces=['Accessible', 'Action', 'Component'] | kids=1 | attrs={'explicit-name': 'true', 'posinset': '2', 'setsize': '10000'} | via 
+    panel | 'Border' | states=showing | ifaces=['Accessible', 'Component'] | kids=1
+  table cell | '2026-01-01, AliExpress 全球速卖通, Travel Mastercard, Online, -$15.34' | states=selectable,showing | ifaces=['Accessible', 'Action', 'Component'] | kids=1 | attrs={'explicit-name': 'true', 'posinset': '3', 'setsize': '10000'} | via 
+    panel | 'Border' | states=showing | ifaces=['Accessible', 'Component'] | kids=1
+  table cell | '2026-01-01, Refund 退款 #5730, Everyday Chequing, Other income, $241.36' | states=selectable,showing | ifaces=['Accessible', 'Action', 'Component'] | kids=1 | attrs={'explicit-name': 'true', 'posinset': '12', 'setsize': '10000'} | via 
+    panel | 'Border' | states=showing | ifaces=['Accessible', 'Component'] | kids=1

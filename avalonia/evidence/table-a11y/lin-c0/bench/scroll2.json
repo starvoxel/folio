@@ -1,0 +1,21 @@
+{
+  "rows": 10000,
+  "frames": 1250,
+  "seconds": 20.2,
+  "worstFrameMs": 20.1,
+  "p99FrameMs": 16.7,
+  "medianFrameMs": 16.2,
+  "over100ms": 0,
+  "before": {
+    "rssMb": 266.7,
+    "managedMb": 28.5,
+    "privateMb": 529.1,
+    "threads": 25
+  },
+  "after": {
+    "rssMb": 268.4,
+    "managedMb": 20.1,
+    "privateMb": 535.4,
+    "threads": 24
+  }
+}

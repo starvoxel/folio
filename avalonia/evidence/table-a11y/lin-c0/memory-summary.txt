@@ -1,0 +1,10 @@
+P0 Overview 5s {"os":"linux","processes":1,"pss_mb":177.7,"rss_mb":214.5}
+P1 Transactions 5s {"os":"linux","processes":1,"pss_mb":198.9,"rss_mb":236}
+P2 after scroll 1 +3s {"os":"linux","processes":1,"pss_mb":214.8,"rss_mb":252.1}
+P3 after scroll 2 +3s {"os":"linux","processes":1,"pss_mb":217.3,"rss_mb":254.6}
+P4 after scroll 3 + 60s idle {"os":"linux","processes":1,"pss_mb":219,"rss_mb":256.4}
+soak after 5 scrolls {"os":"linux","processes":1,"pss_mb":231.5,"rss_mb":269.3}
+soak after 10 scrolls {"os":"linux","processes":1,"pss_mb":244.3,"rss_mb":282.1}
+soak after 15 scrolls {"os":"linux","processes":1,"pss_mb":259,"rss_mb":297}
+soak after 20 scrolls {"os":"linux","processes":1,"pss_mb":263.8,"rss_mb":296.2}
+P5 after soak (20 scrolls) + 60s idle {"os":"linux","processes":1,"pss_mb":263.8,"rss_mb":296.2}
