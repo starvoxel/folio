@@ -7,6 +7,7 @@ using SkiaSharp;
 //   status | state | navigate <page> | screenshot <file.png> | invoke '<json>' | bench-scroll | bench-sort <col> [desc] | quit
 //   wait-ready [--timeout s]                    poll discovery file + /status until the app is ready
 //   selftest <app-exe> <data-dir> <outdir> [--theme light|dark] [--headless]   full G3 scenario against the real window
+//   memtest <app-exe> <data-dir> <outdir> [--measure-script tools/measure-memory.py] [--soak N] [--extra-arg X]   F1 memory scenario, process-tree metric per OS
 //   diff <a.png> <b.png> [--tolerance 0.001]     pixel compare, exit 1 over tolerance
 var a = args.ToList();
 string? disc = null;
@@ -14,6 +15,7 @@ var di = a.IndexOf("--discovery"); if (di >= 0) { disc = a[di + 1]; a.RemoveRang
 if (a.Count == 0) { Console.Error.WriteLine("usage: see source header"); return 2; }
 
 if (a[0] == "diff") return Diff(a);
+if (a[0] == "memtest") return await MemTest.Run(a);
 if (a[0] == "selftest") return await SelfTest.Run(a);
 if (a[0] == "wait-ready") return await WaitReady(a, disc);
 

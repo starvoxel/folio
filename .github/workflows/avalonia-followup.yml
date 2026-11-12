@@ -1,0 +1,192 @@
+name: avalonia-followup
+
+on:
+  push:
+    branches: [spike/slice-avalonia]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  AVALONIA_TELEMETRY_OPTOUT: '1'
+
+jobs:
+  linux:
+    name: Linux follow-up (F1 memory, F3 AT-SPI, A1, A2)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool at-spi2-core python3-gi gir1.2-atspi-2.0 dbus-x11 strace iproute2
+      - name: Build
+        working-directory: avalonia
+        run: |
+          dotnet build Slice -c Release
+          dotnet build Cli -c Release
+      - name: F1 memory (PSS and RSS over the process tree; P0 to P5)
+        working-directory: avalonia
+        run: xvfb-run -a -s "-screen 0 1440x900x24" Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory --measure-script ../tools/measure-memory.py | tee ../out/memory-summary.txt
+      - name: F3 and A1 AT-SPI dumps, original app
+        working-directory: avalonia
+        env:
+          ATSPI_PYTHON: /usr/bin/python3
+        run: xvfb-run -a -s "-screen 0 1440x900x24" ./a11y-linux.sh ../out/a11y/default
+      - name: F3 and A1 AT-SPI dumps, with the accessibility fixes (--a11y-fix)
+        working-directory: avalonia
+        env:
+          ATSPI_PYTHON: /usr/bin/python3
+        run: xvfb-run -a -s "-screen 0 1440x900x24" ./a11y-linux.sh ../out/a11y/fix --a11y-fix
+      - name: A1 outline of the dumps
+        working-directory: avalonia
+        run: |
+          for v in default fix; do for f in transactions transactions-selected dialog; do python3 tools/atspi_view.py ../out/a11y/$v/$f.json --skip-plain-panels > ../out/a11y/$v/$f.txt || true; done; done
+          head -50 ../out/a11y/default/transactions.txt; echo ...; grep -E "table|selected|DataGridRow|, selected" ../out/a11y/fix/transactions-selected.txt | head -8
+      - name: A2 telemetry observation in a loopback-only namespace
+        working-directory: avalonia
+        run: sudo -E env "PATH=$PATH" "DOTNET_ROOT=${DOTNET_ROOT:-$HOME/.dotnet}" bash tools/telemetry-check.sh ../out/telemetry
+      - name: Make evidence readable
+        if: always()
+        run: sudo chown -R "$USER" out
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: followup-linux
+          path: out/
+  windows:
+    name: Windows follow-up (F1 memory, F3 UIA, A1, A5 network)
+    runs-on: windows-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        shell: bash
+        working-directory: avalonia
+        run: |
+          dotnet build Slice -c Release
+          dotnet build Cli -c Release
+      - name: F1 memory (private working set and total working set over the process tree)
+        shell: bash
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli.exe memtest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/memory | tee ../out/memory-summary.txt
+      - name: F3 and A1 UI Automation dump, original app
+        if: always()
+        shell: pwsh
+        working-directory: avalonia
+        run: ./tools/uia-dump.ps1 -App "$PWD/Slice/bin/Release/net10.0/FolioSlice.exe" -Cli "$PWD/Cli/bin/Release/net10.0/folio-slice-cli.exe" -Data "$PWD/../fixtures" -Out "$PWD/../out/a11y/default"
+      - name: F3 and A1 UI Automation dump, with the accessibility fixes
+        if: always()
+        shell: pwsh
+        working-directory: avalonia
+        run: ./tools/uia-dump.ps1 -App "$PWD/Slice/bin/Release/net10.0/FolioSlice.exe" -Cli "$PWD/Cli/bin/Release/net10.0/folio-slice-cli.exe" -Data "$PWD/../fixtures" -Out "$PWD/../out/a11y/fix" -AppArgs "--a11y-fix"
+      - name: Show UIA outline
+        if: always()
+        shell: pwsh
+        run: |
+          Get-Content out/a11y/default/transactions.txt -TotalCount 60
+          "-----"
+          Select-String -Path out/a11y/fix/transactions-selected.txt -Pattern "GRID|TABLE|SELECTED|DataGridRow|Grid" | Select-Object -First 15 | ForEach-Object { $_.Line }
+      - name: A5 network observation (watcher in the background, scenario with 300 s idle)
+        if: always()
+        shell: pwsh
+        working-directory: avalonia
+        run: |
+          $w = Start-Process pwsh -ArgumentList "-NoProfile","-File","$PWD/tools/win-netwatch.ps1","-Out","$PWD/../out/net","-Seconds","420" -PassThru
+          Start-Sleep -Seconds 5
+          & "$PWD/Cli/bin/Release/net10.0/folio-slice-cli.exe" selftest "$PWD/Slice/bin/Release/net10.0/FolioSlice.exe" "$PWD/../fixtures" "$PWD/../out/net-selftest" --oskeys --idle 300
+          $w.WaitForExit()
+          Get-Content "$PWD/../out/net/summary.txt" -TotalCount 60
+          "--- other processes, non-loopback (runner background):"
+          Get-Content "$PWD/../out/net/other-processes-nonloopback.txt" -TotalCount 40
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: followup-windows
+          path: out/
+  macos:
+    name: macOS follow-up (F2)
+    runs-on: macos-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Machine
+        run: sw_vers; uname -m; sysctl -n machdep.cpu.brand_string; who; ls /Applications | head -5
+      - name: Build
+        working-directory: avalonia
+        run: |
+          s=$(date +%s)
+          dotnet build Slice -c Release
+          dotnet build Cli -c Release
+          echo "build seconds: $(( $(date +%s) - s ))"
+      - name: G3 scenario on macOS (synthetic keys; real OS keys not available here)
+        continue-on-error: true
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/selftest
+      - name: Screenshots, light and dark, and cold start
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          for t in light dark; do
+            s=$(date +%s%N)
+            ./shots.sh ../out/shots-$t $t
+          done
+      - name: Cold start
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          export FOLIO_DISCOVERY=$PWD/../out/cold/discovery.json; mkdir -p ../out/cold
+          s=$(date +%s%N); ./run-slice.sh ../out/cold; Cli/bin/Release/net10.0/folio-slice-cli wait-ready | cut -c1-200
+          echo "cold start wall ms: $(( ($(date +%s%N) - s) / 1000000 ))" | tee ../out/cold/coldstart.txt
+          Cli/bin/Release/net10.0/folio-slice-cli quit > /dev/null
+      - name: F1 memory (footprint and RSS)
+        continue-on-error: true
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory | tee ../out/memory-summary.txt
+      - name: F3 accessibility hierarchy
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          ./a11y-mac.sh ../out/a11y/default
+          ./a11y-mac.sh ../out/a11y/fix --a11y-fix
+          head -40 ../out/a11y/default/transactions.txt
+      - name: Network observation (tcpdump and lsof sampling, 300 s idle)
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          ./tools/mac-netwatch.sh ../out/net 420 &
+          sleep 5
+          Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/net-selftest --idle 300 || true
+          wait
+          cat ../out/net/summary.txt; echo "--- lsof rows for the app that are not loopback:"; grep -vE '127.0.0.1|\[::1\]|^#|COMMAND' ../out/net/lsof-app.txt | sort -u | head -20
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: followup-macos
+          path: out/
+  facts:
+    name: Maintenance facts (A6)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Collect
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash avalonia/tools/maintenance-facts.sh out/facts
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: followup-facts
+          path: out/
