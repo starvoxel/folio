@@ -158,13 +158,16 @@ test('reporting: bar and legend click open filtered Transactions', async () => {
 
   // Click a bar: the month table buttons are the keyboard path; the SVG bar is the pointer path.
   await goto(L.page, 'Reporting');
-  const bars = (await L.page.locator('[data-testid="bars"]').boundingBox())!;
-  const plotLeft = bars.x + 64;
-  const plotW = bars.width - 64 - 16;
-  // Second month, "Money in" bar sits left of its category centre.
-  const cx = plotLeft + plotW * (1.5 / 12);
-  const barY = bars.y + bars.height - 28 - 5; // just above the x axis
-  await L.page.mouse.click(cx - plotW / 12 / 5, barY);
+  // Find the rendered SVG bars by colour (layout differs per OS/font, so no hard-coded geometry).
+  const greens = await L.page.evaluate(() =>
+    [...document.querySelectorAll('[data-testid="bars"] svg path')]
+      .filter((p) => (p.getAttribute('fill') ?? '').toLowerCase() === '#0f7b0f')
+      .map((p) => p.getBoundingClientRect())
+      .filter((r) => r.height > 20)
+      .sort((a, b) => a.x - b.x)
+      .map((r) => ({ x: r.x + r.width / 2, y: r.y + r.height / 2 })));
+  expect(greens).toHaveLength(12);
+  await L.page.mouse.click(greens[1]!.x, greens[1]!.y); // February, Money in
   await settle(L.page);
   t = await state(L.page);
   expect(t.page).toBe('transactions');

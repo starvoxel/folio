@@ -19,3 +19,4 @@ Timestamps are UTC. Start: 2026-11-11T23:50Z (session start, branch checked out,
 | 01:15 | a11y: ECharts' auto `aria` label overwrote my chart label and read raw cents ("data for Housing is 2708950"). Disabled ECharts aria; kept my own label + legend/table as the accessible data. |
 | 01:35 | CI run 1: Linux slice tests 16/16 twice, but my screenshot-compare step failed: Playwright wipes `test-results/` at the start of each run, deleting run 1's screenshots. Moved the kept run-1 shots outside `test-results`. Release vs test executable differ by exactly 1 byte (the inspect fuse). |
 | 01:40 | Dark mode: Fluent nav items painted opaque black; overrode to transparent. |
+| 01:50 | CI run 1 on Windows: fuse-hardened binary launched and Playwright attached (11 tests passed), but the SVG bar click failed because my test hard-coded pixel geometry that differs on Windows fonts. Rewrote it to locate bars by fill colour in the SVG. |
