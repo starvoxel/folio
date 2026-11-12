@@ -8,6 +8,7 @@ $etl = Join-Path $Out "pktmon.etl"
 try { pktmon stop 2>&1 | Out-Null; pktmon start --capture --comp nics --file-name $etl 2>&1 | Out-File (Join-Path $Out "pktmon-start.txt") } catch { "pktmon unavailable: $_" | Out-File (Join-Path $Out "pktmon-start.txt") }
 $app = New-Object System.Collections.Generic.List[string]
 $other = @{}
+$byproc = @{}   # every process, loopback included: shows the sampler can see sockets (validation of the method)
 $names = @{}
 $end = (Get-Date).AddSeconds($Seconds)
 $samples = 0; $appSeen = 0
@@ -20,6 +21,7 @@ while ((Get-Date) -lt $end) {
   try { $conns += Get-NetUDPEndpoint -ErrorAction SilentlyContinue | Select-Object @{n='proto';e={'udp'}}, LocalAddress, LocalPort, @{n='RemoteAddress';e={''}}, @{n='RemotePort';e={0}}, @{n='State';e={''}}, OwningProcess } catch {}
   foreach ($c in $conns) {
     $pn = $procs[[int]$c.OwningProcess]; if (-not $pn) { $pn = "pid" + $c.OwningProcess }
+    $bk = "$pn  state=$($c.State)  local=$($c.LocalAddress)  remote=$($c.RemoteAddress)"; if ($c.State -ne 'Listen' -or $pn -like 'folio*' -or $pn -eq 'System') { $byproc[$bk] = 1 + [int]$byproc[$bk] }
     if ($pn -eq "FolioSlice") {
       $appSeen++
       $app.Add(("{0},{1},{2}:{3},{4}:{5},{6}" -f $t, $c.proto, $c.LocalAddress, $c.LocalPort, $c.RemoteAddress, $c.RemotePort, $c.State))
@@ -30,6 +32,7 @@ while ((Get-Date) -lt $end) {
   Start-Sleep -Milliseconds 500
 }
 try { pktmon stop 2>&1 | Out-File (Join-Path $Out "pktmon-stop.txt"); pktmon etl2txt $etl --out (Join-Path $Out "pktmon.txt") 2>&1 | Out-Null } catch {}
+$byproc.GetEnumerator() | Where-Object { $_.Name -match "folio|System|pwsh" } | Sort-Object Name | ForEach-Object { "{0}  samples={1}" -f $_.Name, $_.Value } | Set-Content (Join-Path $Out "loopback-and-listeners-validation.txt")
 $app | Sort-Object -Unique | Set-Content (Join-Path $Out "app-connections-unique.csv")
 $other.GetEnumerator() | Sort-Object Name | ForEach-Object { "{0}  samples={1}" -f $_.Key, $_.Value } | Set-Content (Join-Path $Out "other-processes-nonloopback.txt")
 $nonlocalApp = $app | Where-Object { $f = $_.Split(','); $r = ($f[3] -replace ':\d+$', ''); $r -and -not (IsLocal $r) } | Sort-Object -Unique
