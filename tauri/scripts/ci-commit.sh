@@ -15,11 +15,11 @@ fi
 for p in "$@"; do [ -e "$p" ] && tar -cf - "$p" | tar -xf - -C "$dest"; done
 for f in $(find "$dest" -name 'strace.log' -size +200k); do gzip -f "$f"; done
 find "$dest" -name '*.log' -size +2M -delete
-git config user.name "tauri-spike-ci"; git config user.email "ci@example.invalid"
+git config core.autocrlf false; git config user.name "tauri-spike-ci"; git config user.email "ci@example.invalid"
 git add -f "$dest"
 git commit -qm "CI evidence: $name (run ${GITHUB_RUN_ID:-local})" || exit 0
 for i in 1 2 3 4 5 6; do
-  git pull -q --rebase origin "${GITHUB_REF_NAME:-spike/slice-tauri}" && git push -q origin "HEAD:${GITHUB_REF_NAME:-spike/slice-tauri}" && exit 0
+  git pull -q --rebase --autostash origin "${GITHUB_REF_NAME:-spike/slice-tauri}" && git push -q origin "HEAD:${GITHUB_REF_NAME:-spike/slice-tauri}" && exit 0
   sleep $((RANDOM % 8 + 2))
 done
 echo "could not push evidence"; exit 0
