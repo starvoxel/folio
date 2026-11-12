@@ -55,11 +55,11 @@ jobs:
       - name: Slice tests, run 1
         run: xvfb-run -a -s "-screen 0 1440x900x24" npx playwright test slice.spec.ts
       - name: Keep run 1 screenshots
-        run: mv test-results/shots/linux test-results/shots-run1
+        run: mv test-results/shots/linux shots-run1
       - name: Slice tests, run 2 (fresh launch)
         run: xvfb-run -a -s "-screen 0 1440x900x24" npx playwright test slice.spec.ts
       - name: Compare run 1 and run 2 screenshots
-        run: node scripts/compare-shots.mjs test-results/shots-run1 test-results/shots/linux "$SHOT_TOLERANCE"
+        run: node scripts/compare-shots.mjs shots-run1 test-results/shots/linux "$SHOT_TOLERANCE"
       - name: Restore screenshots from the previous workflow run
         id: prev
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -117,11 +117,11 @@ jobs:
       - name: Slice tests, run 1
         run: npx playwright test slice.spec.ts
       - name: Keep run 1 screenshots
-        run: mv test-results/shots/win32 test-results/shots-run1
+        run: mv test-results/shots/win32 shots-run1
       - name: Slice tests, run 2
         run: npx playwright test slice.spec.ts
       - name: Compare run 1 and run 2 screenshots
-        run: node scripts/compare-shots.mjs test-results/shots-run1 test-results/shots/win32 "$SHOT_TOLERANCE"
+        run: node scripts/compare-shots.mjs shots-run1 test-results/shots/win32 "$SHOT_TOLERANCE"
       - name: G2 grid performance
         continue-on-error: true
         run: npx playwright test perf.spec.ts

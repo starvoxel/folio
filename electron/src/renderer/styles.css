@@ -109,3 +109,7 @@ h2 { font-size: 16px; line-height: 22px; font-weight: 600; margin: 0 0 12px; }
 .link-btn:focus-visible { outline: 2px solid var(--accent); }
 
 .settings-page { max-width: 720px; }
+
+/* Fluent's nav items paint an opaque dark fill in dark mode; the prototype uses transparent items. */
+html body .nav button, html body .nav a { background: transparent; }
+html body .nav button:hover, html body .nav a:hover, html body .nav [aria-current='page'] { background: var(--subtle-hover); }
