@@ -5,3 +5,7 @@ tauri/src-tauri/gen/
 tauri/test-results/
 tauri/capture/
 tauri/dist-e2e/
+node_modules/
+tauri/test-results/
+*.log
+.DS_Store
