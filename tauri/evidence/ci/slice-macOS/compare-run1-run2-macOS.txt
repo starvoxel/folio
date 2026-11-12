@@ -1,11 +1,12 @@
 accounts-light.png: 68 px differ (0.0099%) ok
-networth-light.png: 0 px differ (0.0000%) ok
+dialog-open.png: 0 px differ (0.0000%) ok
+networth-light.png: 68 px differ (0.0099%) ok
 overview-light.png: 0 px differ (0.0000%) ok
 reporting-dark.png: 0 px differ (0.0000%) ok
-reporting-donut-light.png: 68 px differ (0.0099%) ok
-reporting-light.png: 68 px differ (0.0099%) ok
-rules-light.png: 68 px differ (0.0099%) ok
+reporting-donut-light.png: 0 px differ (0.0000%) ok
+reporting-light.png: 0 px differ (0.0000%) ok
+rules-light.png: 0 px differ (0.0000%) ok
 settings-light.png: 0 px differ (0.0000%) ok
 transactions-dark.png: 0 px differ (0.0000%) ok
-transactions-light.png: 10856 px differ (1.5729%) FAIL
-compared 10 screenshots, tolerance 0.100% of pixels, 1 failed
+transactions-light.png: 0 px differ (0.0000%) ok
+compared 11 screenshots, tolerance 0.100% of pixels, 0 failed

@@ -1,16 +1,13 @@
 
-Execution of 1 workers started at 2026-11-12T17:29:31.455Z
+Execution of 1 workers started at 2026-11-12T18:08:39.061Z
 
 [0-0] RUNNING in undefined - file:///specs/slice.e2e.ts
-[0-0] javascript error in "Folio slice (Tauri, WebdriverIO embedded driver).settings dialog: focus lands inside, Tab cycles, Escape closes"
-javascript error: WebDriverError: JavaScript execution returned a result of an unsupported type (code 5) when running "execute/async" with method "POST"
-    at async Context.<anonymous> (/Users/runner/work/folio/folio/tauri/e2e/specs/slice.e2e.ts:174:5)
-[0-0] FAILED in undefined - file:///specs/slice.e2e.ts
+[0-0] PASSED in undefined - file:///specs/slice.e2e.ts
 
  "spec" Reporter:
 ------------------------------------------------------------------
 [webkit 605.1.15 macos #0-0] Running: webkit (v605.1.15) on macos
-[webkit 605.1.15 macos #0-0] Session ID: 53c55f3c-71c4-48fb-b16f-432ed8f21ff3
+[webkit 605.1.15 macos #0-0] Session ID: 47e259e7-2396-4a22-b79e-088582c08abf
 [webkit 605.1.15 macos #0-0]
 [webkit 605.1.15 macos #0-0] » specs/slice.e2e.ts
 [webkit 605.1.15 macos #0-0] Folio slice (Tauri, WebdriverIO embedded driver)
@@ -28,16 +25,10 @@ javascript error: WebDriverError: JavaScript execution returned a result of an u
 [webkit 605.1.15 macos #0-0]    ✓ reporting: bar and legend click open filtered Transactions
 [webkit 605.1.15 macos #0-0]    ✓ theme dark: charts and pages render
 [webkit 605.1.15 macos #0-0]    ✓ theme light: charts and pages render
-[webkit 605.1.15 macos #0-0]    ✖ settings dialog: focus lands inside, Tab cycles, Escape closes
+[webkit 605.1.15 macos #0-0]    ✓ settings dialog: focus lands inside, Tab cycles, Escape closes
 [webkit 605.1.15 macos #0-0]
-[webkit 605.1.15 macos #0-0] 14 passing (5.8s)
-[webkit 605.1.15 macos #0-0] 1 failing
-[webkit 605.1.15 macos #0-0]
-[webkit 605.1.15 macos #0-0] 1) Folio slice (Tauri, WebdriverIO embedded driver) settings dialog: focus lands inside, Tab cycles, Escape closes
-[webkit 605.1.15 macos #0-0] WebDriverError: JavaScript execution returned a result of an unsupported type (code 5) when running "execute/async" with method "POST"
-[webkit 605.1.15 macos #0-0] javascript error: WebDriverError: JavaScript execution returned a result of an unsupported type (code 5) when running "execute/async" with method "POST"
-[webkit 605.1.15 macos #0-0]     at async Context.<anonymous> (/Users/runner/work/folio/folio/tauri/e2e/specs/slice.e2e.ts:174:5)
+[webkit 605.1.15 macos #0-0] 15 passing (7.6s)
 
 
-Spec Files:	 0 passed, 1 failed, 1 total (100% completed) in 00:00:06  
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:09  
 

@@ -1,189 +1,191 @@
 {
   "platform": "darwin",
-  "pid": 11745,
+  "pid": 19594,
   "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)",
   "sortMsWorstPerColumn": {
-    "date": 39,
-    "description": 32.99999999999818,
-    "account": 32,
-    "category": 31,
-    "amount": 32.99999999999818
+    "date": 60,
+    "description": 38.99999999999818,
+    "account": 30.99999999999818,
+    "category": 31.999999999996362,
+    "amount": 30
   },
   "passes": [
     {
-      "durationMs": 10047,
+      "durationMs": 10363,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 52
+      "worstFrameMs": 60
     },
     {
-      "durationMs": 10011,
+      "durationMs": 10321,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 26
+      "worstFrameMs": 89
     },
     {
-      "durationMs": 10005,
+      "durationMs": 10367,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 22
+      "worstFrameMs": 76
     }
   ],
-  "selectionMs": 52,
-  "soakWorstFrameMs": 121,
+  "selectionMs": 120,
+  "soakWorstFrameMs": 82,
   "points": {
     "P0": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 29,
-        "secondaryMB": 101.3,
+        "primaryMB": 30,
+        "secondaryMB": 101.7,
         "processes": 1
       },
       "all": {
-        "primaryMB": 96.6,
-        "secondaryMB": 253.6,
-        "processes": 4
+        "primaryMB": 113,
+        "secondaryMB": 395.2,
+        "processes": 8
       },
       "detail": [
-        "folio[11745]:29",
-        "com.apple.WebKit.GPU[11746]:11",
-        "com.apple.WebKit.Networking[11747]:6",
-        "com.apple.WebKit.WebContent[11748]:51"
+        "folio[19594]:30",
+        "com.apple.WebKit.Networking[19458]:0",
+        "com.apple.WebKit.WebContent[19459]:0",
+        "com.apple.WebKit.Networking[19533]:4",
+        "com.apple.WebKit.WebContent[19534]:9",
+        "com.apple.WebKit.WebContent[19535]:9",
+        "com.apple.WebKit.Networking[19596]:5",
+        "com.apple.WebKit.WebContent[19597]:54"
       ],
       "webkitHelpersNotDescendants": [
-        11746,
-        11747,
-        11748
+        19458,
+        19459,
+        19533,
+        19534,
+        19535,
+        19596,
+        19597
       ],
-      "baselineCount": 7
+      "baselineCount": 0
     },
     "P1": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 29,
-        "secondaryMB": 101.4,
+        "primaryMB": 30,
+        "secondaryMB": 101.6,
         "processes": 1
       },
       "all": {
-        "primaryMB": 103.5,
-        "secondaryMB": 264.6,
-        "processes": 4
+        "primaryMB": 109.7,
+        "secondaryMB": 306.8,
+        "processes": 5
       },
       "detail": [
-        "folio[11745]:29",
-        "com.apple.WebKit.GPU[11746]:11",
-        "com.apple.WebKit.Networking[11747]:6",
-        "com.apple.WebKit.WebContent[11748]:58"
+        "folio[19594]:30",
+        "com.apple.WebKit.Networking[19533]:4",
+        "com.apple.WebKit.WebContent[19534]:9",
+        "com.apple.WebKit.Networking[19596]:5",
+        "com.apple.WebKit.WebContent[19597]:59"
       ],
       "webkitHelpersNotDescendants": [
-        11746,
-        11747,
-        11748
+        19533,
+        19534,
+        19596,
+        19597
       ],
-      "baselineCount": 7
+      "baselineCount": 0
     },
     "P2": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 32,
-        "secondaryMB": 104.8,
+        "primaryMB": 33,
+        "secondaryMB": 104.9,
         "processes": 1
       },
       "all": {
-        "primaryMB": 517.4,
-        "secondaryMB": 494.3,
-        "processes": 4
+        "primaryMB": 511.2,
+        "secondaryMB": 461.2,
+        "processes": 3
       },
       "detail": [
-        "folio[11745]:32",
-        "com.apple.WebKit.GPU[11746]:13",
-        "com.apple.WebKit.Networking[11747]:5",
-        "com.apple.WebKit.WebContent[11748]:467"
+        "folio[19594]:33",
+        "com.apple.WebKit.Networking[19596]:5",
+        "com.apple.WebKit.WebContent[19597]:473"
       ],
       "webkitHelpersNotDescendants": [
-        11746,
-        11747,
-        11748
+        19596,
+        19597
       ],
-      "baselineCount": 7
+      "baselineCount": 0
     },
     "P3": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 32,
-        "secondaryMB": 105,
+        "primaryMB": 33,
+        "secondaryMB": 105.1,
         "processes": 1
       },
       "all": {
-        "primaryMB": 641.5,
-        "secondaryMB": 505.5,
-        "processes": 4
+        "primaryMB": 631.3,
+        "secondaryMB": 465.5,
+        "processes": 3
       },
       "detail": [
-        "folio[11745]:32",
-        "com.apple.WebKit.GPU[11746]:14",
-        "com.apple.WebKit.Networking[11747]:5",
-        "com.apple.WebKit.WebContent[11748]:590"
+        "folio[19594]:33",
+        "com.apple.WebKit.Networking[19596]:5",
+        "com.apple.WebKit.WebContent[19597]:593"
       ],
       "webkitHelpersNotDescendants": [
-        11746,
-        11747,
-        11748
+        19596,
+        19597
       ],
-      "baselineCount": 7
+      "baselineCount": 0
     },
     "P4": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
         "primaryMB": 31,
-        "secondaryMB": 106.3,
+        "secondaryMB": 103.7,
         "processes": 1
       },
       "all": {
-        "primaryMB": 166.5,
-        "secondaryMB": 508.4,
-        "processes": 4
+        "primaryMB": 499.3,
+        "secondaryMB": 470,
+        "processes": 3
       },
       "detail": [
-        "folio[11745]:31",
-        "com.apple.WebKit.GPU[11746]:12",
-        "com.apple.WebKit.Networking[11747]:5",
-        "com.apple.WebKit.WebContent[11748]:118"
+        "folio[19594]:31",
+        "com.apple.WebKit.Networking[19596]:5",
+        "com.apple.WebKit.WebContent[19597]:463"
       ],
       "webkitHelpersNotDescendants": [
-        11746,
-        11747,
-        11748
+        19596,
+        19597
       ],
-      "baselineCount": 7
+      "baselineCount": 0
     },
     "P5": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 31,
-        "secondaryMB": 106.2,
+        "primaryMB": 27,
+        "secondaryMB": 102.8,
         "processes": 1
       },
       "all": {
-        "primaryMB": 509.4,
-        "secondaryMB": 520.3,
-        "processes": 4
+        "primaryMB": 493.3,
+        "secondaryMB": 481.4,
+        "processes": 3
       },
       "detail": [
-        "folio[11745]:31",
-        "com.apple.WebKit.GPU[11746]:12",
-        "com.apple.WebKit.Networking[11747]:5",
-        "com.apple.WebKit.WebContent[11748]:461"
+        "folio[19594]:27",
+        "com.apple.WebKit.Networking[19596]:5",
+        "com.apple.WebKit.WebContent[19597]:461"
       ],
       "webkitHelpersNotDescendants": [
-        11746,
-        11747,
-        11748
+        19596,
+        19597
       ],
-      "baselineCount": 7
+      "baselineCount": 0
     }
   },
   "rowsAfterSoak": 10000

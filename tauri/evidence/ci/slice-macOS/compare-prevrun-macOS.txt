@@ -1,10 +1,10 @@
-accounts-light.png: 68 px differ (0.0099%) ok
+accounts-light.png: 0 px differ (0.0000%) ok
 networth-light.png: 0 px differ (0.0000%) ok
 overview-light.png: 0 px differ (0.0000%) ok
 reporting-dark.png: 0 px differ (0.0000%) ok
-reporting-donut-light.png: 68 px differ (0.0099%) ok
+reporting-donut-light.png: 0 px differ (0.0000%) ok
 reporting-light.png: 0 px differ (0.0000%) ok
-rules-light.png: 68 px differ (0.0099%) ok
+rules-light.png: 0 px differ (0.0000%) ok
 settings-light.png: 0 px differ (0.0000%) ok
 transactions-dark.png: 0 px differ (0.0000%) ok
 transactions-light.png: 0 px differ (0.0000%) ok
