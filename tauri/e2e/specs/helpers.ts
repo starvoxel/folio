@@ -46,14 +46,21 @@ export async function press(k: 'Tab' | 'Enter' | 'Escape') {
     await browser.keys(k);
     return;
   }
-  if (process.platform === 'linux') {
-    execFileSync('xdotool', ['key', '--clearmodifiers', k === 'Escape' ? 'Escape' : k === 'Enter' ? 'Return' : 'Tab']);
-  } else if (process.platform === 'win32') {
-    const map = { Tab: '{TAB}', Enter: '{ENTER}', Escape: '{ESC}' };
-    execFileSync('powershell', ['-NoProfile', '-Command', `Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('${map[k]}')`]);
-  } else {
-    const code = { Tab: 48, Enter: 36, Escape: 53 }[k];
-    execFileSync('osascript', ['-e', `tell application "System Events" to key code ${code}`]);
+  try {
+    if (process.platform === 'linux') {
+      execFileSync('xdotool', ['key', '--clearmodifiers', k === 'Escape' ? 'Escape' : k === 'Enter' ? 'Return' : 'Tab']);
+    } else if (process.platform === 'win32') {
+      const map = { Tab: '{TAB}', Enter: '{ENTER}', Escape: '{ESC}' };
+      execFileSync('powershell', ['-NoProfile', '-Command', `Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('${map[k]}')`]);
+    } else {
+      const code = { Tab: 48, Enter: 36, Escape: 53 }[k];
+      execFileSync('osascript', ['-e', `tell application "System Events" to key code ${code}`], { timeout: 15000 });
+    }
+  } catch (e) {
+    // OS-level key injection was refused (macOS needs an accessibility permission the hosted runner does not grant). Record it
+    // and fall back to the driver's synthetic keys, which cannot move focus on Tab: tests that depend on that will fail honestly.
+    fs.appendFileSync(path.join(resultsDir, `key-fallback-${process.platform}.txt`), `${k}: ${String(e).slice(0, 300)}\n`);
+    await browser.keys(k);
   }
   await new Promise((r) => setTimeout(r, 60));
 }

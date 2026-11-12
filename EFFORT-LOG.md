@@ -9,3 +9,4 @@ Times are UTC, 2026-11-12. Prompts or corrections from the user after the kickof
 - First run under Xvfb: blank white window. Suspected upstream WebKitGTK/Xvfb bug (tauri#15936) and tried DMABUF/compositing/software-GL env vars; none changed anything. Real cause found by injecting a diagnostic script: `app.security.freezePrototype: true` made a library assign to a read-only property, so the bundle never ran. Removed it. Lesson: this hardening option breaks the Fluent/React/ECharts bundle.
 - Second failure: `invoke` of a raw `Response` returns an ArrayBuffer, not a string. Fixed in the adapter.
 - Slice renders on Linux with no graphics workaround needed in this sandbox.
+- Mistake: committed tauri/e2e/node_modules (14.5k files, ~7 MB packed). Removed from the index in the next commit; history still contains it because a force-push was not allowed. A reviewer may squash.

@@ -1,0 +1,155 @@
+name: tauri-slice
+
+on:
+  push:
+    branches: [spike/slice-tauri]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: never
+
+jobs:
+  slice:
+    name: slice, memory, bundles (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-latest]
+    defaults:
+      run:
+        shell: bash
+        working-directory: tauri
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            tauri/package-lock.json
+            tauri/e2e/package-lock.json
+      - name: Linux prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev patchelf xvfb xdotool rpm fonts-noto-cjk fonts-noto-core
+      - name: Toolchain and web view versions
+        run: |
+          mkdir -p test-results
+          { rustc --version; cargo --version; node --version; uname -a; } | tee test-results/versions-${{ runner.os }}.txt
+          if [ "$RUNNER_OS" = Linux ]; then dpkg -s libwebkit2gtk-4.1-0 | grep -E '^(Package|Version)' | tee -a test-results/versions-${{ runner.os }}.txt; cat /etc/os-release | head -2 | tee -a test-results/versions-${{ runner.os }}.txt; fi
+          if [ "$RUNNER_OS" = Windows ]; then powershell -NoProfile -Command "(Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}').pv; (Get-CimInstance Win32_OperatingSystem).Caption; (Get-CimInstance Win32_OperatingSystem).Version" | tee -a test-results/versions-${{ runner.os }}.txt; fi
+          if [ "$RUNNER_OS" = macOS ]; then { sw_vers; defaults read /System/Cryptexes/App/System/Library/Frameworks/WebKit.framework/Resources/Info CFBundleVersion 2>/dev/null || defaults read /System/Library/Frameworks/WebKit.framework/Resources/Info CFBundleVersion; defaults read /System/Library/Frameworks/WebKit.framework/Resources/Info CFBundleShortVersionString 2>/dev/null; } | tee -a test-results/versions-${{ runner.os }}.txt; fi
+      - name: npm ci (app and e2e)
+        run: |
+          npm ci
+          (cd e2e && npm ci)
+      - name: Build the shipped bundles (timed)
+        run: |
+          start=$(date +%s)
+          npm run build:ui
+          bundles=""
+          if [ "$RUNNER_OS" = Linux ]; then bundles="deb,rpm,appimage"; fi
+          if [ "$RUNNER_OS" = Windows ]; then bundles="nsis,msi"; fi
+          if [ "$RUNNER_OS" = macOS ]; then bundles="app,dmg"; fi
+          npx tauri build --bundles $bundles 2>&1 | tail -40 || true
+          echo "shipped build + bundles: $(( $(date +%s) - start )) s" | tee test-results/build-time-${{ runner.os }}.txt
+      - name: Sizes
+        run: |
+          { find src-tauri/target/release/bundle -maxdepth 3 \( -name '*.deb' -o -name '*.rpm' -o -name '*.AppImage' -o -name '*.exe' -o -name '*.msi' -o -name '*.dmg' \) -exec ls -l {} \; ;
+            ls -l src-tauri/target/release/folio src-tauri/target/release/folio.exe 2>/dev/null;
+            du -sk src-tauri/target/release/bundle/macos/Folio.app 2>/dev/null; } | tee test-results/sizes-${{ runner.os }}.txt
+      - name: Build the test binary (embedded WebDriver, off unless FOLIO_AUTOMATION=1)
+        run: |
+          start=$(date +%s)
+          scripts/build-e2e.sh 2>&1 | tail -5
+          echo "e2e build: $(( $(date +%s) - start )) s" | tee -a test-results/build-time-${{ runner.os }}.txt
+      - name: WebKit helper baseline (macOS)
+        if: runner.os == 'macOS'
+        run: node scripts/memtree.mjs baseline "$RUNNER_TEMP/wk-base.json"
+      - name: Slice scenario, run 1
+        run: |
+          cd e2e
+          run() { if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" "$@"; else "$@"; fi; }
+          rc=0
+          FOLIO_SPEC=./specs/slice.e2e.ts run npx wdio run wdio.conf.ts 2>&1 | tee ../test-results/slice-run1-${{ runner.os }}.log || rc=1
+          cp -r ../test-results/shots ../test-results/shots-run1
+          exit 0
+      - name: Slice scenario, run 2 (same code, same job)
+        run: |
+          cd e2e
+          run() { if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" "$@"; else "$@"; fi; }
+          FOLIO_SPEC=./specs/slice.e2e.ts run npx wdio run wdio.conf.ts 2>&1 | tee ../test-results/slice-run2-${{ runner.os }}.log || true
+          node compare-shots.mjs ../test-results/shots-run1/$(node -p "process.platform") ../test-results/shots/$(node -p "process.platform") 0.001 | tee ../test-results/compare-run1-run2-${{ runner.os }}.txt || true
+      - name: Restore screenshots of the previous workflow run
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: tauri/test-results/prev-shots
+          key: shots-${{ runner.os }}-none
+          restore-keys: shots-${{ runner.os }}-
+      - name: Cross-run screenshot comparison
+        run: |
+          p=$(node -p "process.platform")
+          if [ -d test-results/prev-shots/$p ]; then (cd e2e && node compare-shots.mjs ../test-results/prev-shots/$p ../test-results/shots/$p 0.001 | tee ../test-results/compare-prevrun-${{ runner.os }}.txt) || true; else echo "no previous run cached" | tee test-results/compare-prevrun-${{ runner.os }}.txt; fi
+          rm -rf test-results/prev-shots && mkdir -p test-results/prev-shots && cp -r test-results/shots/$p test-results/prev-shots/$p
+      - name: Save screenshots for the next workflow run
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: tauri/test-results/prev-shots
+          key: shots-${{ runner.os }}-${{ github.run_id }}
+      - name: Quit command exits the process
+        run: |
+          cd e2e
+          run() { if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" "$@"; else "$@"; fi; }
+          FOLIO_SPEC=./specs/quit.e2e.ts run npx wdio run wdio.conf.ts 2>&1 | tail -15 || true
+          sleep 3
+          if pgrep -x folio >/dev/null 2>&1 || tasklist 2>/dev/null | grep -qi folio.exe; then echo "app still running after quit" | tee ../test-results/quit-${{ runner.os }}.txt; else echo "app process gone after quit_app" | tee ../test-results/quit-${{ runner.os }}.txt; fi
+      - name: F1 memory P0..P5 + G2 frames and sorts (default graphics path)
+        env:
+          FOLIO_WEBKIT_BASELINE: ${{ runner.temp }}/wk-base.json
+        run: |
+          cd e2e
+          run() { if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" "$@"; else "$@"; fi; }
+          FOLIO_PERF_SUFFIX=-default FOLIO_SPEC=./specs/perf.e2e.ts run npx wdio run wdio.conf.ts 2>&1 | grep -E "MEM|passing|failing|Error" | cut -c1-600
+      - name: F1 memory, Linux with the DMABUF renderer disabled
+        if: runner.os == 'Linux'
+        run: |
+          cd e2e
+          FOLIO_WEBKIT_ENV=WEBKIT_DISABLE_DMABUF_RENDERER=1 FOLIO_PERF_SUFFIX=-dmabuf-off FOLIO_SPEC=./specs/perf.e2e.ts xvfb-run -a -s "-screen 0 1440x900x24" npx wdio run wdio.conf.ts 2>&1 | grep -E "MEM|passing|failing|Error" | cut -c1-600
+      - name: Shipped binary, no driver, idle memory at P0 (app-only vs all)
+        env:
+          FOLIO_WEBKIT_BASELINE: ${{ runner.temp }}/wk-base.json
+        run: |
+          export FOLIO_DATA_DIR="$GITHUB_WORKSPACE/fixtures"
+          exe=src-tauri/target/release/folio; [ "$RUNNER_OS" = Windows ] && exe=src-tauri/target/release/folio.exe
+          ( if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a -s "-screen 0 1440x900x24" bash -c "$PWD/$exe >/dev/null 2>&1 & sleep 10; node scripts/memtree.mjs measure \$(node scripts/memtree.mjs find folio) | tee test-results/shipped-idle-${{ runner.os }}.json; kill %1"
+            else "$exe" >/dev/null 2>&1 & sleep 10; node scripts/memtree.mjs measure $(node scripts/memtree.mjs find folio) "$FOLIO_WEBKIT_BASELINE" | tee test-results/shipped-idle-${{ runner.os }}.json; kill %1 2>/dev/null || taskkill //F //IM folio.exe; fi ) || true
+      - name: Cold start of the shipped binary (window to first render, 5 samples)
+        run: node scripts/cold-start.mjs 2>&1 | tee test-results/cold-start-${{ runner.os }}.txt || true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: slice-${{ runner.os }}
+          path: |
+            tauri/test-results/**
+            !tauri/test-results/prev-shots/**
+            !tauri/test-results/wdio-logs/**
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: bundles-${{ runner.os }}
+          path: |
+            tauri/src-tauri/target/release/bundle/deb/*.deb
+            tauri/src-tauri/target/release/bundle/appimage/*.AppImage
+            tauri/src-tauri/target/release/bundle/rpm/*.rpm
+            tauri/src-tauri/target/release/bundle/nsis/*.exe
+            tauri/src-tauri/target/release/bundle/msi/*.msi
+            tauri/src-tauri/target/release/bundle/dmg/*.dmg
+          if-no-files-found: warn
+          retention-days: 3
