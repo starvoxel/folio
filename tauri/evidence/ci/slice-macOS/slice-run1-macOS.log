@@ -1,5 +1,5 @@
 
-Execution of 1 workers started at 2026-11-12T18:53:15.478Z
+Execution of 1 workers started at 2026-11-12T19:13:33.805Z
 
 [0-0] RUNNING in undefined - file:///specs/slice.e2e.ts
 [0-0] PASSED in undefined - file:///specs/slice.e2e.ts
@@ -7,7 +7,7 @@ Execution of 1 workers started at 2026-11-12T18:53:15.478Z
  "spec" Reporter:
 ------------------------------------------------------------------
 [webkit 605.1.15 macos #0-0] Running: webkit (v605.1.15) on macos
-[webkit 605.1.15 macos #0-0] Session ID: bcf7f45b-ed35-412f-b558-32a2939d83f2
+[webkit 605.1.15 macos #0-0] Session ID: 48e608b9-65fc-4a62-b7d1-f00b564d002b
 [webkit 605.1.15 macos #0-0]
 [webkit 605.1.15 macos #0-0] » specs/slice.e2e.ts
 [webkit 605.1.15 macos #0-0] Folio slice (Tauri, WebdriverIO embedded driver)
@@ -27,8 +27,8 @@ Execution of 1 workers started at 2026-11-12T18:53:15.478Z
 [webkit 605.1.15 macos #0-0]    ✓ theme light: charts and pages render
 [webkit 605.1.15 macos #0-0]    ✓ settings dialog: focus lands inside, Tab cycles, Escape closes
 [webkit 605.1.15 macos #0-0]
-[webkit 605.1.15 macos #0-0] 15 passing (10.4s)
+[webkit 605.1.15 macos #0-0] 15 passing (7.5s)
 
 
-Spec Files:	 1 passed, 1 total (100% completed) in 00:00:14  
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:10  
 
