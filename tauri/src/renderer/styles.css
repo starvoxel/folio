@@ -1,0 +1,89 @@
+/* Colours come from the Fluent theme tokens set by FluentProvider; no custom palette. System font stack, no remote fonts. */
+:root { --font: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, 'Noto Sans', 'Noto Sans CJK SC', 'Noto Sans Arabic', 'Noto Sans Hebrew', sans-serif; }
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body { font-family: var(--font); font-size: 14px; line-height: 20px; }
+html body .fluent-root { height: 100%; background: var(--colorNeutralBackground2); color: var(--colorNeutralForeground1); font-family: var(--font); }
+.boot { padding: 24px; }
+.muted { color: var(--colorNeutralForeground2); }
+.num { font-variant-numeric: tabular-nums; }
+.pos { color: var(--colorPaletteGreenForeground1); }
+.right { text-align: right; justify-content: flex-end; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); height: 100%; }
+html body .nav { height: 100%; background: transparent; }
+.brand { font-size: 20px; line-height: 28px; font-weight: 600; padding: 12px 12px 4px; }
+.main { display: flex; flex-direction: column; min-width: 0; height: 100%; }
+.topbar { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px; border-bottom: 1px solid var(--colorNeutralStroke2); flex: none; }
+.topbar .file-name { font-weight: 600; }
+.topbar .spacer { flex: 1; }
+.saved { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+.saved .dot { width: 8px; height: 8px; color: var(--colorPaletteGreenForeground1); }
+.content { flex: 1; min-height: 0; overflow: auto; padding: 20px 32px 24px; }
+.banner { margin-bottom: 12px; }
+
+h1 { font-size: 28px; line-height: 36px; font-weight: 600; margin: 0; }
+h2 { font-size: 16px; line-height: 22px; font-weight: 600; margin: 0 0 12px; }
+.page-head { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.placeholder h1 { margin-bottom: 8px; }
+
+.card { background: var(--colorNeutralBackground1); border: 1px solid var(--colorNeutralStroke2); border-radius: 8px; box-shadow: var(--shadow2); padding: 16px; }
+.card + .card { margin-top: 16px; }
+
+/* Transactions */
+.tx-page { display: flex; flex-direction: column; height: 100%; min-height: 0; max-width: 1240px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.filters .search { min-width: 280px; }
+.tx-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; flex: 1; min-height: 0; }
+.tx-body .card + .card { margin-top: 0; }
+.grid-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+.grid { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.grid-head, .grid-row { display: grid; grid-template-columns: 110px minmax(160px, 1fr) 170px 170px 120px; align-items: center; }
+.grid-head { border-bottom: 1px solid var(--colorNeutralStroke2); height: 36px; flex: none; font-weight: 600; }
+.grid-body { flex: 1; min-height: 0; overflow: auto; outline: none; position: relative; contain: strict; }
+.grid-body:focus-visible { box-shadow: inset 0 0 0 2px var(--colorBrandBackground); }
+.grid-row { position: absolute; top: 0; left: 0; right: 0; cursor: default; border-bottom: 1px solid var(--colorNeutralStroke2); }
+.grid-row:hover { background: var(--colorSubtleBackgroundHover); }
+.grid-row.selected { background: var(--colorBrandBackground2); }
+.cell { padding: 0 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; align-items: center; min-width: 0; }
+.cell.head { padding: 0; }
+.head-btn { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 4px; padding: 0 12px; height: 100%; width: 100%; cursor: pointer; font-weight: 600; }
+.cell.right .head-btn { justify-content: flex-end; }
+.head-btn:hover { background: var(--colorSubtleBackgroundHover); }
+.head-btn:focus-visible { outline: 2px solid var(--colorBrandBackground); outline-offset: -2px; }
+.empty { padding: 32px; text-align: center; color: var(--colorNeutralForeground2); }
+.details { overflow: auto; }
+.details h2 { margin-bottom: 4px; word-break: break-word; }
+.details .big { font-size: 28px; line-height: 36px; font-weight: 600; margin-bottom: 12px; }
+.details dl { margin: 0; }
+.details dt { color: var(--colorNeutralForeground2); font-size: 12px; line-height: 16px; margin-top: 12px; }
+.details dd { margin: 2px 0 0; word-break: break-word; }
+
+/* Reporting */
+.report-page { max-width: 1240px; }
+.report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 16px; align-items: start; }
+.report-grid .card + .card { margin-top: 0; }
+.donut-wrap { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: center; }
+.chart.donut { width: 260px; height: 260px; }
+.chart.bars { width: 100%; height: 280px; }
+.legend { list-style: none; margin: 0; padding: 0; }
+.legend-row { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 12px 1fr auto 44px; gap: 8px; align-items: center; width: 100%; min-height: 32px; padding: 0 8px; border-radius: 4px; cursor: pointer; }
+.legend-row:hover { background: var(--colorSubtleBackgroundHover); }
+.legend-row:focus-visible { outline: 2px solid var(--colorBrandBackground); outline-offset: -2px; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; }
+.pct { text-align: right; }
+.flow-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.flow-table th, .flow-table td { padding: 4px 8px; border-top: 1px solid var(--colorNeutralStroke2); font-weight: 400; text-align: left; }
+.flow-table th[scope='col'] { font-weight: 600; border-top: 0; }
+.flow-table .right { text-align: right; }
+.link-btn { all: unset; cursor: pointer; color: var(--colorBrandForegroundLink); padding: 2px 4px; border-radius: 4px; }
+.link-btn:hover { text-decoration: underline; }
+.link-btn:focus-visible { outline: 2px solid var(--colorBrandBackground); }
+
+.settings-page { max-width: 720px; }
+
+/* Fluent's nav items paint an opaque dark fill in dark mode; transparent items sit better on the page background. */
+html body .nav button, html body .nav a { background: transparent; }
+html body .nav button:hover, html body .nav a:hover, html body .nav [aria-current='page'] { background: var(--colorSubtleBackgroundHover); }

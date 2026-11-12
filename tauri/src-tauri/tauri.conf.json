@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Folio",
+  "version": "0.0.1",
+  "identifier": "invalid.example.folio.spike",
+  "build": {
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      { "label": "main", "title": "Folio", "width": 1440, "height": 900, "minWidth": 900, "minHeight": 600, "visible": true }
+    ],
+    "security": {
+      "capabilities": ["main"],
+      "csp": {
+        "default-src": "'none'",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' data:",
+        "font-src": "'self'",
+        "connect-src": "ipc: http://ipc.localhost",
+        "base-uri": "'none'",
+        "form-action": "'none'",
+        "frame-ancestors": "'none'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "category": "Office",
+    "shortDescription": "Folio spike",
+    "linux": { "deb": { "depends": [] } },
+    "windows": { "webviewInstallMode": { "type": "downloadBootstrapper" } }
+  }
+}

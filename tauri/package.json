@@ -1,0 +1,30 @@
+{
+  "name": "folio-tauri-spike",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Folio stack-selection spike: Tauri 2 + React slice",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build:ui": "vite build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev:ui": "vite",
+    "tauri": "tauri",
+    "test:unit": "node --test --experimental-strip-types src/shared/*.test.ts"
+  },
+  "devDependencies": {
+    "@fluentui/react-components": "9.75.2",
+    "@tanstack/react-virtual": "3.14.26",
+    "@tauri-apps/api": "2.12.4",
+    "@tauri-apps/cli": "2.12.4",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "echarts": "6.1.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
+  }
+}
