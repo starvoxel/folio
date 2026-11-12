@@ -1,13 +1,13 @@
-[0-0] 2026-11-12T18:22:39.979Z LAUNCHED
-[0-0] 2026-11-12T18:22:40.580Z PAGE Overview
-[0-0] 2026-11-12T18:22:41.296Z PAGE Transactions
-[0-0] 2026-11-12T18:22:41.980Z PAGE Reporting
-[0-0] 2026-11-12T18:22:42.566Z PAGE Net worth
-[0-0] 2026-11-12T18:22:43.149Z PAGE Accounts
-[0-0] 2026-11-12T18:22:43.713Z PAGE Rules & categories
-[0-0] 2026-11-12T18:22:44.282Z PAGE Settings
-[0-0] 2026-11-12T18:22:44.595Z USED transactions search/filter/sort/select
-[0-0] 2026-11-12T18:22:46.319Z USED reporting click-through, theme, dialog
-[0-0] 2026-11-12T18:22:46.319Z IDLE START 300s
-[0-0] 2026-11-12T18:27:46.471Z IDLE END
-[webkit 605.1.15 macos #0-0] 1 passing (5m 6.5s)
+[0-0] 2026-11-12T18:41:08.594Z LAUNCHED
+[0-0] 2026-11-12T18:41:09.195Z PAGE Overview
+[0-0] 2026-11-12T18:41:09.913Z PAGE Transactions
+[0-0] 2026-11-12T18:41:10.596Z PAGE Reporting
+[0-0] 2026-11-12T18:41:11.145Z PAGE Net worth
+[0-0] 2026-11-12T18:41:11.713Z PAGE Accounts
+[0-0] 2026-11-12T18:41:12.262Z PAGE Rules & categories
+[0-0] 2026-11-12T18:41:12.832Z PAGE Settings
+[0-0] 2026-11-12T18:41:13.168Z USED transactions search/filter/sort/select
+[0-0] 2026-11-12T18:41:14.797Z USED reporting click-through, theme, dialog
+[0-0] 2026-11-12T18:41:14.797Z IDLE START 300s
+[0-0] 2026-11-12T18:46:14.800Z IDLE END
+[webkit 605.1.15 macos #0-0] 1 passing (5m 6.2s)

@@ -1,3 +1,3 @@
-total packets in capture (whole machine):   123921
+total packets in capture (whole machine):   134565
 --- non-loopback sockets held by folio or WebKit helpers (lsof, every 3 s):
 (no rows above = no non-loopback socket from the app or its WebKit helpers seen at 3 s sampling)
