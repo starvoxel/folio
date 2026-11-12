@@ -191,6 +191,13 @@ public sealed class MainWindow : Window
     public bool SendKey(string key, bool shift = false)
     {
         var k = Enum.Parse<Key>(key, true);
+        if (Opt.Headless)
+        {
+            // Headless platform has a proper input pipeline: key events go through the same path as real input.
+            Avalonia.Headless.HeadlessWindowExtensions.KeyPress(this, k, shift ? RawInputModifiers.Shift : RawInputModifiers.None, PhysicalKey.None, null);
+            Avalonia.Headless.HeadlessWindowExtensions.KeyRelease(this, k, shift ? RawInputModifiers.Shift : RawInputModifiers.None, PhysicalKey.None, null);
+            return true;
+        }
         var focused = (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() as InputElement) ?? this;
         var mods = shift ? KeyModifiers.Shift : KeyModifiers.None;
         if (k == Key.Tab)
