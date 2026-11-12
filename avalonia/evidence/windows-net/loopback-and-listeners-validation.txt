@@ -1,0 +1,9 @@
+folio-slice-cli  state=Bound  local=::  remote=::  samples=124
+folio-slice-cli  state=Established  local=127.0.0.1  remote=127.0.0.1  samples=124
+System  state=  local=10.1.0.112  remote=  samples=1396
+System  state=  local=172.29.16.1  remote=  samples=1396
+System  state=Established  local=127.0.0.1  remote=127.0.0.1  samples=124
+System  state=Listen  local=::  remote=::  samples=3490
+System  state=Listen  local=10.1.0.112  remote=0.0.0.0  samples=698
+System  state=Listen  local=127.0.0.1  remote=0.0.0.0  samples=515
+System  state=Listen  local=172.29.16.1  remote=0.0.0.0  samples=698
