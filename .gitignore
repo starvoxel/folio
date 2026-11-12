@@ -4,3 +4,4 @@ tauri/src-tauri/target/
 tauri/src-tauri/gen/
 tauri/test-results/
 tauri/capture/
+tauri/dist-e2e/

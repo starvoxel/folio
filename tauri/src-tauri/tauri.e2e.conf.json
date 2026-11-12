@@ -1,0 +1,25 @@
+{
+  "app": {
+    "withGlobalTauri": true,
+    "security": {
+      "capabilities": [
+        "main",
+        {
+          "identifier": "e2e",
+          "description": "Test builds only",
+          "windows": [
+            "main"
+          ],
+          "permissions": [
+            "core:default",
+            "core:window:default",
+            "wdio:default"
+          ]
+        }
+      ]
+    }
+  },
+  "build": {
+    "frontendDist": "../dist-e2e"
+  }
+}
