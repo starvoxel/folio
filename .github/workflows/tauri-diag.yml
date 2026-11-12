@@ -1,7 +1,9 @@
 name: tauri-diag
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [spike/slice-tauri]
+    paths: ['tauri/scripts/diag-shipped.sh', '.github/workflows/tauri-diag.yml']
 
 permissions:
   contents: write
