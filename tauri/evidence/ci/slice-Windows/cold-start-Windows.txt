@@ -1,4 +1,5 @@
-ERROR: The process "7620" not found.
-ERROR: The process "8200" not found.
-ERROR: The process "1108" not found.
-{"metric":"ms from spawn to first web view process present","samples":[733,482,485,497,512]}
+ERROR: The process "6672" not found.
+ERROR: The process "3148" not found.
+ERROR: The process "6532" not found.
+ERROR: The process "5340" not found.
+{"metric":"ms from spawn to first web view process present","samples":[880,586,571,598,592]}
