@@ -1,14 +1,13 @@
 samples: 60 distinct seconds
 web view tree processes seen: folio.exe, msedgewebview2.exe
-web view tree sockets (any): 256 rows; non-loopback remote (not Listen): 25 rows
-  24x msedgewebview2.exe, 104.20.23.154:443
-  1x msedgewebview2.exe, 150.171.22.17:443
+web view tree sockets (any): 286 rows; non-loopback remote (not Listen): 27 rows
+  27x msedgewebview2.exe, 104.20.23.154:443
 other (non-web-view) processes with non-loopback connections during the sample, by process:
-  350 rows  Runner.Worker.exe
-  287 rows  System Idle Process
-  245 rows  svchost.exe
-  140 rows  Runner.Listener.exe
-  140 rows  WindowsAzureGuestAgent.exe
-  70 rows  WaAppAgent.exe
-  60 rows  hosted-compute-agent
-  46 rows  provjobd.exe1216107111
+  357 rows  System Idle Process
+  288 rows  Runner.Worker.exe
+  208 rows  svchost.exe
+  144 rows  Runner.Listener.exe
+  144 rows  WaAppAgent.exe
+  144 rows  WindowsAzureGuestAgent.exe
+  61 rows  provjobd.exe647138664
+  59 rows  hosted-compute-agent

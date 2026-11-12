@@ -1,0 +1,9 @@
+
+ExperimentationAndConfigurationServiceControl : 0
+PSPath                                        : Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\WebView2
+PSParentPath                                  : Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge
+PSChildName                                   : WebView2
+PSDrive                                       : HKLM
+PSProvider                                    : Microsoft.PowerShell.Core\Registry
+
+
