@@ -1,4 +1,4 @@
-01-overview-nav: exit 0 164 nodes -> /Users/runner/work/folio/folio/tauri/test-results/a11y-platform/darwin/01-overview-nav.txt 
+01-overview-nav: exit 0 138 nodes -> /Users/runner/work/folio/folio/tauri/test-results/a11y-platform/darwin/01-overview-nav.txt 
 02-transactions-no-selection: exit 0 671 nodes -> /Users/runner/work/folio/folio/tauri/test-results/a11y-platform/darwin/02-transactions-no-selection.txt 
 03-transactions-row-selected: exit 0 693 nodes -> /Users/runner/work/folio/folio/tauri/test-results/a11y-platform/darwin/03-transactions-row-selected.txt 
 04-transactions-scrolled-far: exit 0 903 nodes -> /Users/runner/work/folio/folio/tauri/test-results/a11y-platform/darwin/04-transactions-scrolled-far.txt 
