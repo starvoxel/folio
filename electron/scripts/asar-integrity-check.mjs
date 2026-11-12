@@ -24,7 +24,18 @@ async function tryLaunch(label) {
     return true;
   } catch (e) { console.log(`${label}: DID NOT START (${String(e).split('\n')[0].slice(0, 160)}) after ${Date.now() - t} ms`); return false; }
 }
+const original = fs.readFileSync(asar);
 const ok1 = await tryLaunch('untouched app.asar');
+// Tamper 1: append a byte after the archive (changes neither the header nor any file).
 fs.appendFileSync(asar, Buffer.from([0]));
-const ok2 = await tryLaunch('app.asar with one byte appended');
-console.log(`RESULT: integrity validation ${ok1 && !ok2 ? 'WORKS (untouched starts, tampered refused)' : ok1 && ok2 ? 'NOT ENFORCED (tampered file still started)' : 'INCONCLUSIVE (untouched build did not start)'}`);
+const ok2 = await tryLaunch('app.asar with one byte appended at the end');
+// Tamper 2: change one letter of a comment inside a packed file (same length, behaviour unchanged, file content differs).
+const buf = Buffer.from(original);
+const needle = Buffer.from('Spellcheck downloads');
+const at = buf.indexOf(needle);
+if (at < 0) { console.log('tamper 2 skipped: marker comment not found in app.asar'); process.exit(1); }
+buf[at + needle.length - 1] = 'z'.charCodeAt(0);
+fs.writeFileSync(asar, buf);
+const ok3 = await tryLaunch('app.asar with one letter changed inside a packed file (a comment)');
+fs.writeFileSync(asar, original);
+console.log(`RESULT: untouched ${ok1 ? 'starts' : 'DOES NOT START'}; byte appended ${ok2 ? 'starts' : 'refused'}; file content tampered ${ok3 ? 'STARTS (not enforced)' : 'refused (enforced)'}`);

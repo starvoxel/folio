@@ -9,6 +9,7 @@ sleep 12
 echo "=== $label: $*"
 echo "renderer processes:"
 for pid in $(pgrep -f -- '--type=renderer'); do
+  echo "  cmdline has --no-sandbox: $(tr '\0' ' ' < /proc/$pid/cmdline | grep -c -- '--no-sandbox')"
   echo "  pid=$pid uid=$(awk '/^Uid:/{print $2}' /proc/$pid/status) $(grep -E '^(Seccomp|NoNewPrivs):' /proc/$pid/status | tr '\n\t' '  ') userns=$(readlink /proc/$pid/ns/user)"
 done
 n=$(pgrep -f -- '--type=renderer' | wc -l); [ "$n" = 0 ] && echo "  (none: app did not start a renderer)"

@@ -33,7 +33,7 @@ echo; echo "### E. electron-builder .deb installed with dpkg, run by the ordinar
 DEB=$(ls release-pkg/*.deb 2>/dev/null | head -1)
 if [ -n "$DEB" ]; then
   ls -la "$DEB"
-  sudo dpkg -i "$DEB" 2>&1 | tail -3
+  sudo apt-get install -y "$PWD/$DEB" 2>&1 | tail -25
   ls -la /opt/Folio/chrome-sandbox; ls -la /etc/apparmor.d/folio-spike 2>&1
   "$SBX" E-deb /usr/bin/folio-spike --data-dir="$FIX"
 else echo "no deb built"; fi
