@@ -1,0 +1,92 @@
+[
+  {
+    "point": "P0 Overview 5s",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 151,
+      "rss_mb": 225.7
+    }
+  },
+  {
+    "point": "P1 Transactions 5s",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 166,
+      "rss_mb": 243.9
+    }
+  },
+  {
+    "point": "P2 after scroll 1 \u002B3s",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 177,
+      "rss_mb": 259.2
+    }
+  },
+  {
+    "point": "P3 after scroll 2 \u002B3s",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 177,
+      "rss_mb": 259.3
+    }
+  },
+  {
+    "point": "P4 after scroll 3 \u002B 60s idle",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 142,
+      "rss_mb": 259.8
+    }
+  },
+  {
+    "point": "soak after 5 scrolls",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 159,
+      "rss_mb": 275.8
+    }
+  },
+  {
+    "point": "soak after 10 scrolls",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 163,
+      "rss_mb": 279.1
+    }
+  },
+  {
+    "point": "soak after 15 scrolls",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 165,
+      "rss_mb": 281.3
+    }
+  },
+  {
+    "point": "soak after 20 scrolls",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 166,
+      "rss_mb": 282.5
+    }
+  },
+  {
+    "point": "P5 after soak (20 scrolls) \u002B 60s idle",
+    "m": {
+      "os": "macos",
+      "processes": 1,
+      "footprint_mb": 165,
+      "rss_mb": 282.3
+    }
+  }
+]

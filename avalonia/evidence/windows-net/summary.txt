@@ -1,0 +1,14 @@
+samples=729; sample interval ~500 ms (+ enumeration time); rows for FolioSlice (all, incl. loopback) = 0
+app rows with a non-loopback remote address: 0
+pktmon destination addresses (all processes):
+10.1.0.15 packets=2144
+140.82.113.22 packets=8
+140.82.114.21 packets=56
+168.61.215.74 packets=12
+168.63.129.16 packets=2040
+169.254.169.254 packets=42
+20.59.87.225 packets=6
+20.59.87.226 packets=6
+20.75.202.224 packets=286
+20.85.130.105 packets=46
+57.150.4.193 packets=6

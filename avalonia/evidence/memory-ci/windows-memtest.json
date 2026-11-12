@@ -1,0 +1,122 @@
+[
+  {
+    "point": "P0 Overview 5s",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 62,
+      "total_ws_mb": 150
+    }
+  },
+  {
+    "point": "P1 Transactions 5s",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 81.1,
+      "total_ws_mb": 176.6
+    }
+  },
+  {
+    "point": "P2 after scroll 1 \u002B3s",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 86.9,
+      "total_ws_mb": 187.6
+    }
+  },
+  {
+    "point": "P3 after scroll 2 \u002B3s",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 87.1,
+      "total_ws_mb": 188.1
+    }
+  },
+  {
+    "point": "P4 after scroll 3 \u002B 60s idle",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 64.4,
+      "total_ws_mb": 161.4
+    }
+  },
+  {
+    "point": "soak after 5 scrolls",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 90.9,
+      "total_ws_mb": 148.4
+    }
+  },
+  {
+    "point": "soak after 10 scrolls",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 81.7,
+      "total_ws_mb": 137.7
+    }
+  },
+  {
+    "point": "soak after 15 scrolls",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 80.7,
+      "total_ws_mb": 132
+    }
+  },
+  {
+    "point": "soak after 20 scrolls",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 80.7,
+      "total_ws_mb": 124.9
+    }
+  },
+  {
+    "point": "P5 after soak (20 scrolls) \u002B 60s idle",
+    "m": {
+      "os": "windows",
+      "processes": 1,
+      "names": [
+        "FolioSlice"
+      ],
+      "private_ws_mb": 75.1,
+      "total_ws_mb": 115
+    }
+  }
+]

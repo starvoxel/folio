@@ -1,0 +1,14 @@
+/home/runner/work/folio/folio/avalonia/Slice/TransactionsPage.cs(19,48): warning CS0618: 'TextBox.Watermark' is obsolete: 'Use PlaceholderText instead.' [/home/runner/work/folio/folio/avalonia/Slice/Slice.csproj]
+/home/runner/work/folio/folio/avalonia/Slice/AutomationServer.cs(126,44): warning CS0618: 'Bitmap.Save(Stream, int?)' is obsolete: 'Use the overload accepting BitmapEncoderOptions instead.' [/home/runner/work/folio/folio/avalonia/Slice/Slice.csproj]
+/home/runner/work/folio/folio/avalonia/Slice/SettingsPage.cs(53,179): warning CS0618: 'TextBox.Watermark' is obsolete: 'Use PlaceholderText instead.' [/home/runner/work/folio/folio/avalonia/Slice/Slice.csproj]
+  Slice -> /home/runner/work/folio/folio/avalonia/Slice/bin/Release/net10.0/FolioSlice.dll
+
+Build succeeded.
+
+/home/runner/work/folio/folio/avalonia/Slice/TransactionsPage.cs(19,48): warning CS0618: 'TextBox.Watermark' is obsolete: 'Use PlaceholderText instead.' [/home/runner/work/folio/folio/avalonia/Slice/Slice.csproj]
+/home/runner/work/folio/folio/avalonia/Slice/AutomationServer.cs(126,44): warning CS0618: 'Bitmap.Save(Stream, int?)' is obsolete: 'Use the overload accepting BitmapEncoderOptions instead.' [/home/runner/work/folio/folio/avalonia/Slice/Slice.csproj]
+/home/runner/work/folio/folio/avalonia/Slice/SettingsPage.cs(53,179): warning CS0618: 'TextBox.Watermark' is obsolete: 'Use PlaceholderText instead.' [/home/runner/work/folio/folio/avalonia/Slice/Slice.csproj]
+    3 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:07.83

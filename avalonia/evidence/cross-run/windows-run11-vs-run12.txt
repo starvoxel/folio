@@ -1,0 +1,8 @@
+/tmp/claude-0/s/art/wa/out/run1/Accounts.png vs /tmp/claude-0/s/art/wb/out/run1/Accounts.png: 0 pixels differ (0.0000 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Net-worth.png vs /tmp/claude-0/s/art/wb/out/run1/Net-worth.png: 0 pixels differ (0.0000 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Overview.png vs /tmp/claude-0/s/art/wb/out/run1/Overview.png: 0 pixels differ (0.0000 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Reporting.png vs /tmp/claude-0/s/art/wb/out/run1/Reporting.png: 48 pixels differ (0.0062 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Rules-and-categories.png vs /tmp/claude-0/s/art/wb/out/run1/Rules-and-categories.png: 0 pixels differ (0.0000 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Settings-switched.png vs /tmp/claude-0/s/art/wb/out/run1/Settings-switched.png: 0 pixels differ (0.0000 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Settings.png vs /tmp/claude-0/s/art/wb/out/run1/Settings.png: 0 pixels differ (0.0000 %), tolerance 0.1000 %: MATCH
+/tmp/claude-0/s/art/wa/out/run1/Transactions.png vs /tmp/claude-0/s/art/wb/out/run1/Transactions.png: 48 pixels differ (0.0062 %), tolerance 0.1000 %: MATCH

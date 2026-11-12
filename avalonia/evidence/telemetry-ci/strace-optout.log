@@ -1,0 +1,5 @@
+4263  execve("/usr/share/dotnet/dotnet", ["dotnet", "build", "Slice", "-c", "Release", "--no-restore", "-nodeReuse:false", "-p:UseSharedCompilation=false"], 0x7ffcd5d0d298 /* 124 vars */) = 0
+4278  connect(173, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+4278  connect(173, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+4279  execve("/usr/share/dotnet/sdk/10.0.404/Roslyn/bincore/csc", ["/usr/share/dotnet/sdk/10.0.404/Roslyn/bincore/csc", "/noconfig", "@/tmp/MSBuildTempWoHPKh/tmpe1399a815e1a4f78b56bd60ecb0d4d4d.rsp"], 0x7fa1cc1fd480 /* 130 vars */) = 0
+4281  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=4279, si_uid=0, si_status=0, si_utime=322 /* 3.22 s */, si_stime=76 /* 0.76 s */} ---
