@@ -256,3 +256,43 @@ jobs:
         with:
           name: e5-windows
           path: electron/ci-out/
+
+  # F3 stretch: a real screen reader (Guidepup: NVDA on Windows, VoiceOver on macOS). Time-boxed; failure is a finding.
+  screen-reader:
+    name: F3 stretch screen reader (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2025
+            exe: out-test/Folio-win32-x64/Folio.exe
+          - os: macos-latest
+            exe: out-test/Folio-darwin-arm64/Folio.app/Contents/MacOS/Folio
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Install
+        run: |
+          npm ci
+          node -e "require('fs').existsSync(require('electron')) || process.exit(1)" 2>/dev/null || node node_modules/electron/install.js
+      - name: Package the test binary
+        run: FOLIO_FUSE_INSPECT=1 FOLIO_OUT=out-test node scripts/package.mjs
+      - name: Install Guidepup and set up the screen reader
+        continue-on-error: true
+        working-directory: electron/scripts/sr
+        run: |
+          npm install
+          npx @guidepup/setup --ci 2>&1 | tail -30
+      - name: Run the screen reader scenario
+        continue-on-error: true
+        run: |
+          mkdir -p ci-out
+          node scripts/sr/run.mjs ${{ matrix.exe }} ci-out/screen-reader.txt 2>&1 | tail -80
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: sr-${{ runner.os }}
+          path: electron/ci-out/
