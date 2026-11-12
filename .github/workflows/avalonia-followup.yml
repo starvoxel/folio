@@ -1,9 +1,7 @@
 name: avalonia-followup
 
 on:
-  push:
-    branches: [spike/slice-avalonia]
-  workflow_dispatch:
+  workflow_dispatch:  # push trigger removed in the table-accessibility spike to save runner time; earlier results are unchanged
 
 permissions:
   contents: read

@@ -1,0 +1,181 @@
+name: avalonia-table
+
+on:
+  push:
+    branches: [spike/slice-avalonia]
+    paths: ['.github/workflows/avalonia-table.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  AVALONIA_TELEMETRY_OPTOUT: '1'
+
+jobs:
+  linux:
+    name: Linux ${{ matrix.cand }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { cand: c0, app: '--a11y-fix', build: '' }
+          - { cand: c1, app: '--a11y-fix --table c1', build: '' }
+          - { cand: c2, app: '--a11y-fix --table c2', build: '' }
+          - { cand: c3, app: '--a11y-fix', build: '-p:DataGridImpl=pro' }
+    env:
+      XV: xvfb-run -a -s "-screen 0 1440x900x24"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool at-spi2-core python3-gi gir1.2-atspi-2.0 dbus-x11
+      - name: Build
+        working-directory: avalonia
+        run: |
+          dotnet build Slice -c Release ${{ matrix.build }}
+          dotnet build Cli -c Release
+      - name: AT-SPI dumps and table summaries
+        working-directory: avalonia
+        env:
+          ATSPI_PYTHON: /usr/bin/python3
+        run: |
+          mkdir -p ../out
+          $XV ./a11y-linux.sh ../out/a11y ${{ matrix.app }}
+          for f in transactions transactions-selected transactions-end; do echo "=== $f"; /usr/bin/python3 tools/atspi_table_summary.py ../out/a11y/$f.json | tee ../out/a11y/$f.summary.txt | cut -c1-400; done
+      - name: G2 bench (scroll twice, sort every column) and screenshot
+        working-directory: avalonia
+        run: |
+          $XV ./bench.sh ../out/bench ${{ matrix.app }}
+          for f in coldstart.txt scroll1.json scroll2.json sorts.jsonl; do echo "--- $f"; cat ../out/bench/$f | tr -d '\n ' ; echo; done
+      - name: Memory P0 to P5 (PSS and RSS over the process tree)
+        working-directory: avalonia
+        run: |
+          mkdir -p ../out
+          $XV Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory --measure-script ../tools/measure-memory.py $(for a in ${{ matrix.app }}; do printf -- '--extra-arg %s ' "$a"; done) | tee ../out/memory-summary.txt
+      - name: Keyboard and behaviour scenario (44 checks, real OS keys; informational for non-stock candidates)
+        continue-on-error: true
+        working-directory: avalonia
+        run: $XV Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/selftest --oskeys $(for a in ${{ matrix.app }}; do printf -- '--extra-arg %s ' "$a"; done)
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: table-linux-${{ matrix.cand }}
+          path: out/
+  windows:
+    name: Windows ${{ matrix.cand }}
+    runs-on: windows-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { cand: c0, app: '--a11y-fix', build: '' }
+          - { cand: c1, app: '--a11y-fix --table c1', build: '' }
+          - { cand: c2, app: '--a11y-fix --table c2', build: '' }
+          - { cand: c3, app: '--a11y-fix', build: '-p:DataGridImpl=pro' }
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        shell: bash
+        working-directory: avalonia
+        run: |
+          dotnet build Slice -c Release ${{ matrix.build }}
+          dotnet build Cli -c Release
+      - name: UI Automation dumps
+        shell: pwsh
+        working-directory: avalonia
+        run: ./tools/uia-dump.ps1 -App "$PWD/Slice/bin/Release/net10.0/FolioSlice.exe" -Cli "$PWD/Cli/bin/Release/net10.0/folio-slice-cli.exe" -Data "$PWD/../fixtures" -Out "$PWD/../out/a11y" -AppArgs "${{ matrix.app }}"
+      - name: Show table lines
+        if: always()
+        shell: pwsh
+        run: |
+          foreach ($f in "transactions","transactions-selected","transactions-end") { "=== $f"; Select-String -Path out/a11y/$f.txt -Pattern "Transactions table|GRID|TABLE|GRIDITEM|SELECTED=True" | Select-Object -First 8 | ForEach-Object { $_.Line.Substring(0, [Math]::Min(330, $_.Line.Length)) } }
+      - name: G2 bench
+        if: always()
+        shell: bash
+        working-directory: avalonia
+        env:
+          SLICE_BIN: ${{ github.workspace }}/avalonia/Slice/bin/Release/net10.0/FolioSlice.exe
+        run: |
+          sed -i 's#folio-slice-cli"#folio-slice-cli.exe"#' bench.sh
+          ./bench.sh ../out/bench ${{ matrix.app }}
+          for f in coldstart.txt scroll1.json scroll2.json sorts.jsonl; do echo "--- $f"; cat ../out/bench/$f | tr -d '\n ' ; echo; done
+      - name: Memory P0 to P5 (private and total working set over the process tree)
+        if: always()
+        shell: bash
+        working-directory: avalonia
+        run: |
+          mkdir -p ../out
+          Cli/bin/Release/net10.0/folio-slice-cli.exe memtest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/memory $(for a in ${{ matrix.app }}; do printf -- '--extra-arg %s ' "$a"; done) | tee ../out/memory-summary.txt
+      - name: Keyboard and behaviour scenario (real OS keys)
+        if: always()
+        continue-on-error: true
+        shell: bash
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli.exe selftest Slice/bin/Release/net10.0/FolioSlice.exe ../fixtures ../out/selftest --oskeys $(for a in ${{ matrix.app }}; do printf -- '--extra-arg %s ' "$a"; done)
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: table-windows-${{ matrix.cand }}
+          path: out/
+  macos:
+    name: macOS ${{ matrix.cand }}
+    runs-on: macos-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { cand: c0, app: '--a11y-fix', build: '' }
+          - { cand: c1, app: '--a11y-fix --table c1', build: '' }
+          - { cand: c2, app: '--a11y-fix --table c2', build: '' }
+          - { cand: c3, app: '--a11y-fix', build: '-p:DataGridImpl=pro' }
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        working-directory: avalonia
+        run: |
+          dotnet build Slice -c Release ${{ matrix.build }}
+          dotnet build Cli -c Release
+      - name: AX dumps
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          mkdir -p ../out/a11y
+          ./a11y-mac.sh ../out/a11y ${{ matrix.app }}
+          for f in transactions transactions-selected transactions-end; do echo "=== $f"; grep -n -E "AXGrid|AXTable|AXList|AXRow|AXCell|selected=1|AXRows|AXSelectedRows|AXColumns|Transactions table" ../out/a11y/$f.txt | cut -c1-300 | head -14; done
+      - name: G2 bench
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          ./bench.sh ../out/bench ${{ matrix.app }}
+          for f in coldstart.txt scroll1.json scroll2.json sorts.jsonl; do echo "--- $f"; cat ../out/bench/$f | tr -d '\n ' ; echo; done
+      - name: Memory P0 to P5 (footprint and RSS)
+        continue-on-error: true
+        working-directory: avalonia
+        run: |
+          mkdir -p ../out
+          Cli/bin/Release/net10.0/folio-slice-cli memtest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/memory $(for a in ${{ matrix.app }}; do printf -- '--extra-arg %s ' "$a"; done) | tee ../out/memory-summary.txt
+      - name: Behaviour scenario (synthetic keys; real keys unavailable here)
+        continue-on-error: true
+        working-directory: avalonia
+        run: Cli/bin/Release/net10.0/folio-slice-cli selftest Slice/bin/Release/net10.0/FolioSlice ../fixtures ../out/selftest $(for a in ${{ matrix.app }}; do printf -- '--extra-arg %s ' "$a"; done)
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: table-macos-${{ matrix.cand }}
+          path: out/
