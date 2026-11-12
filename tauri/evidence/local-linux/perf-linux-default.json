@@ -1,0 +1,154 @@
+{
+  "platform": "linux",
+  "pid": 32303,
+  "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/60.5 Safari/605.1.15",
+  "sortMsWorstPerColumn": {
+    "date": 93.99999999999818,
+    "description": 99,
+    "account": 89,
+    "category": 92,
+    "amount": 83.00000000000182
+  },
+  "passes": [
+    {
+      "durationMs": 17093,
+      "frames": 600,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 60
+    },
+    {
+      "durationMs": 16925,
+      "frames": 600,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 63
+    },
+    {
+      "durationMs": 16008.999999999993,
+      "frames": 600,
+      "framesOver100ms": 0,
+      "longTasks": 0,
+      "worstFrameMs": 45
+    }
+  ],
+  "selectionMs": 97.99999999998543,
+  "soakWorstFrameMs": 88,
+  "points": {
+    "P0": {
+      "metric": "PSS (MB), RSS (MB)",
+      "app": {
+        "primaryMB": 91.1,
+        "secondaryMB": 170.5,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 372.4,
+        "secondaryMB": 554.3,
+        "processes": 3
+      },
+      "detail": [
+        "folio[32303]:91",
+        "WebKitNetworkPr[32371]:20",
+        "WebKitWebProces[32397]:262"
+      ],
+      "orphans": []
+    },
+    "P1": {
+      "metric": "PSS (MB), RSS (MB)",
+      "app": {
+        "primaryMB": 91.2,
+        "secondaryMB": 170.7,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 417.2,
+        "secondaryMB": 599.5,
+        "processes": 3
+      },
+      "detail": [
+        "folio[32303]:91",
+        "WebKitNetworkPr[32371]:20",
+        "WebKitWebProces[32397]:306"
+      ],
+      "orphans": []
+    },
+    "P2": {
+      "metric": "PSS (MB), RSS (MB)",
+      "app": {
+        "primaryMB": 91.3,
+        "secondaryMB": 171,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 534.2,
+        "secondaryMB": 716.8,
+        "processes": 3
+      },
+      "detail": [
+        "folio[32303]:91",
+        "WebKitNetworkPr[32371]:20",
+        "WebKitWebProces[32397]:423"
+      ],
+      "orphans": []
+    },
+    "P3": {
+      "metric": "PSS (MB), RSS (MB)",
+      "app": {
+        "primaryMB": 91.4,
+        "secondaryMB": 171,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 531.7,
+        "secondaryMB": 714.4,
+        "processes": 3
+      },
+      "detail": [
+        "folio[32303]:91",
+        "WebKitNetworkPr[32371]:20",
+        "WebKitWebProces[32397]:421"
+      ],
+      "orphans": []
+    },
+    "P4": {
+      "metric": "PSS (MB), RSS (MB)",
+      "app": {
+        "primaryMB": 90.9,
+        "secondaryMB": 170.5,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 523.2,
+        "secondaryMB": 705.9,
+        "processes": 3
+      },
+      "detail": [
+        "folio[32303]:91",
+        "WebKitNetworkPr[32371]:20",
+        "WebKitWebProces[32397]:413"
+      ],
+      "orphans": []
+    },
+    "P5": {
+      "metric": "PSS (MB), RSS (MB)",
+      "app": {
+        "primaryMB": 91,
+        "secondaryMB": 170.6,
+        "processes": 1
+      },
+      "all": {
+        "primaryMB": 568.3,
+        "secondaryMB": 751,
+        "processes": 3
+      },
+      "detail": [
+        "folio[32303]:91",
+        "WebKitNetworkPr[32371]:20",
+        "WebKitWebProces[32397]:458"
+      ],
+      "orphans": []
+    }
+  },
+  "rowsAfterSoak": 10000
+}

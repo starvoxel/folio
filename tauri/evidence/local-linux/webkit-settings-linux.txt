@@ -1,0 +1,18 @@
+enable-hyperlink-auditing True
+
+enable-dns-prefetching False
+enable-javascript True
+enable-developer-extras False
+enable-site-specific-quirks True
+enable-media-stream True
+enable-webrtc False
+enable-encrypted-media False
+enable-mediasource True
+enable-page-cache True
+enable-html5-database True
+enable-html5-local-storage True
+allow-file-access-from-file-urls False
+enable-write-console-messages-to-stdout False
+spell-checking-enabled False
+sandbox-enabled-api-present True
+webkitgtk 2 52 6
