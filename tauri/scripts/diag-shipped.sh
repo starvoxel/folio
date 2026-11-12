@@ -11,7 +11,8 @@ $BIN >"$OUT/$label.log" 2>&1 &
 APP=\$!
 for i in \$(seq 1 30); do
   sleep 1
-  echo "t=\${i}s procs: \$(ps -eo pid,comm | grep -cE 'WebKit(Web|Network|GPU)Process') webkit, app alive: \$(kill -0 \$APP 2>/dev/null && echo yes || echo NO), windows: \$(xwininfo -root -tree | grep -cE 'Folio|folio')" >> "$OUT/$label.timeline"
+  if [ \$((i%3)) = 0 ]; then import -window root "$OUT/$label.tmp.png" 2>/dev/null; echo "   brightness@\${i}s: \$(convert "$OUT/$label.tmp.png" -format '%[fx:mean]' info:)" >> "$OUT/$label.timeline"; fi
+  echo "t=\${i}s procs: \$(pgrep -fc 'WebKit(Web|Network)Process') webkit, app alive: \$(kill -0 \$APP 2>/dev/null && echo yes || echo NO), windows: \$(xwininfo -root -tree | grep -cE 'Folio|folio')" >> "$OUT/$label.timeline"
 done
 xwininfo -root -tree > "$OUT/$label.xwininfo"
 import -window root "$OUT/$label.png"; convert "$OUT/$label.png" -format 'brightness %[fx:mean]\n' info: >> "$OUT/$label.timeline"
