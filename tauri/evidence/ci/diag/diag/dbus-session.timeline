@@ -1,31 +1,41 @@
-t=1s procs: 0 webkit, app alive: yes, windows: 2
-t=2s procs: 0 webkit, app alive: yes, windows: 2
-t=3s procs: 0 webkit, app alive: yes, windows: 2
-t=4s procs: 0 webkit, app alive: yes, windows: 2
-t=5s procs: 0 webkit, app alive: yes, windows: 2
-t=6s procs: 0 webkit, app alive: yes, windows: 2
-t=7s procs: 0 webkit, app alive: yes, windows: 2
-t=8s procs: 0 webkit, app alive: yes, windows: 2
-t=9s procs: 0 webkit, app alive: yes, windows: 2
-t=10s procs: 0 webkit, app alive: yes, windows: 2
-t=11s procs: 0 webkit, app alive: yes, windows: 2
-t=12s procs: 0 webkit, app alive: yes, windows: 2
-t=13s procs: 0 webkit, app alive: yes, windows: 2
-t=14s procs: 0 webkit, app alive: yes, windows: 2
-t=15s procs: 0 webkit, app alive: yes, windows: 2
-t=16s procs: 0 webkit, app alive: yes, windows: 2
-t=17s procs: 0 webkit, app alive: yes, windows: 2
-t=18s procs: 0 webkit, app alive: yes, windows: 2
-t=19s procs: 0 webkit, app alive: yes, windows: 2
-t=20s procs: 0 webkit, app alive: yes, windows: 2
-t=21s procs: 0 webkit, app alive: yes, windows: 2
-t=22s procs: 0 webkit, app alive: yes, windows: 2
-t=23s procs: 0 webkit, app alive: yes, windows: 2
-t=24s procs: 0 webkit, app alive: yes, windows: 2
-t=25s procs: 0 webkit, app alive: yes, windows: 2
-t=26s procs: 0 webkit, app alive: yes, windows: 2
-t=27s procs: 0 webkit, app alive: yes, windows: 2
-t=28s procs: 0 webkit, app alive: yes, windows: 2
-t=29s procs: 0 webkit, app alive: yes, windows: 2
-t=30s procs: 0 webkit, app alive: yes, windows: 2
+t=1s procs: 2 webkit, app alive: yes, windows: 2
+t=2s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@3s: 0.976343
+t=3s procs: 2 webkit, app alive: yes, windows: 2
+t=4s procs: 2 webkit, app alive: yes, windows: 2
+t=5s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@6s: 0.976343
+t=6s procs: 2 webkit, app alive: yes, windows: 2
+t=7s procs: 2 webkit, app alive: yes, windows: 2
+t=8s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@9s: 0.976343
+t=9s procs: 2 webkit, app alive: yes, windows: 2
+t=10s procs: 2 webkit, app alive: yes, windows: 2
+t=11s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@12s: 0.976343
+t=12s procs: 2 webkit, app alive: yes, windows: 2
+t=13s procs: 2 webkit, app alive: yes, windows: 2
+t=14s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@15s: 0.976343
+t=15s procs: 2 webkit, app alive: yes, windows: 2
+t=16s procs: 2 webkit, app alive: yes, windows: 2
+t=17s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@18s: 0.976343
+t=18s procs: 2 webkit, app alive: yes, windows: 2
+t=19s procs: 2 webkit, app alive: yes, windows: 2
+t=20s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@21s: 0.976343
+t=21s procs: 2 webkit, app alive: yes, windows: 2
+t=22s procs: 2 webkit, app alive: yes, windows: 2
+t=23s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@24s: 0.976343
+t=24s procs: 2 webkit, app alive: yes, windows: 2
+t=25s procs: 2 webkit, app alive: yes, windows: 2
+t=26s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@27s: 0.976343
+t=27s procs: 2 webkit, app alive: yes, windows: 2
+t=28s procs: 2 webkit, app alive: yes, windows: 2
+t=29s procs: 2 webkit, app alive: yes, windows: 2
+   brightness@30s: 0.976343
+t=30s procs: 2 webkit, app alive: yes, windows: 2
 brightness 0.976343
