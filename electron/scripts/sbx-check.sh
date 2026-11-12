@@ -1,0 +1,15 @@
+#!/bin/bash
+# usage: sbx-check.sh <label> <command...>   Launches the app under Xvfb and reports whether Chromium's sandbox is active.
+# Sandboxed renderer = "Seccomp: 2" in /proc/<pid>/status. An app that cannot start its sandbox exits with a FATAL log line.
+label=$1; shift
+log=/tmp/sbx-$label.log
+xvfb-run -a "$@" >"$log" 2>&1 &
+sleep 12
+echo "=== $label: $*"
+echo "renderer processes:"
+for pid in $(pgrep -f -- '--type=renderer'); do
+  echo "  pid=$pid uid=$(awk '/^Uid:/{print $2}' /proc/$pid/status) $(grep -E '^(Seccomp|NoNewPrivs):' /proc/$pid/status | tr '\n\t' '  ') userns=$(readlink /proc/$pid/ns/user)"
+done
+n=$(pgrep -f -- '--type=renderer' | wc -l); [ "$n" = 0 ] && echo "  (none: app did not start a renderer)"
+echo "log (sandbox/fatal lines):"; grep -iE "sandbox|FATAL|namespace" "$log" | head -5 | sed 's/^/  /'
+pkill -f -- "--type=" ; pkill -f "$(basename "$1")" 2>/dev/null; sleep 2

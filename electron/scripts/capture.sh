@@ -10,10 +10,11 @@ set -euo pipefail
 mode=$1; out=$2; shift 2
 mkdir -p "$out"
 out=$(cd "$out" && pwd)
-export CAP_OUT="$out" CAP_MODE="$mode"
+export CAP_OUT="$out" CAP_MODE="$mode" CAP_IPV6_OFF="${CAP_IPV6_OFF:-}"
 unshare --net --mount-proc bash -c '
   set -euo pipefail
   ip link set lo up
+  if [ -n "${CAP_IPV6_OFF:-}" ]; then sysctl -qw net.ipv6.conf.all.disable_ipv6=1 net.ipv6.conf.default.disable_ipv6=1 || true; fi
   if [ "$CAP_MODE" = sink ]; then
     ip link add d0 type veth peer name d1
     ip addr add 10.99.0.2/24 dev d0

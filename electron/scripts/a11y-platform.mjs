@@ -6,10 +6,11 @@ import { spawnSync } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const [exe, outDir] = process.argv.slice(2);
 fs.mkdirSync(outDir, { recursive: true });
-const here = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
+const here = path.dirname(fileURLToPath(import.meta.url));
 const fixtures = path.resolve(here, '..', '..', 'fixtures');
 const args = [...(process.platform === 'linux' ? ['--no-sandbox'] : []), '--force-renderer-accessibility'];
 const app = await electron.launch({ executablePath: exe, args, timeout: 60000, env: { ...process.env, ACCESSIBILITY_ENABLED: '1', GTK_MODULES: 'gail:atk-bridge', FOLIO_AUTOMATION: '1', FOLIO_DATA_DIR: fixtures, FOLIO_USER_DATA: fs.mkdtempSync(path.join(os.tmpdir(), 'folio-a11y-')) } });

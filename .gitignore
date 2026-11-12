@@ -10,3 +10,6 @@ capture/
 out*/
 *.zip
 electron/capture-*.log
+release-pkg/
+electron/ci-out/
+electron/ci-out-*
