@@ -123,3 +123,104 @@ jobs:
           name: a11y-${{ runner.os }}
           path: tauri/test-results/a11y-platform/**
           if-no-files-found: warn
+
+  windows-privacy:
+    name: G1 Windows socket sampling and WebView2 controls (windows-2025)
+    runs-on: windows-2025
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: tauri
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            tauri/package-lock.json
+            tauri/e2e/package-lock.json
+      - run: |
+          npm ci
+          (cd e2e; npm ci)
+          New-Item -ItemType Directory -Force test-results | Out-Null
+      - name: Build the shipped binary and the test binary
+        shell: bash
+        run: |
+          npm run build:ui
+          (cd src-tauri && cargo build --release 2>&1 | tail -2)
+          scripts/build-e2e.sh 2>&1 | tail -2
+      - name: Versions and WebView2 locations
+        run: |
+          $pv = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}').pv
+          "WebView2 runtime $pv" | Tee-Object test-results/webview2-version.txt
+          Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft\EdgeWebView\Application" -Directory | Select-Object -ExpandProperty Name | Tee-Object -Append test-results/webview2-version.txt
+          (Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft\EdgeWebView\Application\$pv" -Recurse -File | Measure-Object Length -Sum).Sum / 1MB | ForEach-Object { "installed runtime size MB: $([math]::Round($_,0))" } | Tee-Object -Append test-results/webview2-version.txt
+      - name: Sampler validation, positive control (the web view reaches example.com)
+        run: |
+          $env:FOLIO_AUTOMATION = '1'
+          $sampler = Start-Process pwsh -ArgumentList '-NoProfile','-File','scripts/win-net-sample.ps1','-Out','test-results/win-net/control','-Seconds','60' -PassThru
+          cd e2e; $env:FOLIO_SPEC = './specs/control.e2e.ts'; npx wdio run wdio.conf.ts 2>&1 | Select-String 'CONTROL|passing|failing'
+          cd ..; $sampler | Wait-Process -Timeout 90
+          Get-Content test-results/win-net/control/summary.txt
+      - name: Driven scenario then five minutes idle, default WebView2 settings, sampler and pktmon
+        run: |
+          pktmon filter remove; pktmon start --capture --pkt-size 0 -f test-results/win-net/default-pktmon.etl | Out-Null
+          $sampler = Start-Process pwsh -ArgumentList '-NoProfile','-File','scripts/win-net-sample.ps1','-Out','test-results/win-net/default','-Seconds','400' -PassThru
+          cd e2e; $env:CAPTURE_IDLE_S = '300'; $env:FOLIO_SPEC = './specs/capture.e2e.ts'; npx wdio run wdio.conf.ts 2>&1 | Select-String 'LAUNCHED|PAGE|USED|IDLE|passing|failing'
+          cd ..; $sampler | Wait-Process -Timeout 200
+          pktmon stop | Out-Null; pktmon etl2txt test-results/win-net/default-pktmon.etl -o test-results/win-net/default-pktmon.txt | Out-Null
+          Remove-Item test-results/win-net/default-pktmon.etl -ErrorAction SilentlyContinue
+          Get-Content test-results/win-net/default/summary.txt
+      - name: Same, with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS set to network-quieting Chromium switches
+        run: |
+          $env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS = '--disable-background-networking --disable-component-update --disable-sync --no-pings --metrics-recording-only --disable-domain-reliability --disable-features=msSmartScreenProtection'
+          pktmon filter remove; pktmon start --capture --pkt-size 0 -f test-results/win-net/args-pktmon.etl | Out-Null
+          $sampler = Start-Process pwsh -ArgumentList '-NoProfile','-File','scripts/win-net-sample.ps1','-Out','test-results/win-net/args','-Seconds','200' -PassThru
+          cd e2e; $env:CAPTURE_IDLE_S = '120'; $env:FOLIO_SPEC = './specs/capture.e2e.ts'; npx wdio run wdio.conf.ts 2>&1 | Select-String 'LAUNCHED|IDLE|passing|failing'
+          cd ..; $sampler | Wait-Process -Timeout 120
+          pktmon stop | Out-Null; pktmon etl2txt test-results/win-net/args-pktmon.etl -o test-results/win-net/args-pktmon.txt | Out-Null
+          Remove-Item test-results/win-net/args-pktmon.etl -ErrorAction SilentlyContinue
+          Get-Content test-results/win-net/args/summary.txt
+      - name: Shipped binary (no driver) launch and two minutes idle, default settings
+        run: |
+          $env:FOLIO_DATA_DIR = "$env:GITHUB_WORKSPACE\fixtures"
+          pktmon filter remove; pktmon start --capture --pkt-size 0 -f test-results/win-net/shipped-pktmon.etl | Out-Null
+          $app = Start-Process src-tauri/target/release/folio.exe -PassThru
+          pwsh -NoProfile -File scripts/win-net-sample.ps1 -Out test-results/win-net/shipped -Seconds 130
+          Stop-Process -Id $app.Id -Force -ErrorAction SilentlyContinue
+          pktmon stop | Out-Null; pktmon etl2txt test-results/win-net/shipped-pktmon.etl -o test-results/win-net/shipped-pktmon.txt | Out-Null
+          Remove-Item test-results/win-net/shipped-pktmon.etl -ErrorAction SilentlyContinue
+      - name: Commit evidence to the branch
+        if: always()
+        shell: bash
+        run: scripts/ci-commit.sh windows-privacy
+
+  macos-network:
+    name: G1 macOS network observation (macos-latest)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+        working-directory: tauri
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            tauri/package-lock.json
+            tauri/e2e/package-lock.json
+      - run: |
+          npm ci
+          (cd e2e && npm ci)
+          mkdir -p test-results
+          scripts/build-e2e.sh 2>&1 | tail -2
+      - name: Capture
+        run: scripts/mac-net-tauri.sh test-results/mac-net
+      - name: Commit evidence to the branch
+        if: always()
+        run: scripts/ci-commit.sh macos-network
