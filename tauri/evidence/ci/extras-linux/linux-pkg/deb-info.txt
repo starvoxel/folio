@@ -1,0 +1,19 @@
+== deb: /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/deb/Folio_0.0.1_amd64.deb
+-rw-r--r-- 1 runner runner 1683604 Nov 12 16:43 /home/runner/work/folio/folio/tauri/src-tauri/target/release/bundle/deb/Folio_0.0.1_amd64.deb
+ Package: folio
+ Version: 0.0.1
+ Installed-Size: 3520
+ Depends: libwebkit2gtk-4.1-0, libgtk-3-0
+== apt simulation (what gets pulled in)
+The following NEW packages will be installed:
+0 upgraded, 1 newly installed, 0 to remove and 48 not upgraded.
+Inst folio (0.0.1 local-deb [amd64])
+== kernel / userns policy
+7.0.0-1017-azure
+kernel.apparmor_restrict_unprivileged_userns = 1
+kernel.unprivileged_userns_clone = 1
+== webkit
+Version: 2.52.6-0ubuntu0.24.04.1
+ii  bubblewrap                             0.9.0-1ubuntu0.3                                 amd64        utility for unprivileged chroot and namespace manipulation
+ii  xdg-dbus-proxy                         0.1.5-1ubuntu0.2                                 amd64        filtering D-Bus proxy
+/usr/bin/bwrap

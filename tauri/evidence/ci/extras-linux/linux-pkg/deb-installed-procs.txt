@@ -1,0 +1,20 @@
+mean brightness (1.0 = blank white):
+0
+--- pid 17637: /bin/sh /usr/bin/xvfb-run -a -s -screen 0 1440x900x24 /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/test-results/linux-pkg
+Uid:	1001	1001	1001	1001
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+ns: user:[4026531837] pid:[4026531836] net:[4026531833]
+--- pid 17650: /bin/bash /home/runner/work/folio/folio/tauri/test-results/linux-pkg/probe-inner.sh deb-installed /home/runner/work/folio/folio/tauri/test-results/linux-pkg /usr/bin/folio 
+Uid:	1001	1001	1001	1001
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+ns: user:[4026531837] pid:[4026531836] net:[4026531833]
+--- pid 17651: /usr/bin/folio 
+Uid:	1001	1001	1001	1001
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+ns: user:[4026531837] pid:[4026531836] net:[4026531833]
