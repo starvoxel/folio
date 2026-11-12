@@ -1,0 +1,424 @@
+AXIsProcessTrusted: true
+AXApplication | title='Avalonia Application' | desc='' | value='' | children=2
+ AXWindow/AXStandardWindow | title='Folio' | desc='' | value='' | children=6
+  AXGroup/AXUnknown | title='WindowChrome' | desc='' | value='' | selected=0 | children=0
+  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+      AXUnknown/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXStaticText/AXUnknown | title='' | desc='' | value='Folio' | selected=0 | children=0
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+               AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=6
+                   AXRow/AXTableRow | title='Rules & categories' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Rules & categories' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Accounts' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Accounts' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Net worth' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Net worth' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Reporting' | desc='' | value='' | selected=1 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Reporting' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Transactions' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Transactions' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Overview' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Overview' | selected=0 | children=0
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXRow/AXTableRow | title='Settings' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Settings' | selected=0 | children=0
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+         AXStaticText/AXUnknown | title='' | desc='' | value='Household 2026.folio' | selected=0 | children=0
+         AXStaticText/AXUnknown | title='' | desc='' | value='● Unsaved changes: none' | selected=0 | children=0
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=5
+         AXButton/AXUnknown | title='Undo' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXButton/AXUnknown | title='Redo' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXButton/AXUnknown | title='Import CSV' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXPopUpButton/AXUnknown | title='Month' | desc='' | value='2026-01' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=6
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXStaticText/AXUnknown | title='' | desc='' | value='2026-01' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXUnknown/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXButton/AXUnknown | title='☰ Menu' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+         AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+             AXStaticText/AXUnknown | title='' | desc='' | value='Reporting' | selected=0 | children=0
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+               AXStaticText/AXUnknown | title='' | desc='' | value='Spending by category, 2026-01' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                AXGroup/AXUnknown | title='Spending by main category (donut chart)' | desc='' | value='' | selected=0 | children=0
+                AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=9
+                    AXButton/AXUnknown | title='Groceries, $18,242.40' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Groceries' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$18,242.40' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='32.1%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Shopping, $9,918.42' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Shopping' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$9,918.42' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='17.4%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Housing, $8,914.55' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Housing' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$8,914.55' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='15.7%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Dining out, $6,133.28' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Dining out' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$6,133.28' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='10.8%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Travel, $4,562.30' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Travel' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$4,562.30' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='8.0%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Transport, $4,181.08' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Transport' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$4,181.08' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='7.3%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Uncategorized, $2,974.51' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Uncategorized' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$2,974.51' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='5.2%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Health, $1,385.79' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Health' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$1,385.79' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='2.4%' | selected=0 | children=0
+                    AXButton/AXUnknown | title='Entertainment, $434.42' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Entertainment' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='$434.42' | selected=0 | children=0
+                       AXStaticText/AXUnknown | title='' | desc='' | value='0.7%' | selected=0 | children=0
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+               AXStaticText/AXUnknown | title='' | desc='' | value='Money in vs money out, 2026' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                AXStaticText/AXUnknown | title='' | desc='' | value='■ Money in' | selected=0 | children=0
+                AXStaticText/AXUnknown | title='' | desc='' | value='■ Money out' | selected=0 | children=0
+               AXGroup/AXUnknown | title='Money in versus money out by month (bar chart)' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=12
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-01' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-01 money in, $26,958.69' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $26,958.69' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-01 money out, $56,746.75' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $56,746.75' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-02' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-02 money in, $38,675.58' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $38,675.58' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-02 money out, $69,768.31' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $69,768.31' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-03' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-03 money in, $46,952.34' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $46,952.34' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-03 money out, $78,717.33' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $78,717.33' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-04' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-04 money in, $60,165.74' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $60,165.74' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-04 money out, $70,455.26' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $70,455.26' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-05' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-05 money in, $36,117.37' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $36,117.37' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-05 money out, $71,308.24' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $71,308.24' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-06' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-06 money in, $49,358.73' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $49,358.73' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-06 money out, $72,574.88' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $72,574.88' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-07' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-07 money in, $61,429.53' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $61,429.53' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-07 money out, $82,055.19' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $82,055.19' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-08' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-08 money in, $62,093.03' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $62,093.03' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-08 money out, $75,563.35' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $75,563.35' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-09' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-09 money in, $56,190.25' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $56,190.25' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-09 money out, $73,765.17' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $73,765.17' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-10' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-10 money in, $62,527.73' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $62,527.73' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-10 money out, $71,705.66' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $71,705.66' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-11' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-11 money in, $43,204.04' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $43,204.04' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-11 money out, $69,254.47' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $69,254.47' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                 AXStaticText/AXUnknown | title='' | desc='' | value='2026-12' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-12 money in, $56,657.83' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='In  $56,657.83' | selected=0 | children=0
+                 AXButton/AXUnknown | title='2026-12 money out, $67,571.43' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXStaticText/AXUnknown | title='' | desc='' | value='Out  $67,571.43' | selected=0 | children=0
+           AXScrollBar/AXUnknown | title='' | desc='' | value='0' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXButton/AXUnknown | title='Line up' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                AXButton/AXUnknown | title='Page up' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                AXButton/AXUnknown | title='Page down' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                AXHandle/AXUnknown | title='Position' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXButton/AXUnknown | title='Line down' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+  AXButton/AXCloseButton | title='' | desc='' | value='' | children=0
+  AXButton/AXFullScreenButton | title='' | desc='' | value='' | children=1
+   AXGroup | title='' | desc='' | value='' | children=1
+    AXGroup | title='' | desc='' | value='' | children=0
+  AXButton/AXMinimizeButton | title='' | desc='' | value='' | children=0
+  AXStaticText | title='' | desc='' | value='Folio' | children=0
+ AXMenuBar | title='' | desc='' | value='' | selected=0 | children=2
+  AXMenuBarItem | title='Apple' | desc='' | value='' | selected=0 | children=1
+   AXMenu | title='' | desc='' | value='' | selected=0 | children=21
+    AXMenuItem | title='About This Mac' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='System Information' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='System Settings…, 1 update' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='App Store' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Recent Items' | desc='' | value='' | selected=0 | children=1
+     AXMenu | title='' | desc='' | value='' | selected=0 | children=14
+      AXMenuItem | title='Applications' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Installer' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Show “Installer” in Finder' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='System Settings' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Show “System Settings” in Finder' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Documents' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='AnkaGuestAddons.pkg' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Show “AnkaGuestAddons.pkg” in Finder' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Servers' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Macintosh HD' | desc='' | value='' | selected=0 | children=0
+      ... 2 more
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Force Quit…' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Force Quit Avalonia Application' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Sleep' | desc='' | value='' | selected=0 | children=0
+    ... 9 more
+  AXMenuBarItem | title='Avalonia Application' | desc='' | value='' | selected=0 | children=1
+   AXMenu | title='' | desc='' | value='' | selected=0 | children=9
+    AXMenuItem | title='About Avalonia' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Services' | desc='' | value='' | selected=0 | children=1
+     AXMenu | title='' | desc='' | value='' | selected=0 | children=9
+      AXMenuItem | title='Activity Monitor' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Allocations & Leaks' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='File Activity' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='System Trace' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Time Profile Active Application' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Time Profile App Under Mouse' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Time Profile Entire System' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Toggle Instruments Recording' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Services Settings…' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Hide Avalonia Application' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Hide Others' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Show All' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Quit' | desc='' | value='' | selected=0 | children=0

@@ -1,0 +1,286 @@
+AXIsProcessTrusted: true
+AXApplication | title='Avalonia Application' | desc='' | value='' | children=2
+ AXWindow/AXStandardWindow | title='Folio' | desc='' | value='' | children=6
+  AXGroup/AXUnknown | title='WindowChrome' | desc='' | value='' | selected=0 | children=0
+  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+      AXUnknown/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXStaticText/AXUnknown | title='' | desc='' | value='Folio' | selected=0 | children=0
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=4
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+               AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=6
+                   AXRow/AXTableRow | title='Rules & categories' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Rules & categories' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Accounts' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Accounts' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Net worth' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Net worth' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Reporting' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Reporting' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Transactions' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Transactions' | selected=0 | children=0
+                   AXRow/AXTableRow | title='Overview' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Overview' | selected=0 | children=0
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXRow/AXTableRow | title='Settings' | desc='' | value='' | selected=1 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXStaticText/AXUnknown | title='' | desc='' | value='Settings' | selected=0 | children=0
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+         AXStaticText/AXUnknown | title='' | desc='' | value='Household 2026.folio' | selected=0 | children=0
+         AXStaticText/AXUnknown | title='' | desc='' | value='● Unsaved changes: none' | selected=0 | children=0
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=5
+         AXButton/AXUnknown | title='Undo' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXButton/AXUnknown | title='Redo' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXButton/AXUnknown | title='Import CSV' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXPopUpButton/AXUnknown | title='Month' | desc='' | value='2026-01' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=6
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXStaticText/AXUnknown | title='' | desc='' | value='2026-01' | selected=0 | children=0
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+              AXUnknown/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+         AXButton/AXUnknown | title='☰ Menu' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=5
+          AXStaticText/AXUnknown | title='' | desc='' | value='Settings' | selected=0 | children=0
+          AXStaticText/AXUnknown | title='' | desc='' | value='Theme' | selected=0 | children=0
+          AXPopUpButton/AXUnknown | title='Theme' | desc='' | value='System' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=6
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                AXStaticText/AXUnknown | title='' | desc='' | value='System' | selected=0 | children=0
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+               AXUnknown/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+          AXStaticText/AXUnknown | title='' | desc='' | value='Confirmation dialog' | selected=0 | children=0
+          AXButton/AXUnknown | title='Reset month review' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+       AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+          AXGroup/AXUnknown | title='Reset this month's review? dialog' | desc='' | value='' | selected=0 | children=1
+           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+               AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                AXScrollArea/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                       AXStaticText/AXUnknown | title='' | desc='' | value='Reset this month's review?' | selected=0 | children=0
+                     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                      AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                       AXStaticText/AXUnknown | title='' | desc='' | value='This clears review marks for the selected month. Nothing else changes.' | selected=0 | children=0
+                       AXTextField/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                        AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                         AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                          AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                           AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                            AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                             AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=3
+                              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                              AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                  AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                 AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=2
+                  AXButton/AXUnknown | title='Reset' | desc='' | value='' | selected=0 | children=1
+                   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+                  AXButton/AXUnknown | title='Cancel' | desc='' | value='' | selected=0 | FOCUSED | children=1
+                   AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=1
+                    AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+     AXGroup/AXUnknown | title='' | desc='' | value='' | selected=0 | children=0
+  AXButton/AXCloseButton | title='' | desc='' | value='' | children=0
+  AXButton/AXFullScreenButton | title='' | desc='' | value='' | children=1
+   AXGroup | title='' | desc='' | value='' | children=1
+    AXGroup | title='' | desc='' | value='' | children=0
+  AXButton/AXMinimizeButton | title='' | desc='' | value='' | children=0
+  AXStaticText | title='' | desc='' | value='Folio' | children=0
+ AXMenuBar | title='' | desc='' | value='' | selected=0 | children=2
+  AXMenuBarItem | title='Apple' | desc='' | value='' | selected=0 | children=1
+   AXMenu | title='' | desc='' | value='' | selected=0 | children=21
+    AXMenuItem | title='About This Mac' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='System Information' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='System Settings…, 1 update' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='App Store' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Recent Items' | desc='' | value='' | selected=0 | children=1
+     AXMenu | title='' | desc='' | value='' | selected=0 | children=14
+      AXMenuItem | title='Applications' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Installer' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Show “Installer” in Finder' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='System Settings' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Show “System Settings” in Finder' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Documents' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='AnkaGuestAddons.pkg' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Show “AnkaGuestAddons.pkg” in Finder' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Servers' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Macintosh HD' | desc='' | value='' | selected=0 | children=0
+      ... 2 more
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Force Quit…' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Force Quit Avalonia Application' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Sleep' | desc='' | value='' | selected=0 | children=0
+    ... 9 more
+  AXMenuBarItem | title='Avalonia Application' | desc='' | value='' | selected=0 | children=1
+   AXMenu | title='' | desc='' | value='' | selected=0 | children=9
+    AXMenuItem | title='About Avalonia' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Services' | desc='' | value='' | selected=0 | children=1
+     AXMenu | title='' | desc='' | value='' | selected=0 | children=9
+      AXMenuItem | title='Activity Monitor' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Allocations & Leaks' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='File Activity' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='System Trace' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Time Profile Active Application' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Time Profile App Under Mouse' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Time Profile Entire System' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Toggle Instruments Recording' | desc='' | value='' | selected=0 | children=0
+      AXMenuItem | title='Services Settings…' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Hide Avalonia Application' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Hide Others' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Show All' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='' | desc='' | value='' | selected=0 | children=0
+    AXMenuItem | title='Quit' | desc='' | value='' | selected=0 | children=0
