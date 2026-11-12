@@ -1,0 +1,1 @@
+Command plugin:fs|read_text_file not allowed by ACL

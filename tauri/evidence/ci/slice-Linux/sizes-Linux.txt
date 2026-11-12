@@ -1,0 +1,4 @@
+-rw-r--r-- 1 runner runner 1683610 Nov 12 16:44 src-tauri/target/release/bundle/deb/Folio_0.0.1_amd64.deb
+-rwxr-xr-x 1 runner runner 80579064 Nov 12 16:45 src-tauri/target/release/bundle/appimage/Folio_0.0.1_amd64.AppImage
+-rw-r--r-- 1 runner runner 1689200 Nov 12 16:44 src-tauri/target/release/bundle/rpm/Folio-0.0.1-1.x86_64.rpm
+-rwxr-xr-x 2 runner runner 3550752 Nov 12 16:45 src-tauri/target/release/folio

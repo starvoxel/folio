@@ -1,0 +1,8 @@
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+cargo 1.99.1 (5f94df478 2026-08-27)
+v22.23.4
+Linux runnervm8axu0 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+Package: libwebkit2gtk-4.1-0
+Version: 2.52.6-0ubuntu0.24.04.1
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
