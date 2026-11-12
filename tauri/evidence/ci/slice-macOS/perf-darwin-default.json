@@ -1,97 +1,83 @@
 {
   "platform": "darwin",
-  "pid": 19594,
+  "pid": 12791,
   "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)",
   "sortMsWorstPerColumn": {
-    "date": 60,
-    "description": 38.99999999999818,
-    "account": 30.99999999999818,
-    "category": 31.999999999996362,
-    "amount": 30
+    "date": 59,
+    "description": 34,
+    "account": 32,
+    "category": 32,
+    "amount": 32
   },
   "passes": [
     {
-      "durationMs": 10363,
+      "durationMs": 11147,
       "frames": 601,
-      "framesOver100ms": 0,
+      "framesOver100ms": 4,
       "longTasks": 0,
-      "worstFrameMs": 60
+      "worstFrameMs": 285
     },
     {
-      "durationMs": 10321,
+      "durationMs": 10196,
       "frames": 601,
       "framesOver100ms": 0,
       "longTasks": 0,
-      "worstFrameMs": 89
+      "worstFrameMs": 63
     },
     {
-      "durationMs": 10367,
+      "durationMs": 10538,
       "frames": 601,
-      "framesOver100ms": 0,
+      "framesOver100ms": 3,
       "longTasks": 0,
-      "worstFrameMs": 76
+      "worstFrameMs": 179
     }
   ],
-  "selectionMs": 120,
-  "soakWorstFrameMs": 82,
+  "selectionMs": 67,
+  "soakWorstFrameMs": 32,
   "points": {
     "P0": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 30,
-        "secondaryMB": 101.7,
+        "primaryMB": 28,
+        "secondaryMB": 100.5,
         "processes": 1
       },
       "all": {
-        "primaryMB": 113,
-        "secondaryMB": 395.2,
-        "processes": 8
+        "primaryMB": 89.4,
+        "secondaryMB": 227.8,
+        "processes": 3
       },
       "detail": [
-        "folio[19594]:30",
-        "com.apple.WebKit.Networking[19458]:0",
-        "com.apple.WebKit.WebContent[19459]:0",
-        "com.apple.WebKit.Networking[19533]:4",
-        "com.apple.WebKit.WebContent[19534]:9",
-        "com.apple.WebKit.WebContent[19535]:9",
-        "com.apple.WebKit.Networking[19596]:5",
-        "com.apple.WebKit.WebContent[19597]:54"
+        "folio[12791]:28",
+        "com.apple.WebKit.Networking[12793]:5",
+        "com.apple.WebKit.WebContent[12794]:56"
       ],
       "webkitHelpersNotDescendants": [
-        19458,
-        19459,
-        19533,
-        19534,
-        19535,
-        19596,
-        19597
+        12793,
+        12794
       ],
       "baselineCount": 0
     },
     "P1": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 30,
-        "secondaryMB": 101.6,
+        "primaryMB": 28,
+        "secondaryMB": 100.6,
         "processes": 1
       },
       "all": {
-        "primaryMB": 109.7,
-        "secondaryMB": 306.8,
-        "processes": 5
+        "primaryMB": 94.3,
+        "secondaryMB": 236.8,
+        "processes": 3
       },
       "detail": [
-        "folio[19594]:30",
-        "com.apple.WebKit.Networking[19533]:4",
-        "com.apple.WebKit.WebContent[19534]:9",
-        "com.apple.WebKit.Networking[19596]:5",
-        "com.apple.WebKit.WebContent[19597]:59"
+        "folio[12791]:28",
+        "com.apple.WebKit.Networking[12793]:5",
+        "com.apple.WebKit.WebContent[12794]:61"
       ],
       "webkitHelpersNotDescendants": [
-        19533,
-        19534,
-        19596,
-        19597
+        12793,
+        12794
       ],
       "baselineCount": 0
     },
@@ -99,22 +85,22 @@
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
         "primaryMB": 33,
-        "secondaryMB": 104.9,
+        "secondaryMB": 105,
         "processes": 1
       },
       "all": {
-        "primaryMB": 511.2,
-        "secondaryMB": 461.2,
+        "primaryMB": 507.3,
+        "secondaryMB": 452.7,
         "processes": 3
       },
       "detail": [
-        "folio[19594]:33",
-        "com.apple.WebKit.Networking[19596]:5",
-        "com.apple.WebKit.WebContent[19597]:473"
+        "folio[12791]:33",
+        "com.apple.WebKit.Networking[12793]:5",
+        "com.apple.WebKit.WebContent[12794]:469"
       ],
       "webkitHelpersNotDescendants": [
-        19596,
-        19597
+        12793,
+        12794
       ],
       "baselineCount": 0
     },
@@ -126,41 +112,41 @@
         "processes": 1
       },
       "all": {
-        "primaryMB": 631.3,
-        "secondaryMB": 465.5,
+        "primaryMB": 560.3,
+        "secondaryMB": 495.9,
         "processes": 3
       },
       "detail": [
-        "folio[19594]:33",
-        "com.apple.WebKit.Networking[19596]:5",
-        "com.apple.WebKit.WebContent[19597]:593"
+        "folio[12791]:33",
+        "com.apple.WebKit.Networking[12793]:5",
+        "com.apple.WebKit.WebContent[12794]:522"
       ],
       "webkitHelpersNotDescendants": [
-        19596,
-        19597
+        12793,
+        12794
       ],
       "baselineCount": 0
     },
     "P4": {
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
-        "primaryMB": 31,
-        "secondaryMB": 103.7,
+        "primaryMB": 30,
+        "secondaryMB": 102.5,
         "processes": 1
       },
       "all": {
-        "primaryMB": 499.3,
-        "secondaryMB": 470,
+        "primaryMB": 557.2,
+        "secondaryMB": 505.3,
         "processes": 3
       },
       "detail": [
-        "folio[19594]:31",
-        "com.apple.WebKit.Networking[19596]:5",
-        "com.apple.WebKit.WebContent[19597]:463"
+        "folio[12791]:30",
+        "com.apple.WebKit.Networking[12793]:5",
+        "com.apple.WebKit.WebContent[12794]:522"
       ],
       "webkitHelpersNotDescendants": [
-        19596,
-        19597
+        12793,
+        12794
       ],
       "baselineCount": 0
     },
@@ -168,22 +154,22 @@
       "metric": "physical footprint (MB), RSS (MB)",
       "app": {
         "primaryMB": 27,
-        "secondaryMB": 102.8,
+        "secondaryMB": 97.6,
         "processes": 1
       },
       "all": {
-        "primaryMB": 493.3,
-        "secondaryMB": 481.4,
+        "primaryMB": 535.9,
+        "secondaryMB": 494.7,
         "processes": 3
       },
       "detail": [
-        "folio[19594]:27",
-        "com.apple.WebKit.Networking[19596]:5",
-        "com.apple.WebKit.WebContent[19597]:461"
+        "folio[12791]:27",
+        "com.apple.WebKit.Networking[12793]:6",
+        "com.apple.WebKit.WebContent[12794]:503"
       ],
       "webkitHelpersNotDescendants": [
-        19596,
-        19597
+        12793,
+        12794
       ],
       "baselineCount": 0
     }
