@@ -7,11 +7,12 @@ name=$1; shift
 cd "$(dirname "$0")/.."
 dest=evidence/ci/$name
 mkdir -p "$dest"
+# tar instead of `cp --parents` so this works with the BSD tools on macOS as well as GNU on Linux and Git Bash
 if [ -d test-results ]; then
-  (cd test-results && find . -type f \( -name '*.json' -o -name '*.txt' -o -name '*.log' -o -name '*.png' -o -name '*.timeline' -o -name '*.xwininfo' \) \
-     -not -path './wdio-logs/*' -not -path './prev-shots/*' -not -path './shots-run1/*' -print0 | xargs -0 -I{} cp --parents {} "../$dest/")
+  (cd test-results && find . -type f \( -name '*.json' -o -name '*.txt' -o -name '*.log' -o -name '*.png' -o -name '*.timeline' -o -name '*.xwininfo' -o -name '*.csv' \) \
+     -not -path './wdio-logs/*' -not -path './prev-shots/*' -not -path './shots-run1/*' | tar -cf - -T -) | tar -xf - -C "$dest"
 fi
-for p in "$@"; do [ -e "$p" ] && cp -r --parents "$p" "$dest/"; done
+for p in "$@"; do [ -e "$p" ] && tar -cf - "$p" | tar -xf - -C "$dest"; done
 for f in $(find "$dest" -name 'strace.log' -size +200k); do gzip -f "$f"; done
 find "$dest" -name '*.log' -size +2M -delete
 git config user.name "tauri-spike-ci"; git config user.email "ci@example.invalid"

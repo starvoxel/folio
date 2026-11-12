@@ -18,13 +18,17 @@ import -window root "$OUT/$label.png"; convert "$OUT/$label.png" -format 'bright
 kill \$APP
 INNER
   chmod +x "$OUT/inner.sh"
-  FOLIO_DATA_DIR=$FIX xvfb-run -a -s "-screen 0 1440x900x24" env "$@" "$OUT/inner.sh"
+  FOLIO_DATA_DIR=$FIX xvfb-run -a -s "-screen 0 1440x900x24" $WRAP env "$@" "$OUT/inner.sh"
   echo "=== $label ($*)"; cat "$OUT/$label.timeline"; tail -3 "$OUT/$label.log"
 }
+{ echo 'DBUS/XDG env:'; env | grep -iE 'dbus|xdg_|display|wayland' ; ls -la /run/user/*/ 2>&1 | head; } > "$OUT/env.txt"
 run plain A=1
 run automation-env FOLIO_AUTOMATION=1
 run dmabuf-off WEBKIT_DISABLE_DMABUF_RENDERER=1
 run compositing-off WEBKIT_DISABLE_COMPOSITING_MODE=1
 run sw-gl LIBGL_ALWAYS_SOFTWARE=1
 run no-a11y NO_AT_BRIDGE=1
+WRAP='dbus-run-session --' run dbus-session A=1
+run no-dbus DBUS_SESSION_BUS_ADDRESS=unix:path=/nonexistent
+run no-portal GTK_USE_PORTAL=0 GIO_USE_PORTALS=0
 true
