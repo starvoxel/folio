@@ -1,0 +1,1 @@
+{"metric":"physical footprint (MB), RSS (MB)","app":{"primaryMB":26,"secondaryMB":95.8,"processes":1},"all":{"primaryMB":94.5,"secondaryMB":259.4,"processes":4},"detail":["folio[24806]:26","com.apple.WebKit.GPU[24808]:10","com.apple.WebKit.Networking[24809]:6","com.apple.WebKit.WebContent[24810]:53"],"webkitHelpersNotDescendants":[24808,24809,24810],"baselineCount":7}

@@ -1,0 +1,9 @@
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+cargo 1.99.1 (5f94df478 2026-08-27)
+v22.23.4
+Darwin dsm12-dh248-feab25cf-0ca6-400b-93fd-6707b6d0d3e1-E2DE6E160E71.local 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:39:04 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_VMAPPLE arm64
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+21624.5.1.11.3
+21624

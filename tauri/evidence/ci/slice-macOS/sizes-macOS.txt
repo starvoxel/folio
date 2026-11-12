@@ -1,0 +1,3 @@
+-rw-r--r--@ 1 runner  staff  1656639 Nov 12 17:27 src-tauri/target/release/bundle/dmg/Folio_0.0.1_aarch64.dmg
+-rwxr-xr-x  1 runner  staff  3300048 Nov 12 17:27 src-tauri/target/release/folio
+3244	src-tauri/target/release/bundle/macos/Folio.app

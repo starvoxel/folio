@@ -1,0 +1,1 @@
+app process gone after quit_app
