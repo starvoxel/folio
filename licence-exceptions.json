@@ -23,7 +23,7 @@
     {
       "packages": ["spdx-exceptions"],
       "license": "CC-BY-3.0",
-      "reason": "A development-time table of SPDX licence-exception names, pulled in by the packaging tools' manifest checks. It is data, not code, and is not shipped.",
+      "reason": "A table of SPDX licence-exception names, pulled in by eslint-plugin-jsdoc through spdx-expression-parse. It is data, not code, it is development-only, and it is not shipped.",
       "decision": "Proposed by the engineer on 2026-11-13 while building the scaffold; the owner has not confirmed it yet."
     }
   ]
