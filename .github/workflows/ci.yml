@@ -110,9 +110,11 @@ jobs:
           path: ${{ runner.temp }}/playwright-browsers
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
 
-      # A no-op when the cache was restored, a download when it was not.
+      # A no-op when the cache was restored, a download when it was not. There is no --with-deps:
+      # on Windows it installs the Media Foundation feature, which took 2m37s on a hosted runner,
+      # and the tests play no media. Put it back if Chromium fails to start without it.
       - name: Install the browser Playwright needs
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - run: npm run test:integration
 

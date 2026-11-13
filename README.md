@@ -20,7 +20,7 @@ You need Node 26 LTS (see `.node-version`) and npm 12. No stable Node bundles np
 npm ci                    # install from the lockfile
 npm run check             # lint, formatter check, type check, architecture tests
 npm run test:unit         # unit tests, next to the code as *.test.ts
-npm run test:integration  # real Chromium and real folders (run "npx playwright install chromium" once)
+npm run test:integration  # real Chromium and real folders (run "npx playwright install chromium" once; add --with-deps on Linux)
 npm run package           # build the desktop app and package it (unsigned) into apps/desktop/release
 npm run test:e2e          # drive the packaged app; run "npm run package" first
 npm test                  # everything, in CI order
