@@ -23,8 +23,8 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 
 ### 1. Remove the .NET scaffold and set up the workspace
 
-- Does: delete `src/`, `tests/` (the .NET projects and solution files), `Folio.slnx`, `Directory.Build.props`, `Directory.Packages.props`, `global.json`, `scripts/install-dotnet.sh`, the .NET workflows (`ci.yml`, `nightly.yml`, `avalonia-watch.yml`, `update-lockfiles.yml`) and the NuGet Dependabot ecosystem; replace the C# `.editorconfig` and `.gitignore` content. Add the root `package.json` with workspaces, the lockfile, the package manager settings (install scripts blocked unless allowlisted, a minimum release age), `tsconfig.base.json`, the Node version pin, ESLint (typescript-eslint, strict and type-checked) and Prettier configuration, and `dependency-cruiser` configuration holding the AD-14 boundary rules.
-- Acceptance criteria: no .NET file remains; installing from the lockfile works on Windows, macOS and Linux runners; type checking, lint and the formatter check pass on empty packages; a deliberate boundary violation (for example `core` importing `node:fs`) fails the architecture check.
+- Does: delete `src/`, `tests/` (the .NET projects and solution files), `Folio.slnx`, `Directory.Build.props`, `Directory.Packages.props`, `global.json`, `scripts/install-dotnet.sh`, the .NET workflows (`ci.yml`, `nightly.yml`, `avalonia-watch.yml`, `update-lockfiles.yml`) and the NuGet Dependabot ecosystem; replace the C# `.editorconfig` and `.gitignore` content. Add the root `package.json` with workspaces, the lockfile, the npm 12 settings (`.npmrc` with `min-release-age=7`, `save-exact`, `engine-strict`, `strict-allow-scripts` and `strict-npmrc`; `allowScripts` in the root `package.json` listing only the packages whose install scripts are reviewed, starting with esbuild; `engines` requiring npm 12 and a Node release it supports), `tsconfig.base.json`, the Node version pin, ESLint (typescript-eslint, strict and type-checked) and Prettier configuration, and `dependency-cruiser` configuration holding the AD-14 boundary rules.
+- Acceptance criteria: no .NET file remains; installing from the lockfile with `npm ci` works on Windows, macOS and Linux runners; an unreviewed dependency install script makes the install fail (`strict-allow-scripts`); type checking, lint and the formatter check pass on empty packages; a deliberate boundary violation (for example `core` importing `node:fs`) fails the architecture check.
 - Verified by: a green CI run and the failing-on-purpose run shown in the pull request.
 
 ### 2. The core package
@@ -47,7 +47,7 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 
 ### 5. CI, Dependabot and documentation
 
-- Does: workflows that run lint, the formatter check, type checking and the architecture check first, then unit, integration and end-to-end tests (Linux for the fast kinds, Windows and macOS for the end-to-end kind), with third-party actions pinned to commit SHAs. Dependabot for npm and GitHub Actions with grouped updates (Electron in its own group; patch and minor groups for the rest) and the existing auto-merge of the patch group, which still waits on the required checks. The README commands, the `key_files` of arc42 sections 02, 04 and 09 and the performance brief updated to the real files.
+- Does: workflows that run lint, the formatter check, type checking and the architecture check first, then unit, integration and end-to-end tests (Linux for the fast kinds, Windows and macOS for the end-to-end kind), with third-party actions pinned to commit SHAs. CI installs npm 12 explicitly (`npm install -g npm@12`, because no stable Node bundles it yet), then runs `npm ci` and `npm audit signatures`, and runs `npx playwright install --with-deps` before the end-to-end tests. Dependabot for npm and GitHub Actions with a `cooldown` of seven days to match `min-release-age`, and grouped updates (Electron in its own group; patch and minor groups for the rest) and the existing auto-merge of the patch group, which still waits on the required checks. The README commands, the `key_files` of arc42 sections 02, 04 and 09 and the performance brief updated to the real files.
 - Acceptance criteria: a pull request runs everything green; the repository's required checks are updated to the new job names (a repository setting only the owner can change).
 - Verified by: a green run on the scaffold pull request and a Dependabot test update.
 
@@ -61,10 +61,12 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 
 - Formatter and linter: Prettier with ESLint using typescript-eslint's strict, type-checked configuration. It is also what ai-foundation's standards describe, and it has the deepest rule set for agent-written code (Jeremy, 2026-11-13). Biome stays a later option once its type-aware and React coverage match.
 
+- Package manager: npm 12 workspaces with the hardened settings above (Jeremy, 2026-11-13). npm 12 blocks dependency lifecycle scripts by default and skips them quietly unless `strict-allow-scripts` is set; workspace packages and the root project's own scripts are not blocked. No stable Node bundles npm 12 yet (Node 26 LTS bundles npm 11.20), so it is installed explicitly. Electron 42 and later has no install script; only esbuild needs an `allowScripts` entry, and Playwright's browsers come from a separate install command. pnpm remains the alternative (it fails on unreviewed scripts by default, but Electron's packaging tools need its hoisted linker).
+- Unit tests sit next to the code, as in AD-14 (Jeremy, 2026-11-13).
+
 ## Open questions
 
-- Package manager: npm workspaces (what the slice used; scripts and release-age settings must be turned on explicitly) or pnpm with the hoisted linker (strict defaults, but its default layout breaks Electron's packaging tools). [Jeremy, before milestone 1]
 - Renderer tests: a simulated DOM (jsdom or happy-dom) for component unit tests. [Engineer, at milestone 3]
 - Where the core runs in the desktop app: the renderer, or a worker. [Engineer, at milestone 3]
 - The packager and installer tooling: `@electron/packager` with `@electron/fuses` plus electron-builder, or Electron Forge. [Engineer, at milestone 4]
-- The Node version to pin for tooling. [Engineer, at milestone 1]
+- The exact Node version to pin for tooling: npm 12 supports `^22.22.2 || ^24.15.0 || >=26.0.0`, so Node 24 LTS or newer. [Engineer, at milestone 1]
