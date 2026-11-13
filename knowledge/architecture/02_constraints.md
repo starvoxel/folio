@@ -44,21 +44,9 @@ Versions are exact and live in the root `package.json` files and the lockfile, s
 
 ## Organizational constraints: coding standards
 
-The project follows the ai-foundation standards `javascript_base` and `javascript_node` (`.aiconfig.json`), and adds the TypeScript, React and Electron conventions in [project-standards.md](../../project-standards.md). ai-foundation has no TypeScript standards yet; a proposal for them is in [typescript-standards-proposal.md](../research/typescript-standards-proposal.md), and the overrides below stay in force until they exist.
+The project follows the ai-foundation standards for its stack, configured in `.aiconfig.json`. Language and stack conventions live only in ai-foundation, never in this repository. Until ai-foundation has TypeScript, React and Electron standards, the existing `javascript_base` and `javascript_node` standards apply, and writing the missing ones is an open task for the ai-foundation project. [project-standards.md](../../project-standards.md) holds only Folio-specific conventions: the kinds of test and their layout and naming.
 
-The build enforces what it can: TypeScript in strict mode, type-aware lint rules with warnings as errors, a formatter check, and boundary rules between packages (AD-14).
-
-Deviations from the shared ai-foundation standards, and how each is handled until the standards change:
-
-| Standard says                                              | This project                                                                                                               | Status                                                                 |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Plain JavaScript (`javascript_base`), `.js` files          | TypeScript in strict mode: `.ts` and `.tsx` files                                                                          | Proposed upstream: `typescript_base` layered on `javascript_base`      |
-| JSDoc with a type on every `@param`                        | TSDoc on exported members, without repeating types the signature already states                                            | Proposed upstream                                                      |
-| File header block on every `.js` file                      | The same header block on every `.ts` and `.tsx` file                                                                       | Proposed upstream                                                      |
-| Relative imports always end in `.js` (`javascript_node`)   | Node-side code (main process, tools, CLI) follows the rule; renderer code uses the bundler's resolution without extensions | Proposed upstream: `typescript_electron` and `typescript_react` layers |
-| Tests use `node:test` and `node:assert/strict`             | Vitest for unit and integration tests, fast-check for properties, Playwright for end-to-end (AD-14, AD-16)                 | Allowed by `javascript_node` when a project standard overrides it      |
-| Tests are colocated as `{module}.test.js`                  | Unit tests are colocated as `{module}.test.ts`; other kinds live under `tests/<kind>/` (AD-14)                             | Proposed upstream                                                      |
-| Test names: `describe` for the unit, `it` for the scenario | `describe(subject)`, then `describe(condition)`, then `it(expected result)`, checked by an architecture test (AD-14)       | Proposed upstream                                                      |
+The build enforces what it can: strict compiler settings, lint with warnings as errors, a formatter check, and boundary rules between packages (AD-14).
 
 ## Product rules that act as constraints
 

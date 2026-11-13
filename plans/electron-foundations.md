@@ -12,7 +12,7 @@ Prove the parts of the Electron architecture that every feature will lean on, be
 
 ## Scope
 
-- In: the CI network capture and its analyzer; atomic save, lock file and backups in the main process; the macOS menu and file-drop import; the core CLI scenarios and the Playwright harness beyond the smoke test; the guard's early-attach check; a web build that reads a file in the browser; the Windows and macOS install experience.
+- In: the CI network capture and its analyzer; atomic save, lock file and backups in the main process; the macOS menu and file-drop import; domain scenario tests and the Playwright harness beyond the smoke test; the guard's early-attach check; a web build that reads a file in the browser; the Windows and macOS install experience.
 - Out: product features; signing and notarization; auto-update; Linux (a later plan, see AD-20); a server backend (AD-19).
 
 ## Approach
@@ -41,8 +41,8 @@ This plan follows the [app scaffold plan](app-scaffold.md), which provides the w
 
 ### 4. The test layers
 
-- Does: the core CLI scenarios for domain end-to-end checks (import, query, close, reopen) with fixtures; the Playwright harness growing from the smoke test: structured state reads, role and test-ID locators, per-OS screenshot baselines with a manual update workflow that opens a pull request; real key events for Tab order and dialog focus where the platform allows; and a test for the debugging guard's early-attach window (R5).
-- Acceptance criteria: two consecutive runs on identical code match every screenshot within a stated tolerance on each OS; the guard test shows what an attach before the guard runs can and cannot do; the CLI runs with no display.
+- Does: the domain scenario tests (import, query, close, reopen) on fixtures and temporary folders, run in plain Node; the Playwright harness growing from the smoke test: structured state reads, role and test-ID locators, per-OS screenshot baselines with a manual update workflow that opens a pull request; real key events for Tab order and dialog focus where the platform allows; and a test for the debugging guard's early-attach window (R5).
+- Acceptance criteria: two consecutive runs on identical code match every screenshot within a stated tolerance on each OS; the guard test shows what an attach before the guard runs can and cannot do; the domain scenarios run with no display.
 - Verified by: CI runs and the guard test result.
 
 ### 5. The read-only web check

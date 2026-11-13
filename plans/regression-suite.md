@@ -13,7 +13,7 @@ A small, fast regression suite that runs the real Folio app and checks it still 
 ## Decisions so far
 
 - Purpose: dependency-update breakage first, UI regressions later.
-- Driver: Playwright, attached to the packaged release binary through Chromium's debugging pipe, with the `window.__folio` state hook and the debugging guard of [AD-16](../knowledge/architecture/09_architecture_decisions.md#ad-16-testing-and-drivability-without-a-network-port). Domain-level scenarios run through the core CLI with no window.
+- Driver: Playwright, attached to the packaged release binary through Chromium's debugging pipe, with the `window.__folio` state hook and the debugging guard of [AD-16](../knowledge/architecture/09_architecture_decisions.md#ad-16-testing-and-drivability-without-a-network-port). Domain-level scenarios run as plain Node tests with no window.
 - Images: pixel comparison against baselines kept per operating system, because fonts and rendering differ by OS. Electron pins Chromium, so baselines move only when Electron is updated.
 - Platforms: Windows and macOS runners run the end-to-end suite; Linux runners run the fast kinds (lint, type check, architecture, unit, integration). Linux is not a v1 platform.
 - Cadence: a short smoke subset on every pull request, the full suite nightly and on demand.

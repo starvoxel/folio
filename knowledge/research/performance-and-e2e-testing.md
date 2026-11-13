@@ -18,7 +18,7 @@ Evidence labels: _measured_ means a spike session ran it on GitHub-hosted runner
    - stress and soak testing, including random operation sequences that check invariants
    - E2E scenarios through the running app
 3. _One shared prerequisite: a deterministic synthetic household generator._ Seeded, realistic data (accounts, provider CSVs, rules, splits, closed months) feeds benchmarks, budgets, stress runs and E2E alike. The selection spike already has a stack-neutral seeded generator for transactions (10,000 mixed-script rows); it is the starting point.
-4. _For E2E, the AD-16 layers are the driver._ The Node command-line tool runs the core with no window for domain scenarios, and Playwright drives the packaged app through a debugging pipe for UI scenarios. A real window matters for focus and dialogs. The spike measured dialog focus, Tab order and per-OS screenshot stability on Windows and macOS runners.
+4. _For E2E, the AD-16 layers are the driver._ Plain Node tests run the core with no window for domain scenarios, and Playwright drives the packaged app through a debugging pipe for UI scenarios. A real window matters for focus and dialogs. The spike measured dialog focus, Tab order and per-OS screenshot stability on Windows and macOS runners.
 5. _The highest-value stress test protects the product's main promise._ Random sequences of import, edit, rule change, undo, close and reopen, with a check after every step that locked months never change (A1.14). It runs in-process against the command layer with no UI, using fast-check. (Inference)
 
 ---
@@ -27,7 +27,7 @@ Evidence labels: _measured_ means a spike session ran it on GitHub-hosted runner
 
 - Performance and stress testing are a separate initiative, not further kinds of the four-kind test setup. Whether they use that setup at all is part of this investigation (AD-14).
 - AD-1 sets a goal: a file-size and open-time budget with a warning threshold and a failure threshold, measured against a heavy synthetic household. How and where it is measured is left to this initiative.
-- AD-16 defines the E2E driver: the core CLI, Playwright through a debugging pipe against the release binary, and per-OS screenshots and a network capture.
+- AD-16 defines the E2E driver: core tests in plain Node, Playwright through a debugging pipe against the release binary, and per-OS screenshots and a network capture.
 - The selection spike measured a 10,000-row virtualized grid on all three OSes. Worst scroll frame was 16 to 17 ms and the slowest sort about 31 ms on Linux and Windows; memory after scrolling was about 161 MB (Windows, private working set) and 206 MB (macOS, footprint), and 441 MB (Linux, proportional). All numbers came from CI runners without a GPU. These are inputs here, not budgets.
 
 ---
@@ -81,7 +81,7 @@ Evidence labels: _measured_ means a spike session ran it on GitHub-hosted runner
 
 ### 4.2 Scenario timings and budgets
 
-- A small harness that generates a synthetic household, then times open, save, import and other operations in-process through the core CLI, or against the packaged app through Playwright.
+- A small harness that generates a synthetic household, then times open, save, import and other operations in-process through core tests in plain Node, or against the packaged app through Playwright.
 - _Memory in the app:_ measure every process of the app, not only the main one. The selection spike found that the number a tool reports for the app's own process can be wrong by a factor of four to twenty when the page runs in separate processes, and defined one metric per OS: proportional memory (PSS) on Linux, private working set on Windows, and physical footprint on macOS. Its scripts are the starting point (measured).
 - _Gating:_ heap growth and file sizes are stable enough to fail a build on. Timings on shared CI runners are noisy, so the usual choices are:
 
@@ -107,11 +107,11 @@ Evidence labels: _measured_ means a spike session ran it on GitHub-hosted runner
 
 | Option                                                 | How it drives the app                                                            | Strengths                                                                                                                      | Weaknesses                                                                                                          |
 | ------------------------------------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
-| Core CLI (AD-16, layer 1)                              | Runs the real core on files in a Node process                                    | Fast, deterministic, no display, the same on every OS, agents can use it                                                       | Skips the UI entirely                                                                                               |
+| Core tests in plain Node (AD-16, layer 1)              | Runs the real core on files in a Node process                                    | Fast, deterministic, no display, the same on every OS, agents can use it                                                       | Skips the UI entirely                                                                                               |
 | Playwright through the debugging pipe (AD-16, layer 2) | Attaches to the exact release binary; locates controls by role, name and test ID | Real window, real DOM, structured state through a test hook, screenshots, traces; measured passing on Windows, macOS and Linux | Debugging switches are guarded and fuse settings matter; synthetic key events do not move focus the way a user does |
 | OS-level UI automation (FlaUI, Appium)                 | Reads the operating-system accessibility tree                                    | Real input and rendering                                                                                                       | Slow and fragile; needs a real desktop session; not needed while Playwright covers the DOM                          |
 
-A likely mix, already adopted by AD-16: most scenarios through the core CLI, UI scenarios through Playwright on Windows and macOS runners, and a nightly or pre-release pass of the full suite. (Inference)
+A likely mix, already adopted by AD-16: most scenarios through core tests in plain Node, UI scenarios through Playwright on Windows and macOS runners, and a nightly or pre-release pass of the full suite. (Inference)
 
 ### 4.6 Visual regression
 
@@ -122,11 +122,11 @@ A likely mix, already adopted by AD-16: most scenarios through the core CLI, UI 
 
 ## 5. Where and how often each would run
 
-| Cadence                      | Candidates                                                                                                                                                  |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Every PR                     | Only cheap, stable gates: file-size and heap-growth budgets with generous margins; a handful of core CLI scenarios; a short Playwright smoke if fast enough |
-| Nightly or on main           | The full Playwright suite on Windows and macOS; the full benchmark suite with tracked results; leak tests; short stress and fuzz runs; the network capture  |
-| Before releases or on demand | Long soak runs; visual regression review; real-hardware checks (a GPU, the macOS display, low-end machines)                                                 |
+| Cadence                      | Candidates                                                                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Every PR                     | Only cheap, stable gates: file-size and heap-growth budgets with generous margins; a handful of core scenario tests; a short Playwright smoke if fast enough |
+| Nightly or on main           | The full Playwright suite on Windows and macOS; the full benchmark suite with tracked results; leak tests; short stress and fuzz runs; the network capture   |
+| Before releases or on demand | Long soak runs; visual regression review; real-hardware checks (a GPU, the macOS display, low-end machines)                                                  |
 
 ---
 
@@ -142,7 +142,7 @@ A likely mix, already adopted by AD-16: most scenarios through the core CLI, UI 
 
 1. _Synthetic household generator._ Seeded and deterministic, with realistic accounts, provider-specific CSVs, rules, splits, transfers and closed months. Shared by every activity above. A stack-neutral transaction generator exists from the selection spike.
 2. _Command layer, lock guard and change sets_ (AD-4, AD-5). Needed for random-sequence stress testing.
-3. _The core CLI and the Playwright harness_ (AD-16). Needed for E2E.
+3. _The Playwright harness_ (AD-16). Needed for E2E.
 4. _The `.folio` file format_ (AD-2). Needed for open, save and size budgets.
 5. _Stable CSV fixtures per provider_ (RBC, TD, Tangerine, EQ Bank, Questrade, CTFS). Needed for import benchmarks and E2E.
 

@@ -76,7 +76,7 @@ _Consequences._ Every view agrees, because every view gets its numbers from the 
 
 _Decision._ All mutations are command objects that produce a change set. Before a change set is applied, one lock guard computes the months it touches and refuses it if any is locked. Domain types also refuse edits to locked lines as a second check. This makes C1.12, H1.8, I1.11 and T1.11 one check rather than many.
 
-_Consequences._ No code path may mutate the model except through a command; the UI, the importer, undo and the command-line tool (AD-16) all use the same path.
+_Consequences._ No code path may mutate the model except through a command; the UI, the importer and undo all use the same path.
 
 ## AD-5. Undo replays month-tagged change sets
 
@@ -106,6 +106,8 @@ _Decision._
 - Transaction dates are a branded `LocalDate` string (`YYYY-MM-DD`); months are a branded `YearMonth` string (`YYYY-MM`). JavaScript's `Date` is not used in the domain, because of time-zone and daylight-saving pitfalls.
 - Time comes from an injected `Clock`, so coverage and "current month" logic is testable.
 - Every entity has a UUID id from `crypto.randomUUID()`, so copying from another file and merging never collide.
+
+_What "branded" means._ TypeScript checks types only at compile time, and a plain `number` carries no meaning, so a count of cents, a dollar amount and a row index look identical to the compiler. A brand is a label that exists only at compile time, attached to an ordinary value: `type Cents = number & { readonly __brand: 'Cents' }`. At runtime a `Cents` is just a number and costs nothing extra, but the compiler treats it as a different type from `number` and from every other brand, so it refuses to pass a bare `number` where `Cents` is expected, or to add `Cents` to a `Dollars`. The only way to create one is through a function that checks its input (for example `cents(250)`, which rejects fractions and unsafe integers), so every `Money` in the program has been validated. The nearest idea in C# is a small `readonly struct Money`, except a brand has no runtime cost. `LocalDate`, `YearMonth` and ids are branded strings in the same way.
 
 _Consequences._ If fractions of a cent are ever needed, only the `Money` helpers change. CSV amounts with more than two decimals need a defined rule at import (open; settled in the import plan).
 
@@ -166,11 +168,13 @@ _Decision._ The four chart types (donut, stacked bar, column bars, diverging bar
 - The build tree-shakes ECharts, so each component the charts use (title, legend, tooltip and so on) is registered explicitly.
 - Money reaches ECharts as integer cents and is formatted from integers, never through a float.
 
+_More chart types are available._ ECharts has about twenty built-in series types, including line, bar, pie and donut, scatter, heatmap, candlestick, radar, funnel, gauge, treemap, sunburst, sankey and calendar. The [example gallery](https://echarts.apache.org/examples/en/index.html) shows them all with their source, and the [feature overview](https://echarts.apache.org/en/feature.html) lists the types. The net worth history (N1.7) and category trends are natural line or area charts. Adding a type means adding a chart model and a legend or table equivalent, not changing the rest.
+
 _Alternatives kept in reserve_ (all MIT or ISC): Recharts, visx, Chart.js, Observable Plot. ECharts releases slowly (one release in six months at the 2026-11-12 check), which the chart-model boundary makes tolerable.
 
 ## AD-14. Package layout, UI state and testing
 
-_Decision._ The repository is a workspace of packages (the scaffold plan names the tooling): `core` (all domain logic, never imports Node, the DOM, React or Electron), `host-api` (the interfaces from AD-19 and a mock), `renderer` (React screens, chart models, app components), `cli` (AD-16), and the `desktop` app that holds the Electron main process. A read-only `web` app comes later. Layers inside `core` are folders (`domain`, `commands`, `persistence` and so on), not extra packages.
+_Decision._ The repository is a workspace of packages (the scaffold plan names the tooling): `core` (all domain logic, never imports Node, the DOM, React or Electron), `host-api` (the interfaces from AD-19 and a mock), `renderer` (React screens, chart models, app components), and the `desktop` app that holds the Electron main process. A read-only `web` app comes later. Layers inside `core` are folders (`domain`, `commands`, `persistence` and so on), not extra packages.
 
 UI state lives in a core store that components read through `useSyncExternalStore`. Components stay thin: when logic needs more than a trivial test, it belongs in `core` or in a small pure module in the renderer, and is unit tested.
 
@@ -184,6 +188,7 @@ Tests come in four kinds, each runnable on its own. The most expensive resource 
 | End-to-end   | The packaged app on a real OS window, driven by Playwright (AD-16)                                                                                                                                                           | `tests/e2e/`, Playwright                             |
 
 - _Techniques are not kinds._ Property-based tests (fast-check), snapshot tests and committed sample `.folio` files (format-compatibility checks) go in whichever kind their resources put them in, usually unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
+- _Why unit tests sit next to the code._ The ai-foundation JavaScript standard colocates tests. A test is easy to find, and moves or is deleted with the module it covers, and imports stay short. The cost is a rule that keeps test files out of builds and packages, and an architecture check that keeps them from importing the wrong things. The other kinds live under `tests/<kind>/` because they span packages or need a real environment. A mirrored `tests/unit/` tree is equally workable: it keeps every kind in one place, at the price of longer paths and two trees that can drift apart.
 - _Enforcement._ dependency-cruiser rules check that `core` imports nothing from Node, the DOM, React or Electron; that the renderer never imports Electron or Node; that the main process never imports React; that Fluent UI is imported only under `renderer/src/ui/fluent/`; and that unit tests import neither Electron nor Playwright. An architecture test checks that each test file sits in the right place and that tests follow the three-level naming shape (`describe` the subject, `describe` the condition, `it` the expected result). The rest of the unit rule (no real file system or network) is a review check. CI runs architecture tests first because they are the cheapest.
 - _Later options._ Tagging tests within a kind (slow, visual or quarantined) is left open and not set up. Performance and stress testing are a separate initiative; they may use this setup.
 
@@ -195,11 +200,27 @@ _Context._ Fluent UI React v9 matches the prototype's look, is maintained by Mic
 
 _Decision._ Use `@fluentui/react-components` v9 with its light and dark themes and the brand ramp set around the prototype's accent (#0078D4), and contain it:
 
-1. Screens use colours, spacing and type only through Fluent tokens, never hard-coded values. App tokens exist only where the prototype adds its own, such as the status backgrounds.
+1. Screens use colours, spacing and type only through Fluent tokens, never hard-coded values (for example text-primary is `tokens.colorNeutralForeground1`, card-bg `tokens.colorNeutralBackground1` with a `tokens.colorNeutralStroke2` border, divider `tokens.colorNeutralStroke2`; the exact names are verified against the pinned version). App tokens exist only where the prototype adds its own, such as the status backgrounds.
 2. One theme module sets the themes, the accent and the app tokens, and follows the system theme unless the user chose light or dark (H1.9).
 3. Fluent components reach screens through app components under `renderer/src/ui/fluent/`: the shell, dialogs, banners, icons, tables and form controls. Screens import those, not Fluent.
 4. No Fluent import appears outside `renderer/src/ui/fluent/`. An architecture test enforces this.
 5. Charts read colours from the same tokens and redraw on theme change.
+
+_Component mapping._ The prototype's controls map to Fluent UI React v9 components as follows.
+
+| Prototype                                                       | Fluent UI React v9                                                                                   |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| NavigationView                                                  | `NavDrawer` with nav items and a footer item                                                         |
+| Button (standard, accent)                                       | `Button`, `appearance="primary"` for the primary action                                              |
+| ComboBox (month, filters, provider)                             | `Dropdown`, or `Combobox` where typing helps                                                         |
+| TextBox (search, notes, forms)                                  | `Input`, `Textarea`                                                                                  |
+| ToggleSwitch (Full pass, month-end analysis, auto-open)         | `Switch`                                                                                             |
+| ToggleButton (tabs and segment choices)                         | `ToggleButton`, or `TabList` where it is a real tab                                                  |
+| InfoBar (status banners, toasts, warnings)                      | `MessageBar`                                                                                         |
+| Dialogs (new file, import, reopen confirmation)                 | `Dialog`                                                                                             |
+| Cards, tiles                                                    | `Card`, or a container styled with card tokens                                                       |
+| Tables                                                          | Fluent `Table` markup with TanStack Virtual (Transactions, Accounts, close balances, import preview) |
+| Charts (donuts, money in vs out, category bars, net worth bars) | ECharts behind chart models (AD-13)                                                                  |
 
 _Tables._ Fluent's `Table` supplies the markup and TanStack Virtual (MIT, founder-led) supplies row virtualization for the 10,000-row grids; sorting, selection and the side details panel are ours. Editing happens in side panels, not in cells. The grid exposes `grid`, `row`, `gridcell` and `columnheader` roles with `aria-rowcount`, `aria-rowindex`, `aria-selected` and `aria-sort`; the focusable element is the scroll container and arrow keys move row selection. That is not a fully compliant ARIA grid. Screen-reader polish is a later initiative, and until then rows have accessible names and every control has a stable `data-testid` for test tooling.
 
@@ -207,11 +228,11 @@ _Revisit when_ a design review prefers another system, or Fluent UI's maintenanc
 
 ## AD-16. Testing and drivability without a network port
 
-_Context._ Agents and automated tests need to drive the running app and the domain logic, and check results, without clicking pixels. An earlier design used a loopback HTTP server inside the app. The selection spike showed the same ground can be covered without putting a listener in the shipped binary.
+_Context._ Agents and automated tests need to drive the running app and the domain logic, and check results, without clicking pixels. A loopback server inside the app was considered and rejected for v1: it would put a network listener in the shipped binary for little gain, because Chromium's debugging pipe covers the same ground.
 
 _Decision._ Three layers, each usable on its own:
 
-1. _The core without a window._ A Node command-line tool (`cli`) runs the real core on `.folio` files and fixtures: import a CSV, query months and totals, close and reopen a month, all through the same commands and lock guard as the UI. It needs no display, is deterministic, and is how agents script domain-level end-to-end checks. Example verbs: `open`, `import`, `query`, `close`, `check`.
+1. _The core without a window._ The core is plain TypeScript, so unit and integration tests (AD-14) run the real commands, lock guard and file format in a plain Node process on fixtures and temporary folders, with no display. That covers import, queries, close and reopen end to end at the domain level. A command-line tool over the core was considered and left out: Playwright covers the UI path and the tests cover the domain path, so a tool would add a package with little new coverage. It can be added if scripting a real `.folio` file by hand, batch operations or a headless service ever needs it, and it is not tied to mobile.
 2. _The real app through Playwright._ Tests start the packaged release binary with `FOLIO_AUTOMATION=1`. That turns on a renderer hook, `window.__folio` (`getState`, `navigate`, `settled`), which returns structured page state as JSON, and the test process attaches through Chromium's `--remote-debugging-pipe`, relayed by the test process, so no network port exists. The exact release binary is tested, with no extra build and no changes to production code for the drive itself. A main-process guard refuses `--remote-debugging-port`, `--remote-debugging-pipe`, `--remote-allow-origins` and `--inspect*` unless `FOLIO_AUTOMATION=1`, and the Node inspect fuse stays off in release builds. Playwright locates controls by role, name and `data-testid`.
 3. _Real-window smoke and checks per OS._ On Windows and macOS runners, an end-to-end suite visits every page, reads state, takes screenshots, and compares them with per-OS baselines (fonts and rendering differ by OS, so baselines are never shared). The network-capture job of AD-18 runs on every Electron update.
 

@@ -8,11 +8,11 @@
 
 ## Goal
 
-Replace the placeholder .NET scaffold with the TypeScript workspace the architecture describes, so the repository matches its documentation and feature work can start. The result is a small but real application: a hardened Electron window showing the app shell, a core package with the first domain types and tests, a host interface with a mock, a command-line tool, all four kinds of test, and CI and Dependabot for npm. There are no product features in this plan.
+Replace the placeholder .NET scaffold with the TypeScript workspace the architecture describes, so the repository matches its documentation and feature work can start. The result is a small but real application: a hardened Electron window showing the app shell, a core package with the first domain types and tests, a host interface with a mock, all four kinds of test, and CI and Dependabot for npm. There are no product features in this plan.
 
 ## Scope
 
-- In: removing the .NET scaffold and its CI; the workspace and tooling; the `core`, `host-api`, `renderer`, `cli` packages and the `desktop` app; the hardening and privacy baseline of AD-18 for the shell; one end-to-end smoke test; CI, Dependabot and the README commands; filling in the `key_files` of the arc42 sections.
+- In: removing the .NET scaffold and its CI; the workspace and tooling; the `core`, `host-api` and `renderer` packages and the `desktop` app; the hardening and privacy baseline of AD-18 for the shell; one end-to-end smoke test; CI, Dependabot and the README commands; filling in the `key_files` of the arc42 sections.
 - Out: any domain feature (accounts, import, categorization and the rest); the budget file format implementation; the full privacy capture, the host implementations beyond a stub, and the web check (the [Electron foundations plan](electron-foundations.md)); signing; Linux.
 
 ## Approach
@@ -45,13 +45,7 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 - Acceptance criteria: the smoke test passes on Windows and macOS runners; started without `FOLIO_AUTOMATION=1`, the binary refuses a debugging switch; the packaged app contains only bundled code, no `node_modules`.
 - Verified by: the end-to-end run in CI and a guard test.
 
-### 5. The command-line tool
-
-- Does: `packages/cli` with a Node `folio` entry point over the core: a `status` command and a `check` command that load a `.folio` fixture through a Node `FileStore`. A test runs it in a child process.
-- Acceptance criteria: it runs with no display; it imports the same core as the app.
-- Verified by: an integration test.
-
-### 6. CI, Dependabot and documentation
+### 5. CI, Dependabot and documentation
 
 - Does: workflows that run lint, the formatter check, type checking and the architecture check first, then unit, integration and end-to-end tests (Linux for the fast kinds, Windows and macOS for the end-to-end kind), with third-party actions pinned to commit SHAs. Dependabot for npm and GitHub Actions with grouped updates (Electron in its own group; patch and minor groups for the rest) and the existing auto-merge of the patch group, which still waits on the required checks. The README commands, the `key_files` of arc42 sections 02, 04 and 09 and the performance brief updated to the real files.
 - Acceptance criteria: a pull request runs everything green; the repository's required checks are updated to the new job names (a repository setting only the owner can change).

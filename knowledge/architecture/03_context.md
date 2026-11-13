@@ -19,7 +19,7 @@ key_files: []
   (read only)           │                              │
                         │                              │◀─▶ Machine preferences (local app-data)
   Test tooling ────────▶│  no network port             │
-  (Playwright, CLI)     └──────────────────────────────┘
+  (automated tests)    └──────────────────────────────┘
                                       ┊
                                       ┊ opt-in only, not in v1
                                       ▼
@@ -27,16 +27,16 @@ key_files: []
             Household-hosted server for the data, instead of a local file (later)
 ```
 
-| Partner                              | Direction  | What crosses                                                                                                                                                                          |
-| ------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Household member                     | In and out | Every interaction, through the desktop UI                                                                                                                                             |
-| Bank CSV exports                     | In         | Files picked or dropped by the user; read locally, never uploaded                                                                                                                     |
-| Budget file                          | In and out | The household's entire data set; written atomically on save                                                                                                                           |
-| Backups                              | Out        | Copies of the budget file, rotated (AD-12)                                                                                                                                            |
-| Machine preferences                  | In and out | Theme, autosave interval, auto-open, recent files, backup location (AD-11)                                                                                                            |
-| Test tooling and agents              | In and out | Playwright drives the app through a debugging pipe owned by the test process, and a Node command-line tool runs the core without a window; both only when started for testing (AD-16) |
-| Online merchant lookup               | Out        | Not in v1. If ever added it is opt-in, stored per budget file, and limited to services that neither keep nor sell data                                                                |
-| Household-hosted server for the data | In and out | Not in v1. If ever added it is a `FileStore` implementation (AD-19), opt-in and controlled by the household, and the content security policy then allows exactly that origin          |
+| Partner                              | Direction  | What crosses                                                                                                                                                                 |
+| ------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Household member                     | In and out | Every interaction, through the desktop UI                                                                                                                                    |
+| Bank CSV exports                     | In         | Files picked or dropped by the user; read locally, never uploaded                                                                                                            |
+| Budget file                          | In and out | The household's entire data set; written atomically on save                                                                                                                  |
+| Backups                              | Out        | Copies of the budget file, rotated (AD-12)                                                                                                                                   |
+| Machine preferences                  | In and out | Theme, autosave interval, auto-open, recent files, backup location (AD-11)                                                                                                   |
+| Test tooling and agents              | In and out | Playwright drives the app through a debugging pipe owned by the test process, only when the app is started for testing (AD-16)                                               |
+| Online merchant lookup               | Out        | Not in v1. If ever added it is opt-in, stored per budget file, and limited to services that neither keep nor sell data                                                       |
+| Household-hosted server for the data | In and out | Not in v1. If ever added it is a `FileStore` implementation (AD-19), opt-in and controlled by the household, and the content security policy then allows exactly that origin |
 
 ## Technical context
 

@@ -10,7 +10,7 @@ The product requirements and architecture are decided. There is no application c
 
 ## Stack
 
-Electron with React and TypeScript, Fluent UI React v9 for components, TanStack Virtual for large tables and ECharts for charts. The domain core is plain TypeScript with no Node, DOM or Electron imports, so the same code can later serve a read-only web build. Tests use Vitest, fast-check, dependency-cruiser and Playwright. Windows and macOS are the v1 platforms. The reasoning is in [AD-17](knowledge/architecture/09_architecture_decisions.md#ad-17-electron-with-typescript-is-the-stack) and the research behind it in [knowledge/research/](knowledge/research/). Coding standards are the ai-foundation `javascript` and `node` standards plus the TypeScript conventions in [project-standards.md](project-standards.md), configured in [.aiconfig.json](.aiconfig.json).
+Electron with React and TypeScript, Fluent UI React v9 for components, TanStack Virtual for large tables and ECharts for charts. The domain core is plain TypeScript with no Node, DOM or Electron imports, so the same code can later serve a read-only web build. Tests use Vitest, fast-check, dependency-cruiser and Playwright. Windows and macOS are the v1 platforms. The reasoning is in [AD-17](knowledge/architecture/09_architecture_decisions.md#ad-17-electron-with-typescript-is-the-stack) and the research behind it in [knowledge/research/](knowledge/research/). Coding standards come from ai-foundation, configured in [.aiconfig.json](.aiconfig.json); [project-standards.md](project-standards.md) holds only Folio's test conventions.
 
 ## Build and test
 
@@ -32,7 +32,7 @@ The full rules for test kinds, layout and naming are in [project-standards.md](p
 | Where                                                                          | What                                                                                                                          |
 | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
 | [knowledge/product/month-end-review.md](knowledge/product/month-end-review.md) | Product requirements overview, with one linked doc per feature area                                                           |
-| [project-standards.md](project-standards.md)                                   | Folio's implementation conventions on top of the ai-foundation standards                                                      |
+| [project-standards.md](project-standards.md)                                   | Folio-specific conventions (the kinds of test) on top of the ai-foundation standards                                          |
 | [knowledge/architecture/](knowledge/architecture/)                             | arc42 architecture docs; decisions are in [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md) |
-| [knowledge/research/](knowledge/research/)                                     | Research briefs, including the stack comparison and a TypeScript standards proposal                                           |
+| [knowledge/research/](knowledge/research/)                                     | Research briefs, including the stack comparison                                                                               |
 | [plans/](plans/)                                                               | Implementation plans                                                                                                          |

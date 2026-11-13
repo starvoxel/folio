@@ -1,6 +1,6 @@
 # Design notes: Folio
 
-Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/Month-End_Financial_Review-v1.html) (v1, updated from the PRD; earlier draft of 2026-11-03 replaced). It is a reference for look and behavior, not code to port: the implementation is React with Fluent UI React v9 and its theme tokens, so use the tokens instead of copying hex values or CSS where the two differ. Requirements stay in [month-end-review.md](month-end-review.md); where this prototype differs from them, see [Differences from the PRD](#differences-from-the-prd).
+Source: HTML prototype [design/Month-End_Financial_Review-v1.html](../../design/Month-End_Financial_Review-v1.html) (v1, updated from the PRD; earlier draft of 2026-11-03 replaced). It is a reference for look and behavior, not code to port: how the look is realized (design system, tokens, components) is in [AD-15](../architecture/09_architecture_decisions.md#ad-15-the-design-system-is-fluent-ui-react-v9-behind-app-components), so copy neither hex values nor CSS from it. Requirements stay in [month-end-review.md](month-end-review.md); where this prototype differs from them, see [Differences from the PRD](#differences-from-the-prd).
 
 ## Boards
 
@@ -13,24 +13,22 @@ Sample data is a file named "Household 2026.budget"; the new-file dialog default
 
 ## Visual foundations
 
-The prototype uses Fluent 2 colours and structural values and the Fluent icon font, with a fixed "Windows blue" accent rather than the OS accent. The app uses Fluent UI React v9's `webLightTheme` and `webDarkTheme` with the brand ramp set around that accent. Where v9's neutral surfaces differ slightly from the prototype's greys (the page and navigation fills, measured in the stack-selection slice), the v9 theme wins unless a design review says otherwise.
+The prototype uses Fluent 2 colours and structural values and the Fluent icon set, with a fixed "Windows blue" accent rather than the OS accent. Where the chosen design system's themes differ slightly from the prototype's greys, the design system's themes win unless a design review says otherwise ([AD-15](../architecture/09_architecture_decisions.md#ad-15-the-design-system-is-fluent-ui-react-v9-behind-app-components)).
 
-| Aspect          | Value                                                                                                                                                                               |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Accent          | #0078D4; hover #106EBE (dark #2B88D8); pressed #005A9E; light fill #DEECF9 (dark #004275)                                                                                           |
-| Page background | Base solid fill #F3F3F3 light, #202020 dark; cards are translucent white (light) or white at ~5% (dark) with a 1px card stroke                                                      |
-| Text            | Primary / secondary / tertiary / disabled as the Fluent text-fill ramp (black at ~89%, 62%, 45%, 36% in light; white at 100%, 77%, 53%, 36% in dark)                                |
-| Status colours  | Success #0F7B0F on #DFF6DD; caution #9D5D00 on #FFF4CE; critical #C42B1C on #FDE7E9 (dark: #6CCB5F, #FCE100, #FF99A4 on dark tints)                                                 |
-| Font            | Inter 400/500/600/700 in the prototype; the app follows the project font decision (Inter, or the system UI font; a bundled font also makes screenshots more stable across machines) |
-| Type scale      | Caption 12/16, body 14/20, body-strong 600, subtitle 20, title 28, title-large 40                                                                                                   |
-| Shape           | Control radius 4, overlay radius 8, pill 999                                                                                                                                        |
-| Spacing         | 4 / 8 / 12 / 16 / 24 / 32                                                                                                                                                           |
-| Controls        | Min height 32, button padding 11,5,11,6; flyout padding 16                                                                                                                          |
-| Icons           | Fluent System Icons (`@fluentui/react-icons`)                                                                                                                                       |
-| Elevation       | Cards 0 1 2 at 6%; flyouts 0 8 16 at 14%                                                                                                                                            |
-| Themes          | Light, dark; Settings offers light / dark / system (H1.9)                                                                                                                           |
-
-Implementation rule: take colours, text, radius and spacing from Fluent UI tokens (for example text-primary → `tokens.colorNeutralForeground1`, card-bg → `tokens.colorNeutralBackground1` with a `tokens.colorNeutralStroke2` border, divider → `tokens.colorNeutralStroke2`), verify the exact token names against the pinned `@fluentui/react-components` version when building, and define app tokens only where the prototype adds its own (the status backgrounds). Charts read their colours from the same tokens and redraw on theme change.
+| Aspect          | Value                                                                                                                                                |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accent          | #0078D4; hover #106EBE (dark #2B88D8); pressed #005A9E; light fill #DEECF9 (dark #004275)                                                            |
+| Page background | Base solid fill #F3F3F3 light, #202020 dark; cards are translucent white (light) or white at ~5% (dark) with a 1px card stroke                       |
+| Text            | Primary / secondary / tertiary / disabled as the Fluent text-fill ramp (black at ~89%, 62%, 45%, 36% in light; white at 100%, 77%, 53%, 36% in dark) |
+| Status colours  | Success #0F7B0F on #DFF6DD; caution #9D5D00 on #FFF4CE; critical #C42B1C on #FDE7E9 (dark: #6CCB5F, #FCE100, #FF99A4 on dark tints)                  |
+| Font            | Inter 400/500/600/700 in the prototype; the project font decision (Inter or the system UI font) is open                                              |
+| Type scale      | Caption 12/16, body 14/20, body-strong 600, subtitle 20, title 28, title-large 40                                                                    |
+| Shape           | Control radius 4, overlay radius 8, pill 999                                                                                                         |
+| Spacing         | 4 / 8 / 12 / 16 / 24 / 32                                                                                                                            |
+| Controls        | Min height 32, button padding 11,5,11,6; flyout padding 16                                                                                           |
+| Icons           | Fluent icon set                                                                                                                                      |
+| Elevation       | Cards 0 1 2 at 6%; flyouts 0 8 16 at 14%                                                                                                             |
+| Themes          | Light, dark; Settings offers light / dark / system (H1.9)                                                                                            |
 
 ## Shell
 
@@ -57,24 +55,6 @@ Implementation rule: take colours, text, radius and spacing from Fluent UI token
 | Rules & categories | Tabs Rules and Categories; rule list (match text, extra conditions, category, match count); rule editor with provider-profile picker, live preview of past transactions it would change, Save and Delete; categories as parent totals with subcategories                                                                                                                                                                                                                                                                         |
 | Settings           | Provider profiles (columns, date format, money-out direction); transfer matching window; theme (Light, Dark, System); online category suggestions toggle shown as planned and off                                                                                                                                                                                                                                                                                                                                                |
 | Import dialog      | Drop zone plus Browse and recent downloads; provider detected from headers; column-mapping summary; preview table (date, description, amount, suggested category, status, Keep for duplicates); warning that locked-month rows are skipped and the account's new covered-through date; Back and Import                                                                                                                                                                                                                           |
-
-## Fluent UI component mapping
-
-Fluent UI React v9 supplies the components. Screens do not import Fluent directly: they use the app's own components, which wrap it ([AD-15](../architecture/09_architecture_decisions.md#ad-15-the-design-system-is-fluent-ui-react-v9-behind-app-components)). Charts are decided by AD-13: ECharts behind chart models. Tables are TanStack Virtual with Fluent table markup.
-
-| Prototype                                                       | Fluent UI React v9                                                                                   |
-| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| NavigationView                                                  | `NavDrawer` with nav items and a footer item                                                         |
-| Button (standard, accent)                                       | `Button`, `appearance="primary"` for the primary action                                              |
-| ComboBox (month, filters, provider)                             | `Dropdown`, or `Combobox` where typing helps                                                         |
-| TextBox (search, notes, forms)                                  | `Input`, `Textarea`                                                                                  |
-| ToggleSwitch (Full pass, month-end analysis, auto-open)         | `Switch`                                                                                             |
-| ToggleButton (tabs and segment choices)                         | `ToggleButton`, or `TabList` where it is a real tab                                                  |
-| InfoBar (status banners, toasts, warnings)                      | `MessageBar`                                                                                         |
-| Dialogs (new file, import, reopen confirmation)                 | `Dialog`                                                                                             |
-| Cards, tiles                                                    | `Card`, or a container styled with card tokens                                                       |
-| Tables                                                          | Fluent `Table` markup with TanStack Virtual (Transactions, Accounts, close balances, import preview) |
-| Charts (donuts, money in vs out, category bars, net worth bars) | ECharts behind chart models (AD-13)                                                                  |
 
 ## Differences from the PRD
 
