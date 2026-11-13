@@ -8,6 +8,11 @@ cd "${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}" 
 # Cloud sessions: make sure the pinned Node and npm 12 are there (a no-op when they already are).
 if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ] && [ -x scripts/install-node.sh ]; then
   bash scripts/install-node.sh || echo "WARNING: install-node.sh failed" >&2
+  # /opt/node22/bin comes before /usr/local/bin on the cloud image, so put the pinned Node first
+  # for the rest of the session (Claude Code reads CLAUDE_ENV_FILE after this hook).
+  if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+    echo 'export PATH="/usr/local/lib/nodejs/bin:$PATH"' >> "$CLAUDE_ENV_FILE"
+  fi
 fi
 
 git config core.hooksPath .githooks || echo "WARNING: could not set core.hooksPath" >&2

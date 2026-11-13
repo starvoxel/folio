@@ -11,6 +11,8 @@
 # download against the hardcoded sha256 before installing; a mismatch or a placeholder hash
 # installs nothing. Always exits 0 so a failure never blocks a session; read the log lines.
 #
+# The caller must put "$NODE_INSTALL_DIR/bin" (default /usr/local/lib/nodejs/bin) first on PATH.
+#
 # Optional: FOLIO_INSTALL_E2E_DEPS=1 also installs Xvfb and the shared libraries Electron needs
 # on Linux (for running the end-to-end tests in a cloud session; apt, needs root).
 #
@@ -95,10 +97,22 @@ install_e2e_dependencies() {
     || { err "end-to-end dependency install failed"; return 1; }
 }
 
+# The links above only win when /usr/local/bin comes before any other Node on PATH, and on the
+# cloud image /opt/node22/bin does not. A script cannot change its caller's PATH, so say so loudly:
+# callers must prepend "$NODE_INSTALL_DIR/bin" (the setup block and the session-start hook do).
+check_path() {
+  local found
+  found="$(command -v node 2>/dev/null || true)"
+  if [ "$found" != "$NODE_LINK_DIR/node" ] && [ "$found" != "$NODE_INSTALL_DIR/bin/node" ]; then
+    log "WARNING: node on PATH is $found, not the pinned one. Run: export PATH=\"$NODE_INSTALL_DIR/bin:\$PATH\""
+  fi
+}
+
 lock="${TMPDIR:-/tmp}/install-node.lock"
 (
   flock 9
   install_node && link_tools && install_npm
   install_e2e_dependencies
+  check_path
 ) 9>"$lock" || err "node is not installed; the session continues without it"
 exit 0

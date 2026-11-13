@@ -42,7 +42,7 @@ The full rules for test kinds, layout and naming are in [project-standards.md](p
 
 ## Cloud sessions
 
-`scripts/install-node.sh` installs the pinned Node 26 LTS (checksum-verified) and npm 12, as the .NET install script once did for the SDK. It is idempotent, always exits 0 and logs what it did. The session-start hook runs it in cloud sessions. Set this as the environment's setup script (it runs as root after the repository is cloned, in the folder that holds the checkouts):
+`scripts/install-node.sh` installs the pinned Node 26 LTS (checksum-verified) and npm 12, as the .NET install script once did for the SDK. It is idempotent, always exits 0 and logs what it did. The session-start hook runs it in cloud sessions and puts the pinned Node first on `PATH`. Set this as the environment's setup script (it runs as root after the repository is cloned, in the folder that holds the checkouts):
 
 ```bash
 #!/bin/bash
@@ -51,6 +51,9 @@ if [ -d folio ]; then
   (
     cd folio || exit 0
     FOLIO_INSTALL_E2E_DEPS=1 bash scripts/install-node.sh
+    # The image's own Node (/opt/node22/bin) is earlier on PATH than /usr/local/bin, so the pinned
+    # one must be put first or npm ci runs on the wrong Node and npm.
+    export PATH="/usr/local/lib/nodejs/bin:$PATH"
     npm ci
     npx playwright install --with-deps chromium
   )
