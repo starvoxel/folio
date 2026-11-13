@@ -40,6 +40,25 @@ There are four kinds of test, decided by the most expensive resource a test touc
 
 The full rules for test kinds, layout and naming are in [project-standards.md](project-standards.md). Performance and stress testing are a separate initiative.
 
+## Cloud sessions
+
+`scripts/install-node.sh` installs the pinned Node 24 LTS (checksum-verified) and npm 12, as the .NET install script once did for the SDK. It is idempotent, always exits 0 and logs what it did. The session-start hook runs it in cloud sessions. Set this as the environment's setup script (it runs as root after the repository is cloned, in the folder that holds the checkouts):
+
+```bash
+#!/bin/bash
+# Folio: pinned Node 24 and npm 12, Xvfb and Electron's Linux libraries, then the locked install.
+if [ -d folio ]; then
+  (
+    cd folio || exit 0
+    FOLIO_INSTALL_E2E_DEPS=1 bash scripts/install-node.sh
+    npm ci
+    npx playwright install --with-deps chromium
+  )
+fi
+```
+
+The environment's network needs `nodejs.org`, `github.com` and `objects.githubusercontent.com` (the Electron download), `cdn.playwright.dev` (the integration tests' Chromium) and `tuf-repo-cdn.sigstore.dev` (`npm audit signatures`); package registries are allowed by default. Run the end-to-end tests there with `xvfb-run -a npm run test:e2e`.
+
 ## Documentation
 
 | Where                                                                          | What                                                                                                                          |
