@@ -89,10 +89,18 @@ module.exports = {
     },
     {
       name: 'unit-tests-import-no-electron-or-driver',
-      comment: 'AD-14: unit tests import neither Electron nor Playwright, nor a host adapter.',
+      comment: 'AD-14: unit tests import neither Electron nor Playwright.',
       severity: 'error',
       from: { path: UNIT_TESTS },
-      to: { path: [ELECTRON, PLAYWRIGHT, DESKTOP] },
+      to: { path: [ELECTRON, PLAYWRIGHT] },
+    },
+    {
+      name: 'unit-tests-import-no-host-adapters',
+      comment:
+        'AD-14: only the desktop app tests its own pure modules; no other unit test reaches into it.',
+      severity: 'error',
+      from: { path: UNIT_TESTS, pathNot: DESKTOP },
+      to: { path: DESKTOP },
     },
     {
       name: 'no-production-import-of-tests',

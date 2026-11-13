@@ -67,6 +67,10 @@ function readArguments(call: ts.CallExpression): {
  * @returns A problem description, or null.
  */
 function checkName(name: ts.Expression | undefined, level: string): string | null {
+  if (name !== undefined && ts.isTemplateExpression(name)) {
+    // A name built in a loop, such as one test per switch; only the written parts can be checked.
+    return null;
+  }
   if (name === undefined || !ts.isStringLiteralLike(name)) {
     return `the ${level} name must be a string literal`;
   }
@@ -87,12 +91,30 @@ export function findShapeProblems(sourceText: string, fileName: string): string[
   const file = ts.createSourceFile(fileName, sourceText, ts.ScriptTarget.ES2023, true);
   const problems: string[] = [];
 
+  // Calls made directly in a body or inside a loop, a condition or a block in it (one test per case).
   const callsIn = (statements: readonly ts.Statement[]): ts.CallExpression[] =>
-    statements.flatMap((statement) =>
-      ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression)
-        ? [statement.expression]
-        : [],
-    );
+    statements.flatMap((statement): ts.CallExpression[] => {
+      if (ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression)) {
+        return [statement.expression];
+      }
+      if (ts.isBlock(statement)) {
+        return callsIn(statement.statements);
+      }
+      if (
+        ts.isForOfStatement(statement) ||
+        ts.isForStatement(statement) ||
+        ts.isForInStatement(statement)
+      ) {
+        return callsIn([statement.statement]);
+      }
+      if (ts.isIfStatement(statement)) {
+        return callsIn([
+          statement.thenStatement,
+          ...(statement.elseStatement === undefined ? [] : [statement.elseStatement]),
+        ]);
+      }
+      return [];
+    });
 
   const visitCase = (call: ts.CallExpression, level: string): void => {
     const { name } = readArguments(call);

@@ -178,7 +178,7 @@ export default tseslint.config(
     rules: { 'no-restricted-exports': 'off' },
   },
   {
-    files: ['scripts/**/*.mjs', 'tools/**/*.js'],
+    files: ['**/scripts/**/*.mjs', 'tools/**/*.js'],
     rules: { 'no-console': 'off' },
   },
   {

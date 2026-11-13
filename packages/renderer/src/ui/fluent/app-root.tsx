@@ -29,6 +29,20 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * The page-coloured surface the app draws on. It is a component of its own because a style hook
+ * uses the style engine of the nearest provider: called in `AppRoot` itself, above the provider
+ * that `AppRoot` renders, it would use the default engine, whose style elements carry no CSP
+ * nonce and are blocked.
+ * @param props - The content.
+ * @param props.children - What to draw on the surface.
+ * @returns The surface element.
+ */
+function Surface(props: { readonly children: ReactNode }): ReactElement {
+  const styles = useStyles();
+  return <div className={styles.root}>{props.children}</div>;
+}
+
 /** Properties of `AppRoot`. */
 export interface AppRootProps {
   /** What the user chose: light, dark or follow the system. */
@@ -49,7 +63,6 @@ export interface AppRootProps {
  */
 export function AppRoot(props: AppRootProps): ReactElement {
   const { themePreference, cspNonce, children } = props;
-  const styles = useStyles();
   const effective = useEffectiveTheme(themePreference);
   useEffect(() => {
     // The browser's default 8px page margin would frame the shell; setting it through the CSSOM
@@ -73,7 +86,7 @@ export function AppRoot(props: AppRootProps): ReactElement {
         theme={effective === 'dark' ? darkTheme : lightTheme}
         targetDocument={document}
       >
-        <div className={styles.root}>{children}</div>
+        <Surface>{children}</Surface>
       </FluentProvider>
     </RendererProvider>
   );

@@ -68,8 +68,8 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 - Simulated DOM for component tests: jsdom, selected per test file with a `@vitest-environment jsdom` comment, with Testing Library. jsdom is what Fluent's own tests use; component tests are `*.test.tsx` (Engineer, milestone 3; AD-14 and project-standards.md updated).
 - Where the core runs: the renderer's main thread for now; a worker stays possible and is left to the performance initiative (Engineer, milestone 3; AD-19 updated).
 - Integration build: the renderer is built with Vite using a mock-host entry (`tests/integration/support/mock-app`) that calls the same `mountApp` as the shipped entry, then served from loopback to a real Chromium (Engineer, milestone 3).
+- Packaging: `@electron/packager` with `@electron/fuses` builds the unsigned app folder that the end-to-end tests drive. The installer tool (NSIS, disk image) belongs to the install-experience milestone of the Electron foundations plan, so electron-builder is not a dependency yet (Engineer, milestone 4; AD-20 updated).
+- Main-process bundle: Vite builds the main process and the preload script into single CommonJS files with every dependency inlined, so the app archive holds no node_modules; a package-contents test checks it (Engineer, milestone 4).
 - File headers: the javascript_base header block is required on every `.ts`, `.tsx`, `.js`, `.mjs` and `.cjs` file, enforced by a local ESLint rule (`tools/eslint/folio-plugin.js`) because the TypeScript standards are not written yet (Engineer, milestone 1).
 
 ## Open questions
-
-- The packager and installer tooling: `@electron/packager` with `@electron/fuses` plus electron-builder, or Electron Forge. [Engineer, at milestone 4]

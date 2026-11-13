@@ -137,6 +137,19 @@ describe('findShapeProblems', () => {
     });
   });
 
+  describe('testsGeneratedInALoop', () => {
+    it('areFoundAndMayHaveBuiltNames', () => {
+      const source =
+        "describe('a', () => { describe('b', () => { for (const x of xs) { it(`returns${x}`, () => {}); } }); });";
+      expect(findShapeProblems(source, 'a.test.ts')).toEqual([]);
+    });
+
+    it('stillRejectsASuiteAtTheWrongLevelInsideALoop', () => {
+      const source = "describe('a', () => { for (const x of xs) { it('c', () => {}); } });";
+      expect(findShapeProblems(source, 'a.test.ts')).not.toEqual([]);
+    });
+  });
+
   describe('hooksInsideASuite', () => {
     it('areAllowed', () => {
       const source = `describe('a', () => { describe('b', () => { beforeEach(() => {}); it('c', () => {}); }); });`;

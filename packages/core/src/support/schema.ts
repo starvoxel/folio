@@ -18,6 +18,11 @@ import {
 import { type Money, isMoney } from '../domain/money.js';
 import { err, ok, type Result } from './result.js';
 
+// zod would otherwise probe for `new Function` support to compile faster validators. The strict
+// content security policy forbids eval (AD-18), and so does the coding standard; validating
+// household-sized data without that speed-up is fast enough.
+z.config({ jitless: true });
+
 /** One problem found while validating untrusted input. It names where, never what the value was. */
 export interface ValidationIssue {
   readonly path: string;

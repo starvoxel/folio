@@ -20,3 +20,4 @@ playwright-report/
 .idea/
 .DS_Store
 Thumbs.db
+apps/desktop/stage/

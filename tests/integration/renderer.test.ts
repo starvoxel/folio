@@ -17,7 +17,7 @@ import { findUnnamedControls } from './support/accessibility.js';
 import { launchBrowser } from './support/browser.js';
 import { buildMockApp } from './support/build-mock-app.js';
 import { serveDirectory, type StaticServer } from './support/static-server.js';
-import './support/window-types.js';
+import '../support/window-types.js';
 
 const PAGES = [
   ['overview', 'Overview'],
