@@ -4,8 +4,9 @@ name: CI
 # (macos-weekly.yml). Linux is not a v1 platform and is used only for the AD-18 network capture,
 # which belongs to the Electron foundations plan.
 #
-# The order follows project-standards.md: static checks and the architecture tests first, then unit,
-# integration and end-to-end tests. Third-party actions are pinned to full commit SHAs; the comment
+# The order follows project-standards.md: static checks and the architecture tests first, then unit
+# and integration tests in parallel (nearly all of their time is setting up a runner, so waiting for
+# one another would only add minutes), then the end-to-end tests once both have passed. Third-party actions are pinned to full commit SHAs; the comment
 # names the release each SHA belongs to. No stable Node bundles npm 12 yet (Node 24 LTS bundles
 # npm 11), so every job installs it explicitly.
 on:
@@ -82,7 +83,7 @@ jobs:
 
   integration-tests:
     name: Integration tests
-    needs: unit-tests
+    needs: static-checks
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -95,7 +96,21 @@ jobs:
       - run: npm install -g npm@12 && npm --version
       - run: npm ci
 
-      # The renderer tests drive a real Chromium, which Playwright downloads separately from npm.
+      # The renderer tests drive a real Chromium, which Playwright downloads separately from npm. The
+      # download takes minutes, so it is cached per Playwright version.
+      - name: Choose where the browser lives and which version to cache
+        id: playwright
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/playwright-browsers" >> "$GITHUB_ENV"
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the Playwright browser
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/playwright-browsers
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
+      # A no-op when the cache was restored, a download when it was not.
       - name: Install the browser Playwright needs
         run: npx playwright install --with-deps chromium
 
@@ -110,7 +125,7 @@ jobs:
 
   end-to-end-tests:
     name: End-to-end tests
-    needs: integration-tests
+    needs: [unit-tests, integration-tests]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

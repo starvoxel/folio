@@ -27,7 +27,7 @@ A test's kind is decided by the most expensive resource it touches, not by how m
 
 ### Layout
 
-- Each kind runs on its own with its own command, and one command runs everything. CI runs architecture tests, then unit, then integration, then end-to-end.
+- Each kind runs on its own with its own command, and one command runs everything. CI runs the architecture tests first, then unit and integration tests in parallel, then end-to-end.
 - Unit tests are colocated as `{module}.test.ts`, or `{module}.test.tsx` for component tests (AD-14 gives the reasons). The other kinds live under `tests/<kind>/`.
 - Unit tests never import Electron, the end-to-end driver or the host adapters. Enforced by the architecture checks. The no-file-system and no-network rule is checked in review.
 
