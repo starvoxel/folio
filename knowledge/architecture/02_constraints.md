@@ -31,7 +31,7 @@ Versions are exact and live in the root `package.json` files and the lockfile, s
 | Package                              | Version in the slice                                                 |
 | ------------------------------------ | -------------------------------------------------------------------- |
 | Electron                             | 45.3.x (Chromium 156)                                                |
-| TypeScript                           | 7.0.x, strict                                                        |
+| TypeScript                           | 6.0.x, strict (see the note below)                                   |
 | Vite                                 | 8.3.x                                                                |
 | React                                | 19.3.x                                                               |
 | `@fluentui/react-components`         | 9.75.x                                                               |
@@ -41,6 +41,8 @@ Versions are exact and live in the root `package.json` files and the lockfile, s
 | fast-check                           | 4.x                                                                  |
 | fflate (zip)                         | 0.8.x                                                                |
 | Electron fuses and packaging tooling | `@electron/fuses` 2.1.x; the packager is chosen in the scaffold plan |
+
+TypeScript is 6.0.x, not the 7.0.x of the slice, because the linter the project chose needs the TypeScript 6 JavaScript API: typescript-eslint 8.72 declares `typescript <6.1.0` and TypeScript 7 (the native compiler) does not ship that API yet. Moving to 7 waits for typescript-eslint support; type checking and the build are otherwise unaffected. Tooling runs on Node 24 LTS (`.node-version`); `engines` accepts Node 22.23.4 and later within npm 12's supported ranges.
 
 ## Organizational constraints: coding standards
 

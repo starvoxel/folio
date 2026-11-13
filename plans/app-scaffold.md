@@ -63,10 +63,12 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 
 - Package manager: npm 12 workspaces with the hardened settings above (Jeremy, 2026-11-13). npm 12 blocks dependency lifecycle scripts by default and skips them quietly unless `strict-allow-scripts` is set; workspace packages and the root project's own scripts are not blocked. No stable Node bundles npm 12 yet (Node 26 LTS bundles npm 11.20), so it is installed explicitly. Electron 42 and later has no install script; only esbuild needs an `allowScripts` entry, and Playwright's browsers come from a separate install command. pnpm remains the alternative (it fails on unreviewed scripts by default, but Electron's packaging tools need its hoisted linker).
 - Unit tests sit next to the code, as in AD-14 (Jeremy, 2026-11-13).
+- TypeScript 6.0.x for now: typescript-eslint (decided above) does not support TypeScript 7, so the pinned 7.0.x waits (Engineer, milestone 1; recorded in 02_constraints.md).
+- Node for tooling: `.node-version` pins Node 24 LTS; `engines` allows `^22.23.4 || ^24.15.0 || >=26.0.0`, the intersection of npm 12's range and the ai-foundation Node baseline (Engineer, milestone 1).
+- File headers: the javascript_base header block is required on every `.ts`, `.tsx`, `.js`, `.mjs` and `.cjs` file, enforced by a local ESLint rule (`tools/eslint/folio-plugin.js`) because the TypeScript standards are not written yet (Engineer, milestone 1).
 
 ## Open questions
 
 - Renderer tests: a simulated DOM (jsdom or happy-dom) for component unit tests. [Engineer, at milestone 3]
 - Where the core runs in the desktop app: the renderer, or a worker. [Engineer, at milestone 3]
 - The packager and installer tooling: `@electron/packager` with `@electron/fuses` plus electron-builder, or Electron Forge. [Engineer, at milestone 4]
-- The exact Node version to pin for tooling: npm 12 supports `^22.22.2 || ^24.15.0 || >=26.0.0`, so Node 24 LTS or newer. [Engineer, at milestone 1]

@@ -1,0 +1,14 @@
+{
+  "name": "@folio/renderer",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The React app: screens, app components and chart models.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --project tsconfig.json"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@folio/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The domain: money, dates, commands and the budget model. Plain TypeScript with no Node, DOM or Electron.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --project tsconfig.json"
+  }
+}

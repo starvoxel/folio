@@ -1,0 +1,14 @@
+{
+  "name": "@folio/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The Electron main process, preload bridge, hardening and packaging.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --project tsconfig.json"
+  }
+}

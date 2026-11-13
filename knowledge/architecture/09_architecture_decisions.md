@@ -157,8 +157,6 @@ The online-lookup opt-in lives in the file because it decides whether household 
 
 _Decision._ Back up the file on open and on a rotating schedule, to the local app-data folder rather than beside the file, so a synced folder does not fill with copies (H1.10). A sidecar `.lock` file warns when another computer has the file open. Before saving, check whether the file changed on disk since it was loaded and warn instead of overwriting. Frequency and retention are set in the backup plan.
 
-
-
 ## AD-13. Charts are ECharts behind chart models
 
 _Decision._ The four chart types (donut, stacked bar, column bars, diverging bars) are drawn with ECharts (Apache-2.0, SVG renderer). A chart model feeds each chart with series data, colours taken from the design tokens, and click events for drill-down (A1.6). Rendering is replaceable without touching the chart models.
