@@ -18,13 +18,13 @@
       ],
       "license": "MPL-2.0",
       "reason": "Vite 8 depends on lightningcss to process CSS at build time. It is a development tool, its code is not part of the shipped app, and MPL-2.0 is a file-level licence that only asks for changes to its own files to be shared.",
-      "decision": "Proposed by the engineer on 2026-11-13 while building the scaffold; the owner has not confirmed it yet."
+      "decision": "Proposed by the engineer and confirmed by Jeremy on 2026-11-13."
     },
     {
       "packages": ["spdx-exceptions"],
       "license": "CC-BY-3.0",
       "reason": "A table of SPDX licence-exception names, pulled in by eslint-plugin-jsdoc through spdx-expression-parse. It is data, not code, it is development-only, and it is not shipped.",
-      "decision": "Proposed by the engineer on 2026-11-13 while building the scaffold; the owner has not confirmed it yet."
+      "decision": "Proposed by the engineer and confirmed by Jeremy on 2026-11-13."
     }
   ]
 }
