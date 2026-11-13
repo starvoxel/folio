@@ -1,41 +1,42 @@
 # Project standards: Folio
 
-Folio's implementation conventions. ai-foundation loads this file after the general standards it resolves from `.aiconfig.json` (`csharp_base`, `csharp_avalonia`), and where they disagree this file wins.
+Folio's implementation conventions. ai-foundation loads this file after the general standards it resolves from `.aiconfig.json`, and where they disagree this file wins. It holds only what is specific to Folio. Language and stack conventions (TypeScript, React, Electron and their tooling) belong in ai-foundation and are not repeated or overridden here.
 
-Rules that have another owner are not repeated here: the stack and pinned versions (`Directory.Packages.props`, [02_constraints.md](knowledge/architecture/02_constraints.md)), architecture decisions such as FluentAvalonia isolation (each enforced by its own architecture test, [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md)), product requirements such as menus (`knowledge/product/`), and generic C# naming rules (the ai-foundation standards).
+Rules that have another owner are not repeated here: the stack and pinned versions (`package.json` and the lockfile, [02_constraints.md](knowledge/architecture/02_constraints.md)), architecture decisions such as package boundaries and design-system isolation (each enforced by its own architecture check, [09_architecture_decisions.md](knowledge/architecture/09_architecture_decisions.md)), product requirements such as menus (`knowledge/product/`), and generic language rules (the ai-foundation standards).
 
 ---
 
 ## Testing
 
-These replace the test structure and naming in `csharp_base` and `csharp_avalonia`.
+These replace the test structure and naming in the ai-foundation standards.
 
 ### Kinds
 
 A test's kind is decided by the most expensive resource it touches, not by how much code it covers.
 
-| Kind         | Rule                                                                                                                                                                                        | Project                                            |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| Unit         | One process, same result every run. No real file system, network or Avalonia platform; time comes from `TimeProvider`. Several real classes may work together if everything stays in memory | `tests/Unit/Folio.{Layer}.UnitTests`               |
-| Integration  | One machine: real temporary folders on disk, Avalonia's headless platform, loopback HTTP                                                                                                    | `tests/Integration/Folio.{Layer}.IntegrationTests` |
-| Architecture | Structural rules of the codebase itself (fitness functions)                                                                                                                                 | `tests/Architecture/Folio.ArchitectureTests`       |
+| Kind         | Rule                                                                                                                                                                                                                                                     | Where                        |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Unit         | One process, same result every run. No real file system, network, Electron or browser engine; time comes from the injected `Clock`. A simulated DOM is allowed for component tests. Several real modules may work together if everything stays in memory | `*.test.ts` next to the code |
+| Integration  | One machine: real temporary folders on disk, the real host adapter, a real browser engine for the renderer, loopback                                                                                                                                     | `tests/integration/`         |
+| Architecture | Structural rules of the codebase itself (fitness functions)                                                                                                                                                                                              | `tests/architecture/`        |
+| End-to-end   | The packaged app in a real window, driven by automation                                                                                                                                                                                                  | `tests/e2e/`                 |
 
-- Property-based, snapshot and sample-file tests are techniques, not kinds. They go wherever their resources put them, usually Unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
-- Performance and end-to-end stress testing are a separate initiative, not kinds of this setup.
+- Property-based, snapshot and sample-file tests are techniques, not kinds. They go wherever their resources put them, usually unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
+- Performance and stress testing are a separate initiative, not kinds of this setup.
 - Tagging tests across kinds is not used yet.
 
 ### Layout
 
-- Each test project lives under `tests/<Kind>/` and its name ends in `<Kind>Tests`. It is listed in `tests/<Kind>.slnx` and in `Folio.slnx`. Enforced by `TestLayoutTests`.
-- Each kind runs on its own with `dotnet test tests/<Kind>.slnx`; `dotnet test Folio.slnx` runs everything. CI runs architecture, then unit, then integration tests.
-- Unit-test projects never reference Avalonia, FluentAvalonia or `Folio.Desktop`. Enforced by `UnitTestDependencyTests`. The no-file-system and no-network rule is checked in review.
+- Each kind runs on its own with its own command, and one command runs everything. CI runs architecture tests, then unit, then integration, then end-to-end.
+- Unit tests are colocated as `{module}.test.ts` (AD-14 gives the reasons). The other kinds live under `tests/<kind>/`.
+- Unit tests never import Electron, the end-to-end driver or the host adapters. Enforced by the architecture checks. The no-file-system and no-network rule is checked in review.
 
 ### Naming
 
-Test methods are named `{Subject}_{Condition}_{ExpectedResult}`:
+Tests are named in three levels: `describe` the subject, `describe` the condition, `it` the expected result.
 
-- Subject: the member under test (`Parse`, `Show`). For architecture tests, the artefact being checked (`ReferencedAssemblies`, `SourceFiles`).
-- Condition: the input, state or scope, as a noun phrase (`EmptyInput`, `ViewModelAsDataContext`, `CoreAssembly`). Use `DefaultState` when there is none.
-- ExpectedResult: a present-tense verb phrase (`ReturnsEmptyResult`, `ThrowsArgumentException`, `ExcludeUIFrameworks`).
+- Subject: the member under test (`parseAmount`, `ClosePage`). For architecture tests, the artefact being checked (`sourceFiles`, `packageImports`).
+- Condition: the input, state or scope, as a noun phrase (`emptyInput`, `lockedMonth`, `coreAssembly`). Use `defaultState` when there is none.
+- Expected result: a present-tense verb phrase (`returnsNoLines`, `throwsRangeError`, `importsNothingFromNode`).
 
-Test classes are named `{ClassUnderTest}Tests`, or `{Rule}Tests` for architecture tests. `TestNamingTests` enforces the three-part shape; review checks the wording.
+Test files are named `{module}.test.ts`, and end-to-end files `{feature}.e2e.ts`. An architecture test enforces the three-level shape; review checks the wording.

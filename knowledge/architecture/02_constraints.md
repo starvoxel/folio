@@ -3,60 +3,50 @@ section: '02'
 title: 'Architecture Constraints'
 lifecycle: draft
 tags: [constraints, stack, standards]
-key_files:
-  - global.json
-  - Directory.Build.props
-  - Directory.Packages.props
-  - project-standards.md
+key_files: []
 ---
 
 > The fixed choices the architecture works within: platform, pinned stack, coding standards and product rules.
 
 ## Technical constraints
 
-| Constraint   | Detail                                                                                                                                          | Source               |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| Platform     | Desktop app on Windows, macOS and Linux                                                                                                         | PRD constraints      |
-| UI           | Avalonia with the FluentAvalonia design system                                                                                                  | PRD constraints      |
-| Runtime      | .NET 10 (LTS, supported to 2028-11-14). FluentAvalonia 3.x ships only for net10.0, and .NET 8 and 9 reach end of support on 2026-11-10          | Research, 2026-11-05 |
-| Storage      | One local budget file opened like a document; may sit in a shared or synced folder                                                              | PRD constraints      |
-| Data sources | CSV only; no bank connections                                                                                                                   | PRD constraints      |
-| Network      | None by default; online lookups are opt-in and limited to services that neither keep nor sell data                                              | PRD H1.12            |
-| Currency     | One currency, in dollars and cents; all accounts are assumed to use the same currency. Exact cents, no floating point                           | PRD assumption 2     |
-| Concurrency  | One editor at a time; two simultaneous editors are not handled                                                                                  | PRD constraints      |
-| Licences     | All dependencies MIT or equivalent; no paid Avalonia products (they add per-seat cost and a licence check that conflicts with the privacy goal) | Decision, 2026-11-05 |
+| Constraint   | Detail                                                                                                                                                                                                                                                                                                                                                                 | Source                               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| Platform     | Desktop app on Windows and macOS. Linux is not a v1 target. A read-only web version and a server-backed data store are wanted later; neither is built in v1                                                                                                                                                                                                            | PRD constraints; decision 2026-11-12 |
+| UI           | Electron, with React and TypeScript, and Fluent UI React v9 for components (AD-17, AD-15)                                                                                                                                                                                                                                                                              | Decision, 2026-11-12                 |
+| Runtime      | The Chromium and Node that ship inside Electron, pinned exactly. Electron releases a major roughly every two months, so updates are monthly work behind the regression suite (AD-18)                                                                                                                                                                                   | Research, 2026-11-12                 |
+| Storage      | One local budget file opened like a document; may sit in a shared or synced folder                                                                                                                                                                                                                                                                                     | PRD constraints                      |
+| Data sources | CSV only; no bank connections                                                                                                                                                                                                                                                                                                                                          | PRD constraints                      |
+| Network      | None by default; online lookups are opt-in and limited to services that neither keep nor sell data. The app opens no listener                                                                                                                                                                                                                                          | PRD H1.12                            |
+| Currency     | One currency, in dollars and cents; all accounts are assumed to use the same currency. Exact integer cents, no floating-point arithmetic on money                                                                                                                                                                                                                      | PRD assumption 2                     |
+| Concurrency  | One editor at a time; two simultaneous editors are not handled                                                                                                                                                                                                                                                                                                         | PRD constraints                      |
+| Licences     | All dependencies MIT or equivalent (Apache-2.0, ISC, BSD, 0BSD); no paid components. A licence check runs in CI. Any other licence needs a recorded decision                                                                                                                                                                                                           | Decision, 2026-11-05                 |
+| Distribution | Household only for v1: unsigned installers are acceptable (Windows SmartScreen and macOS Gatekeeper will warn), and there is no auto-update (AD-20)                                                                                                                                                                                                                    | Decision, 2026-11-12                 |
+| Build tools  | npm 12 workspaces, hardened: dependency install scripts are blocked unless listed in `allowScripts` (npm 12's default), new releases wait seven days (`min-release-age`), CI installs from the lockfile with `npm ci` and checks signatures. No stable Node bundles npm 12 yet, so CI and developers install it explicitly. These matter because the npm tree is large | Research, 2026-11-13                 |
 
 ## Pinned stack
 
-Versions are exact and live in `Directory.Packages.props` (Central Package Management with transitive pinning). FluentAvalonia declares Avalonia ranges with no upper bound, so only these exact pins keep the two compatible.
+Versions are exact and live in the root `package.json` files and the lockfile, set by the scaffold plan ([app-scaffold.md](../../plans/app-scaffold.md)). The versions below are what the stack-selection slice measured on 2026-11-12 and are the starting pins.
 
-| Package                                                                                             | Version                                                              |
-| --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| .NET SDK                                                                                            | 10.0.1xx feature band (`global.json`, roll forward within the band)  |
-| Avalonia, Avalonia.Desktop, Avalonia.Skia, Avalonia.Controls.ColorPicker, Avalonia.Headless(.XUnit) | 12.1.5                                                               |
-| Avalonia.Controls.DataGrid                                                                          | 12.1.2 (deprecated upstream, bug fixes only)                         |
-| FluentAvaloniaUI                                                                                    | 3.1.0                                                                |
-| CommunityToolkit.Mvvm                                                                               | 8.4.2                                                                |
-| xunit.v3                                                                                            | 3.2.2 (matches what Avalonia.Headless.XUnit 12.1.5 is built against) |
-
-Do not move to Avalonia 12.2 until FluentAvalonia supports it and the Fluent2 theme question is settled ([11_risks.md](11_risks.md)).
+| Package                              | Version in the slice                                                 |
+| ------------------------------------ | -------------------------------------------------------------------- |
+| Electron                             | 45.3.x (Chromium 156)                                                |
+| TypeScript                           | 7.0.x, strict                                                        |
+| Vite                                 | 8.3.x                                                                |
+| React                                | 19.3.x                                                               |
+| `@fluentui/react-components`         | 9.75.x                                                               |
+| `@tanstack/react-virtual`            | 3.14.x                                                               |
+| ECharts                              | 6.1.x                                                                |
+| Playwright                           | 1.65.x                                                               |
+| fast-check                           | 4.x                                                                  |
+| fflate (zip)                         | 0.8.x                                                                |
+| Electron fuses and packaging tooling | `@electron/fuses` 2.1.x; the packager is chosen in the scaffold plan |
 
 ## Organizational constraints: coding standards
 
-The project follows the ai-foundation standards `csharp_base` and `csharp_avalonia` (`.aiconfig.json`). The build enforces what it can: nullable reference types, warnings as errors, explicit types instead of `var`, file-scoped namespaces, no primary constructors, explicit access modifiers, naming rules and XML docs on public members (`.editorconfig`, `Directory.Build.props`).
+The project follows the ai-foundation standards for its stack, configured in `.aiconfig.json`. Language and stack conventions live only in ai-foundation, never in this repository. Until ai-foundation has TypeScript, React and Electron standards, the existing `javascript_base` and `javascript_node` standards apply, and writing the missing ones is an open task for the ai-foundation project. [project-standards.md](../../project-standards.md) holds only Folio-specific conventions: the kinds of test and their layout and naming.
 
-Folio's implementation conventions on top of those standards are in [project-standards.md](../../project-standards.md), which ai-foundation loads last. Today that file covers the test kinds, layout and naming. The stack, architecture rules and product rules stay with their owners: this section, the decisions in section 09, and the PRD. Generic naming rules belong in the ai-foundation standards themselves.
-
-Deviations from the shared ai-foundation standards, and how each is handled until the standards change:
-
-| Standard says                                                     | This project                                                                                                                 | Status                                                                                                                       |
-| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Avalonia 11.x                                                     | Avalonia 12.1.x                                                                                                              | Proposed upstream: Avalonia 12.x                                                                                             |
-| `Avalonia.Themes.Fluent` as the base theme                        | `FluentAvaloniaTheme`                                                                                                        | Proposed upstream: the base standard stops naming a theme; a layered `csharp_avalonia_fluent` standard covers FluentAvalonia |
-| Test projects named `{Project}.Tests` / `{Project}.Desktop.Tests` | One project per kind of test under `tests/<Kind>/`, named `*.UnitTests`, `*.IntegrationTests`, `*.ArchitectureTests` (AD-14) | Proposed upstream: the standards describe test kinds and separate runs                                                       |
-| Acronym casing not specified; `CNS.Core.Services` example         | Microsoft's guideline: two-letter acronyms in capitals, longer ones PascalCase                                               | Proposed upstream as an explicit `csharp_base` rule                                                                          |
-| Test naming `{MethodName}_{Scenario}_{ExpectedResult}`            | `{Subject}_{Condition}_{ExpectedResult}`, with architecture tests naming the artefact checked                                | Proposed upstream                                                                                                            |
-| `<Menu>` bar docked at the top on Windows                         | Hamburger menu in the window (PRD H1.14), plus a `NativeMenu` on macOS                                                       | Proposed upstream: the rule defers to the product design and requires a macOS `NativeMenu`                                   |
+The build enforces what it can: strict compiler settings, lint with warnings as errors, a formatter check, and boundary rules between packages (AD-14).
 
 ## Product rules that act as constraints
 

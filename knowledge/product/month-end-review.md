@@ -22,17 +22,17 @@ One household, several members sharing one budget file. All members have equal a
 
 ## Constraints
 
-| Area           | v1 choice                                                                                                                                                                                                                                 |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platform       | Desktop app, Avalonia + FluentAvalonia (Windows, macOS, Linux); standards `csharp_base`, `csharp_avalonia`                                                                                                                                |
-| Users          | One household sharing the file                                                                                                                                                                                                            |
-| Storage        | Local budget file opened like a document; may sit in a shared folder. Format: a `.folio` file, a zip of JSON and JSONL parts ([AD-2](../architecture/09_architecture_decisions.md#ad-2-the-budget-file-is-a-zip-of-json-and-jsonl-parts)) |
-| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                                                                                                       |
-| Data sources   | CSV only                                                                                                                                                                                                                                  |
-| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up                                                                                      |
-| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                                                                                                     |
-| Currency       | One currency, in dollars; all accounts are assumed to use the same currency                                                                                                                                                               |
-| Concurrency    | Two simultaneous editors not handled                                                                                                                                                                                                      |
+| Area           | v1 choice                                                                                                                                            |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform       | Desktop app for Windows and macOS (Linux is not a v1 target, see [Later versions](#later-versions-and-out-of-scope))                                 |
+| Users          | One household sharing the file                                                                                                                       |
+| Storage        | Local budget file opened like a document, with the `.folio` extension; may sit in a shared folder                                                    |
+| Saving         | Autosave every X minutes (configurable) plus manual save; undo/redo for the session                                                                  |
+| Data sources   | CSV only                                                                                                                                             |
+| Privacy        | Data stays in the file on our computers; nothing leaves unless opted in; no bank connections. No telemetry is an assumption, implied by the write-up |
+| Online lookups | Off by default; opt-in; only services that neither keep nor sell data                                                                                |
+| Currency       | One currency, in dollars; all accounts are assumed to use the same currency                                                                          |
+| Concurrency    | Two simultaneous editors not handled                                                                                                                 |
 
 ## Success measures
 
@@ -67,18 +67,21 @@ Months are calendar months; statements are not. Each transaction is filed under 
 
 ## Later versions and out of scope
 
-| Item                                           | Status                      |
-| ---------------------------------------------- | --------------------------- |
-| Budget targets and goals per category          | Version 2                   |
-| PDF statement import (reuses the preview step) | Later                       |
-| Bulk tagging across categories                 | Later                       |
-| Optional file password and encryption          | Later                       |
-| Printable month summary and CSV export         | Later                       |
-| Opt-in online merchant lookup                  | Research first, then decide |
-| Two people editing at once                     | Not handled in v1           |
-| Direct bank connections                        | Out of scope                |
-| More than one currency                         | Out of scope                |
-| Phone or web apps                              | Out of scope for now        |
+| Item                                                        | Status                                                  |
+| ----------------------------------------------------------- | ------------------------------------------------------- |
+| Budget targets and goals per category                       | Version 2                                               |
+| PDF statement import (reuses the preview step)              | Later                                                   |
+| Bulk tagging across categories                              | Later                                                   |
+| Optional file password and encryption                       | Later                                                   |
+| Printable month summary and CSV export                      | Later                                                   |
+| Opt-in online merchant lookup                               | Research first, then decide                             |
+| Two people editing at once                                  | Not handled in v1                                       |
+| Direct bank connections                                     | Out of scope                                            |
+| More than one currency                                      | Out of scope                                            |
+| Linux desktop                                               | Later; best effort after Windows and macOS              |
+| Server backend for the budget data, instead of a local file | Later; not built in v1; opt-in and household-controlled |
+| Web app (read-only first)                                   | Later, after the desktop core                           |
+| Phone app                                                   | Later; not required                                     |
 
 ## Assumptions and open questions
 
@@ -86,7 +89,7 @@ Open (decider in brackets):
 
 - Online merchant lookup: which service, if any. [Research during planning; Jeremy]
 
-Resolved: the budget file format is a zip of JSON and JSONL parts (decided 2026-11-05; see [architecture decisions](../architecture/09_architecture_decisions.md)).
+Resolved: the budget file format is defined in the [architecture decisions](../architecture/09_architecture_decisions.md) (decided 2026-11-05).
 
 Assumptions made while detailing the areas (each is a stated default, change freely):
 
@@ -94,3 +97,4 @@ Assumptions made while detailing the areas (each is a stated default, change fre
 2. All accounts use the same currency. Amounts are stored and compared in exact cents of that currency; no floating point.
 3. A "month" is the calendar month of the transaction's posted date.
 4. Autosave never changes a locked month; the only path to change one is reopen.
+5. v1 targets Windows and macOS only. Linux was de-prioritized by Jeremy on 2026-11-12 because supporting it adds cost; it is a later, best-effort platform. A server-backed data store instead of a local file is wanted in a later version and is not part of v1; keeping the data layer from assuming a local file where that costs nothing is a design preference, not a requirement.
