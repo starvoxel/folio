@@ -14,12 +14,12 @@ These replace the test structure and naming in the ai-foundation standards.
 
 A test's kind is decided by the most expensive resource it touches, not by how much code it covers.
 
-| Kind         | Rule                                                                                                                                                                                                                                                     | Where                        |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| Unit         | One process, same result every run. No real file system, network, Electron or browser engine; time comes from the injected `Clock`. A simulated DOM is allowed for component tests. Several real modules may work together if everything stays in memory | `*.test.ts` next to the code |
-| Integration  | One machine: real temporary folders on disk, the real host adapter, a real browser engine for the renderer, loopback                                                                                                                                     | `tests/integration/`         |
-| Architecture | Structural rules of the codebase itself (fitness functions)                                                                                                                                                                                              | `tests/architecture/`        |
-| End-to-end   | The packaged app in a real window, driven by automation                                                                                                                                                                                                  | `tests/e2e/`                 |
+| Kind         | Rule                                                                                                                                                                                                                                                     | Where                                                           |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Unit         | One process, same result every run. No real file system, network, Electron or browser engine; time comes from the injected `Clock`. A simulated DOM is allowed for component tests. Several real modules may work together if everything stays in memory | `*.test.ts` next to the code (`*.test.tsx` for component tests) |
+| Integration  | One machine: real temporary folders on disk, the real host adapter, a real browser engine for the renderer, loopback                                                                                                                                     | `tests/integration/`                                            |
+| Architecture | Structural rules of the codebase itself (fitness functions)                                                                                                                                                                                              | `tests/architecture/`                                           |
+| End-to-end   | The packaged app in a real window, driven by automation                                                                                                                                                                                                  | `tests/e2e/`                                                    |
 
 - Property-based, snapshot and sample-file tests are techniques, not kinds. They go wherever their resources put them, usually unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
 - Performance and stress testing are a separate initiative, not kinds of this setup.
@@ -28,7 +28,7 @@ A test's kind is decided by the most expensive resource it touches, not by how m
 ### Layout
 
 - Each kind runs on its own with its own command, and one command runs everything. CI runs architecture tests, then unit, then integration, then end-to-end.
-- Unit tests are colocated as `{module}.test.ts` (AD-14 gives the reasons). The other kinds live under `tests/<kind>/`.
+- Unit tests are colocated as `{module}.test.ts`, or `{module}.test.tsx` for component tests (AD-14 gives the reasons). The other kinds live under `tests/<kind>/`.
 - Unit tests never import Electron, the end-to-end driver or the host adapters. Enforced by the architecture checks. The no-file-system and no-network rule is checked in review.
 
 ### Naming

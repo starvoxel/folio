@@ -6,5 +6,26 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-/** The name of this package, so the empty workspace has something to type check. */
-export const packageName = 'host-api';
+export {
+  HostError,
+  type FileContents,
+  type FileFilter,
+  type FileRef,
+  type FileStamp,
+  type HostApi,
+  type HostErrorCode,
+  type HostInfo,
+  type LockResult,
+  type MenuCommand,
+  type OpenDialogOptions,
+  type SaveDialogOptions,
+  type Unsubscribe,
+  type WriteResult,
+} from './host-api.js';
+export { createHostFileStore, type FileStore } from './file-store.js';
+export {
+  createMockHost,
+  type MockHost,
+  type MockHostControls,
+  type MockHostOptions,
+} from './mock-host.js';

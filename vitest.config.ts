@@ -6,6 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
 /**
@@ -13,9 +14,11 @@ import { defineConfig } from 'vitest/config';
  * `vitest run --project <name>`. End-to-end tests run under Playwright, not here.
  */
 export default defineConfig({
+  plugins: [react()],
   test: {
     projects: [
       {
+        extends: true,
         test: {
           name: 'architecture',
           include: ['tests/architecture/**/*.test.ts'],
@@ -24,17 +27,21 @@ export default defineConfig({
         },
       },
       {
+        extends: true,
         test: {
           name: 'unit',
-          include: ['packages/*/src/**/*.test.ts', 'apps/*/src/**/*.test.ts'],
+          include: ['packages/*/src/**/*.test.{ts,tsx}', 'apps/*/src/**/*.test.{ts,tsx}'],
           environment: 'node',
         },
       },
       {
+        extends: true,
         test: {
           name: 'integration',
           include: ['tests/integration/**/*.test.ts'],
           environment: 'node',
+          testTimeout: 60_000,
+          hookTimeout: 120_000,
         },
       },
     ],

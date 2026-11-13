@@ -65,10 +65,11 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 - Unit tests sit next to the code, as in AD-14 (Jeremy, 2026-11-13).
 - TypeScript 6.0.x for now: typescript-eslint (decided above) does not support TypeScript 7, so the pinned 7.0.x waits (Engineer, milestone 1; recorded in 02_constraints.md).
 - Node for tooling: `.node-version` pins Node 24 LTS; `engines` allows `^22.23.4 || ^24.15.0 || >=26.0.0`, the intersection of npm 12's range and the ai-foundation Node baseline (Engineer, milestone 1).
+- Simulated DOM for component tests: jsdom, selected per test file with a `@vitest-environment jsdom` comment, with Testing Library. jsdom is what Fluent's own tests use; component tests are `*.test.tsx` (Engineer, milestone 3; AD-14 and project-standards.md updated).
+- Where the core runs: the renderer's main thread for now; a worker stays possible and is left to the performance initiative (Engineer, milestone 3; AD-19 updated).
+- Integration build: the renderer is built with Vite using a mock-host entry (`tests/integration/support/mock-app`) that calls the same `mountApp` as the shipped entry, then served from loopback to a real Chromium (Engineer, milestone 3).
 - File headers: the javascript_base header block is required on every `.ts`, `.tsx`, `.js`, `.mjs` and `.cjs` file, enforced by a local ESLint rule (`tools/eslint/folio-plugin.js`) because the TypeScript standards are not written yet (Engineer, milestone 1).
 
 ## Open questions
 
-- Renderer tests: a simulated DOM (jsdom or happy-dom) for component unit tests. [Engineer, at milestone 3]
-- Where the core runs in the desktop app: the renderer, or a worker. [Engineer, at milestone 3]
 - The packager and installer tooling: `@electron/packager` with `@electron/fuses` plus electron-builder, or Electron Forge. [Engineer, at milestone 4]

@@ -61,3 +61,11 @@ export {
   type Money,
   type MoneyParseCode,
 } from './domain/money.js';
+export { createStore, type Store } from './state/store.js';
+export {
+  DEFAULT_MACHINE_SETTINGS,
+  THEME_PREFERENCES,
+  readMachineSettings,
+  type MachineSettings,
+  type ThemePreference,
+} from './settings/machine-settings.js';

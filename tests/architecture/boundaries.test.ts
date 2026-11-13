@@ -25,9 +25,10 @@ const fixtures = 'tests/architecture/fixtures';
  * @returns The violated rule names, each with the file it was found in.
  */
 async function violationsIn(directory: string): Promise<string[]> {
+  // The configuration hides the fixtures from the ordinary run; this test wants to see them.
+  const { exclude: _hiddenFixtures, ...configuredOptions } = config.options ?? {};
   const options: ICruiseOptions = {
-    ...config.options,
-    exclude: { path: 'node_modules' },
+    ...configuredOptions,
     validate: true,
     ruleSet: { forbidden: config.forbidden ?? [] },
     tsConfig: { fileName: join(repositoryRoot, 'tsconfig.json') },
