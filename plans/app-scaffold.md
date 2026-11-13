@@ -23,7 +23,7 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 
 ### 1. Remove the .NET scaffold and set up the workspace
 
-- Does: delete `src/`, `tests/` (the .NET projects and solution files), `Folio.slnx`, `Directory.Build.props`, `Directory.Packages.props`, `global.json`, `scripts/install-dotnet.sh`, the .NET workflows (`ci.yml`, `nightly.yml`, `avalonia-watch.yml`, `update-lockfiles.yml`) and the NuGet Dependabot ecosystem; replace the C# `.editorconfig` and `.gitignore` content. Add the root `package.json` with workspaces, the lockfile, the package manager settings (install scripts blocked unless allowlisted, a minimum release age), `tsconfig.base.json`, the Node version pin, ESLint and the formatter configuration, and `dependency-cruiser` configuration holding the AD-14 boundary rules.
+- Does: delete `src/`, `tests/` (the .NET projects and solution files), `Folio.slnx`, `Directory.Build.props`, `Directory.Packages.props`, `global.json`, `scripts/install-dotnet.sh`, the .NET workflows (`ci.yml`, `nightly.yml`, `avalonia-watch.yml`, `update-lockfiles.yml`) and the NuGet Dependabot ecosystem; replace the C# `.editorconfig` and `.gitignore` content. Add the root `package.json` with workspaces, the lockfile, the package manager settings (install scripts blocked unless allowlisted, a minimum release age), `tsconfig.base.json`, the Node version pin, ESLint (typescript-eslint, strict and type-checked) and Prettier configuration, and `dependency-cruiser` configuration holding the AD-14 boundary rules.
 - Acceptance criteria: no .NET file remains; installing from the lockfile works on Windows, macOS and Linux runners; type checking, lint and the formatter check pass on empty packages; a deliberate boundary violation (for example `core` importing `node:fs`) fails the architecture check.
 - Verified by: a green CI run and the failing-on-purpose run shown in the pull request.
 
@@ -57,10 +57,13 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 - Logging: a small logger in the main process with levels; no financial data in any log.
 - Licences: a CI check for MIT-or-equivalent dependencies.
 
+## Decisions
+
+- Formatter and linter: Prettier with ESLint using typescript-eslint's strict, type-checked configuration. It is also what ai-foundation's standards describe, and it has the deepest rule set for agent-written code (Jeremy, 2026-11-13). Biome stays a later option once its type-aware and React coverage match.
+
 ## Open questions
 
 - Package manager: npm workspaces (what the slice used; scripts and release-age settings must be turned on explicitly) or pnpm with the hoisted linker (strict defaults, but its default layout breaks Electron's packaging tools). [Jeremy, before milestone 1]
-- Formatter and linter: Prettier with ESLint, or Biome. [Jeremy, before milestone 1]
 - Renderer tests: a simulated DOM (jsdom or happy-dom) for component unit tests. [Engineer, at milestone 3]
 - Where the core runs in the desktop app: the renderer, or a worker. [Engineer, at milestone 3]
 - The packager and installer tooling: `@electron/packager` with `@electron/fuses` plus electron-builder, or Electron Forge. [Engineer, at milestone 4]
