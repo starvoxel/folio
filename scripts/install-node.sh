@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Installs the pinned Node.js and npm for cloud sessions, the way install-dotnet.sh once did for
-# the .NET SDK. .node-version only names the major (24); this pins the exact release CI resolves,
+# the .NET SDK. .node-version only names the major (26); this pins the exact release CI resolves,
 # and npm 12 on top of it, because no stable Node bundles npm 12 yet (plans/app-scaffold.md).
 # To bump: change the versions and the sha256 together (the hash is in
 # https://nodejs.org/dist/v<version>/SHASUMS256.txt, on the node-v<version>-linux-x64.tar.xz line).
-# Prefer a Node release at least seven days old, to match min-release-age in .npmrc.
+# Always take the newest release of the current LTS line (26): Node security fixes are shipped
+# as point releases, so the seven-day wait that .npmrc applies to npm packages must not apply here.
 #
 # Idempotent and safe to run concurrently (a second run waits for the first). Verifies the
 # download against the hardcoded sha256 before installing; a mismatch or a placeholder hash
@@ -16,8 +17,8 @@
 # Test hooks (not for normal use): NODE_INSTALL_DIR, NODE_URL, NODE_LINK_DIR.
 set -uo pipefail
 
-NODE_VERSION="24.22.2"
-NODE_SHA256="48cc0e21e048790e54c0cf5749c2725005313d652651c40b7a21feb9697aaf75"
+NODE_VERSION="26.13.1"
+NODE_SHA256="5c063e46bab0fbc1c17cc445d7ff129cbdcd0471be6ed83b6ab864f8143bc864"
 NPM_VERSION="12.2.2"
 NODE_INSTALL_DIR="${NODE_INSTALL_DIR:-/usr/local/lib/nodejs}"
 NODE_LINK_DIR="${NODE_LINK_DIR:-/usr/local/bin}"

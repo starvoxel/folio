@@ -1,0 +1,47 @@
+name: macOS weekly
+
+# macOS is a v1 platform but not the one the pull-request checks run on (ci.yml uses Windows). This
+# runs the whole chain on macOS once a week, and on demand, to catch macOS-only breakage early:
+# the packaged app, the ASAR-integrity fuse and the real Chromium sandbox are the likeliest places.
+# Change the cron to daily if weekly turns out to be too slow to catch breakage.
+on:
+  schedule:
+    - cron: '23 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    name: macOS full run
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+      - run: npm audit signatures
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm run test:architecture
+      - run: npm run test:unit
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:integration
+      - run: npm run package
+      - run: npm run test:e2e
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: macos-results
+          path: |
+            test-results/screenshots
+            test-results/e2e
+          if-no-files-found: ignore

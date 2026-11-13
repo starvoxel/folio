@@ -14,7 +14,7 @@ Electron with React and TypeScript, Fluent UI React v9 for components, TanStack 
 
 ## Build and test
 
-You need Node 24 LTS (see `.node-version`) and npm 12. No stable Node bundles npm 12 yet, so install it once with `npm install -g npm@12`. The repository's `.npmrc` is strict on purpose: dependency install scripts are blocked unless `allowScripts` in `package.json` lists them, and new releases must be seven days old.
+You need Node 26 LTS (see `.node-version`) and npm 12. No stable Node bundles npm 12 yet, so install it once with `npm install -g npm@12`. The repository's `.npmrc` is strict on purpose: dependency install scripts are blocked unless `allowScripts` in `package.json` lists them, and new releases must be seven days old.
 
 ```
 npm ci                    # install from the lockfile
@@ -27,7 +27,7 @@ npm test                  # everything, in CI order
 npm run format            # fix formatting
 ```
 
-`npm run test:architecture` runs the boundary rules (dependency-cruiser), the test placement, file naming and test-shape checks, and the licence check. On Linux the end-to-end tests need a display, for example `xvfb-run -a npm run test:e2e`, and a Linux machine whose Chromium sandbox is not configured gets `--no-sandbox` for those tests only; CI runs them on Windows and macOS. If Playwright's Chromium is somewhere unusual, set `FOLIO_CHROMIUM_PATH`. The packaged app can be driven only when started with `FOLIO_AUTOMATION=1` (AD-16).
+`npm run test:architecture` runs the boundary rules (dependency-cruiser), the test placement, file naming and test-shape checks, and the licence check. On Linux the end-to-end tests need a display, for example `xvfb-run -a npm run test:e2e`, and a Linux machine whose Chromium sandbox is not configured gets `--no-sandbox` for those tests only; CI runs every kind on Windows, and the whole chain on macOS once a week. If Playwright's Chromium is somewhere unusual, set `FOLIO_CHROMIUM_PATH`. The packaged app can be driven only when started with `FOLIO_AUTOMATION=1` (AD-16).
 
 ### Kinds of test
 
@@ -42,11 +42,11 @@ The full rules for test kinds, layout and naming are in [project-standards.md](p
 
 ## Cloud sessions
 
-`scripts/install-node.sh` installs the pinned Node 24 LTS (checksum-verified) and npm 12, as the .NET install script once did for the SDK. It is idempotent, always exits 0 and logs what it did. The session-start hook runs it in cloud sessions. Set this as the environment's setup script (it runs as root after the repository is cloned, in the folder that holds the checkouts):
+`scripts/install-node.sh` installs the pinned Node 26 LTS (checksum-verified) and npm 12, as the .NET install script once did for the SDK. It is idempotent, always exits 0 and logs what it did. The session-start hook runs it in cloud sessions. Set this as the environment's setup script (it runs as root after the repository is cloned, in the folder that holds the checkouts):
 
 ```bash
 #!/bin/bash
-# Folio: pinned Node 24 and npm 12, Xvfb and Electron's Linux libraries, then the locked install.
+# Folio: pinned Node 26 and npm 12, Xvfb and Electron's Linux libraries, then the locked install.
 if [ -d folio ]; then
   (
     cd folio || exit 0

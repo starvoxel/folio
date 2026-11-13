@@ -51,7 +51,7 @@ Versions are exact and live in the root `package.json` files and the lockfile, s
 | fflate (zip)                         | 0.8.x                                                |
 | Electron fuses and packaging tooling | `@electron/fuses` 2.1.x, `@electron/packager` 20.3.x |
 
-TypeScript is 6.0.x, not the 7.0.x of the slice, because the linter the project chose needs the TypeScript 6 JavaScript API: typescript-eslint 8.72 declares `typescript <6.1.0` and TypeScript 7 (the native compiler) does not ship that API yet. Moving to 7 waits for typescript-eslint support; type checking and the build are otherwise unaffected. Tooling runs on Node 24 LTS (`.node-version`); `engines` accepts Node 22.23.4 and later within npm 12's supported ranges.
+TypeScript is 6.0.x, not the 7.0.x of the slice, because the linter the project chose needs the TypeScript 6 JavaScript API: typescript-eslint 8.72 declares `typescript <6.1.0` and TypeScript 7 (the native compiler) does not ship that API yet. Moving to 7 waits for typescript-eslint support; type checking and the build are otherwise unaffected. Tooling runs on Node 26 LTS (`.node-version`), always the newest release of that line because Node ships its security fixes as point releases; `engines` accepts Node 22.23.4 and later within npm 12's supported ranges.
 
 ## Organizational constraints: coding standards
 

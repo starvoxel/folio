@@ -1,5 +1,9 @@
 name: CI
 
+# Every job runs on Windows, the platform Folio ships on first. macOS runs the same chain weekly
+# (macos-weekly.yml). Linux is not a v1 platform and is used only for the AD-18 network capture,
+# which belongs to the Electron foundations plan.
+#
 # The order follows project-standards.md: static checks and the architecture tests first, then unit,
 # integration and end-to-end tests. Third-party actions are pinned to full commit SHAs; the comment
 # names the release each SHA belongs to. No stable Node bundles npm 12 yet (Node 24 LTS bundles
@@ -12,6 +16,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -19,7 +27,7 @@ concurrency:
 jobs:
   static-checks:
     name: Static checks
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -59,7 +67,7 @@ jobs:
   unit-tests:
     name: Unit tests
     needs: static-checks
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -75,7 +83,7 @@ jobs:
   integration-tests:
     name: Integration tests
     needs: unit-tests
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -101,16 +109,9 @@ jobs:
           if-no-files-found: ignore
 
   end-to-end-tests:
-    name: End-to-end tests (${{ matrix.os }})
+    name: End-to-end tests
     needs: integration-tests
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        shell: bash
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -133,6 +134,6 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: ${{ !cancelled() }}
         with:
-          name: e2e-results-${{ matrix.os }}
+          name: e2e-results-windows
           path: test-results/e2e
           if-no-files-found: ignore
