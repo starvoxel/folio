@@ -3,7 +3,21 @@ section: '09'
 title: 'Architecture Decisions'
 lifecycle: draft
 tags: [decisions, adr]
-key_files: []
+key_files:
+  - .dependency-cruiser.cjs
+  - tests/architecture/boundaries.test.ts
+  - tests/architecture/source-files.test.ts
+  - packages/core/src/domain/money.ts
+  - packages/core/src/domain/clock.ts
+  - packages/host-api/src/host-api.ts
+  - packages/renderer/src/ui/fluent/app-root.tsx
+  - packages/renderer/src/app/automation.ts
+  - apps/desktop/src/main/hardening.ts
+  - apps/desktop/src/main/protocol.ts
+  - apps/desktop/src/main/debug-guard.ts
+  - apps/desktop/scripts/package.mjs
+  - tests/e2e/smoke.e2e.ts
+  - tests/e2e/guard.e2e.ts
 ---
 
 > The architecture decisions agreed with Jeremy on 2026-11-05 and revised on 2026-11-12 for the Electron stack, each with its reason and what it costs. Numbering is stable; a superseded decision is marked, not deleted.

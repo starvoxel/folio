@@ -1,11 +1,33 @@
 version: 2
 updates:
-  # The npm ecosystem is added with the CI work in the app scaffold plan (milestone 5).
+  # Electron is updated roughly every two months and each update needs the privacy capture and the
+  # end-to-end suite to be read (AD-18), so it never shares a pull request with anything else.
+  # Everything else is split by update type; the first matching group wins. The cooldown matches
+  # min-release-age in .npmrc, so Dependabot never proposes a version npm would refuse to install.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      electron:
+        patterns:
+          - 'electron'
+          - '@electron/*'
+      patches:
+        update-types: [patch]
+      minors:
+        update-types: [minor]
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
     groups:
       patches:
         update-types: [patch]

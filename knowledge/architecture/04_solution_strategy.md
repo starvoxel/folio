@@ -3,7 +3,16 @@ section: '04'
 title: 'Solution Strategy'
 lifecycle: draft
 tags: [strategy]
-key_files: []
+key_files:
+  - packages/core/src/index.ts
+  - packages/host-api/src/host-api.ts
+  - packages/host-api/src/mock-host.ts
+  - packages/renderer/src/app/mount-app.tsx
+  - packages/renderer/src/ui/fluent/index.ts
+  - apps/desktop/src/main/main.ts
+  - apps/desktop/src/main/hardening.ts
+  - .dependency-cruiser.cjs
+  - tests/e2e/support/launch-app.ts
 ---
 
 > The handful of ideas the rest of the design follows from. Each links to its decision in [09_architecture_decisions.md](09_architecture_decisions.md).

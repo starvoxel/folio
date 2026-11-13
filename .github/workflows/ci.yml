@@ -1,0 +1,138 @@
+name: CI
+
+# The order follows project-standards.md: static checks and the architecture tests first, then unit,
+# integration and end-to-end tests. Third-party actions are pinned to full commit SHAs; the comment
+# names the release each SHA belongs to. No stable Node bundles npm 12 yet (Node 24 LTS bundles
+# npm 11), so every job installs it explicitly.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install npm 12
+        run: npm install -g npm@12 && npm --version
+
+      - name: Install from the lockfile
+        run: npm ci
+
+      - name: Verify registry signatures
+        run: npm audit signatures
+
+      - name: An unreviewed install script must fail the install
+        run: npm run check:install-policy
+
+      - name: Lint
+        if: ${{ !cancelled() }}
+        run: npm run lint
+
+      - name: Formatter check
+        if: ${{ !cancelled() }}
+        run: npm run format:check
+
+      - name: Type check
+        if: ${{ !cancelled() }}
+        run: npm run typecheck
+
+      - name: Architecture tests and licence check
+        if: ${{ !cancelled() }}
+        run: npm run test:architecture
+
+  unit-tests:
+    name: Unit tests
+    needs: static-checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+      - run: npm run test:unit
+
+  integration-tests:
+    name: Integration tests
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+
+      # The renderer tests drive a real Chromium, which Playwright downloads separately from npm.
+      - name: Install the browser Playwright needs
+        run: npx playwright install --with-deps chromium
+
+      - run: npm run test:integration
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: integration-screenshots
+          path: test-results/screenshots
+          if-no-files-found: ignore
+
+  end-to-end-tests:
+    name: End-to-end tests (${{ matrix.os }})
+    needs: integration-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+
+      # The tests drive the exact packaged binary; there is no separate test build (AD-16). The
+      # tests attach to Electron's own Chromium, so no Playwright browser is downloaded here.
+      - name: Build and package the app
+        run: npm run package
+
+      - name: Run the end-to-end tests
+        run: npm run test:e2e
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: e2e-results-${{ matrix.os }}
+          path: test-results/e2e
+          if-no-files-found: ignore

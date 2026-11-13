@@ -3,7 +3,16 @@ section: '02'
 title: 'Architecture Constraints'
 lifecycle: draft
 tags: [constraints, stack, standards]
-key_files: []
+key_files:
+  - package.json
+  - .npmrc
+  - .node-version
+  - tsconfig.base.json
+  - eslint.config.js
+  - licence-exceptions.json
+  - tests/architecture/licences.test.ts
+  - apps/desktop/package.json
+  - packages/renderer/package.json
 ---
 
 > The fixed choices the architecture works within: platform, pinned stack, coding standards and product rules.
@@ -20,7 +29,7 @@ key_files: []
 | Network      | None by default; online lookups are opt-in and limited to services that neither keep nor sell data. The app opens no listener                                                                                                                                                                                                                                          | PRD H1.12                            |
 | Currency     | One currency, in dollars and cents; all accounts are assumed to use the same currency. Exact integer cents, no floating-point arithmetic on money                                                                                                                                                                                                                      | PRD assumption 2                     |
 | Concurrency  | One editor at a time; two simultaneous editors are not handled                                                                                                                                                                                                                                                                                                         | PRD constraints                      |
-| Licences     | All dependencies MIT or equivalent (Apache-2.0, ISC, BSD, 0BSD); no paid components. A licence check runs in CI. Any other licence needs a recorded decision                                                                                                                                                                                                           | Decision, 2026-11-05                 |
+| Licences     | All dependencies MIT or equivalent (Apache-2.0, ISC, BSD, 0BSD); no paid components. A licence check runs in CI with the architecture tests (`tests/architecture/licences.test.ts`). Any other licence needs a recorded decision, kept in `licence-exceptions.json`                                                                                                    | Decision, 2026-11-05                 |
 | Distribution | Household only for v1: unsigned installers are acceptable (Windows SmartScreen and macOS Gatekeeper will warn), and there is no auto-update (AD-20)                                                                                                                                                                                                                    | Decision, 2026-11-12                 |
 | Build tools  | npm 12 workspaces, hardened: dependency install scripts are blocked unless listed in `allowScripts` (npm 12's default), new releases wait seven days (`min-release-age`), CI installs from the lockfile with `npm ci` and checks signatures. No stable Node bundles npm 12 yet, so CI and developers install it explicitly. These matter because the npm tree is large | Research, 2026-11-13                 |
 
