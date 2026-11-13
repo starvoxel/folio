@@ -102,7 +102,7 @@ export default tseslint.config(
       ],
       '@typescript-eslint/consistent-type-imports': [
         'error',
-        { fixStyle: 'inline-type-imports', prefer: 'type-imports' },
+        { fixStyle: 'separate-type-imports', prefer: 'type-imports' },
       ],
       '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/no-unused-vars': [
@@ -110,6 +110,33 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
+    },
+  },
+  {
+    // AD-7: the domain has no Date and no float parsing. Time comes from the injected Clock; the one
+    // place that reads the system clock is allowed below.
+    files: ['packages/core/src/**/*.ts'],
+    ignores: [
+      'packages/core/src/domain/system-clock.ts',
+      'packages/core/src/domain/system-clock.test.ts',
+    ],
+    rules: {
+      'no-restricted-globals': [
+        'error',
+        { name: 'Date', message: 'Use the injected Clock and the LocalDate helpers (AD-7).' },
+        {
+          name: 'parseFloat',
+          message: 'Money is parsed from decimal strings without floats (AD-7).',
+        },
+      ],
+      'no-restricted-properties': [
+        'error',
+        {
+          object: 'Number',
+          property: 'parseFloat',
+          message: 'Money is parsed from decimal strings without floats (AD-7).',
+        },
+      ],
     },
   },
   {
