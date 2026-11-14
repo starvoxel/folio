@@ -1,12 +1,12 @@
-name: macOS weekly
+name: macOS daily
 
 # macOS is a v1 platform but not the one the pull-request checks run on (ci.yml uses Windows). This
-# runs the whole chain on macOS once a week, and on demand, to catch macOS-only breakage early:
+# runs the whole chain on macOS every day, and on demand, to catch macOS-only breakage early:
 # the packaged app, the ASAR-integrity fuse and the real Chromium sandbox are the likeliest places.
-# Change the cron to daily if weekly turns out to be too slow to catch breakage.
+# Daily, not weekly, while the app is young: breakage should show up within a day of the change.
 on:
   schedule:
-    - cron: '23 5 * * 1'
+    - cron: '23 5 * * *'
   workflow_dispatch:
 
 permissions:
