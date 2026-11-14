@@ -1,4 +1,0 @@
-<!-- Integration tests only. Run with: dotnet test tests/Integration.slnx -->
-<Solution>
-  <Project Path="Integration/Folio.Desktop.IntegrationTests/Folio.Desktop.IntegrationTests.csproj" />
-</Solution>

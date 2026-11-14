@@ -3,7 +3,21 @@ section: '09'
 title: 'Architecture Decisions'
 lifecycle: draft
 tags: [decisions, adr]
-key_files: []
+key_files:
+  - .dependency-cruiser.cjs
+  - tests/architecture/boundaries.test.ts
+  - tests/architecture/source-files.test.ts
+  - packages/core/src/domain/money.ts
+  - packages/core/src/domain/clock.ts
+  - packages/host-api/src/host-api.ts
+  - packages/renderer/src/ui/fluent/app-root.tsx
+  - packages/renderer/src/app/automation.ts
+  - apps/desktop/src/main/hardening.ts
+  - apps/desktop/src/main/protocol.ts
+  - apps/desktop/src/main/debug-guard.ts
+  - apps/desktop/scripts/package.mjs
+  - tests/e2e/smoke.e2e.ts
+  - tests/e2e/guard.e2e.ts
 ---
 
 > The architecture decisions agreed with Jeremy on 2026-11-05 and revised on 2026-11-12 for the Electron stack, each with its reason and what it costs. Numbering is stable; a superseded decision is marked, not deleted.
@@ -157,8 +171,6 @@ The online-lookup opt-in lives in the file because it decides whether household 
 
 _Decision._ Back up the file on open and on a rotating schedule, to the local app-data folder rather than beside the file, so a synced folder does not fill with copies (H1.10). A sidecar `.lock` file warns when another computer has the file open. Before saving, check whether the file changed on disk since it was loaded and warn instead of overwriting. Frequency and retention are set in the backup plan.
 
-
-
 ## AD-13. Charts are ECharts behind chart models
 
 _Decision._ The four chart types (donut, stacked bar, column bars, diverging bars) are drawn with ECharts (Apache-2.0, SVG renderer). A chart model feeds each chart with series data, colours taken from the design tokens, and click events for drill-down (A1.6). Rendering is replaceable without touching the chart models.
@@ -180,12 +192,12 @@ UI state lives in a core store that components read through `useSyncExternalStor
 
 Tests come in four kinds, each runnable on its own. The most expensive resource a test touches decides its kind, not how much code it covers.
 
-| Kind         | Rule                                                                                                                                                                                                                         | Where                                                |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| Unit         | One process, deterministic. No real file system, network, Electron or browser engine; time comes from the injected `Clock`. A simulated DOM is allowed for component tests; several real modules may work together in memory | `*.test.ts` next to the code, run by Vitest          |
-| Integration  | One machine: real temporary folders, the real host adapter, a real browser engine for the renderer, loopback                                                                                                                 | `tests/integration/`, Vitest                         |
-| Architecture | Structural rules of the codebase itself (fitness functions): package boundaries, where Fluent may appear, test placement and naming                                                                                          | `tests/architecture/`, dependency-cruiser and Vitest |
-| End-to-end   | The packaged app on a real OS window, driven by Playwright (AD-16)                                                                                                                                                           | `tests/e2e/`, Playwright                             |
+| Kind         | Rule                                                                                                                                                                                                                         | Where                                                                          |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Unit         | One process, deterministic. No real file system, network, Electron or browser engine; time comes from the injected `Clock`. A simulated DOM is allowed for component tests; several real modules may work together in memory | `*.test.ts` next to the code (`*.test.tsx` for component tests), run by Vitest |
+| Integration  | One machine: real temporary folders, the real host adapter, a real browser engine for the renderer, loopback                                                                                                                 | `tests/integration/`, Vitest                                                   |
+| Architecture | Structural rules of the codebase itself (fitness functions): package boundaries, where Fluent may appear, test placement and naming                                                                                          | `tests/architecture/`, dependency-cruiser and Vitest                           |
+| End-to-end   | The packaged app on a real OS window, driven by Playwright (AD-16)                                                                                                                                                           | `tests/e2e/`, Playwright                                                       |
 
 - _Techniques are not kinds._ Property-based tests (fast-check), snapshot tests and committed sample `.folio` files (format-compatibility checks) go in whichever kind their resources put them in, usually unit. Product rules such as "a locked month never changes" are ordinary unit or integration tests.
 - _Why unit tests sit next to the code._ The ai-foundation JavaScript standard colocates tests. A test is easy to find, and moves or is deleted with the module it covers, and imports stay short. The cost is a rule that keeps test files out of builds and packages, and an architecture check that keeps them from importing the wrong things. The other kinds live under `tests/<kind>/` because they span packages or need a real environment. A mirrored `tests/unit/` tree is equally workable: it keeps every kind in one place, at the price of longer paths and two trees that can drift apart.
@@ -201,7 +213,7 @@ _Context._ Fluent UI React v9 matches the prototype's look, is maintained by Mic
 _Decision._ Use `@fluentui/react-components` v9 with its light and dark themes and the brand ramp set around the prototype's accent (#0078D4), and contain it:
 
 1. Screens use colours, spacing and type only through Fluent tokens, never hard-coded values (for example text-primary is `tokens.colorNeutralForeground1`, card-bg `tokens.colorNeutralBackground1` with a `tokens.colorNeutralStroke2` border, divider `tokens.colorNeutralStroke2`; the exact names are verified against the pinned version). App tokens exist only where the prototype adds its own, such as the status backgrounds.
-2. One theme module sets the themes, the accent and the app tokens, and follows the system theme unless the user chose light or dark (H1.9).
+2. One theme module sets the themes, the accent and the app tokens, and follows the system theme unless the user chose light or dark (H1.9). Styles never go on `FluentProvider` itself: Fluent copies a provider's class name onto the portal element that holds menus and dropdown lists, so a full-height background there covers the page and swallows every click. For the same reason a style hook must not run in the component that renders the style provider: it would use the default style engine, whose style elements carry no CSP nonce (AD-18) and are blocked.
 3. Fluent components reach screens through app components under `renderer/src/ui/fluent/`: the shell, dialogs, banners, icons, tables and form controls. Screens import those, not Fluent.
 4. No Fluent import appears outside `renderer/src/ui/fluent/`. An architecture test enforces this.
 5. Charts read colours from the same tokens and redraw on theme change.
@@ -281,7 +293,7 @@ _Context._ The renderer and the core must not depend on Electron, so a read-only
 
 _Decision._ The renderer reaches the operating system only through a `HostApi` defined in the `host-api` package: open and save dialogs, reading and writing file bytes, an atomic save, lock acquire and release with stale-lock detection, backups, app-data settings, native menu events, file-drop events, reveal in folder and quit. Electron implements it with a preload bridge and main-process handlers; the renderer sees only that interface. Budget storage sits behind a narrower `FileStore` (open, save, lock, back up) so the data source can change without touching the screens.
 
-- _Desktop._ The main process does the file work: write a temporary file, flush, rename over the target (AD-12). A native file drop event supplies paths for CSV import. The core runs in the renderer (or a worker, decided at scaffold); file bytes pass over the bridge.
+- _Desktop._ The main process does the file work: write a temporary file, flush, rename over the target (AD-12). A native file drop event supplies paths for CSV import. The core runs in the renderer's main thread; file bytes pass over the bridge. A worker stays possible because the core has no DOM or Node dependency, and the performance initiative can decide it with real 10-year measurements (decided at the scaffold, 2026-11-13).
 - _Web, later and read-only first._ A browser implementation reads a `.folio` file picked with a plain file input and parses it locally with no upload, so it works in every browser without the File System Access API. There is no save, no lock and no native menu there.
 - _Server backend, later._ A household-hosted server is another `FileStore` implementation, opt-in and controlled by the household. It is not built and not designed in v1; the interface is the only preparation, and the data layer avoids assuming a local file where that costs nothing. When it arrives, H1.12 is reworded, the content security policy allows exactly that origin, and the AD-18 capture allowlists it.
 - _Mobile, later._ A wrapper around the same renderer is possible. It is not evaluated.
@@ -292,7 +304,7 @@ _Consequences._ Every feature that touches the file system or the OS goes throug
 
 _Decision._ v1 is for the household only, so installers are unsigned: a Windows installer (NSIS) and a macOS disk image. Windows SmartScreen will warn about an unknown publisher, and macOS Gatekeeper will need a right-click Open (or the quarantine attribute removed) on first run. Signing and notarization need a paid certificate and a developer account; they are revisited if Folio is ever shared beyond the household.
 
-There is no auto-update (H1.12). Updates are installed by hand. An opt-in, user-triggered "check for updates" that fetches a static version file is the only update mechanism that fits the privacy rule, and it is not in v1. The packager and installer tooling are chosen in the scaffold plan; the selection slice used `@electron/packager` with `@electron/fuses`, and `electron-builder` for installers.
+There is no auto-update (H1.12). Updates are installed by hand. An opt-in, user-triggered "check for updates" that fetches a static version file is the only update mechanism that fits the privacy rule, and it is not in v1. The scaffold uses `@electron/packager` with `@electron/fuses` to produce the one app folder that the tests drive and that the installers wrap (decided 2026-11-13). The installer tool (NSIS and disk image, where the slice used `electron-builder`) is chosen with the install-experience work in the [Electron foundations plan](../../plans/electron-foundations.md).
 
 _Linux, later._ A `.deb` first, built with electron-builder's default install script (it chooses the sandbox mode and installs an AppArmor profile on Ubuntu 24.04 and later); a CI job that installs the package and launches it without `--no-sandbox`; an AppImage only as a secondary format, because it cannot carry the profile and silently runs without the Chromium sandbox on those systems. X11 and Wayland and real GPUs need testing then; the CI runners have neither.
 

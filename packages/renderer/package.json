@@ -1,0 +1,29 @@
+{
+  "name": "@folio/renderer",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The React app: screens, app components and chart models.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --project tsconfig.json"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "9.75.1",
+    "@fluentui/react-icons": "2.0.345",
+    "@folio/core": "0.0.0",
+    "@folio/host-api": "0.0.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
+    "vite": "8.3.6"
+  }
+}

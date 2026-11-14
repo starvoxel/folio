@@ -1,39 +1,120 @@
 version: 2
 updates:
-  - package-ecosystem: nuget
+  # The npm groups put every set of packages that must move together into one pull request, so a
+  # peer-range conflict can never leave half a pair behind. tests/architecture/dependabot-groups.test.ts
+  # checks that every tightly coupled pair of direct dependencies shares a group; when it fails,
+  # fix the groups here, not the test. The first matching group wins, and a package that matches no
+  # group gets its own pull request.
+  #
+  # The cooldown matches min-release-age in .npmrc, so Dependabot never proposes a version npm would
+  # refuse to resolve. Security updates ignore the cooldown, and the security groups come first.
+  # Only the 'patches' group is auto-merged (dependabot-automerge.yml), and only after the required
+  # checks pass; every named group below is reviewed by a person.
+  - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
     groups:
-      avalonia:
+      # Security updates. Electron stays in its own pull request: each Electron update needs the
+      # end-to-end results and, later, the privacy capture to be read (AD-18).
+      security-electron:
+        applies-to: security-updates
         patterns:
-          - "Avalonia*"
-      # Everything else, split by update type. The first matching group wins, so Avalonia and
-      # FluentAvalonia (which the Avalonia pin tracks) never land in these two.
+          - 'electron'
+          - '@electron/*'
+      security:
+        applies-to: security-updates
+        patterns:
+          - '*'
+
+      # Version updates.
+      electron:
+        patterns:
+          - 'electron'
+          - '@electron/*'
+      # typescript-eslint declares the TypeScript range it supports (<6.1.0 today), so the two
+      # always move together. See the TypeScript note in 02_constraints.md.
+      typescript-toolchain:
+        patterns:
+          - 'typescript'
+          - 'typescript-eslint'
+          - '@typescript-eslint/*'
+      eslint:
+        patterns:
+          - 'eslint'
+          - '@eslint/js'
+          - 'eslint-config-prettier'
+          - 'eslint-plugin-jsdoc'
+          - 'globals'
+      # react-dom needs the same React release, and the types follow their package.
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+          - '@testing-library/*'
+      # Design-system updates can change how the app looks, so they are reviewed against the
+      # screenshots. Auto-merge can be considered once baselines are compared (Electron foundations).
+      fluent:
+        patterns:
+          - '@fluentui/*'
+      # plugin-react peers on exactly one Vite major; Vitest and jsdom share the same runner, and
+      # Vite has an optional peer on yaml (^2.4.2), which the architecture tests read directly.
+      vite:
+        patterns:
+          - 'vite'
+          - 'yaml'
+          - '@vitejs/*'
+          - 'vitest'
+          - '@vitest/*'
+          - 'jsdom'
+      playwright:
+        patterns:
+          - '@playwright/test'
+      # The types package follows the major version of the package it describes.
+      ws:
+        patterns:
+          - 'ws'
+          - '@types/ws'
+      semver:
+        patterns:
+          - 'semver'
+          - '@types/semver'
+      node-types:
+        patterns:
+          - '@types/node'
+      # zod validates untrusted input, so it gets its own pull request and is never auto-merged.
       patches:
         update-types: [patch]
         exclude-patterns:
-          - "Avalonia*"
-          - "FluentAvalonia*"
+          - 'zod'
       minors:
         update-types: [minor]
-        exclude-patterns:
-          - "Avalonia*"
-          - "FluentAvalonia*"
     ignore:
-      # Pinned until FluentAvalonia supports Avalonia 12.2 (see Directory.Packages.props).
-      - dependency-name: "Avalonia*"
-        update-types:
-          - version-update:semver-minor
-          - version-update:semver-major
+      # typescript-eslint does not support TypeScript 6.1 or later yet. Lift this when its
+      # peerDependencies admit the next TypeScript, then bump both in one change.
+      - dependency-name: 'typescript'
+        versions: ['>=6.1.0']
+      # The types follow the Node line the tooling runs on (.node-version).
+      - dependency-name: '@types/node'
+        versions: ['>=27.0.0']
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
     groups:
+      security:
+        applies-to: security-updates
+        patterns:
+          - '*'
       patches:
         update-types: [patch]
       minors:
