@@ -12,8 +12,17 @@ import { chooseWindowSize } from './window-size.js';
 
 describe('chooseWindowSize', () => {
   describe('aLargeScreen', () => {
-    it('returnsTheDesignSize', () => {
-      expect(chooseWindowSize({ width: 2560, height: 1400 })).toEqual({ width: 1440, height: 900 });
+    it('opensAtMostOfTheScreen', () => {
+      expect(chooseWindowSize({ width: 2560, height: 1400 })).toEqual({
+        width: 2048,
+        height: 1120,
+      });
+    });
+  });
+
+  describe('aScreenJustBiggerThanTheDesign', () => {
+    it('keepsTheDesignSizeWhereItIsLarger', () => {
+      expect(chooseWindowSize({ width: 1600, height: 1000 })).toEqual({ width: 1440, height: 900 });
     });
   });
 

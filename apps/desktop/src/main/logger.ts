@@ -35,16 +35,20 @@ export interface LoggerOptions {
 }
 
 const ORDER: Readonly<Record<LogLevel, number>> = { debug: 10, info: 20, warn: 30, error: 40 };
+// Keep a line small enough to read in a terminal and to attach to a bug report, and make a stray
+// long value (a file path, a pasted description) get cut instead of written whole. The numbers are
+// judgement, not measured; raise them when a real message needs more.
 const MAX_MESSAGE_LENGTH = 300;
 const MAX_FIELD_LENGTH = 120;
 
 /**
  * Read a log level from text such as an environment variable.
- * @param text - The text, or undefined when unset.
+ * @param text - The text, or undefined when unset. Case and surrounding spaces do not matter.
  * @returns The level; `info` when the text is missing or not a level.
  */
 export function parseLogLevel(text: string | undefined): LogLevel {
-  return text === 'debug' || text === 'info' || text === 'warn' || text === 'error' ? text : 'info';
+  const name = text?.trim().toLowerCase();
+  return name === 'debug' || name === 'info' || name === 'warn' || name === 'error' ? name : 'info';
 }
 
 /**

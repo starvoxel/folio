@@ -101,6 +101,13 @@ describe('parseLogLevel', () => {
     });
   });
 
+  describe('aLevelNameInAnotherCase', () => {
+    it('returnsThatLevel', () => {
+      expect(parseLogLevel('DEBUG')).toBe('debug');
+      expect(parseLogLevel(' Warn ')).toBe('warn');
+    });
+  });
+
   describe('missingOrUnknownText', () => {
     it('returnsInfo', () => {
       expect(parseLogLevel(undefined)).toBe('info');
