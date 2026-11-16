@@ -31,7 +31,8 @@ function assertTrustedSender(event: IpcMainInvokeEvent): void {
 
 /**
  * Run a handler and turn its failure into a result the bridge can rethrow. The message is fixed
- * text, so no data from the failing call leaks into the renderer or the log.
+ * text, so no data from the failing call leaks into the renderer, and the log gets the error's
+ * name and stack frames without its message.
  * @param logger - Where failures are noted.
  * @param name - The handler name for the log.
  * @param work - The work to do.
@@ -44,8 +45,8 @@ async function guarded<Value>(
 ): Promise<IpcResult<Value>> {
   try {
     return { ok: true, value: await work() };
-  } catch {
-    logger.error('ipc handler failed', { handler: name });
+  } catch (error) {
+    logger.logError('ipc handler failed', error, { handler: name });
     return { ok: false, code: 'unavailable', message: 'The host could not complete the request' };
   }
 }

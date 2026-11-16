@@ -6,6 +6,8 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { scrubStack } from './log-stack.js';
+
 /** How serious a log line is, from most to least verbose. */
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -16,12 +18,41 @@ export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
  */
 export type LogFields = Readonly<Record<string, string | number | boolean>>;
 
+/**
+ * What a logged error looks like: its class name, an optional system code, the frames of its stack
+ * and its causes. There is never a message, a path outside the app folder or any other property.
+ */
+export interface LoggedError {
+  /** The error's class name when it looks like an identifier, else `Error`; `NonError` for a thrown value that was not an error. */
+  readonly name: string;
+  /** The `typeof` of a thrown value that was not an error. */
+  readonly kind?: string;
+  /** A system error code such as `ENOENT`, when the error has one that looks like a code. */
+  readonly code?: string;
+  /** The stack frames, made safe by `scrubStack`; empty when there are none. */
+  readonly stack: readonly string[];
+  /** True when frames were left out because the stack was longer than the limit. */
+  readonly truncated?: true;
+  /** The error's `cause`, described by the same rules. */
+  readonly cause?: LoggedError;
+  /** True when the cause chain went deeper than the limit and the rest was left out. */
+  readonly causeOmitted?: true;
+}
+
 /** The main process's logger. */
 export interface Logger {
   debug(message: string, fields?: LogFields): void;
   info(message: string, fields?: LogFields): void;
   warn(message: string, fields?: LogFields): void;
   error(message: string, fields?: LogFields): void;
+  /**
+   * Log an error at the `error` level. Only the error's name, code and stack frames are written,
+   * never its message, because a message can quote data (AD-10). Use this for anything caught.
+   * @param message - What the app was doing, as fixed text.
+   * @param error - The caught value, which may not be an error at all.
+   * @param fields - Extra plain facts, as for `error`.
+   */
+  logError(message: string, error: unknown, fields?: LogFields): void;
 }
 
 /** What `createLogger` needs. */
@@ -32,6 +63,11 @@ export interface LoggerOptions {
   readonly write: (line: string) => void;
   /** The time source, in milliseconds since the epoch. */
   readonly now: () => number;
+  /**
+   * The folder the app is installed in. Stack paths below it are kept; every other path is cut to
+   * its file name (see `scrubPath`).
+   */
+  readonly appFolder?: string;
 }
 
 const ORDER: Readonly<Record<LogLevel, number>> = { debug: 10, info: 20, warn: 30, error: 40 };
@@ -40,6 +76,14 @@ const ORDER: Readonly<Record<LogLevel, number>> = { debug: 10, info: 20, warn: 3
 // judgement, not measured; raise them when a real message needs more.
 const MAX_MESSAGE_LENGTH = 300;
 const MAX_FIELD_LENGTH = 120;
+// Stacks have their own limits, so the 120 characters of a field never cut a frame in half. Frame
+// length and count are in log-stack.ts. A cause chain of more than a few links is a loop or noise.
+const MAX_CAUSE_DEPTH = 3;
+const ERROR_NAME = /^[A-Za-z_$][\w$]{0,59}$/u;
+const ERROR_CODE = /^[A-Z][A-Z0-9_]{1,39}$/u;
+// Written when a line cannot be built or written. It is fixed text, with no time, because the time
+// source may be what failed.
+const FALLBACK_LINE = '{"level":"error","message":"a log line could not be written"}';
 
 /**
  * Read a log level from text such as an environment variable.
@@ -81,25 +125,119 @@ function cleanFields(fields: LogFields | undefined): Record<string, string | num
 }
 
 /**
- * Create a logger that writes one JSON line per message.
- * @param options - The level, where lines go and the time source.
+ * Read something that may throw, such as a getter on a hostile or broken error.
+ * @param get - The read.
+ * @returns The value, or undefined when the read threw.
+ */
+function read<Value>(get: () => Value): Value | undefined {
+  try {
+    return get();
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Describe a thrown value for the log: name, code and stack frames, and its causes, never the
+ * message. A value that is not an error is described by its type only, because a thrown string or
+ * object can hold anything.
+ * @param value - The thrown value.
+ * @param appFolder - The folder the app is installed in, or undefined when unknown.
+ * @param depth - How many causes deep this value is.
+ * @returns The description.
+ */
+function describeError(value: unknown, appFolder: string | undefined, depth: number): LoggedError {
+  const stack =
+    typeof value === 'object' && value !== null ? read(() => (value as Error).stack) : undefined;
+  if (typeof stack !== 'string' && !(value instanceof Error)) {
+    return { name: 'NonError', kind: typeof value, stack: [] };
+  }
+  const error = value as Error;
+  const name = read(() => error.name);
+  const code = read(() => (error as { code?: unknown }).code);
+  const cause = read(() => error.cause);
+  const scrubbed = typeof stack === 'string' ? scrubStack(stack, appFolder) : undefined;
+  return {
+    name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
+    ...(typeof code === 'string' && ERROR_CODE.test(code) ? { code } : {}),
+    stack: scrubbed?.frames ?? [],
+    ...(scrubbed?.truncated === true ? { truncated: true as const } : {}),
+    ...(cause === undefined
+      ? {}
+      : depth >= MAX_CAUSE_DEPTH
+        ? { causeOmitted: true as const }
+        : { cause: describeError(cause, appFolder, depth + 1) }),
+  };
+}
+
+/**
+ * Join several writers into one. A writer that throws does not stop the others.
+ * @param writers - The writers, such as standard error and a log file.
+ * @returns One writer that calls each of them.
+ */
+export function combineWriters(
+  ...writers: readonly ((line: string) => void)[]
+): (line: string) => void {
+  return (line) => {
+    for (const write of writers) {
+      try {
+        write(line);
+      } catch {
+        // One failing destination must not take the others down with it.
+      }
+    }
+  };
+}
+
+/**
+ * Create a logger that writes one JSON line per message. The logger never throws: a line that
+ * cannot be built or written is replaced by a fixed notice, and if that fails too it is dropped,
+ * because a diagnostic must not be able to stop the app.
+ * @param options - The level, where lines go, the time source and the app folder.
  * @returns The logger.
  */
 export function createLogger(options: LoggerOptions): Logger {
-  const log =
-    (level: LogLevel) =>
-    (message: string, fields?: LogFields): void => {
+  const emit = (
+    level: LogLevel,
+    message: string,
+    fields?: LogFields,
+    error?: { value: unknown },
+  ): void => {
+    try {
       if (ORDER[level] < ORDER[options.level]) {
         return;
       }
       options.write(
         JSON.stringify({
-          time: new Date(options.now()).toISOString(),
+          time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
           level,
           message: clip(message, MAX_MESSAGE_LENGTH),
           ...(fields === undefined ? {} : { fields: cleanFields(fields) }),
+          ...(error === undefined
+            ? {}
+            : { error: describeError(error.value, options.appFolder, 0) }),
         }),
       );
+    } catch {
+      try {
+        options.write(FALLBACK_LINE);
+      } catch {
+        // Nothing left to try; dropping the line is the only safe choice.
+      }
+    }
+  };
+  const log =
+    (level: LogLevel) =>
+    (message: string, fields?: LogFields): void => {
+      emit(level, message, fields);
     };
-  return { debug: log('debug'), info: log('info'), warn: log('warn'), error: log('error') };
+  return {
+    debug: log('debug'),
+    info: log('info'),
+    warn: log('warn'),
+    error: log('error'),
+    logError: (message, error, fields) => {
+      emit('error', message, fields, { value: error });
+    },
+  };
 }

@@ -54,7 +54,7 @@ The selection slice on `spike/slice-electron` is reference only: read its harden
 ## Requirements
 
 - Security: AD-18 applies to the shell from the first commit; imported files and IPC input are untrusted.
-- Logging: a small logger in the main process with levels; no financial data in any log.
+- Logging: a small logger in the main process with levels; no financial data and no personal data in any log. Errors, stack traces and the log file are in [plans/logging.md](logging.md).
 - Licences: a CI check for MIT-or-equivalent dependencies.
 
 ## Decisions
