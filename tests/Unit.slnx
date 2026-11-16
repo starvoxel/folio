@@ -1,4 +1,0 @@
-<!-- Unit tests only. Run with: dotnet test tests/Unit.slnx -->
-<Solution>
-  <Project Path="Unit/Folio.Core.UnitTests/Folio.Core.UnitTests.csproj" />
-</Solution>

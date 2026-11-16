@@ -1,8 +1,8 @@
 name: Dependabot auto-merge
 
-# Enables auto-merge on the Dependabot "patches" group (NuGet and GitHub Actions). Minors, majors,
-# Avalonia and FluentAvalonia PRs stay manual. The PR still has to pass the required checks in branch
-# protection before GitHub merges it (needs "Allow auto-merge" enabled in repository settings).
+# Enables auto-merge on the Dependabot "patches" group (npm and GitHub Actions). The named groups (electron, react, fluent, vite and the rest),
+# the security groups, minors and majors stay manual. The PR still has to pass the required checks in branch protection
+# before GitHub merges it (needs "Allow auto-merge" enabled in repository settings).
 on: pull_request_target
 
 permissions:

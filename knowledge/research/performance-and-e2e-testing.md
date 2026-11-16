@@ -132,8 +132,8 @@ A likely mix, already adopted by AD-16: most scenarios through core tests in pla
 
 ## 6. How this relates to the existing test setup
 
-- Benchmarks are scripts, not tests, so they sit outside `tests/`, for example in `perf/`.
-- E2E suites are Playwright projects under `tests/e2e/` (AD-14). They stay out of the default unit and integration run.
+- Benchmarks are scripts, not tests, so they sit outside `tests/`, for example in `perf/` (the directory does not exist yet).
+- E2E specs are `*.e2e.ts` files under `tests/e2e/`, run by one Playwright configuration (`playwright.config.ts`, `npm run test:e2e`) against the packaged app that `npm run package` builds (AD-14). The launch helper that attaches through the debugging pipe is `tests/e2e/support/launch-app.ts`, and the first spec, `tests/e2e/smoke.e2e.ts`, is the pattern to extend. They stay out of the default unit and integration run (`npm run test:unit`, `npm run test:integration`).
 - Tagging, left open in AD-14, could mark "slow" tests if some stress checks end up inside the regular projects.
 
 ---

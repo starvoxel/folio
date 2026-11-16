@@ -2,9 +2,7 @@
   "project_name": "Folio",
   "project_shortname": "FOL",
   "standards": {
-    "engineering": [
-      "javascript", "node"
-    ],
+    "engineering": ["javascript", "node"],
     "all": []
   },
   "ai_identity": {

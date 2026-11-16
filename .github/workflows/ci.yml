@@ -1,59 +1,156 @@
 name: CI
 
+# Every job runs on Windows, the platform Folio ships on first. macOS runs the same chain daily
+# (macos-daily.yml). Linux is not a v1 platform and is used only for the AD-18 network capture,
+# which belongs to the Electron foundations plan.
+#
+# The order follows project-standards.md: static checks and the architecture tests first, then unit
+# and integration tests in parallel (nearly all of their time is setting up a runner, so waiting for
+# one another would only add minutes), then the end-to-end tests once both have passed. Third-party actions are pinned to full commit SHAs; the comment
+# names the release each SHA belongs to. No stable Node bundles npm 12 yet (Node 24 LTS bundles
+# npm 11), so every job installs it explicitly.
 on:
   push:
     branches: [main]
   pull_request:
 
-# Actions are pinned to full commit SHAs; the comment names the release each SHA belongs to.
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  testing:
-    name: Testing (${{ matrix.os }})
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    env:
-      DOTNET_NOLOGO: true
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
+  static-checks:
+    name: Static checks
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Set up .NET (version from global.json)
-        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          global-json-file: global.json
-          cache: true
-          cache-dependency-path: "**/packages.lock.json"
+          node-version-file: .node-version
+          cache: npm
 
-      - name: Restore (locked mode, fails if a packages.lock.json is out of date)
-        run: dotnet restore Folio.slnx --locked-mode
+      - name: Install npm 12
+        run: npm install -g npm@12 && npm --version
 
-      - name: Check formatting
-        if: matrix.os == 'ubuntu-latest'
-        run: dotnet format Folio.slnx --verify-no-changes --no-restore
+      - name: Install from the lockfile
+        run: npm ci
 
-      - name: Build (warnings are errors)
-        run: dotnet build Folio.slnx --configuration Release --no-restore
+      - name: Verify registry signatures
+        run: npm audit signatures
 
-      - name: Architecture tests
-        run: dotnet test tests/Architecture.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Architecture
+      - name: An unreviewed install script must fail the install
+        run: npm run check:install-policy
 
-      - name: Unit tests
-        if: success() || failure()
-        run: dotnet test tests/Unit.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Unit
+      - name: Lint
+        if: ${{ !cancelled() }}
+        run: npm run lint
 
-      - name: Integration tests
-        if: success() || failure()
-        run: dotnet test tests/Integration.slnx --configuration Release --no-build --logger "trx" --results-directory TestResults/Integration
+      - name: Formatter check
+        if: ${{ !cancelled() }}
+        run: npm run format:check
 
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      - name: Type check
+        if: ${{ !cancelled() }}
+        run: npm run typecheck
+
+      - name: Architecture tests and licence check
+        if: ${{ !cancelled() }}
+        run: npm run test:architecture
+
+  unit-tests:
+    name: Unit tests
+    needs: static-checks
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          name: test-results-${{ matrix.os }}
-          path: TestResults
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+      - run: npm run test:unit
+
+  integration-tests:
+    name: Integration tests
+    needs: static-checks
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+
+      # The renderer tests drive a real Chromium, which Playwright downloads separately from npm. The
+      # download takes minutes, so it is cached per Playwright version.
+      - name: Choose where the browser lives and which version to cache
+        id: playwright
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/playwright-browsers" >> "$GITHUB_ENV"
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the Playwright browser
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/playwright-browsers
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
+      # A no-op when the cache was restored, a download when it was not. There is no --with-deps:
+      # on Windows it installs the Media Foundation feature, which took 2m37s on a hosted runner,
+      # and the tests play no media. Put it back if Chromium fails to start without it.
+      - name: Install the browser Playwright needs
+        run: npx playwright install chromium
+
+      - run: npm run test:integration
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: integration-screenshots
+          path: test-results/screenshots
+          if-no-files-found: ignore
+
+  end-to-end-tests:
+    name: End-to-end tests
+    needs: [unit-tests, integration-tests]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+
+      # The tests drive the exact packaged binary; there is no separate test build (AD-16). The
+      # tests attach to Electron's own Chromium, so no Playwright browser is downloaded here.
+      - name: Build and package the app
+        run: npm run package
+
+      - name: Run the end-to-end tests
+        run: npm run test:e2e
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: e2e-results-windows
+          path: test-results/e2e
+          if-no-files-found: ignore

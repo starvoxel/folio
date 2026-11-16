@@ -1,0 +1,13 @@
+package-lock.json
+node_modules/
+dist/
+out/
+release/
+coverage/
+test-results/
+playwright-report/
+design/
+knowledge/architecture/index.json
+tests/architecture/fixtures/
+.claude/
+knowledge/research/

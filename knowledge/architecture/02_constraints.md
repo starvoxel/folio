@@ -3,7 +3,16 @@ section: '02'
 title: 'Architecture Constraints'
 lifecycle: draft
 tags: [constraints, stack, standards]
-key_files: []
+key_files:
+  - package.json
+  - .npmrc
+  - .node-version
+  - tsconfig.base.json
+  - eslint.config.js
+  - licence-exceptions.json
+  - tests/architecture/licences.test.ts
+  - apps/desktop/package.json
+  - packages/renderer/package.json
 ---
 
 > The fixed choices the architecture works within: platform, pinned stack, coding standards and product rules.
@@ -20,7 +29,7 @@ key_files: []
 | Network      | None by default; online lookups are opt-in and limited to services that neither keep nor sell data. The app opens no listener                                                                                                                                                                                                                                          | PRD H1.12                            |
 | Currency     | One currency, in dollars and cents; all accounts are assumed to use the same currency. Exact integer cents, no floating-point arithmetic on money                                                                                                                                                                                                                      | PRD assumption 2                     |
 | Concurrency  | One editor at a time; two simultaneous editors are not handled                                                                                                                                                                                                                                                                                                         | PRD constraints                      |
-| Licences     | All dependencies MIT or equivalent (Apache-2.0, ISC, BSD, 0BSD); no paid components. A licence check runs in CI. Any other licence needs a recorded decision                                                                                                                                                                                                           | Decision, 2026-11-05                 |
+| Licences     | All dependencies MIT or equivalent (Apache-2.0, ISC, BSD, 0BSD); no paid components. A licence check runs in CI with the architecture tests (`tests/architecture/licences.test.ts`). Any other licence needs a recorded decision, kept in `licence-exceptions.json`                                                                                                    | Decision, 2026-11-05                 |
 | Distribution | Household only for v1: unsigned installers are acceptable (Windows SmartScreen and macOS Gatekeeper will warn), and there is no auto-update (AD-20)                                                                                                                                                                                                                    | Decision, 2026-11-12                 |
 | Build tools  | npm 12 workspaces, hardened: dependency install scripts are blocked unless listed in `allowScripts` (npm 12's default), new releases wait seven days (`min-release-age`), CI installs from the lockfile with `npm ci` and checks signatures. No stable Node bundles npm 12 yet, so CI and developers install it explicitly. These matter because the npm tree is large | Research, 2026-11-13                 |
 
@@ -28,19 +37,21 @@ key_files: []
 
 Versions are exact and live in the root `package.json` files and the lockfile, set by the scaffold plan ([app-scaffold.md](../../plans/app-scaffold.md)). The versions below are what the stack-selection slice measured on 2026-11-12 and are the starting pins.
 
-| Package                              | Version in the slice                                                 |
-| ------------------------------------ | -------------------------------------------------------------------- |
-| Electron                             | 45.3.x (Chromium 156)                                                |
-| TypeScript                           | 7.0.x, strict                                                        |
-| Vite                                 | 8.3.x                                                                |
-| React                                | 19.3.x                                                               |
-| `@fluentui/react-components`         | 9.75.x                                                               |
-| `@tanstack/react-virtual`            | 3.14.x                                                               |
-| ECharts                              | 6.1.x                                                                |
-| Playwright                           | 1.65.x                                                               |
-| fast-check                           | 4.x                                                                  |
-| fflate (zip)                         | 0.8.x                                                                |
-| Electron fuses and packaging tooling | `@electron/fuses` 2.1.x; the packager is chosen in the scaffold plan |
+| Package                              | Version in the slice                                 |
+| ------------------------------------ | ---------------------------------------------------- |
+| Electron                             | 45.3.x (Chromium 156)                                |
+| TypeScript                           | 6, strict                                            |
+| Vite                                 | 8.3.x                                                |
+| React                                | 19.3.x                                               |
+| `@fluentui/react-components`         | 9.75.x                                               |
+| `@tanstack/react-virtual`            | 3.14.x                                               |
+| ECharts                              | 6.1.x                                                |
+| Playwright                           | 1.65.x                                               |
+| fast-check                           | 4.x                                                  |
+| fflate (zip)                         | 0.8.x                                                |
+| Electron fuses and packaging tooling | `@electron/fuses` 2.1.x, `@electron/packager` 20.3.x |
+
+Tooling runs on Node 26 LTS (`.node-version`), always the newest release of that line because Node ships its security fixes as point releases; `engines` accepts Node 22.23.4 and later within npm 12's supported ranges.
 
 ## Organizational constraints: coding standards
 
@@ -53,3 +64,9 @@ The build enforces what it can: strict compiler settings, lint with warnings as 
 - A locked month changes only through the guarded reopen (M1.7, M1.14, H1.8).
 - Months close in order (M1.17).
 - Closing, reopening and completing an import save immediately (H1.6b).
+
+## Dependency updates and security
+
+Dependabot version updates run weekly with a seven-day cooldown that matches `min-release-age`. Packages that depend on each other's exact version ranges are grouped so they move in one pull request; otherwise one half of a pair would be proposed alone and fail to install. An architecture test (`tests/architecture/dependabot-groups.test.ts`) fails when two such packages land in different groups, so the groups cannot drift from the dependency tree. TypeScript is held back, together with its linter, until the linter supports the next release. Only the `patches` group is auto-merged, after the required checks pass; `zod`, which validates untrusted input, and every other group are reviewed by a person.
+
+Dependabot security updates are on. They bump to the minimum patched version and ignore the cooldown, so a fix is not held back a week. Electron security updates arrive in their own pull request. Advisories exist only for Electron's own issues: Chromium point releases carry no advisory, so they reach the project through the normal weekly Electron update. Node ships its security fixes as point releases and is updated outside this process (`scripts/install-node.sh`). An urgent Electron or Chromium fix that cannot wait for the cooldown is installed by hand with `npm install --min-release-age=0 electron@<exact version>`, which leaves `.npmrc` untouched, and the reason goes in the commit message. A locked version younger than seven days still installs with `npm ci`; only a fresh resolve is refused.
