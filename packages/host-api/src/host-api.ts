@@ -69,9 +69,35 @@ export type MenuCommand =
   | 'settings'
   | 'about';
 
+/** Every form-factor profile, in the order the layout registry and its tests use. */
+export const FORM_FACTORS = ['desktop', 'web', 'tablet', 'phone'] as const;
+
+/**
+ * The kind of device the app runs on, chosen by the host and never guessed from the window width
+ * (AD-21). It picks which family of layouts the renderer uses.
+ */
+export type FormFactor = (typeof FORM_FACTORS)[number];
+
+/**
+ * How the user points at the screen, as the host knows it. It decides touch target size and
+ * whether hover-only controls may be used; the window width has nothing to do with either
+ * (AD-21). A browser host reads the `pointer` and `hover` media queries here, so the renderer
+ * itself never does.
+ */
+export interface InputStyle {
+  /** `fine` for a mouse or trackpad, `coarse` for a finger. */
+  readonly pointer: 'fine' | 'coarse';
+  /** True when the primary input can hover over a control. */
+  readonly hover: boolean;
+}
+
 /** Facts about the host the renderer may need. */
 export interface HostInfo {
   readonly platform: 'win32' | 'darwin' | 'linux' | 'web';
+  /** The form-factor profile that picks the layouts (AD-21). */
+  readonly formFactor: FormFactor;
+  /** The primary input style (AD-21). */
+  readonly input: InputStyle;
   /** True only when the app was started with FOLIO_AUTOMATION=1 (AD-16). */
   readonly automation: boolean;
   readonly appVersion: string;

@@ -10,6 +10,7 @@ import { useEffect, type ReactElement } from 'react';
 
 import { applySettings, chooseMonth, navigateTo } from './app-state.js';
 import { useAppServices } from './app-services.js';
+import { LayoutProvider, useLayout } from './layout-context.js';
 import { handleMenuCommand, MENU_ENTRIES } from './menu-commands.js';
 import { formatMonthLabel, recentMonths } from './month-label.js';
 import { FOOTER_PAGES, isPageId, NAVIGATION_PAGES, type PageDefinition } from './pages.js';
@@ -17,24 +18,32 @@ import { testIds } from './test-ids.js';
 import { useAppState } from './use-app-state.js';
 import { readMachineSettings, parseYearMonth } from '@folio/core';
 import { PageRouter } from '../screens/page-router.js';
-import {
-  AppNavigation,
-  AppRoot,
-  AppShell,
-  TopBar,
-  type AppNavigationItem,
-} from '../ui/fluent/index.js';
+import { AppRoot, AppShell, type AppNavigationItem } from '../ui/fluent/index.js';
 
 const MONTHS_SHOWN = 12;
 
 /**
- * The whole app: loads the machine settings, listens for menu commands from the host, and draws
- * the shell with the current page.
+ * The whole app: measures the area it has so a layout can be chosen for it (AD-21), then draws the
+ * app inside that.
  * @returns The app element.
  */
 export function App(): ReactElement {
+  return (
+    <LayoutProvider>
+      <AppView />
+    </LayoutProvider>
+  );
+}
+
+/**
+ * The app inside its measured area: loads the machine settings, listens for menu commands from
+ * the host, and draws the shell, which the layout arranges, with the current page.
+ * @returns The app view element.
+ */
+function AppView(): ReactElement {
   const { host, store, cspNonce } = useAppServices();
   const state = useAppState(store);
+  const { resolved, interaction } = useLayout();
 
   useEffect(() => {
     let active = true;
@@ -77,72 +86,60 @@ export function App(): ReactElement {
   return (
     <AppRoot themePreference={state.themePreference} cspNonce={cspNonce}>
       <AppShell
-        navigation={
-          <AppNavigation
-            title="Folio"
-            label="Main navigation"
-            items={NAVIGATION_PAGES.map(toItem)}
-            footerItems={FOOTER_PAGES.map(toItem)}
-            selected={state.page}
-            onSelect={(value) => {
-              if (isPageId(value)) {
-                store.setState((current) => navigateTo(current, value));
-              }
-            }}
-          />
-        }
-        topBar={
-          <TopBar
-            fileName={state.fileName}
-            statusText={state.hasUnsavedChanges ? 'Unsaved changes' : 'Saved automatically'}
-            fileNameTestId={testIds.topBar.fileName}
-            statusTestId={testIds.topBar.saveStatus}
-            menuLabel="Menu"
-            menuTestId={testIds.topBar.menu}
-            menuItems={MENU_ENTRIES.map((entry) => ({
-              id: entry.command,
-              label: entry.label,
-              testId: testIds.topBar.menuItem(entry.command),
-              onSelect: () => {
-                handleMenuCommand(store, entry.command);
-              },
-            }))}
-            commands={[
-              // Placeholders: they do nothing until the features behind them are built.
-              {
-                id: 'undo',
-                label: 'Undo',
-                icon: 'undo',
-                testId: testIds.topBar.undo,
-                onClick: noop,
-              },
-              {
-                id: 'redo',
-                label: 'Redo',
-                icon: 'redo',
-                testId: testIds.topBar.redo,
-                onClick: noop,
-              },
-              {
-                id: 'import',
-                label: 'Import CSV',
-                icon: 'import',
-                testId: testIds.topBar.importCsv,
-                onClick: noop,
-              },
-            ]}
-            monthLabel="Month"
-            monthTestId={testIds.topBar.month}
-            months={months}
-            selectedMonth={state.month}
-            onMonthChange={(value) => {
-              const parsed = parseYearMonth(value);
-              if (parsed.ok) {
-                store.setState((current) => chooseMonth(current, parsed.value));
-              }
-            }}
-          />
-        }
+        layout={resolved.definition}
+        interaction={interaction}
+        drawerToggleLabel="Navigation"
+        drawerToggleTestId={testIds.topBar.navigation}
+        navigation={{
+          title: 'Folio',
+          label: 'Main navigation',
+          items: NAVIGATION_PAGES.map(toItem),
+          footerItems: FOOTER_PAGES.map(toItem),
+          selected: state.page,
+          onSelect: (value) => {
+            if (isPageId(value)) {
+              store.setState((current) => navigateTo(current, value));
+            }
+          },
+        }}
+        topBar={{
+          fileName: state.fileName,
+          statusText: state.hasUnsavedChanges ? 'Unsaved changes' : 'Saved automatically',
+          fileNameTestId: testIds.topBar.fileName,
+          statusTestId: testIds.topBar.saveStatus,
+          menuLabel: 'Menu',
+          menuTestId: testIds.topBar.menu,
+          menuItems: MENU_ENTRIES.map((entry) => ({
+            id: entry.command,
+            label: entry.label,
+            testId: testIds.topBar.menuItem(entry.command),
+            onSelect: () => {
+              handleMenuCommand(store, entry.command);
+            },
+          })),
+          commands: [
+            // Placeholders: they do nothing until the features behind them are built.
+            { id: 'undo', label: 'Undo', icon: 'undo', testId: testIds.topBar.undo, onClick: noop },
+            { id: 'redo', label: 'Redo', icon: 'redo', testId: testIds.topBar.redo, onClick: noop },
+            {
+              id: 'import',
+              label: 'Import CSV',
+              icon: 'import',
+              testId: testIds.topBar.importCsv,
+              onClick: noop,
+            },
+          ],
+          monthLabel: 'Month',
+          monthTestId: testIds.topBar.month,
+          months,
+          selectedMonth: state.month,
+          onMonthChange: (value) => {
+            const parsed = parseYearMonth(value);
+            if (parsed.ok) {
+              store.setState((current) => chooseMonth(current, parsed.value));
+            }
+          },
+        }}
       >
         <PageRouter page={state.page} />
       </AppShell>

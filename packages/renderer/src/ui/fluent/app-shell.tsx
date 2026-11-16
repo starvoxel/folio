@@ -1,74 +1,67 @@
 // ------------------------------
 // app-shell.tsx
 //
-// Author: Starvoxel AI Agent - 2026-11-13
+// Author: Starvoxel AI Agent - 2026-11-16
 //
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
 import type { ReactElement, ReactNode } from 'react';
 
-import { makeStyles, tokens } from '@fluentui/react-components';
-
-const useStyles = makeStyles({
-  root: {
-    display: 'grid',
-    gridTemplateColumns: 'auto 1fr',
-    height: '100vh',
-  },
-  column: {
-    display: 'flex',
-    flexDirection: 'column',
-    minWidth: 0,
-    minHeight: 0,
-  },
-  content: {
-    flexGrow: 1,
-    overflow: 'auto',
-    paddingTop: tokens.spacingVerticalXXL,
-    paddingBottom: tokens.spacingVerticalXXL,
-    paddingLeft: tokens.spacingHorizontalXXXL,
-    paddingRight: tokens.spacingHorizontalXXXL,
-  },
-  // The content keeps a readable width and sits in the middle of the space, so the page looks
-  // balanced at any window width or shape, ultrawide included. Nothing here depends on an aspect
-  // ratio.
-  contentInner: {
-    width: '100%',
-    maxWidth: '1240px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-});
+import type { Interaction, LayoutDefinition } from '../../layout/index.js';
+import type { AppNavigationProps } from './app-navigation.js';
+import { ShellDrawer } from './shell-drawer.js';
+import { ShellLeftPane } from './shell-left-pane.js';
+import type { TopBarProps } from './top-bar.js';
 
 /** Properties of `AppShell`. */
 export interface AppShellProps {
-  /** The navigation pane, on the left and the full height of the window. */
-  readonly navigation: ReactNode;
-  /** The top bar above the page. */
-  readonly topBar: ReactNode;
+  /** The layout for this profile and width (AD-21): which shell variant, and its rules. */
+  readonly layout: LayoutDefinition;
+  /** How controls behave for the way the user points (AD-21). */
+  readonly interaction: Interaction;
+  /** What the navigation shows; the shell chooses where and how. */
+  readonly navigation: Omit<AppNavigationProps, 'targetSize' | 'overlay'>;
+  /** What the top bar shows; the shell applies the layout's rules to it. */
+  readonly topBar: Omit<TopBarProps, 'rules' | 'targetSize' | 'navigationToggle'>;
+  /** The accessible name of the button that opens the navigation drawer. */
+  readonly drawerToggleLabel: string;
+  /** The `data-testid` of that button. */
+  readonly drawerToggleTestId: string;
   /** The current page. */
   readonly children: ReactNode;
 }
 
 /**
- * The frame of every screen: navigation on the left, a top bar, and the page below it (design
- * notes, Shell).
- * @param props - The three regions of the frame.
+ * The frame of every screen (design notes, Shell). It picks the shell variant the layout names and
+ * hands it the rules, so how the frame is arranged is decided by the layout and nowhere else.
+ * @param props - The layout, the interaction rules, the navigation, the top bar and the page.
  * @returns The shell element.
  */
 export function AppShell(props: AppShellProps): ReactElement {
-  const { navigation, topBar, children } = props;
-  const styles = useStyles();
-  return (
-    <div className={styles.root}>
-      {navigation}
-      <div className={styles.column}>
-        {topBar}
-        <main className={styles.content}>
-          <div className={styles.contentInner}>{children}</div>
-        </main>
-      </div>
-    </div>
-  );
+  const { layout, interaction, navigation, topBar, children } = props;
+  const variant = {
+    layout,
+    navigation: { ...navigation, targetSize: interaction.targetSize },
+    topBar: {
+      ...topBar,
+      rules: layout.topBar,
+      targetSize: interaction.targetSize,
+      navigationToggle: null,
+    },
+  };
+  switch (layout.navigation) {
+    case 'leftPane':
+      return <ShellLeftPane {...variant}>{children}</ShellLeftPane>;
+    case 'drawer':
+      return (
+        <ShellDrawer
+          {...variant}
+          toggleLabel={props.drawerToggleLabel}
+          toggleTestId={props.drawerToggleTestId}
+        >
+          {children}
+        </ShellDrawer>
+      );
+  }
 }

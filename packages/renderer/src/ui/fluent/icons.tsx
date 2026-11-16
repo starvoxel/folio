@@ -15,6 +15,7 @@ import {
   ArrowUndo24Regular,
   BuildingBank24Regular,
   Home24Regular,
+  MoreHorizontal24Regular,
   Navigation24Regular,
   Receipt24Regular,
   Settings24Regular,
@@ -32,6 +33,7 @@ export type AppIconName =
   | 'rules'
   | 'settings'
   | 'menu'
+  | 'more'
   | 'undo'
   | 'redo'
   | 'import';
@@ -61,6 +63,8 @@ export function AppIcon(props: { readonly name: AppIconName }): ReactElement {
       return <Settings24Regular aria-hidden />;
     case 'menu':
       return <Navigation24Regular aria-hidden />;
+    case 'more':
+      return <MoreHorizontal24Regular aria-hidden />;
     case 'undo':
       return <ArrowUndo24Regular aria-hidden />;
     case 'redo':

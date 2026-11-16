@@ -8,15 +8,20 @@
 
 import { createContext, useContext, type ReactElement, type ReactNode } from 'react';
 
-import type { HostApi } from '@folio/host-api';
+import type { FormFactor, HostApi, InputStyle } from '@folio/host-api';
 
 import type { AppStore } from './app-state.js';
 
-/** What every component may reach: the host, the state and the page's CSP nonce. */
+/**
+ * What every component may reach: the host, the state, the page's CSP nonce, and the form-factor
+ * profile and input style the host reported at mount (AD-21).
+ */
 export interface AppServices {
   readonly host: HostApi;
   readonly store: AppStore;
   readonly cspNonce: string | undefined;
+  readonly formFactor: FormFactor;
+  readonly input: InputStyle;
 }
 
 const AppServicesContext = createContext<AppServices | null>(null);

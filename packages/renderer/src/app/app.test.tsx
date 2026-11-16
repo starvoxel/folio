@@ -10,7 +10,7 @@
 import { fixedClock, localDate } from '@folio/core';
 import { createMockHost, type MockHost } from '@folio/host-api';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { App } from './app.js';
 import { AppServicesProvider } from './app-services.js';
@@ -22,15 +22,44 @@ interface Rendered {
 }
 
 /**
+ * Make the layout's measured area the given width; jsdom lays nothing out, so every element is 0
+ * wide unless a test says otherwise.
+ * @param width - The width, in CSS pixels, of the area the app has.
+ */
+function setAreaWidth(width: number): void {
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+    width,
+    height: 800,
+    x: 0,
+    y: 0,
+    top: 0,
+    left: 0,
+    right: width,
+    bottom: 800,
+    toJSON: () => ({}),
+  });
+}
+
+/**
  * Render the whole app against a mock host and wait until the settings have been read.
  * @param settings - The machine settings the mock host starts with.
+ * @param width - The width of the area the app has; a regular desktop window when omitted.
  * @returns The host and the store, for assertions.
  */
-async function renderApp(settings: unknown = null): Promise<Rendered> {
+async function renderApp(settings: unknown = null, width = 1440): Promise<Rendered> {
+  setAreaWidth(width);
   const host = createMockHost({ settings });
   const store = createAppStore(fixedClock(localDate('2026-11-13')));
   render(
-    <AppServicesProvider services={{ host, store, cspNonce: undefined }}>
+    <AppServicesProvider
+      services={{
+        host,
+        store,
+        cspNonce: undefined,
+        formFactor: 'desktop',
+        input: { pointer: 'fine', hover: true },
+      }}
+    >
       <App />
     </AppServicesProvider>,
   );
@@ -46,6 +75,7 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
 });
 
 describe('App', () => {
@@ -103,6 +133,53 @@ describe('App', () => {
       await waitFor(() => {
         expect(store.getState().page).toBe('settings');
       });
+    });
+  });
+});
+
+describe('App', () => {
+  describe('aRegularWidth', () => {
+    it('showsTheLeftPaneAndTheMenuAndCommandsInTheTopBar', async () => {
+      await renderApp(null, 1440);
+      expect(screen.getByTestId('app-shell').dataset['navigation']).toBe('leftPane');
+      expect(screen.queryByTestId('topbar-navigation')).toBeNull();
+      expect(screen.getByTestId('topbar-undo')).toBeDefined();
+    });
+  });
+
+  describe('aCompactWidth', () => {
+    it('showsTheDrawerToggleAndMovesTheCommandsToTheMenu', async () => {
+      await renderApp(null, 480);
+      expect(screen.getByTestId('app-shell').dataset['navigation']).toBe('drawer');
+      expect(screen.getByRole('button', { name: 'Navigation' })).toBeDefined();
+      expect(screen.queryByTestId('topbar-undo')).toBeNull();
+      expect(screen.queryByTestId('nav-overview')).toBeNull();
+      fireEvent.click(screen.getByRole('button', { name: 'Menu' }));
+      expect(await screen.findByRole('menuitem', { name: 'Import CSV' })).toBeDefined();
+    });
+
+    it('opensTheDrawerAndClosesItAfterAPageIsChosen', async () => {
+      const { store } = await renderApp(null, 480);
+      fireEvent.click(screen.getByRole('button', { name: 'Navigation' }));
+      fireEvent.click(await screen.findByTestId('nav-accounts'));
+      expect(store.getState().page).toBe('accounts');
+      await waitFor(() => {
+        expect(screen.queryByTestId('nav-accounts')).toBeNull();
+      });
+      expect(screen.getByRole('button', { name: 'Navigation' }).getAttribute('aria-expanded')).toBe(
+        'false',
+      );
+    });
+  });
+
+  describe('theLayoutRoot', () => {
+    it('reportsTheProfileTheWidthClassAndWhereTheLayoutCameFrom', async () => {
+      await renderApp(null, 1700);
+      const root = screen.getByTestId('layout-root');
+      expect(root.dataset['formFactor']).toBe('desktop');
+      expect(root.dataset['widthClass']).toBe('wide');
+      expect(root.dataset['layoutSource']).toBe('desktop/wide');
+      expect(root.dataset['targetSize']).toBe('standard');
     });
   });
 });

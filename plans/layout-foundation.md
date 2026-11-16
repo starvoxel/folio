@@ -2,7 +2,7 @@
 
 | Field       | Value              |
 | ----------- | ------------------ |
-| Status      | Approved           |
+| Status      | Implemented        |
 | Approved by | Jeremy, 2026-11-16 |
 | Created     | 2026-11-16         |
 
@@ -39,7 +39,7 @@ Decisions are in [AD-14](../knowledge/architecture/09_architecture_decisions.md#
 
 ### 3. Input style
 
-- Does: the shell's own controls take their minimum target size from the input style (44 px for touch, 32 px otherwise); hover-only affordances are shown permanently when the host reports no hover. Nothing in the width class changes either.
+- Does: the shell's own controls take their minimum target size from the input style (44 px for touch, 32 px otherwise); the hover rule is exposed (`hoverActions`) for controls that will reveal actions on hover; no control does yet. Nothing in the width class changes either.
 - Acceptance criteria: with a coarse-pointer host the top bar buttons and navigation items are at least 44 px high at every width.
 
 ### 4. Tests, record and documents

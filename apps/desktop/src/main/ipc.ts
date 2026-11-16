@@ -69,6 +69,8 @@ export function registerIpcHandlers(services: IpcServices): void {
     return guarded(logger, 'getInfo', () => ({
       platform:
         process.platform === 'win32' || process.platform === 'darwin' ? process.platform : 'linux',
+      formFactor: 'desktop',
+      input: { pointer: 'fine', hover: true },
       automation: isAutomationEnabled(process.env),
       appVersion: app.getVersion(),
     }));

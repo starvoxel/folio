@@ -17,6 +17,10 @@ const CORE = '(^|/)packages/core/src/';
 const HOST_API = '(^|/)packages/host-api/src/';
 const RENDERER = '(^|/)packages/renderer/src/';
 const DESKTOP = '(^|/)apps/desktop/src/';
+const SCREENS = '(^|/)packages/renderer/src/screens/';
+const LAYOUT = '(^|/)packages/renderer/src/layout/';
+// The React glue that reads the layout: the one hook that measures the width and shares it.
+const LAYOUT_CONTEXT = '(^|/)packages/renderer/src/app/layout-context';
 const UNIT_TESTS = '(^|/)(packages|apps)/[^/]+/src/.*\\.test\\.tsx?$';
 
 // Test files and the tests/ tree, except the architecture fixtures, which pose as production code.
@@ -86,6 +90,24 @@ module.exports = {
       severity: 'error',
       from: { pathNot: '(^|/)packages/renderer/src/ui/fluent/' },
       to: { path: FLUENT },
+    },
+    {
+      name: 'screens-do-not-know-the-layout',
+      comment:
+        'AD-21: screens describe content and never positions or widths, so they import neither the layout modules nor the hook that reads the width.',
+      severity: 'error',
+      from: { path: SCREENS },
+      to: { path: [LAYOUT, LAYOUT_CONTEXT] },
+    },
+    {
+      name: 'layout-logic-is-framework-neutral',
+      comment:
+        'AD-21: the profile, width-class and resolver logic is pure; it imports no React, Fluent, Electron or app code.',
+      severity: 'error',
+      from: { path: LAYOUT },
+      to: {
+        path: [REACT, FLUENT, ELECTRON, DESKTOP, '(^|/)packages/renderer/src/(app|screens|ui)/'],
+      },
     },
     {
       name: 'unit-tests-import-no-electron-or-driver',

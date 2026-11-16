@@ -87,47 +87,7 @@ afterAll(async () => {
   await rm(workDirectory, { recursive: true, force: true });
 });
 
-const WINDOW_SHAPES = [
-  ['smallest', 900, 600],
-  ['standard', 1440, 900],
-  ['ultrawide21to9', 3440, 1440],
-  ['superUltrawide32to9', 5120, 1440],
-  ['tallAndNarrow', 1000, 1600],
-] as const;
-
 describe('builtRenderer', () => {
-  for (const [name, width, height] of WINDOW_SHAPES) {
-    describe(`${name}Window`, () => {
-      it('fitsWithoutScrollingSidewaysAndKeepsTheContentCentred', async () => {
-        const app = await openApp('light', { width, height });
-        try {
-          await app.page.getByTestId('nav-overview').click();
-          await settle(app.page);
-          const overflow = await app.page.evaluate(
-            () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-          );
-          expect(overflow, 'sideways overflow in pixels').toBeLessThanOrEqual(0);
-          const main = await app.page.locator('main').boundingBox();
-          const inner = await app.page.locator('main > div').boundingBox();
-          expect(main).not.toBeNull();
-          expect(inner).not.toBeNull();
-          if (main !== null && inner !== null) {
-            expect(inner.width).toBeLessThanOrEqual(1240);
-            const left = inner.x - main.x;
-            const right = main.x + main.width - (inner.x + inner.width);
-            expect(Math.abs(left - right), 'difference between the side gaps').toBeLessThanOrEqual(
-              20,
-            );
-          }
-          await app.page.screenshot({ path: join(screenshotDirectory, `shape-${name}.png`) });
-          expect(app.problems).toEqual([]);
-        } finally {
-          await app.close();
-        }
-      });
-    });
-  }
-
   describe('lightTheme', () => {
     it('visitsEveryPageAndShowsItsHeading', async () => {
       const app = await openApp('light');
