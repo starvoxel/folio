@@ -35,7 +35,8 @@ The prototype uses Fluent 2 colours and structural values and the Fluent icon se
 - Left navigation pane headed "Folio", filling the window height. The prototype predates the product name and still shows "Month-End Review" and "Month-End Spending Review"; the app uses "Folio".
 - Items in order: Overview, Transactions, Reporting, Net worth, Accounts, Rules & categories (Review is not a nav item, per H1.4). Settings is the footer item.
 - Top bar: file name and "Saved automatically" with a "sample data" tag, Undo, Redo, Import CSV, and the month picker (ComboBox of months).
-- Content max width about 1240, 20px vertical rhythm between sections, cards in auto-fit grids (210 and 440 minimum column widths).
+- Content max width about 1240, centred in the space beside the navigation, 20px vertical rhythm between sections, cards in auto-fit grids (210 and 440 minimum column widths).
+- The layout assumes no aspect ratio. It must look right from the smallest window (900×600) to ultrawide screens (21:9 and 32:9), so widths are fluid and the top bar wraps when it runs out of room. The integration tests open the app at each of those shapes and fail on sideways scrolling or off-centre content. The integration tests open the app at each of those shapes and fail on sideways scrolling or off-centre content.
 - Close is a page reached from Overview or Review, not a nav item; Overview stays selected while it is open.
 - Messages are full-width banners (a message bar), not fixed-width popups, and confirm actions, for example "<Month> is closed and locked".
 
