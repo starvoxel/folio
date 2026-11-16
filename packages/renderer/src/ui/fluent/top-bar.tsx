@@ -28,7 +28,9 @@ const useStyles = makeStyles({
   bar: {
     display: 'flex',
     alignItems: 'center',
+    flexWrap: 'wrap',
     columnGap: tokens.spacingHorizontalM,
+    rowGap: tokens.spacingVerticalXS,
     paddingTop: tokens.spacingVerticalS,
     paddingBottom: tokens.spacingVerticalS,
     paddingLeft: tokens.spacingHorizontalL,

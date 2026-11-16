@@ -30,8 +30,14 @@ const useStyles = makeStyles({
     paddingLeft: tokens.spacingHorizontalXXXL,
     paddingRight: tokens.spacingHorizontalXXXL,
   },
+  // The content keeps a readable width and sits in the middle of the space, so the page looks
+  // balanced at any window width or shape, ultrawide included. Nothing here depends on an aspect
+  // ratio.
   contentInner: {
+    width: '100%',
     maxWidth: '1240px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 });
 
