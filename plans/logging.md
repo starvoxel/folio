@@ -80,7 +80,7 @@ Why: the cheapest way to keep a useful message free of data is to never put the 
 
 Do this only if milestones 3 to 5 leave failures that cannot be debugged without the raw values. Nothing before it depends on it.
 
-- Does: when `FOLIO_LOG_SEAL_KEY` holds an age recipient (`age1...`), each logged error and each private field also carries a sealed blob with the raw details, written in the [age](https://jsr.io/@age/age-encryption) format, so the stock `age` command can open it. The recipient is issued per install and per version from a master secret the owner holds: a release secret is `HKDF(master, version)`, the install key is `HKDF(release secret, install id)`, and a token holds only the public recipient. The install id is a random UUID kept in the user-data folder, not taken from the hardware. A script (`init`, `issue`, `decode`) re-derives keys on demand. The derivation is frozen as a written spec with known-answer test vectors, and each blob names its app version, install id and master id in the clear. Off by default.
+- Does: when `FOLIO_LOG_SEAL_KEY` holds an age recipient (`age1...`), each logged error and each private field also carries a sealed blob with the raw details, written in the [age](https://jsr.io/@age/age-encryption) format, so the stock `age` command can open it. The recipient is issued per install and per version from a master secret the owner holds: a release secret is `HKDF(master, version)`, the install key is `HKDF(release secret, install id)`, and a token holds only the public recipient. The install id is a random UUID kept in the user-data folder, not taken from the hardware. A script (`init`, `issue`, `decode`) re-derives keys on demand; it takes the master secret from an environment variable filled by Bitwarden Secrets Manager, so the secret is never typed, saved or printed. The derivation is frozen as a written spec with known-answer test vectors, and each blob names its app version, install id and master id in the clear. Off by default.
 - First task: check the `age-encryption` package against the dependency rules (licence, install scripts, size, release age) and that it bundles into `main.cjs`.
 - Acceptance criteria: a round trip with a generated key; a wrong key fails; the stock `age` command opens a blob; with the variable unset nothing is sealed; AD-10 amended ("no personal data in the clear; sealed details only when enabled").
 - Verified by: the unit run and a decode of a real log by hand.
@@ -114,12 +114,13 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 - A log file under the user-data folder in packaged builds, with 1 MB size rotation and two backups (Engineer, 2026-11-16; the owner asked for the decision to be made here).
 
 - Sealing raw error details in the age format, issued per install and version from an owner-held master secret, enabled by an environment variable, with a Settings toggle later; milestone 6, last and optional (Jeremy and Engineer, 2026-11-19).
+- The master secret is stored in Bitwarden Secrets Manager (Jeremy, 2026-11-19). The key script reads it from an environment variable supplied by the secret manager's command-line tool, and never writes it to a file, a log or the repository. It is not given to CI.
 - Order: positions-not-values and per-field privacy first, masking second, the developer switch third, sealing last (Jeremy, 2026-11-19).
 - Messages: own errors as written, third-party messages masked by vocabulary, known-template extraction left for later (Jeremy and Engineer, 2026-11-17).
 
 ## Open questions
 
-- Who holds the master secret, and where (offline, a password manager), and how it is backed up: losing it makes every sealed log unreadable. [Jeremy, before milestone 6]
+- Who besides Jeremy can read the master secret in Bitwarden Secrets Manager, so that losing one account does not make every sealed log unreadable. [Jeremy, before milestone 6]
 
 - Whether the main process should log uncaught exceptions and unhandled rejections. A handler replaces Electron's default error dialog and keeps the app running in a state nobody chose, so it is a behaviour decision, not a logging one. [Jeremy]
 - Whether the bundled main process should carry source maps, so stack frames name the TypeScript files and not `main.cjs` lines. The scrubber already reduces such frames to their file name. [Engineer, with the packaging work]
