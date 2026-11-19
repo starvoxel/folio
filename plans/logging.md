@@ -114,13 +114,12 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 - A log file under the user-data folder in packaged builds, with 1 MB size rotation and two backups (Engineer, 2026-11-16; the owner asked for the decision to be made here).
 
 - Sealing raw error details in the age format, issued per install and version from an owner-held master secret, enabled by an environment variable, with a Settings toggle later; milestone 6, last and optional (Jeremy and Engineer, 2026-11-19).
+- Only Jeremy has access to the master secret for now, and that is accepted: if that access is lost, every sealed log becomes unreadable. Revisit before milestone 6 if a second person needs to decode logs (Jeremy, 2026-11-19).
 - The master secret is stored in Bitwarden Secrets Manager (Jeremy, 2026-11-19). The key script reads it from an environment variable supplied by the secret manager's command-line tool, and never writes it to a file, a log or the repository. It is not given to CI.
 - Order: positions-not-values and per-field privacy first, masking second, the developer switch third, sealing last (Jeremy, 2026-11-19).
 - Messages: own errors as written, third-party messages masked by vocabulary, known-template extraction left for later (Jeremy and Engineer, 2026-11-17).
 
 ## Open questions
-
-- Who besides Jeremy can read the master secret in Bitwarden Secrets Manager, so that losing one account does not make every sealed log unreadable. [Jeremy, before milestone 6]
 
 - Whether the main process should log uncaught exceptions and unhandled rejections. A handler replaces Electron's default error dialog and keeps the app running in a state nobody chose, so it is a behaviour decision, not a logging one. [Jeremy]
 - Whether the bundled main process should carry source maps, so stack frames name the TypeScript files and not `main.cjs` lines. The scrubber already reduces such frames to their file name. [Engineer, with the packaging work]
