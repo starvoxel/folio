@@ -4,7 +4,7 @@ The high-level list of what is planned or under way. One line each; the detail l
 
 ## In progress
 
-- Diagnostic logging: errors with safe stack traces and a log file are done; messages, sealed details and a developer-only unredacted switch are next. [plans/logging.md](plans/logging.md)
+- Diagnostic logging: errors with safe stack traces and a log file are done; messages, per-field privacy and a developer-only unredacted switch are next; encrypted details (age) come last and are optional. [plans/logging.md](plans/logging.md)
 
 ## Planned
 
@@ -14,7 +14,6 @@ The high-level list of what is planned or under way. One line each; the detail l
 
 ## Later
 
-- Logging: a Settings toggle for protected diagnostic details, in place of the `FOLIO_LOG_SEAL` variable.
-- Logging: one encryption key per release, so a leaked key exposes one release.
+- Logging: a Settings toggle for protected diagnostic details, in place of the `FOLIO_LOG_SEAL_KEY` variable.
 - Logging: uncaught exceptions and unhandled rejections.
 - Logging: an in-app "open logs" or "copy diagnostics" command.

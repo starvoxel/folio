@@ -13,7 +13,7 @@ Make the main-process logger good enough to debug a failure on a household machi
 ## Scope
 
 - In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, and the call sites in `main.ts` and `ipc.ts`.
-- In, next: error messages (own errors as written, third-party messages masked), sealed raw details that only the owner can decrypt, and a developer-only unredacted switch. Milestones 3 to 5.
+- In, next: error messages (own errors as written, third-party messages masked), per-field privacy and a developer-only unredacted switch (milestones 3 to 5). Sealed details that only the owner can decrypt are milestone 6, last and optional.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -56,48 +56,56 @@ _Log file._ Needed now: the stack traces are of little use if a packaged app, wh
 - Acceptance criteria: unit tests over an in-memory file system cover appending, rotation, the backup cap and recovery after a failed operation; an integration test on a real temporary folder rotates a real file. That a packaged app writes `logs/folio.log` is not yet checked by the end-to-end smoke test.
 - Verified by: the unit and integration runs.
 
-### 3. Error messages, own and third-party
+### 3. Positions, not values, and per-field privacy
 
-Why: the message often holds the most useful fact (`reading 'theme'`), and milestone 1 drops all of it.
+Why: the cheapest way to keep a useful message free of data is to never put the data in it. No crypto is needed for this.
 
-- Does: a `FolioError` class whose message follows a message standard (fixed text plus ids, counts and dates, never a value) and is logged as written, also when it is a `cause`; code that catches a third-party error wraps it in a `FolioError` and keeps the original as the cause. Every other message goes through vocabulary masking: quoted text is masked, a word is kept only if it is in a fixed list of error words, everything else becomes `<?>`, and a number is kept only after `position`, `line`, `column` or `index`. The masker fails closed: a word it does not know is hidden, not shown.
-- Acceptance criteria: a test set of messages that hold data (amounts, account numbers, names, merchants, file names, emails, IBANs) in several shapes, none of whose values survive; `TypeError` and `ENOENT` style messages keep their structure.
+- Does: a `FolioError` class whose message follows a message standard (fixed text plus ids, counts, dates, row and column numbers and file hashes, never a value) and is logged as written, also when it is a `cause`; code that catches a third-party error wraps it in a `FolioError` and keeps the original as the cause. Log fields get a per-field privacy mark, as in Apple's `os_log`: a plain value is written, an unmarked string stays hidden as today, and a field marked private is dropped until milestone 6 can seal it.
+- Acceptance criteria: unit tests that a `FolioError` message is written as is and a third-party cause is not; a private field never appears in a line; existing field behaviour is unchanged.
 - Verified by: the unit run; AD-10 and this plan updated for the message rule. Whether the message standard also goes in `project-standards.md` is Jeremy's choice (not a stack rule).
 
-### 4. Sealed raw details
+### 4. Masked third-party messages
 
-- Does: when `FOLIO_LOG_SEAL=1`, each logged error also carries `error.sealed`: the raw name, message, unscrubbed stack, `code`, `path` and `syscall` encrypted to the owner's public key (X25519, HKDF and AES-256-GCM from `node:crypto`, a fresh ephemeral key per entry, a key id, the line's time and message bound in as authenticated data). The public key ships in the repo; a script generates the key pair, and the owner keeps the private key out of the repo and out of CI. `scripts/decode-log.mjs` reads a log and a private key and prints the unredacted log. Off by default.
-- Acceptance criteria: a round trip in a unit test with a generated key pair; a changed time or message makes decryption fail; a wrong key fails; with the variable unset nothing is sealed; AD-10 amended ("no personal data in the clear; sealed details only when enabled").
-- Verified by: the unit run and a decode of a real log file by hand.
+- Does: vocabulary masking for every message that is not a `FolioError`'s. Quoted text is masked, a word is kept only if it is in a fixed list of error words, everything else becomes `<?>`, and a number is kept only after `position`, `line`, `column` or `index`. The masker fails closed: a word it does not know is hidden, not shown.
+- Acceptance criteria: a test set of messages that hold data (amounts, account numbers, names, merchants, file names, emails, IBANs) in several shapes, none of whose values survive; `TypeError` and `ENOENT` style messages keep their structure.
+- Verified by: the unit run.
 
 ### 5. Developer-only unredacted switch
 
-- Does: `FOLIO_LOG_UNREDACTED=1` writes plain messages and raw stacks to the log. The code ignores the variable in packaged builds, so a household machine cannot be set to write personal data in the clear; for a packaged build the decode script of milestone 4 gives the same view.
+- Does: `FOLIO_LOG_UNREDACTED=1` writes plain messages and raw stacks to the log. The code ignores the variable in packaged builds, so a household machine cannot be set to write personal data in the clear.
 - Acceptance criteria: a test that the switch works unpackaged and is ignored when packaged.
 - Verified by: the unit run.
 
+### 6. Sealed details with age (last, optional)
+
+Do this only if milestones 3 to 5 leave failures that cannot be debugged without the raw values. Nothing before it depends on it.
+
+- Does: when `FOLIO_LOG_SEAL_KEY` holds an age recipient (`age1...`), each logged error and each private field also carries a sealed blob with the raw details, written in the [age](https://jsr.io/@age/age-encryption) format, so the stock `age` command can open it. The recipient is issued per install and per version from a master secret the owner holds: a release secret is `HKDF(master, version)`, the install key is `HKDF(release secret, install id)`, and a token holds only the public recipient. The install id is a random UUID kept in the user-data folder, not taken from the hardware. A script (`init`, `issue`, `decode`) re-derives keys on demand. The derivation is frozen as a written spec with known-answer test vectors, and each blob names its app version, install id and master id in the clear. Off by default.
+- First task: check the `age-encryption` package against the dependency rules (licence, install scripts, size, release age) and that it bundles into `main.cjs`.
+- Acceptance criteria: a round trip with a generated key; a wrong key fails; the stock `age` command opens a blob; with the variable unset nothing is sealed; AD-10 amended ("no personal data in the clear; sealed details only when enabled").
+- Verified by: the unit run and a decode of a real log by hand.
+
 ## Later
 
-Recorded so they are not lost. None is scheduled. The ones that are plans of their own (the Settings toggle, per-release keys, uncaught exceptions, an in-app logs command) are also listed in [PLANS.md](../PLANS.md).
+Recorded so they are not lost. None is scheduled. The ones that are plans of their own (the Settings toggle, uncaught exceptions, an in-app logs command) are also listed in [PLANS.md](../PLANS.md).
 
-| Item                                                                                                                                                     | Why it waits                                                                                                                                                                                                                                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A Settings toggle ("include protected details in diagnostics") in place of the `FOLIO_LOG_SEAL` variable                                                 | Touches the settings schema (AD-11) and the UI; the household is not technical, so this is the real switch                                                                                                                                                                                                                                                           |
-| Per-release keys: derive each release's private key from a master secret the owner holds plus the app version, and ship only that release's public key   | One key protects every sealed log; per-release keys limit the damage of a leak. Deriving a key from values inside the app alone is not safe: anyone with the app could derive it. The secret must not live in CI: derive the public keys on the owner's machine ahead of time and commit them (a version-to-public-key list), so no job ever holds the master secret |
-| Known-template extraction for third-party errors (rebuild the message of a `TypeError`, a Node system error or a `JSON.parse` error from its safe parts) | Only if vocabulary masking loses too much                                                                                                                                                                                                                                                                                                                            |
-| A message hash for grouping repeated failures (needs a random per-install salt, because a hash of a short value can be guessed)                          | Not needed until repeats are hard to count                                                                                                                                                                                                                                                                                                                           |
-| Logging uncaught exceptions and unhandled rejections                                                                                                     | Changes behaviour (see Open questions)                                                                                                                                                                                                                                                                                                                               |
-| Source maps for the main bundle                                                                                                                          | Packaging work                                                                                                                                                                                                                                                                                                                                                       |
-| `AggregateError.errors`, `Error.stackTraceLimit`, async stack depth                                                                                      | Ten frames is enough for now                                                                                                                                                                                                                                                                                                                                         |
-| An end-to-end check that a packaged app writes `logs/folio.log`                                                                                          | Needs a packaged run                                                                                                                                                                                                                                                                                                                                                 |
-| An "open logs folder" or "copy diagnostics" command in the app                                                                                           | Needs UI and the menu plan                                                                                                                                                                                                                                                                                                                                           |
-| Logging in the renderer and the preload script                                                                                                           | Needs a bridge and its own privacy review                                                                                                                                                                                                                                                                                                                            |
-| A log file in unpackaged runs                                                                                                                            | A developer has the terminal                                                                                                                                                                                                                                                                                                                                         |
+| Item                                                                                                                                                     | Why it waits                                                                                               |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| A Settings toggle ("include protected details in diagnostics") in place of the `FOLIO_LOG_SEAL_KEY` variable                                             | Touches the settings schema (AD-11) and the UI; the household is not technical, so this is the real switch |
+| Known-template extraction for third-party errors (rebuild the message of a `TypeError`, a Node system error or a `JSON.parse` error from its safe parts) | Only if vocabulary masking loses too much                                                                  |
+| A message hash for grouping repeated failures (needs a random per-install salt, because a hash of a short value can be guessed)                          | Not needed until repeats are hard to count                                                                 |
+| Logging uncaught exceptions and unhandled rejections                                                                                                     | Changes behaviour (see Open questions)                                                                     |
+| Source maps for the main bundle                                                                                                                          | Packaging work                                                                                             |
+| `AggregateError.errors`, `Error.stackTraceLimit`, async stack depth                                                                                      | Ten frames is enough for now                                                                               |
+| An end-to-end check that a packaged app writes `logs/folio.log`                                                                                          | Needs a packaged run                                                                                       |
+| An "open logs folder" or "copy diagnostics" command in the app                                                                                           | Needs UI and the menu plan                                                                                 |
+| Logging in the renderer and the preload script                                                                                                           | Needs a bridge and its own privacy review                                                                  |
+| A log file in unpackaged runs                                                                                                                            | A developer has the terminal                                                                               |
 
 ## Requirements
 
 - No financial data and no personal data in any log, including paths and error messages (AD-10, AD-18).
-- Sealed details are written only when the owner's variable is set, and only the owner's private key opens them.
+- Sealed details, if built, are written only when the owner's variable is set, and only keys derived from the owner's master secret open them.
 - Logging never changes what the app does: it cannot throw, and it adds no network access.
 
 ## Decisions
@@ -105,13 +113,13 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 - Frames only, app-relative paths, everything else cut to the file name (Engineer, 2026-11-16; proposal changed from "strip the install, home and temp folders").
 - A log file under the user-data folder in packaged builds, with 1 MB size rotation and two backups (Engineer, 2026-11-16; the owner asked for the decision to be made here).
 
-- Public-key sealing for raw error details, enabled by `FOLIO_LOG_SEAL=1`, with a Settings toggle later (Jeremy, 2026-11-17).
+- Sealing raw error details in the age format, issued per install and version from an owner-held master secret, enabled by an environment variable, with a Settings toggle later; milestone 6, last and optional (Jeremy and Engineer, 2026-11-19).
+- Order: positions-not-values and per-field privacy first, masking second, the developer switch third, sealing last (Jeremy, 2026-11-19).
 - Messages: own errors as written, third-party messages masked by vocabulary, known-template extraction left for later (Jeremy and Engineer, 2026-11-17).
-- A single key for now, with a key id on every entry so keys can change; per-release derived keys are in Later (Jeremy and Engineer, 2026-11-17).
 
 ## Open questions
 
-- Who holds the private key, and where (offline, a password manager), and how it is backed up: losing it makes every sealed log unreadable. [Jeremy, before milestone 4]
+- Who holds the master secret, and where (offline, a password manager), and how it is backed up: losing it makes every sealed log unreadable. [Jeremy, before milestone 6]
 
 - Whether the main process should log uncaught exceptions and unhandled rejections. A handler replaces Electron's default error dialog and keeps the app running in a state nobody chose, so it is a behaviour decision, not a logging one. [Jeremy]
 - Whether the bundled main process should carry source maps, so stack frames name the TypeScript files and not `main.cjs` lines. The scrubber already reduces such frames to their file name. [Engineer, with the packaging work]
