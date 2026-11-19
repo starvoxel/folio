@@ -8,9 +8,10 @@
 
 import { join } from 'node:path';
 
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow, dialog, Menu } from 'electron';
 
 import { findRefusedSwitches } from './debug-guard.js';
+import { installErrorHandlers } from './error-handlers.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
 import { createRotatingFileWriter, nodeLogFileOperations } from './log-file.js';
@@ -43,6 +44,14 @@ const logger = createLogger({
   ),
   now: () => Date.now(),
   appFolder: app.getAppPath(),
+});
+
+installErrorHandlers({
+  logger,
+  showError: (title, content) => {
+    dialog.showErrorBox(title, content);
+  },
+  source: process,
 });
 
 /** Open the window once the app is ready, with the hardening and the handlers in place. */
