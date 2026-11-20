@@ -8,20 +8,50 @@
 
 import { join } from 'node:path';
 
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow, dialog, Menu } from 'electron';
 
 import { findRefusedSwitches } from './debug-guard.js';
+import { installErrorHandlers } from './error-handlers.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
-import { createLogger, parseLogLevel } from './logger.js';
+import { createRotatingFileWriter, nodeLogFileOperations } from './log-file.js';
+import { combineWriters, createLogger, parseLogLevel } from './logger.js';
 import { registerAppProtocol, registerAppScheme } from './protocol.js';
 import { createSettingsStore } from './settings-store.js';
 import { createMainWindow } from './window.js';
 
+// A closed pipe (EPIPE) makes standard error emit an error event, and an event nobody listens to
+// would crash the app. Logging must never do that.
+process.stderr.on('error', () => undefined);
+
+// Packaged builds have no console, so their lines also go to a file in the app's own data folder
+// (see plans/logging.md). The folder is read on the first line, which is the earliest it is
+// needed.
+let logFile: ((line: string) => void) | undefined;
+const writeToLogFile = (line: string): void => {
+  logFile ??= createRotatingFileWriter({
+    folder: join(app.getPath('userData'), 'logs'),
+    files: nodeLogFileOperations,
+  });
+  logFile(line);
+};
+
 const logger = createLogger({
   level: parseLogLevel(process.env['FOLIO_LOG_LEVEL']),
-  write: (line) => process.stderr.write(`${line}\n`),
+  write: combineWriters(
+    (line) => process.stderr.write(`${line}\n`),
+    ...(app.isPackaged ? [writeToLogFile] : []),
+  ),
   now: () => Date.now(),
+  appFolder: app.getAppPath(),
+});
+
+installErrorHandlers({
+  logger,
+  showError: (title, content) => {
+    dialog.showErrorBox(title, content);
+  },
+  source: process,
 });
 
 /** Open the window once the app is ready, with the hardening and the handlers in place. */
@@ -53,7 +83,7 @@ async function openWhenReady(): Promise<void> {
       packaged: app.isPackaged,
     });
   } catch (error) {
-    logger.error('startup failed', { reason: error instanceof Error ? error.name : 'unknown' });
+    logger.logError('startup failed', error);
     app.exit(1);
   }
 }
