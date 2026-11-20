@@ -408,6 +408,49 @@ describe('builtLayout', () => {
       }
     });
 
+    it('keepsAnOpenDialogOnThePageWhenTheNavigationFormChanges', async () => {
+      const app = await openApp('desktop', { viewport: { width: 3440, height: 900 } });
+      try {
+        await app.page.getByTestId('nav-settings').click();
+        await app.page.getByTestId('settings-reset').click();
+        await app.page.getByRole('dialog', { name: 'Reset settings?' }).waitFor();
+        await app.page.evaluate(() => {
+          Object.defineProperty(window, 'folioMain', {
+            value: document.querySelector('main'),
+            configurable: true,
+          });
+        });
+        for (const [width, widthClass, navigation] of [
+          [1440, 'regular', 'leftPane'],
+          [700, 'medium', 'drawer'],
+          [3440, 'ultrawide', 'leftPane'],
+        ] as const) {
+          await app.page.setViewportSize({ width, height: 900 });
+          await app.page.waitForFunction(
+            (expected) =>
+              document
+                .querySelector('[data-testid="layout-root"]')
+                ?.getAttribute('data-width-class') === expected,
+            widthClass,
+          );
+          await settle(app.page);
+          expect(await attribute(app.page, 'app-shell', 'data-navigation')).toBe(navigation);
+          expect(await app.page.getByRole('dialog', { name: 'Reset settings?' }).count()).toBe(1);
+          expect(
+            await app.page.evaluate(
+              () =>
+                (window as unknown as { folioMain: unknown }).folioMain ===
+                document.querySelector('main'),
+            ),
+            `the page element is kept at ${String(width)}px`,
+          ).toBe(true);
+        }
+        expect(app.problems).toEqual([]);
+      } finally {
+        await app.close();
+      }
+    });
+
     it('keepsTheSelectedPageAndClosesAnOpenDrawerWhenTheNavigationBecomesAPane', async () => {
       const app = await openApp('desktop', { viewport: { width: 500, height: 800 } });
       try {

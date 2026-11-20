@@ -61,10 +61,12 @@ export interface AppNavigationProps {
    * When given, the pane is an overlay that opens over the page (the drawer navigation form);
    * otherwise it is a pane beside the page that is always shown.
    */
-  readonly overlay?: {
-    readonly open: boolean;
-    readonly onOpenChange: (open: boolean) => void;
-  };
+  readonly overlay?:
+    | {
+        readonly open: boolean;
+        readonly onOpenChange: (open: boolean) => void;
+      }
+    | undefined;
 }
 
 /**
