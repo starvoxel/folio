@@ -52,7 +52,13 @@ export async function mountApp(
   root.render(
     <StrictMode>
       <AppServicesProvider
-        services={{ host, store, cspNonce: readCspNonce(container.ownerDocument) }}
+        services={{
+          host,
+          store,
+          cspNonce: readCspNonce(container.ownerDocument),
+          formFactor: info.formFactor,
+          input: info.input,
+        }}
       >
         <App />
       </AppServicesProvider>

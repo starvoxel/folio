@@ -154,6 +154,35 @@ describe('packageImports', () => {
     });
   });
 
+  describe('screenImportingTheLayout', () => {
+    it('failsTheArchitectureCheckOnlyForScreens', async () => {
+      const violations = await fixtureViolations();
+      expect(violations).toContain(
+        'screens-do-not-know-the-layout: packages/renderer/src/screens/imports-layout.ts',
+      );
+      expect(violations).toContain(
+        'screens-do-not-know-the-layout: packages/renderer/src/screens/imports-layout-context.ts',
+      );
+      expect(
+        violations.filter((violation) => violation.startsWith('screens-do-not')),
+      ).not.toContain(
+        'screens-do-not-know-the-layout: packages/renderer/src/ui/fluent/allowed-layout.ts',
+      );
+    });
+  });
+
+  describe('layoutLogicImportingReactOrAppCode', () => {
+    it('failsTheArchitectureCheck', async () => {
+      const violations = await fixtureViolations();
+      expect(violations).toContain(
+        'layout-logic-is-framework-neutral: packages/renderer/src/layout/imports-react.ts',
+      );
+      expect(violations).toContain(
+        'layout-logic-is-framework-neutral: packages/renderer/src/layout/imports-app.ts',
+      );
+    });
+  });
+
   describe('unitTestImportingElectronOrPlaywright', () => {
     it('failsTheArchitectureCheck', async () => {
       const violations = await fixtureViolations();

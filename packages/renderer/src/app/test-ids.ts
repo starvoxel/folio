@@ -21,6 +21,7 @@ export const testIds = {
   page: (page: PageId): string => `page-${page}`,
   topBar: {
     menu: 'topbar-menu',
+    navigation: 'topbar-navigation',
     menuItem: (command: string): string => `topbar-menu-${command}`,
     fileName: 'topbar-file-name',
     saveStatus: 'topbar-save-status',

@@ -80,6 +80,8 @@ interface ForeignLock {
 export function createMockHost(options: MockHostOptions = {}): MockHost {
   const info: HostInfo = {
     platform: 'web',
+    formFactor: 'desktop',
+    input: { pointer: 'fine', hover: true },
     automation: false,
     appVersion: '0.0.0-mock',
     ...options.info,

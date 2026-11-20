@@ -46,8 +46,11 @@ interface OpenedApp {
  * @param colorScheme - The system colour scheme the context reports.
  * @returns The page, the console problems seen so far, and a way to close it.
  */
-async function openApp(colorScheme: 'light' | 'dark'): Promise<OpenedApp> {
-  const context = await browser.newContext({ colorScheme, viewport: { width: 1440, height: 900 } });
+async function openApp(
+  colorScheme: 'light' | 'dark',
+  viewport: { width: number; height: number } = { width: 1440, height: 900 },
+): Promise<OpenedApp> {
+  const context = await browser.newContext({ colorScheme, viewport });
   const page = await context.newPage();
   const problems: string[] = [];
   page.on('pageerror', (error) => problems.push(`pageerror: ${error.message}`));

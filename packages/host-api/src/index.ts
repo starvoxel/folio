@@ -7,14 +7,17 @@
 // ------------------------------
 
 export {
+  FORM_FACTORS,
   HostError,
   type FileContents,
   type FileFilter,
   type FileRef,
   type FileStamp,
+  type FormFactor,
   type HostApi,
   type HostErrorCode,
   type HostInfo,
+  type InputStyle,
   type LockResult,
   type MenuCommand,
   type OpenDialogOptions,

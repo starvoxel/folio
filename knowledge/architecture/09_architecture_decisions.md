@@ -22,6 +22,11 @@ key_files:
   - apps/desktop/scripts/package.mjs
   - tests/e2e/smoke.e2e.ts
   - tests/e2e/guard.e2e.ts
+  - packages/renderer/src/layout/resolve-layout.ts
+  - packages/renderer/src/layout/layout-registry.ts
+  - packages/renderer/src/app/layout-context.tsx
+  - tests/architecture/layout-rules.test.ts
+  - tests/integration/layout.test.ts
 ---
 
 > The architecture decisions agreed with Jeremy on 2026-11-05 and revised on 2026-11-12 for the Electron stack, each with its reason and what it costs. Numbering is stable; a superseded decision is marked, not deleted.
@@ -48,6 +53,7 @@ key_files:
 | [AD-18](#ad-18-the-renderer-is-hardened-and-privacy-is-checked-in-ci)         | The renderer is hardened and privacy is checked in CI         | Accepted                            |
 | [AD-19](#ad-19-the-platform-is-one-interface-hostapi-and-filestore)           | The platform is one interface: HostApi and FileStore          | Accepted                            |
 | [AD-20](#ad-20-windows-and-macos-packaging-unsigned-no-auto-update)           | Windows and macOS packaging, unsigned, no auto-update         | Accepted                            |
+| [AD-21](#ad-21-layouts-are-chosen-by-form-factor-profile-and-width-class)     | Layouts are chosen by form-factor profile and width class     | Accepted                            |
 
 ## AD-1. The whole file lives in memory
 
@@ -315,3 +321,22 @@ There is no auto-update (H1.12). Updates are installed by hand. An opt-in, user-
 _Linux, later._ A `.deb` first, built with electron-builder's default install script (it chooses the sandbox mode and installs an AppArmor profile on Ubuntu 24.04 and later); a CI job that installs the package and launches it without `--no-sandbox`; an AppImage only as a secondary format, because it cannot carry the profile and silently runs without the Chromium sandbox on those systems. X11 and Wayland and real GPUs need testing then; the CI runners have neither.
 
 _Consequences._ The household must be told how to open the unsigned installers. Every Electron update means a new build for each OS.
+
+## AD-21. Layouts are chosen by form-factor profile and width class
+
+_Context._ The app must look right at any window width and shape, ultrawide included, and the web, tablet and phone builds (AD-17, AD-19) will want layouts of their own. A layout tied to one aspect ratio, or to breakpoints scattered through screens, would have to be rewritten for each.
+
+_Decision._ Two independent inputs choose the layout, and screens know neither.
+
+1. _Form-factor profile and input style come from the host._ `HostInfo` carries `formFactor` (`desktop`, `web`, `tablet`, `phone`) and `input` (`pointer` fine or coarse, `hover` yes or no) next to the platform (AD-19). They are read once at mount and never guessed from the window width. A browser host reads the `pointer` and `hover` media queries in its adapter; the renderer never does.
+2. _The width class is computed in one place._ `compact`, `medium`, `regular`, `wide`, `ultrawide`, with their thresholds in one table (`layout/width-class.ts`; in CSS pixels: 0, 600, 900, 1600, 2560). Regular starts at the minimum window width, so the narrower classes appear only when the area is smaller than a window or zoomed. `LayoutProvider` measures the width of its own root element (not `window.innerWidth`, so a split view or an embedding behaves like a window) and keeps only the class in state.
+3. _A layout is a registry lookup._ `(profile, width class)` gives a `LayoutDefinition`: the navigation form (`leftPane` or `drawer`), what the top bar shows and what moves to an overflow menu, and the content column rules (maximum width, padding step). Each profile lists only the classes it needs. The lookup takes the class itself, then the nearest narrower class the profile defines, then the profile's default, then the same for desktop; a profile with no entry uses desktop. The nearest-narrower step refines the first agreed rule (class, profile default, desktop), which sent ultrawide to the regular layout, narrower than wide.
+4. _Input style is not a width matter._ Touch target size (`TARGET_SIZE_PX`: 32 for a pointer, 44 for touch) and whether controls may rely on hover come from `interactionFor(input)`, so a desktop window dragged narrow keeps pointer targets and a tablet at desktop width keeps touch targets. The registry never carries them.
+5. _Screens describe content, shells arrange it._ Only `renderer/src/ui/fluent/` shells and page layouts decide positions and widths. Two checks enforce it: a dependency-cruiser rule keeps `screens/` from importing the layout modules or the layout hook, and a source check fails a screen that contains a media query, `matchMedia`, a width read, a resize observer, `formFactor`, a class name or an inline style.
+6. _Placement._ The profile, width-class, registry and resolver logic is pure and unit tested in `renderer/src/layout/`, and imports no React, Fluent or DOM (checked). The React glue is `app/layout-context.tsx`. The Fluent shell (`app-shell.tsx`, one component whose navigation form follows the layout, so the page keeps its place in the tree and its state, such as an open dialog, survives a resize across a threshold), the content region and the compact top bar stay under `ui/fluent/` (AD-15). There is one bundle; code-splitting per profile is a later option, because a profile is a registry entry.
+
+_Desktop layouts now._ Compact and medium: a drawer opened from a top bar button (it closes after a page is chosen, on Escape and on the backdrop, and returns focus to the button), the menu entries and commands in an overflow menu, the month picker on its own row, full-width content. Regular: the left pane, the full top bar, a 1240 px column. Wide and ultrawide: the same with a 1440 px column. Tablet and phone have no entries yet and use the desktop layouts; adding one is a registry entry plus its shell variants.
+
+_Alternatives rejected._ Detecting the profile from the window width fails for a phone in landscape or a desktop window made narrow. Breakpoints inside screens spread layout across every page. CSS media queries alone cannot change the navigation form or the top bar's content.
+
+_Consequences._ At ultrawide widths the column stays centred with empty space beside it; using the width (a details panel beside a table, say) is for screens that have such content. The input style is fixed at mount; a host whose input can change at run time needs a change subscription, added with the first such host. A hover-free rule exists in `interactionFor` but no control uses it yet. The integration matrix covers every profile at every width class, with device emulation for tablet and phone, and must get a table per profile once a profile has its own entries.

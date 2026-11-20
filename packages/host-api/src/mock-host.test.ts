@@ -20,6 +20,8 @@ describe('createMockHost', () => {
       const host = createMockHost();
       expect(await host.getInfo()).toEqual({
         platform: 'web',
+        formFactor: 'desktop',
+        input: { pointer: 'fine', hover: true },
         automation: false,
         appVersion: '0.0.0-mock',
       });
@@ -30,6 +32,16 @@ describe('createMockHost', () => {
     it('reportsTheOverriddenFields', async () => {
       const host = createMockHost({ info: { automation: true, platform: 'win32' } });
       expect(await host.getInfo()).toMatchObject({ automation: true, platform: 'win32' });
+    });
+
+    it('reportsTheOverriddenFormFactorAndInputStyle', async () => {
+      const host = createMockHost({
+        info: { formFactor: 'phone', input: { pointer: 'coarse', hover: false } },
+      });
+      expect(await host.getInfo()).toMatchObject({
+        formFactor: 'phone',
+        input: { pointer: 'coarse', hover: false },
+      });
     });
   });
 });
