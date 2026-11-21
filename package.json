@@ -29,7 +29,9 @@
     "check:install-policy": "node scripts/check-install-policy.mjs",
     "check": "npm run lint && npm run format:check && npm run typecheck && npm run test:architecture"
   },
-  "allowScripts": {},
+  "allowScripts": {
+    "fsevents": false
+  },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.65.0",
