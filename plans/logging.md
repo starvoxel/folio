@@ -91,6 +91,10 @@ Do this only if milestones 4 to 6 leave failures that cannot be debugged without
 - Acceptance criteria: a round trip with a generated key; a wrong key fails; the stock `age` command opens a blob; with the variable unset nothing is sealed; AD-10 amended ("no personal data in the clear; sealed details only when enabled").
 - Verified by: the unit run and a decode of a real log by hand.
 
+### Working conventions
+
+- One branch and one pull request per milestone, in order. The branch is `logging-m{N}-{short-name}` (for example `logging-m4-positions-not-values`) and the pull request title starts `Logging milestone {N}:`. Branches start from the latest `main`. Milestones 1 to 3 shipped together before this convention (Jeremy, 2026-11-21).
+
 ## Later
 
 Recorded so they are not lost. None is scheduled. The ones that are plans of their own (the Settings toggle, an in-app logs command) are also listed in [PLANS.md](../PLANS.md).
