@@ -75,10 +75,12 @@ describe('maskMessage', () => {
       ['multi\nline\r\nSalary 5200\tAcme', ['Salary', '5200', 'Acme']],
       ['Ünïcödé Måndag 123', ['Ünïcödé', 'Måndag', '123']],
     ];
-    it.each(cases)('hidesTheValuesIn %j', (message, secrets) => {
-      const masked = maskMessage(message).toLowerCase();
-      for (const secret of secrets) {
-        expect(masked).not.toContain(secret.toLowerCase());
+    it('hidesTheValuesInEveryMessage', () => {
+      for (const [message, secrets] of cases) {
+        const masked = maskMessage(message).toLowerCase();
+        for (const secret of secrets) {
+          expect(masked, message).not.toContain(secret.toLowerCase());
+        }
       }
     });
   });
