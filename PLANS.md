@@ -4,7 +4,7 @@ The high-level list of what is planned or under way. One line each; the detail l
 
 ## In progress
 
-- Diagnostic logging: errors with safe stack traces, a log file and uncaught-error logging are done; messages, per-field privacy and a developer-only unredacted switch are next; encrypted details (age) come last and are optional. [plans/logging.md](plans/logging.md)
+- Diagnostic logging: errors with safe stack traces, a log file, uncaught-error logging, `FolioError` and per-field privacy are done; masked third-party messages and a developer-only unredacted switch are next; encrypted details (age) come last and are optional. [plans/logging.md](plans/logging.md)
 
 ## Planned
 

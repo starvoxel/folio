@@ -2,7 +2,7 @@
 
 | Field       | Value                                |
 | ----------- | ------------------------------------ |
-| Status      | In progress (milestones 1 to 3 done) |
+| Status      | In progress (milestones 1 to 4 done) |
 | Approved by |                                      |
 | Created     | 2026-11-16                           |
 
@@ -12,8 +12,8 @@ Make the main-process logger good enough to debug a failure on a household machi
 
 ## Scope
 
-- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, and logging of uncaught errors.
-- In, next: error messages (own errors as written, third-party messages masked), per-field privacy and a developer-only unredacted switch (milestones 4 to 6). Sealed details that only the owner can decrypt are milestone 7, last and optional.
+- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark.
+- In, next: masked third-party messages and a developer-only unredacted switch (milestones 5 and 6). Sealed details that only the owner can decrypt are milestone 7, last and optional.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -62,11 +62,11 @@ _Log file._ Needed now: the stack traces are of little use if a packaged app, wh
 - Acceptance criteria: unit tests with a fake event source cover both events, non-error reasons, one box for several errors, and a box that throws.
 - Verified by: lint, format check, type check, the architecture checks and the unit tests.
 
-### 4. Positions, not values, and per-field privacy
+### 4. Positions, not values, and per-field privacy (done)
 
 Why: the cheapest way to keep a useful message free of data is to never put the data in it. No crypto is needed for this.
 
-- Does: a `FolioError` class whose message follows a message standard (fixed text plus ids, counts, dates, row and column numbers and file hashes, never a value) and is logged as written, also when it is a `cause`; code that catches a third-party error wraps it in a `FolioError` and keeps the original as the cause. Log fields get a per-field privacy mark, as in Apple's `os_log`: a plain value is written, an unmarked string stays hidden as today, and a field marked private is dropped until milestone 7 can seal it.
+- Does: a `FolioError` class whose message follows a message standard (fixed text plus ids, counts, dates, row and column numbers and file hashes, never a value) and is logged as written, also when it is a `cause`; code that catches a third-party error wraps it in a `FolioError` and keeps the original as the cause. Log fields get a per-field privacy mark, as in Apple's `os_log`: `privateField(value)` is written as `[private]` and its value never appears, until milestone 7 can seal it. An unmarked value behaves as before (strings are written and clipped, other values become `[omitted]`). Making unmarked strings private by default, as Apple does, would change every existing call site and is not done; the call sites are fixed text and reviewed. `FolioError` lives in `packages/core` so core code can raise it; the logger recognises it with `instanceof`, so a plain error that is merely named `FolioError` is still dropped.
 - Acceptance criteria: unit tests that a `FolioError` message is written as is and a third-party cause is not; a private field never appears in a line; existing field behaviour is unchanged.
 - Verified by: the unit run; AD-10 and this plan updated for the message rule. Whether the message standard also goes in `project-standards.md` is Jeremy's choice (not a stack rule).
 
