@@ -18,9 +18,14 @@ Foundations, in the order the risks suggest:
 - Electron foundations: privacy capture in CI, save, lock and backups, menus and file drops, the test layers, a read-only web check, and the household install experience. [plans/electron-foundations.md](plans/electron-foundations.md)
 - UI regression suite: end-to-end scenarios on Windows and macOS, per-OS screenshot baselines, and Dependabot gating. [plans/regression-suite.md](plans/regression-suite.md)
 
-Product features, from the [product requirements](knowledge/product/month-end-review.md). None has a plan yet; each gets one before work starts.
+Product features, from the [product requirements](knowledge/product/month-end-review.md). Each gets a plan before work starts; drafted so far:
 
-- Core month-end views, in priority order: setup and accounts (S), CSV import (I), categorization (C), transfers and savings (T), month-end review and locking (M), reporting (A), app shell and settings (H, including backups and undo).
+- Setup and accounts (S): new file, accounts, category templates, the setup dialog and the Accounts page, plus the `.folio` file format (AD-2) in `core`; depends on Electron foundations milestone 2. [plans/setup-and-accounts.md](plans/setup-and-accounts.md)
+- CSV import (I): the import pipeline, provider profiles, preview, duplicates, coverage and suspicious flags, with the CSV fixtures; depends on setup and accounts. [plans/csv-import.md](plans/csv-import.md)
+
+Still without a plan:
+
+- Core month-end views, in priority order: categorization (C), transfers and savings (T), month-end review and locking (M), reporting (A), app shell and settings (H, including backups and undo).
 - Net worth (N), after the core views.
 
 ## Done
