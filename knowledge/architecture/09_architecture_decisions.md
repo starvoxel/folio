@@ -16,6 +16,8 @@ key_files:
   - apps/desktop/src/main/logger.ts
   - packages/core/src/support/folio-error.ts
   - apps/desktop/src/main/log-stack.ts
+  - apps/desktop/src/main/log-message-mask.ts
+  - apps/desktop/src/main/log-vocabulary.ts
   - apps/desktop/src/main/log-file.ts
   - apps/desktop/src/main/error-handlers.ts
   - apps/desktop/src/main/protocol.ts
@@ -168,7 +170,7 @@ _Decision._ Store current state. Keep a permanent, append-only audit log in the 
 
 _Open, settled at implementation:_ retention or compaction rules; exactly which fields are recorded. The audit log never feeds diagnostic logging, which must stay free of financial data.
 
-_Diagnostic logging._ The main process writes one JSON line per message to standard error and, in packaged builds, to `logs/folio.log` in the app's user-data folder (1 MB, two rotated copies), which is never uploaded. Logged errors carry their class name, a system code such as `ENOENT` and their stack frames, never the message, because a message can quote data. Paths in frames keep their folders only below the app folder; every other path is cut to its file name, which removes the user's home folder and any folder a person named. The message of an error the app raises itself (`FolioError`, in `packages/core`) is written as it is, so it follows a message standard: fixed text plus ids, counts, dates, positions (row, column, offset) and hashes, never a value taken from a file, a field or a setting. Code that catches a third-party error wraps it in a `FolioError` and keeps the original as the cause, whose message is never written. A log field marked `privateField` is written as `[private]`. Thrown values that are not errors are logged by type only. Uncaught exceptions and unhandled rejections are logged the same way, shown once in a fixed-text error box, and the app keeps running. Details and limits are in [plans/logging.md](../../plans/logging.md).
+_Diagnostic logging._ The main process writes one JSON line per message to standard error and, in packaged builds, to `logs/folio.log` in the app's user-data folder (1 MB, two rotated copies), which is never uploaded. Logged errors carry their class name, a system code such as `ENOENT` and their stack frames, never the message, because a message can quote data. Paths in frames keep their folders only below the app folder; every other path is cut to its file name, which removes the user's home folder and any folder a person named. The message of an error the app raises itself (`FolioError`, in `packages/core`) is written as it is, so it follows a message standard: fixed text plus ids, counts, dates, positions (row, column, offset) and hashes, never a value taken from a file, a field or a setting. Code that catches a third-party error wraps it in a `FolioError` and keeps the original as the cause. The message of any other error is masked before it is written, as `maskedMessage`: quoted text and any word outside a short reviewed list of error words become `<?>`, and a number survives only after a word such as `position` or `line`, so what the message can reveal is limited to that list. A log field marked `privateField` is written as `[private]`. Thrown values that are not errors are logged by type only. Uncaught exceptions and unhandled rejections are logged the same way, shown once in a fixed-text error box, and the app keeps running. Details and limits are in [plans/logging.md](../../plans/logging.md).
 
 ## AD-11. Settings split between file and machine
 
