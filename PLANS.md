@@ -42,6 +42,7 @@ Product features, from the [product requirements](knowledge/product/month-end-re
 - Phone app, not required.
 - Performance and stress testing, a separate initiative. [knowledge/research/performance-and-e2e-testing.md](knowledge/research/performance-and-e2e-testing.md)
 - Logging: a Settings toggle for protected diagnostic details, in place of the `FOLIO_LOG_SEAL_KEY` variable.
+- Logging: boundary wrappers for third-party failures (`JSON.parse`, file reads, zip, schema) and a lint rule for `FolioError`.
 - Logging: an in-app "open logs" or "copy diagnostics" command.
 
 ## Not planned

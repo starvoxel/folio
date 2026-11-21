@@ -26,6 +26,8 @@ const TOKEN = /[\p{L}\p{M}]+|\p{N}+|[^\p{L}\p{M}\p{N}]+/gu;
 const NUMBER_LEAD = /^\s*[:=]?\s*$/u;
 // Hidden words that sit next to each other, with only separators between them, become one mask.
 const ADJACENT_MASKS = /<\?>(?:[\s,.:;/\\@#_&+-]*<\?>)+/gu;
+// What can follow an apostrophe inside a word (`can't`, `it's`, `we've`).
+const CONTRACTION_SUFFIXES: ReadonlySet<string> = new Set(['t', 's', 're', 'll', 've', 'd', 'm']);
 const CONTROL = /[\p{Cc}\p{Cf}]+/gu;
 
 /**
@@ -74,15 +76,23 @@ export function maskMessage(message: string): string {
   // The last word that was kept, and what has come after it, to decide about a number.
   let lastWord = '';
   let gap = '';
+  // The previous token, to tell `can't` (a word, an apostrophe, a suffix) from a quote.
+  let previous = '';
+  let beforePrevious = '';
   for (const token of text.match(TOKEN) ?? []) {
     if (/^[\p{L}\p{M}]/u.test(token)) {
       const lower = token.toLowerCase();
-      const kept = LOG_VOCABULARY.has(lower);
+      const afterApostrophe =
+        (previous === "'" || previous === '\u2019') && /^[\p{L}\p{M}]/u.test(beforePrevious);
+      const kept =
+        LOG_VOCABULARY.has(lower) || (afterApostrophe && CONTRACTION_SUFFIXES.has(lower));
       result += kept ? token : MASK;
       lastWord = kept ? lower : '';
       gap = '';
     } else if (/^\p{N}/u.test(token)) {
       const kept = POSITION_WORDS.has(lastWord) && NUMBER_LEAD.test(gap);
+      // A sign in front of a hidden number would show whether the number was negative.
+      result = kept ? result : result.replace(/[-+]$/u, '');
       result += kept ? token : MASK;
       lastWord = '';
       gap = '';
@@ -90,6 +100,8 @@ export function maskMessage(message: string): string {
       result += token;
       gap += token;
     }
+    beforePrevious = previous;
+    previous = token;
   }
   return result.replace(ADJACENT_MASKS, MASK).trim();
 }

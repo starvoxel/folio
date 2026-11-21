@@ -142,6 +142,146 @@ describe('maskMessage', () => {
   });
 });
 
+/**
+ * Messages recorded from real Node and V8 errors (generated with a small script that provokes each
+ * one, then pasted here with file paths made generic), and the masked text that was reviewed for
+ * each. A change to the masker or the word list that changes any line shows up here as a diff to
+ * review: a hidden word that should be visible is a word to add to the list, and a visible word
+ * that could be data is a bug.
+ */
+const RECORDED_MESSAGES: readonly (readonly [string, string])[] = [
+  [
+    "Cannot read properties of null (reading 'foo')",
+    "Cannot read properties of null (reading '<?>')",
+  ],
+  [
+    "Cannot read properties of undefined (reading 'foo')",
+    "Cannot read properties of undefined (reading '<?>')",
+  ],
+  [
+    "Cannot read properties of undefined (reading 'b')",
+    "Cannot read properties of undefined (reading '<?>')",
+  ],
+  ['o.fn is not a function', '<?> is not a function'],
+  ['x is not a function', '<?> is not a function'],
+  ['nope is not defined', '<?> is not defined'],
+  ['Assignment to constant variable.', 'Assignment to constant variable.'],
+  [
+    "Cannot read properties of undefined (reading 'z')",
+    "Cannot read properties of undefined (reading '<?>')",
+  ],
+  [
+    'Expected double-quoted property name in JSON at position 7 (line 1 column 8)',
+    'Expected double-quoted property name in JSON at position 7 (line 1 column 8)',
+  ],
+  ['Unexpected end of JSON input', 'Unexpected end of JSON input'],
+  [
+    "Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+    "Expected property name or '<?>' in JSON at position 1 (line 1 column 2)",
+  ],
+  [
+    'Unexpected token \'a\', "abc" is not valid JSON',
+    'Unexpected token \'<?>\', "<?>" is not valid JSON',
+  ],
+  [
+    "Expected ',' or ']' after array element in JSON at position 4 (line 1 column 5)",
+    "Expected '<?>' or '<?>' after array element in JSON at position 4 (line 1 column 5)",
+  ],
+  ['Invalid array length', 'Invalid array length'],
+  ['Invalid count value: -1', 'Invalid count value: <?>'],
+  [
+    'toFixed() digits argument must be between 0 and 100',
+    '<?>() digits argument must be between <?> and <?>',
+  ],
+  ['Maximum call stack size exceeded', 'Maximum call stack size exceeded'],
+  ['URI malformed', 'URI malformed'],
+  ['Invalid URL', 'Invalid URL'],
+  ['Cannot convert 1.5 to a BigInt', 'Cannot convert <?> to a <?>'],
+  ['Cannot convert a Symbol value to a string', 'Cannot convert a Symbol value to a string'],
+  ['5 is not iterable', '<?> is not iterable'],
+  ['null is not iterable', 'null is not iterable'],
+  [
+    "Cannot destructure property 'a' of 'null' as it is null.",
+    "Cannot destructure property '<?>' of '<?>' as it is null.",
+  ],
+  ['Currency code is required with currency style.', '<?> code is required with <?> style.'],
+  [
+    'Cannot define property a, object is not extensible',
+    'Cannot define property a, object is not extensible',
+  ],
+  [
+    "Cannot assign to read only property 'a' of object '#<Object>'",
+    "Cannot assign to read only property '<?>' of object '<?>'",
+  ],
+  ['Invalid time value', 'Invalid time value'],
+  ['() => {} could not be cloned.', '() => {} could not be cloned.'],
+  [
+    'The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received an instance of Object',
+    'The first argument must be of type string or an instance of Buffer, <?>, or Array or an Array-like Object. Received an instance of Object',
+  ],
+  [
+    "ENOENT: no such file or directory, open '/tmp/x/missing.csv'",
+    "ENOENT: no such file or directory, open '<?>'",
+  ],
+  [
+    'EISDIR: illegal operation on a directory, read',
+    'EISDIR: illegal operation on a directory, read',
+  ],
+  [
+    "ENOENT: no such file or directory, open '/tmp/x/a/b.txt'",
+    "ENOENT: no such file or directory, open '<?>'",
+  ],
+  [
+    "ENOENT: no such file or directory, open '/tmp/x/no/x'",
+    "ENOENT: no such file or directory, open '<?>'",
+  ],
+  ["Cannot find module 'fflate'", "Cannot find module '<?>'"],
+  [
+    'The encoded data was not valid for encoding utf-8',
+    'The encoded data was not valid for encoding utf<?>',
+  ],
+  ['Array buffer allocation failed', 'Array buffer allocation failed'],
+  ['Invalid array buffer length', 'Invalid array buffer length'],
+  ['Reduce of empty array with no initial value', 'Reduce of empty array with no initial value'],
+  [
+    'number 5 is not iterable (cannot read property Symbol(Symbol.iterator))',
+    'number <?> is not iterable (cannot read property Symbol(Symbol.iterator))',
+  ],
+  ['Iterator value 1 is not an entry object', 'Iterator value <?> is not an entry object'],
+  ['Reflect.ownKeys called on non-object', '<?> called on non-object'],
+  [
+    'Cannot create proxy with a non-object as target or handler',
+    'Cannot create proxy with a non-object as <?> or handler',
+  ],
+  [
+    'Method Promise.prototype.then called on incompatible receiver 1',
+    'Method Promise.prototype.then called on incompatible receiver <?>',
+  ],
+  ['Symbol() could not be cloned.', 'Symbol() could not be cloned.'],
+  ["can't parse the file", "can't <?> the file"],
+  ['value -5 is not valid', 'value <?> is not valid'],
+];
+
+describe('maskMessage', () => {
+  describe('recordedNodeAndV8Messages', () => {
+    it('matchesTheReviewedOutputForEveryMessage', () => {
+      for (const [message, reviewed] of RECORDED_MESSAGES) {
+        expect(maskMessage(message), message).toBe(reviewed);
+      }
+    });
+
+    it('keepsAtLeastEightyPercentOfTheWords', () => {
+      let total = 0;
+      let kept = 0;
+      for (const [message, reviewed] of RECORDED_MESSAGES) {
+        total += message.match(/[\p{L}]+/gu)?.length ?? 0;
+        kept += reviewed.match(/[\p{L}]+/gu)?.length ?? 0;
+      }
+      expect(kept / total).toBeGreaterThanOrEqual(0.8);
+    });
+  });
+});
+
 describe('LOG_VOCABULARY', () => {
   describe('everyEntry', () => {
     it('isAPlainLowerCaseWord', () => {
