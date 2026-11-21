@@ -7,7 +7,7 @@ The high-level list of what is planned or under way. One line each; the detail l
 - Diagnostic logging, one milestone per branch and pull request. [plans/logging.md](plans/logging.md)
   - 1 to 3, done: safe stack traces, a log file, uncaught errors.
   - 4, done: `FolioError` messages and private fields.
-  - 5: masked third-party messages.
+  - 5, done: masked third-party messages.
   - 6: a developer-only unredacted switch.
   - 7, last and optional: encrypted details (age), per install.
 

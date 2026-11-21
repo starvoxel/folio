@@ -2,7 +2,7 @@
 
 | Field       | Value                                |
 | ----------- | ------------------------------------ |
-| Status      | In progress (milestones 1 to 4 done) |
+| Status      | In progress (milestones 1 to 5 done) |
 | Approved by |                                      |
 | Created     | 2026-11-16                           |
 
@@ -12,8 +12,8 @@ Make the main-process logger good enough to debug a failure on a household machi
 
 ## Scope
 
-- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark.
-- In, next: masked third-party messages and a developer-only unredacted switch (milestones 5 and 6). Sealed details that only the owner can decrypt are milestone 7, last and optional.
+- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark, and masked third-party messages.
+- In, next: a developer-only unredacted switch (milestone 6). Sealed details that only the owner can decrypt are milestone 7, last and optional.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -70,9 +70,9 @@ Why: the cheapest way to keep a useful message free of data is to never put the 
 - Acceptance criteria: unit tests that a `FolioError` message is written as is and a third-party cause is not; a private field never appears in a line; existing field behaviour is unchanged.
 - Verified by: the unit run; AD-10 and this plan updated for the message rule. Whether the message standard also goes in `project-standards.md` is Jeremy's choice (not a stack rule).
 
-### 5. Masked third-party messages
+### 5. Masked third-party messages (done)
 
-- Does: vocabulary masking for every message that is not a `FolioError`'s. Quoted text is masked, a word is kept only if it is in a fixed list of error words, everything else becomes `<?>`, and a number is kept only after `position`, `line`, `column` or `index`. The masker fails closed: a word it does not know is hidden, not shown.
+- Does: vocabulary masking for every message that is not a `FolioError`'s. Quoted text is masked, a word is kept only if it is in a fixed list of error words, everything else becomes `<?>`, and a number is kept only after `position`, `line`, `column` or `index`. The masker fails closed: a word it does not know is hidden, not shown. Neighbouring masks merge into one, so even the number of hidden words is not shown; input is cut at 1000 characters before it is looked at. The result is written as `error.maskedMessage`, a different key from the `message` of a `FolioError`, so the two cannot be confused. The word list is `log-vocabulary.ts`; adding a word is a review item, and a test keeps names, brands and finance terms out of it. Known limitation: a message whose quoted text itself contains quotes (the newer `JSON.parse` message) is masked more heavily than needed, which is safe but loses detail; known-template extraction is in Later.
 - Acceptance criteria: a test set of messages that hold data (amounts, account numbers, names, merchants, file names, emails, IBANs) in several shapes, none of whose values survive; `TypeError` and `ENOENT` style messages keep their structure.
 - Verified by: the unit run.
 

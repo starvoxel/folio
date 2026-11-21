@@ -8,6 +8,7 @@
 
 import { FolioError } from '@folio/core';
 
+import { maskMessage } from './log-message-mask.js';
 import { scrubStack } from './log-stack.js';
 
 /** How serious a log line is, from most to least verbose. */
@@ -55,6 +56,11 @@ export interface LoggedError {
    * written as it is. Every other error's message is never written.
    */
   readonly message?: string;
+  /**
+   * The message of any other error, masked by `maskMessage`: quoted text, unknown words and
+   * numbers are replaced by `<?>`. A different key from `message`, so the two cannot be confused.
+   */
+  readonly maskedMessage?: string;
   /** The error's class name when it looks like an identifier, else `Error`; `NonError` for a thrown value that was not an error. */
   readonly name: string;
   /** The `typeof` of a thrown value that was not an error. */
@@ -187,14 +193,19 @@ function describeError(value: unknown, appFolder: string | undefined, depth: num
     return { name: 'NonError', kind: typeof value, stack: [] };
   }
   const error = value as Error;
-  const message = error instanceof FolioError ? read(() => error.message) : undefined;
+  const isFolioError = error instanceof FolioError;
+  const message = read(() => error.message);
   const name = read(() => error.name);
   const code = read(() => (error as { code?: unknown }).code);
   const cause = read(() => error.cause);
   const scrubbed = typeof stack === 'string' ? scrubStack(stack, appFolder) : undefined;
   return {
     name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
-    ...(typeof message === 'string' ? { message: clip(message, MAX_MESSAGE_LENGTH) } : {}),
+    ...(typeof message !== 'string' || message === ''
+      ? {}
+      : isFolioError
+        ? { message: clip(message, MAX_MESSAGE_LENGTH) }
+        : { maskedMessage: clip(maskMessage(message), MAX_MESSAGE_LENGTH) }),
     ...(typeof code === 'string' && ERROR_CODE.test(code) ? { code } : {}),
     stack: scrubbed?.frames ?? [],
     ...(scrubbed?.truncated === true ? { truncated: true as const } : {}),
