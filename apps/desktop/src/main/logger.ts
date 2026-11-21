@@ -6,23 +6,55 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { FolioError } from '@folio/core';
+
 import { scrubStack } from './log-stack.js';
 
 /** How serious a log line is, from most to least verbose. */
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 /**
+ * A value the caller wants kept out of the log line. The line shows `[private]` in its place. It
+ * exists so a value that may be needed for debugging is marked at the call site, where a later
+ * milestone can seal it for the owner (plans/logging.md); until then it is never written.
+ */
+export class PrivateField {
+  /** The value kept out of the log. */
+  public readonly value: string | number | boolean;
+
+  /** @param value - The value to keep out of the log. */
+  public constructor(value: string | number | boolean) {
+    this.value = value;
+  }
+}
+
+/**
+ * Mark a field value as private.
+ * @param value - The value.
+ * @returns A marker that the logger writes as `[private]`.
+ */
+export function privateField(value: string | number | boolean): PrivateField {
+  return new PrivateField(value);
+}
+
+/**
  * Extra facts on a log line. Only plain values are accepted, and the messages and values are for
  * operational facts such as a version or a blocked scheme. Never pass file contents, amounts,
- * descriptions or account names: diagnostic logs carry no financial data (AD-10, AD-18).
+ * descriptions or account names: diagnostic logs carry no financial data (AD-10, AD-18). A value
+ * that should stay out of the line is marked with `privateField`.
  */
-export type LogFields = Readonly<Record<string, string | number | boolean>>;
+export type LogFields = Readonly<Record<string, string | number | boolean | PrivateField>>;
 
 /**
  * What a logged error looks like: its class name, an optional system code, the frames of its stack
  * and its causes. There is never a message, a path outside the app folder or any other property.
  */
 export interface LoggedError {
+  /**
+   * The message, only for a `FolioError`, whose message follows the message standard and is
+   * written as it is. Every other error's message is never written.
+   */
+  readonly message?: string;
   /** The error's class name when it looks like an identifier, else `Error`; `NonError` for a thrown value that was not an error. */
   readonly name: string;
   /** The `typeof` of a thrown value that was not an error. */
@@ -113,13 +145,15 @@ function clip(text: string, limit: number): string {
 function cleanFields(fields: LogFields | undefined): Record<string, string | number | boolean> {
   const cleaned: Record<string, string | number | boolean> = {};
   for (const [key, value] of Object.entries(fields ?? {})) {
-    const kind = typeof (value as unknown);
-    cleaned[key] =
-      kind === 'string'
-        ? clip(value as string, MAX_FIELD_LENGTH)
-        : kind === 'number' || kind === 'boolean'
-          ? value
-          : '[omitted]';
+    // The value may break its type at run time, so check what it really is.
+    const raw: unknown = value;
+    if (typeof raw === 'string') {
+      cleaned[key] = clip(raw, MAX_FIELD_LENGTH);
+    } else if (typeof raw === 'number' || typeof raw === 'boolean') {
+      cleaned[key] = raw;
+    } else {
+      cleaned[key] = raw instanceof PrivateField ? '[private]' : '[omitted]';
+    }
   }
   return cleaned;
 }
@@ -153,12 +187,14 @@ function describeError(value: unknown, appFolder: string | undefined, depth: num
     return { name: 'NonError', kind: typeof value, stack: [] };
   }
   const error = value as Error;
+  const message = error instanceof FolioError ? read(() => error.message) : undefined;
   const name = read(() => error.name);
   const code = read(() => (error as { code?: unknown }).code);
   const cause = read(() => error.cause);
   const scrubbed = typeof stack === 'string' ? scrubStack(stack, appFolder) : undefined;
   return {
     name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
+    ...(typeof message === 'string' ? { message: clip(message, MAX_MESSAGE_LENGTH) } : {}),
     ...(typeof code === 'string' && ERROR_CODE.test(code) ? { code } : {}),
     stack: scrubbed?.frames ?? [],
     ...(scrubbed?.truncated === true ? { truncated: true as const } : {}),

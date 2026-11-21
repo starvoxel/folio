@@ -8,10 +8,13 @@
 
 import { describe, expect, it } from 'vitest';
 
+import { FolioError } from '@folio/core';
+
 import {
   combineWriters,
   createLogger,
   parseLogLevel,
+  privateField,
   type LogFields,
   type LogLevel,
 } from './logger.js';
@@ -364,7 +367,91 @@ describe('logError', () => {
   });
 });
 
+describe('logError', () => {
+  describe('aFolioError', () => {
+    it('writesItsMessageAsItIs', () => {
+      const { logger, lines } = collect('info');
+      logger.logError('import failed', new FolioError('row 12, column 3 is not an amount'));
+      expect(lines[0]?.['error']).toEqual({
+        name: 'FolioError',
+        message: 'row 12, column 3 is not an amount',
+        stack: expect.any(Array) as unknown,
+      });
+    });
+  });
+
+  describe('aFolioErrorWithAVeryLongMessage', () => {
+    it('clipsTheMessage', () => {
+      const { logger, lines } = collect('info');
+      logger.logError('failed', new FolioError('m'.repeat(1000)));
+      expect((lines[0]?.['error'] as { message: string }).message.length).toBeLessThan(310);
+    });
+  });
+
+  describe('aFolioErrorThatWrapsAThirdPartyError', () => {
+    it('writesTheWrapperMessageAndNotTheCauseMessage', () => {
+      const { logger, lines, raw } = collect('info');
+      const cause = errorWithStack('SyntaxError', 'Unexpected "Rent 1,200.00 Acme"', [
+        '    at parse (a.js:1:1)',
+      ]);
+      logger.logError('failed', new FolioError('could not read row 4', { cause }));
+      const logged = lines[0]?.['error'] as { message: string; cause: Record<string, unknown> };
+      expect(logged.message).toBe('could not read row 4');
+      expect(logged.cause).toEqual({ name: 'SyntaxError', stack: ['at parse (a.js:1:1)'] });
+      expect(raw[0]).not.toContain('Acme');
+    });
+  });
+
+  describe('aThirdPartyErrorWrappingAFolioError', () => {
+    it('writesTheFolioErrorMessageOnlyForTheCause', () => {
+      const { logger, lines, raw } = collect('info');
+      const inner = new FolioError('account 7 has 3 open months');
+      const outer = errorWithStack('Error', 'balance 5000 for Jo', [], inner);
+      logger.logError('failed', outer);
+      const logged = lines[0]?.['error'] as { cause: { message: string } };
+      expect(logged.cause.message).toBe('account 7 has 3 open months');
+      expect(raw[0]).not.toContain('5000');
+    });
+  });
+
+  describe('aPlainErrorWhoseNameIsFolioError', () => {
+    it('stillDropsItsMessage', () => {
+      const { logger, raw } = collect('info');
+      logger.logError('failed', errorWithStack('FolioError', 'balance 5000', []));
+      expect(raw[0]).not.toContain('5000');
+    });
+  });
+});
+
 describe('createLogger', () => {
+  describe('aFieldMarkedPrivate', () => {
+    it('isWrittenAsPrivateAndNeverWithItsValue', () => {
+      const { logger, lines, raw } = collect('info');
+      logger.info('imported', {
+        rows: 12,
+        payee: privateField('Acme Bank'),
+        amount: privateField(120000),
+        flag: privateField(true),
+      });
+      expect(lines[0]?.['fields']).toEqual({
+        rows: 12,
+        payee: '[private]',
+        amount: '[private]',
+        flag: '[private]',
+      });
+      expect(raw[0]).not.toContain('Acme');
+      expect(raw[0]).not.toContain('120000');
+    });
+  });
+
+  describe('aPrivateFieldOnAnErrorLine', () => {
+    it('isWrittenAsPrivate', () => {
+      const { logger, lines } = collect('info');
+      logger.logError('failed', new FolioError('row 1'), { value: privateField('secret') });
+      expect(lines[0]?.['fields']).toEqual({ value: '[private]' });
+    });
+  });
+
   describe('aWriterThatThrows', () => {
     it('neverThrowsToTheCaller', () => {
       const logger = createLogger({

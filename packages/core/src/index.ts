@@ -6,6 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+export { FolioError, type FolioErrorOptions } from './support/folio-error.js';
 export { type Brand } from './support/brand.js';
 export {
   err,

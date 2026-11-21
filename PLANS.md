@@ -4,7 +4,12 @@ The high-level list of what is planned or under way. One line each; the detail l
 
 ## In progress
 
-- Diagnostic logging: errors with safe stack traces, a log file and uncaught-error logging are done; messages, per-field privacy and a developer-only unredacted switch are next; encrypted details (age) come last and are optional. [plans/logging.md](plans/logging.md)
+- Diagnostic logging, one milestone per branch and pull request. [plans/logging.md](plans/logging.md)
+  - 1 to 3, done: safe stack traces, a log file, uncaught errors.
+  - 4, done: `FolioError` messages and private fields.
+  - 5: masked third-party messages.
+  - 6: a developer-only unredacted switch.
+  - 7, last and optional: encrypted details (age), per install.
 
 ## Planned
 
