@@ -9,7 +9,7 @@ The high-level list of what is planned or under way. One line each; the detail l
   - 4, done: `FolioError` messages and private fields.
   - 5, done: masked third-party messages.
   - 6: a developer-only unredacted switch.
-  - 7, last and optional: encrypted details (age), per install.
+  - 7, last: save diagnostic details (raw details kept in memory, saved only by the person).
 
 ## Planned
 
@@ -46,9 +46,9 @@ Still without a plan:
 - Server backend for the budget data instead of a local file: opt-in and household-controlled.
 - Phone app, not required.
 - Performance and stress testing, a separate initiative. [knowledge/research/performance-and-e2e-testing.md](knowledge/research/performance-and-e2e-testing.md)
-- Logging: a Settings toggle for protected diagnostic details, in place of the `FOLIO_LOG_SEAL_KEY` variable.
+- Logging: age-sealed diagnostic details, per install, with a Settings toggle (an alternative to the in-memory buffer).
 - Logging: boundary wrappers for third-party failures (`JSON.parse`, file reads, zip, schema) and a lint rule for `FolioError`.
-- Logging: an in-app "open logs" or "copy diagnostics" command.
+- Logging: an "open logs folder" command and menu entries for "Save diagnostic details…", with the menu plan.
 
 ## Not planned
 
