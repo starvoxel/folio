@@ -70,8 +70,8 @@ jobs:
         run: npm run test:architecture
 
       # Same check as ai-foundation's CI: key_files staleness and relative links in the arc42 docs.
-      # ai-foundation is private, so its checkout needs a token that can read it (secret
-      # AIF_CHECKOUT_TOKEN). Pinned to a commit; bump it to take newer aif behaviour.
+      # ai-foundation is public, so no token is needed. Pinned to a commit; bump it to take newer
+      # aif behaviour.
       - name: Check out ai-foundation (for aif)
         if: ${{ !cancelled() }}
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -79,7 +79,6 @@ jobs:
           repository: starvoxel/ai-foundation
           ref: 0d85ad7ceb06f08d17f422972b3134bbdbd5f61d
           path: .aif
-          token: ${{ secrets.AIF_CHECKOUT_TOKEN }}
           persist-credentials: false
 
       - name: Install aif
