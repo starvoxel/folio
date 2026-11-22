@@ -33,9 +33,13 @@ function collect(
   logger: ReturnType<typeof createLogger>;
   lines: Record<string, unknown>[];
   raw: string[];
+  unredactedLines: Record<string, unknown>[];
+  unredactedRaw: string[];
 } {
   const lines: Record<string, unknown>[] = [];
   const raw: string[] = [];
+  const unredactedLines: Record<string, unknown>[] = [];
+  const unredactedRaw: string[] = [];
   const logger = createLogger({
     level,
     write: (line) => {
@@ -44,9 +48,16 @@ function collect(
     },
     now: () => Date.UTC(2026, 10, 13, 12, 0, 0),
     ...(appFolder === undefined ? {} : { appFolder }),
-    unredacted,
+    ...(unredacted
+      ? {
+          writeUnredacted: (line: string) => {
+            unredactedRaw.push(line);
+            unredactedLines.push(JSON.parse(line) as Record<string, unknown>);
+          },
+        }
+      : {}),
   });
-  return { logger, lines, raw };
+  return { logger, lines, raw, unredactedLines, unredactedRaw };
 }
 
 const WINDOWS_APP = 'C:\\Users\\Jo Smith\\AppData\\Local\\Folio\\resources\\app.asar';
@@ -580,8 +591,47 @@ describe('logError', () => {
   });
 
   describe('theUnredactedSwitchOn', () => {
+    it('leavesTheNormalLineUnchangedAndWritesTheRawLineAsASecondLine', () => {
+      const { logger, lines, raw, unredactedLines } = collect('info', undefined, true);
+      const error = errorWithStack('TypeError', 'balance 5000 for Acme', [
+        '    at f (/Users/jo smith/x.js:1:2)',
+      ]);
+      logger.logError('failed', error, { value: privateField('secret') });
+      expect(lines).toHaveLength(1);
+      expect(lines[0]?.['error']).not.toHaveProperty('raw');
+      expect(lines[0]).not.toHaveProperty('unredacted');
+      expect(lines[0]?.['fields']).toEqual({ value: '[private]' });
+      expect(raw[0]).not.toContain('5000');
+      expect(raw[0]).not.toContain('secret');
+      expect(unredactedLines).toHaveLength(1);
+      expect(unredactedLines[0]?.['unredacted']).toBe(true);
+      expect(unredactedLines[0]?.['message']).toBe('failed');
+    });
+
+    it('doesNotWriteTheRawLineBelowTheLevel', () => {
+      const { logger, unredactedLines } = collect('error', undefined, true);
+      logger.info('quiet', { value: privateField('secret') });
+      expect(unredactedLines).toHaveLength(0);
+    });
+
+    it('neverThrowsWhenTheUnredactedWriterFailsAndStillWritesTheNormalLine', () => {
+      const lines: string[] = [];
+      const logger = createLogger({
+        level: 'info',
+        write: (line) => void lines.push(line),
+        writeUnredacted: () => {
+          throw new Error('disk full');
+        },
+        now: () => 0,
+      });
+      expect(() => {
+        logger.info('a');
+      }).not.toThrow();
+      expect(lines).toHaveLength(1);
+    });
+
     it('writesTheRawMessageTheRawStackAndTheHiddenWords', () => {
-      const { logger, lines } = collect('info', undefined, true);
+      const { logger, unredactedLines: lines } = collect('info', undefined, true);
       const error = errorWithStack('TypeError', 'cannot parse "Rent 1200" in budget.csv', [
         '    at f (/Users/jo smith/x.js:1:2)',
       ]);
@@ -599,7 +649,7 @@ describe('logError', () => {
     });
 
     it('writesPrivateFieldValuesAsTheyAre', () => {
-      const { logger, lines } = collect('info', undefined, true);
+      const { logger, unredactedLines: lines } = collect('info', undefined, true);
       logger.info('imported', {
         payee: privateField('Acme Bank'),
         amount: privateField(120000),
@@ -609,7 +659,7 @@ describe('logError', () => {
     });
 
     it('writesTheRawDetailsOfEveryCause', () => {
-      const { logger, lines } = collect('info', undefined, true);
+      const { logger, unredactedLines: lines } = collect('info', undefined, true);
       const cause = errorWithStack('SyntaxError', 'bad "Acme"', ['    at p (a.js:1:1)']);
       logger.logError('failed', errorWithStack('Error', 'wrapped 5000', [], cause));
       const logged = lines[0]?.['error'] as {
@@ -622,7 +672,7 @@ describe('logError', () => {
     });
 
     it('writesNoRawMessageForAFolioErrorBecauseItsMessageIsAlreadyPlain', () => {
-      const { logger, lines } = collect('info', undefined, true);
+      const { logger, unredactedLines: lines } = collect('info', undefined, true);
       logger.logError('failed', new FolioError('row 4 is not an amount'));
       const logged = lines[0]?.['error'] as { message: string; raw: Record<string, unknown> };
       expect(logged.message).toBe('row 4 is not an amount');
@@ -631,7 +681,7 @@ describe('logError', () => {
     });
 
     it('clipsAVeryLongRawMessageAndStack', () => {
-      const { logger, lines } = collect('info', undefined, true);
+      const { logger, unredactedLines: lines } = collect('info', undefined, true);
       const frames = Array.from({ length: 600 }, (_, index) => `    at f${index} (a.js:1:1)`);
       logger.logError('failed', errorWithStack('Error', 'm'.repeat(5000), frames));
       const raw = (lines[0]?.['error'] as { raw: { message: string; stack: string } }).raw;
@@ -640,7 +690,11 @@ describe('logError', () => {
     });
 
     it('writesAThrownNonErrorWithNoRawContent', () => {
-      const { logger, lines, raw } = collect('info', undefined, true);
+      const {
+        logger,
+        unredactedLines: lines,
+        unredactedRaw: raw,
+      } = collect('info', undefined, true);
       logger.logError('failed', 'secret balance 100');
       expect(lines[0]?.['error']).toEqual({ name: 'NonError', kind: 'string', stack: [] });
       expect(raw[0]).not.toContain('secret');

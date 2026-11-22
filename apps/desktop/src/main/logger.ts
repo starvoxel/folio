@@ -62,7 +62,7 @@ export interface LoggedError {
    */
   readonly maskedMessage?: string;
   /**
-   * The raw details, only when the development-only unredacted switch is on: the raw message of an
+   * The raw details, only on the unredacted line of the development-only switch: the raw message of an
    * error that is not a `FolioError`, the raw stack and the words the mask hid. Never present in a
    * packaged build.
    */
@@ -123,11 +123,13 @@ export interface LoggerOptions {
    */
   readonly appFolder?: string;
   /**
-   * Development only: write raw messages, raw stacks and private field values next to the masked
-   * ones. Get it from `parseUnredacted`, which refuses it in a packaged build. The lines then go
-   * to the terminal of an unpackaged run, which has no log file.
+   * Development only: where the unredacted line goes. When set, each log call also writes a second
+   * line to it, the same as the normal one plus the raw message, raw stack, hidden words and
+   * private field values, and marked `"unredacted":true`. The normal line is never changed, so it
+   * stays safe to share. Set it only when `parseUnredacted` allows, which refuses a packaged
+   * build.
    */
-  readonly unredacted?: boolean;
+  readonly writeUnredacted?: (line: string) => void;
 }
 
 const ORDER: Readonly<Record<LogLevel, number>> = { debug: 10, info: 20, warn: 30, error: 40 };
@@ -316,41 +318,47 @@ export function combineWriters(
  * @returns The logger.
  */
 export function createLogger(options: LoggerOptions): Logger {
+  const build = (
+    level: LogLevel,
+    message: string,
+    unredacted: boolean,
+    fields?: LogFields,
+    error?: { value: unknown },
+  ): string =>
+    JSON.stringify({
+      time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
+      level,
+      message: clip(message, MAX_MESSAGE_LENGTH),
+      ...(unredacted ? { unredacted: true } : {}),
+      ...(fields === undefined ? {} : { fields: cleanFields(fields, unredacted) }),
+      ...(error === undefined
+        ? {}
+        : { error: describeError(error.value, options.appFolder, 0, unredacted) }),
+    });
   const emit = (
     level: LogLevel,
     message: string,
     fields?: LogFields,
     error?: { value: unknown },
   ): void => {
+    if (ORDER[level] < ORDER[options.level]) {
+      return;
+    }
     try {
-      if (ORDER[level] < ORDER[options.level]) {
-        return;
-      }
-      options.write(
-        JSON.stringify({
-          time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
-          level,
-          message: clip(message, MAX_MESSAGE_LENGTH),
-          ...(fields === undefined
-            ? {}
-            : { fields: cleanFields(fields, options.unredacted === true) }),
-          ...(error === undefined
-            ? {}
-            : {
-                error: describeError(
-                  error.value,
-                  options.appFolder,
-                  0,
-                  options.unredacted === true,
-                ),
-              }),
-        }),
-      );
+      options.write(build(level, message, false, fields, error));
     } catch {
       try {
         options.write(FALLBACK_LINE);
       } catch {
         // Nothing left to try; dropping the line is the only safe choice.
+      }
+    }
+    const { writeUnredacted } = options;
+    if (writeUnredacted !== undefined) {
+      try {
+        writeUnredacted(build(level, message, true, fields, error));
+      } catch {
+        // The development output is optional; losing a line is fine.
       }
     }
   };

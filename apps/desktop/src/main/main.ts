@@ -15,7 +15,8 @@ import { installErrorHandlers } from './error-handlers.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
 import { createRotatingFileWriter, nodeLogFileOperations } from './log-file.js';
-import { combineWriters, createLogger, parseLogLevel, parseUnredacted } from './logger.js';
+import { createLogDestinations } from './log-destinations.js';
+import { createLogger, parseLogLevel, parseUnredacted } from './logger.js';
 import { registerAppProtocol, registerAppScheme } from './protocol.js';
 import { createSettingsStore } from './settings-store.js';
 import { createMainWindow } from './window.js';
@@ -25,28 +26,36 @@ import { createMainWindow } from './window.js';
 process.stderr.on('error', () => undefined);
 
 // Packaged builds have no console, so their lines also go to a file in the app's own data folder
-// (see plans/logging.md). The folder is read on the first line, which is the earliest it is
+// (see plans/logging.md). Unpackaged runs write to `logs-dev` instead, so a developer's logs never
+// mix with an installed app's. The folder is read on the first line, which is the earliest it is
 // needed.
-let logFile: ((line: string) => void) | undefined;
-const writeToLogFile = (line: string): void => {
-  logFile ??= createRotatingFileWriter({
-    folder: join(app.getPath('userData'), 'logs'),
-    files: nodeLogFileOperations,
-  });
-  logFile(line);
+const logFileWriter = (fileName: string): ((line: string) => void) => {
+  let writer: ((line: string) => void) | undefined;
+  return (line) => {
+    writer ??= createRotatingFileWriter({
+      folder: join(app.getPath('userData'), app.isPackaged ? 'logs' : 'logs-dev'),
+      fileName,
+      files: nodeLogFileOperations,
+    });
+    writer(line);
+  };
 };
+
+// Development only: `FOLIO_LOG_UNREDACTED=1` adds raw details in a second line. A packaged build
+// ignores it (`parseUnredacted`, and `createLogDestinations` again), so no raw line is ever
+// written there.
+const destinations = createLogDestinations({
+  packaged: app.isPackaged,
+  unredacted: parseUnredacted(process.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
+  stderr: (line) => process.stderr.write(`${line}\n`),
+  file: logFileWriter,
+});
 
 const logger = createLogger({
   level: parseLogLevel(process.env['FOLIO_LOG_LEVEL']),
-  write: combineWriters(
-    (line) => process.stderr.write(`${line}\n`),
-    ...(app.isPackaged ? [writeToLogFile] : []),
-  ),
+  ...destinations,
   now: () => Date.now(),
   appFolder: app.getAppPath(),
-  // Development only: ignored in a packaged build. Packaged builds are the only ones that write
-  // the log file, so the raw details never reach a file (plans/logging.md, milestone 6).
-  unredacted: parseUnredacted(process.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
 });
 
 installErrorHandlers({

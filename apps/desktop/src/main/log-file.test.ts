@@ -67,6 +67,26 @@ describe('createRotatingFileWriter', () => {
     });
   });
 
+  describe('aCustomFileName', () => {
+    it('writesAndRotatesThatFileAndLeavesFolioLogAlone', () => {
+      const { files, contents } = memoryFiles();
+      const write = createRotatingFileWriter({
+        folder: FOLDER,
+        files,
+        fileName: 'folio-unredacted.log',
+        maxBytes: 10,
+        backups: 1,
+      });
+      write('aaaa');
+      write('bbbb');
+      write('cccc');
+      const custom = join(FOLDER, 'folio-unredacted.log');
+      expect(contents.get(custom)).toBe('cccc\n');
+      expect(contents.get(`${custom}.1`)).toBe('aaaa\nbbbb\n');
+      expect(contents.has(CURRENT)).toBe(false);
+    });
+  });
+
   describe('anExistingFile', () => {
     it('countsItsSizeTowardsTheLimit', () => {
       const { files, contents } = memoryFiles();
