@@ -30,6 +30,8 @@ npm run depcruise         # the boundary rules from the command line, for readab
 
 `npm run test:architecture` runs the boundary rules (dependency-cruiser, through its API, over the real tree and over deliberate-violation fixtures), the test placement, file naming and test-shape checks, and the licence check. On Linux the end-to-end tests need a display, for example `xvfb-run -a npm run test:e2e`, and a Linux machine whose Chromium sandbox is not configured gets `--no-sandbox` for those tests only; CI runs every kind on Windows, and the whole chain on macOS once a week. If Playwright's Chromium is somewhere unusual, set `FOLIO_CHROMIUM_PATH`. The packaged app can be driven only when started with `FOLIO_AUTOMATION=1` (AD-16).
 
+For development runs, copy [.env.example](.env.example) to `.env` in the folder you start the app from to set the logging variables (`FOLIO_LOG_LEVEL`, `FOLIO_LOG_UNREDACTED`) without exporting them each time. Only unpackaged runs read the file, only those two keys are used, and a variable already set in your shell wins. `.env` is ignored by git.
+
 ### Kinds of test
 
 There are four kinds of test, decided by the most expensive resource a test touches. Each runs on its own:

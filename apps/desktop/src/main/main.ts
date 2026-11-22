@@ -7,11 +7,13 @@
 // ------------------------------
 
 import { randomBytes } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, dialog, Menu } from 'electron';
 
 import { findRefusedSwitches } from './debug-guard.js';
+import { applyDevEnvFile } from './dev-env.js';
 import { installErrorHandlers } from './error-handlers.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
@@ -42,23 +44,42 @@ const logFileWriter = (fileName: string): ((line: string) => void) => {
   };
 };
 
+// Development only: a `.env` file in the folder the app was started from may set the logging
+// variables (`dev-env.ts` lists the only keys it may set). A packaged build never reads it, and the
+// real environment wins over the file.
+const devEnv = applyDevEnvFile({
+  packaged: app.isPackaged,
+  env: process.env,
+  readText: () => {
+    try {
+      return readFileSync(join(process.cwd(), '.env'), 'utf8');
+    } catch {
+      return undefined;
+    }
+  },
+});
+
 // Development only: `FOLIO_LOG_UNREDACTED=1` adds raw details in a second line. A packaged build
 // ignores it (`parseUnredacted`, and `createLogDestinations` again), so no raw line is ever
 // written there.
 const destinations = createLogDestinations({
   packaged: app.isPackaged,
-  unredacted: parseUnredacted(process.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
+  unredacted: parseUnredacted(devEnv.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
   stderr: (line) => process.stderr.write(`${line}\n`),
   file: logFileWriter,
 });
 
 const logger = createLogger({
-  level: parseLogLevel(process.env['FOLIO_LOG_LEVEL']),
+  level: parseLogLevel(devEnv.env['FOLIO_LOG_LEVEL']),
   ...destinations,
   now: () => Date.now(),
   appFolder: app.getAppPath(),
   sessionId: createSessionId((size) => randomBytes(size)),
 });
+
+if (devEnv.loaded.length > 0) {
+  logger.debug('dev env file applied', { keys: devEnv.loaded.join(',') });
+}
 
 installErrorHandlers({
   logger,
