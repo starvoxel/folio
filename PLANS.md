@@ -16,6 +16,7 @@ The high-level list of what is planned or under way. One line each; the detail l
 Foundations, in the order the risks suggest:
 
 - Electron foundations: privacy capture in CI, save, lock and backups, menus and file drops, the test layers, a read-only web check, and the household install experience. [plans/electron-foundations.md](plans/electron-foundations.md)
+- Budget file encryption: the whole file encrypted with AES-256-GCM, a recovery code, and migration of plain files. Before the save and backup work in the Electron foundations plan. [plans/file-encryption.md](plans/file-encryption.md)
 - UI regression suite: end-to-end scenarios on Windows and macOS, per-OS screenshot baselines, and Dependabot gating. [plans/regression-suite.md](plans/regression-suite.md)
 
 Product features, from the [product requirements](knowledge/product/month-end-review.md). None has a plan yet; each gets one before work starts.
@@ -34,7 +35,7 @@ Product features, from the [product requirements](knowledge/product/month-end-re
 - PDF statement import, reusing the import preview step.
 - Bulk tagging across categories.
 - Printable month summary and CSV export.
-- Optional file password and encryption.
+- An optional file passphrase, as a further key wrap on top of the encrypted file. [plans/file-encryption.md](plans/file-encryption.md)
 - Opt-in online merchant lookup, after research on which service, if any.
 - Linux desktop, best effort after Windows and macOS.
 - Read-only web app, after the desktop core; the web check in the Electron foundations plan decides how much of the renderer carries over.

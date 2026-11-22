@@ -55,6 +55,7 @@ key_files:
 | [AD-19](#ad-19-the-platform-is-one-interface-hostapi-and-filestore)           | The platform is one interface: HostApi and FileStore          | Accepted                            |
 | [AD-20](#ad-20-windows-and-macos-packaging-unsigned-no-auto-update)           | Windows and macOS packaging, unsigned, no auto-update         | Accepted                            |
 | [AD-21](#ad-21-layouts-are-chosen-by-form-factor-profile-and-width-class)     | Layouts are chosen by form-factor profile and width class     | Accepted                            |
+| [AD-22](#ad-22-the-budget-file-is-encrypted-as-a-whole-with-aes-256-gcm)      | The budget file is encrypted as a whole with AES-256-GCM      | Proposed                            |
 
 ## AD-1. The whole file lives in memory
 
@@ -78,7 +79,7 @@ Save writes a complete new file beside the original, flushes it, then atomically
 
 Filtering stays in memory: array methods over the model plus a few lookup indexes (by month, by account) that change sets keep up to date. An in-memory database was rejected because it would be a second copy of the data to keep in sync with every command, undo and redo.
 
-_Consequences._ There is no native dependency. Encryption, when it comes, is AES-GCM over the file's bytes, and attachments (PDF import) become zip entries. We write migration code by hand, and the file cannot be queried ad hoc outside the app.
+_Consequences._ There is no native dependency. Encryption is AES-256-GCM over the whole zip's bytes, as set out in AD-22, and attachments (PDF import) become zip entries. We write migration code by hand, and the file cannot be queried ad hoc outside the app.
 
 ## AD-3. One classification entry point, frozen at close
 
@@ -341,3 +342,25 @@ _Desktop layouts now._ Compact and medium: a drawer opened from a top bar button
 _Alternatives rejected._ Detecting the profile from the window width fails for a phone in landscape or a desktop window made narrow. Breakpoints inside screens spread layout across every page. CSS media queries alone cannot change the navigation form or the top bar's content.
 
 _Consequences._ At ultrawide widths the column stays centred with empty space beside it; using the width (a details panel beside a table, say) is for screens that have such content. The input style is fixed at mount; a host whose input can change at run time needs a change subscription, added with the first such host. A hover-free rule exists in `interactionFor` but no control uses it yet. The integration matrix covers every profile at every width class, with device emulation for tablet and phone, and must get a table per profile once a profile has its own entries.
+
+## AD-22. The budget file is encrypted as a whole with AES-256-GCM
+
+_Context._ A budget file holds a household's complete finances and is meant to sit in synced folders, be copied to USB sticks and be backed up (AD-2, AD-12). As a plain zip, anyone who gets a copy reads everything. The PRD listed an optional file password as "Later". This decision replaces it with encryption that is always on and needs no password, because the household is not technical and a forgotten password would be the likeliest way to lose the data.
+
+_Decision._ The zip of AD-2 is built in memory as before and then encrypted as one unit with AES-256-GCM from Node's built-in `node:crypto`. No dependency is added, and the zip itself carries no encryption.
+
+- _Layout._ Magic, format version, mode, file id, key id, KDF id and parameters, recovery salt, recovery wrap nonce, wrapped file key, content nonce, then ciphertext and a 16-byte tag. Every header byte is authenticated as additional data: the wrapped key by the bytes before it, the content by the whole header. Unknown versions, modes and KDF ids are refused, and sizes are checked before anything is allocated.
+- _Modes._ Mode 1 is encrypted. Mode 0 is the header followed by a plain zip, written only by unpackaged (dev) builds so a developer can inspect files. A packaged build never writes plaintext and a save never lowers an encrypted file to plaintext. A packaged build that opens a plain file (mode 0, or a bare zip from before this decision) warns, then re-saves it encrypted after a verified conversion. A plaintext file whose id or path was seen encrypted on this computer is refused, because plaintext has no integrity check and a swapped-in file must not be adopted.
+- _Keys._ A random 32-byte file key encrypts the zip. It is wrapped once by a recovery code (128 random bits, Crockford base32, shown a single time, turned into a key with HKDF-SHA-256), and the wrapped copy is in the file. Each computer also keeps the file key wrapped by Electron `safeStorage`, in a machine key store in the user-data folder (AD-11), indexed by file id. The safeStorage wrap is not in the file, because it opens only on the computer and OS account that made it. A computer without the key asks for the recovery code once. "Replace recovery code" makes a new file key and a new code, since a new code alone would leave the old one opening new saves.
+- _Saves._ A fresh random 96-bit nonce on every save. The zip never reaches the disk unencrypted. The file is written to a temporary file in the same folder, flushed, decrypted again and compared, then renamed over the original. Backups are byte copies of the last file written, so they have the same encryption and key.
+- _Placement._ The codec and key store live in the main process behind `FileStore` and `HostApi` (AD-19), because the core imports no Node (AD-14). The core sees plain zip bytes, and the renderer never sees a key. Randomness and keys are passed in, so tests use a fixed test key. A developer script runs the same codec to decrypt or encrypt files for analysis. The test key and the script are kept out of the packaged app by a check.
+
+_Alternatives rejected._
+
+- _Encryption inside the zip._ The built-in zip tooling (`fflate`) has none, and a library would be a new dependency. The classic zip scheme is weak, and the AES variant leaves part names and sizes readable. Encrypting the whole zip hides the part layout too.
+- _A user password as the main key._ The household would have to remember it, and a lost password loses the file. A random key with a recovery code puts the burden on one printed sheet. A passphrase can be added later as another wrap in the header, as a new format version.
+- _The safeStorage wrap inside the file._ It cannot be opened on another computer, so the file would be unreadable anywhere but where it was made.
+
+_Consequences._ A copy of the file is useless without a computer that holds the key or the recovery code. A lost code, with no computer that still has the key, loses the data, and backups do not help because they share the key. Existing tools can no longer unzip a budget file, so a developer script replaces that. The file name, its size and its save times are still visible to a sync provider. Every other computer in the household asks for the code the first time it opens the file. A shared OS account gets no protection, since the key store opens for whoever is logged in, and neither does malware running as the same user. A save counter against rollback to an older valid copy, a passphrase, and locking after idle time are not in this decision. Details, milestones and open questions are in [plans/file-encryption.md](../../plans/file-encryption.md).
+
+_Revisit when_ a passphrase is wanted, the read-only web build needs to decrypt (HKDF and AES-GCM both exist in WebCrypto, which is why HKDF was chosen), a server backend arrives (AD-19), or the shared-account case matters to the household.
