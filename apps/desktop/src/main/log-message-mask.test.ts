@@ -9,7 +9,7 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 
-import { maskMessage } from './log-message-mask.js';
+import { maskMessage, maskMessageWithReport } from './log-message-mask.js';
 import { LOG_VOCABULARY, POSITION_WORDS } from './log-vocabulary.js';
 
 describe('maskMessage', () => {
@@ -278,6 +278,28 @@ describe('maskMessage', () => {
         kept += reviewed.match(/[\p{L}]+/gu)?.length ?? 0;
       }
       expect(kept / total).toBeGreaterThanOrEqual(0.8);
+    });
+  });
+});
+
+describe('maskMessageWithReport', () => {
+  describe('aMessageWithWordsOutsideTheVocabulary', () => {
+    it('reportsEachHiddenWordOnceInLowerCase', () => {
+      const report = maskMessageWithReport('Cannot parse Budget budget and Budget.csv');
+      expect(report.hiddenWords).toEqual(['parse', 'budget', 'csv']);
+      expect(report.masked).toBe(maskMessage('Cannot parse Budget budget and Budget.csv'));
+    });
+  });
+
+  describe('wordsInsideQuotedText', () => {
+    it('areNotReported', () => {
+      expect(maskMessageWithReport('bad "Acme Rent" value').hiddenWords).toEqual([]);
+    });
+  });
+
+  describe('aMessageWithOnlyVocabularyWords', () => {
+    it('reportsNothing', () => {
+      expect(maskMessageWithReport('Unexpected end of JSON input').hiddenWords).toEqual([]);
     });
   });
 });

@@ -2,7 +2,7 @@
 
 | Field       | Value                                |
 | ----------- | ------------------------------------ |
-| Status      | In progress (milestones 1 to 5 done) |
+| Status      | In progress (milestones 1 to 6 done) |
 | Approved by |                                      |
 | Created     | 2026-11-16                           |
 
@@ -12,8 +12,8 @@ Make the main-process logger good enough to debug a failure on a household machi
 
 ## Scope
 
-- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark, and masked third-party messages.
-- In, next: a developer-only unredacted switch (milestone 6), then saving diagnostic details (milestone 7, last): raw details kept in memory only and saved to a file the person chooses.
+- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark, masked third-party messages and the developer-only unredacted switch.
+- In, next: saving diagnostic details (milestone 7, last): raw details kept in memory only and saved to a file the person chooses.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -76,9 +76,10 @@ Why: the cheapest way to keep a useful message free of data is to never put the 
 - Acceptance criteria: a test set of messages that hold data (amounts, account numbers, names, merchants, file names, emails, IBANs) in several shapes, none of whose values survive; `TypeError` and `ENOENT` style messages keep their structure.
 - Verified by: the unit run.
 
-### 6. Developer-only unredacted switch
+### 6. Developer-only unredacted switch (done)
 
 - Does: `FOLIO_LOG_UNREDACTED=1` writes plain messages and raw stacks to standard error, and next to each masked message the raw one and the list of words the masker hid, so the word list can be grown from real use. The code ignores the variable in packaged builds, so a household machine cannot be set to write personal data in the clear. The output goes to the terminal of an unpackaged run only: the log file exists only in packaged builds, so nothing is stored. For packaged builds milestone 7 is the only way to see raw details; milestone 6 stays because a developer running an unpackaged build needs the plain text in the terminal.
+- Implementation: `parseUnredacted(env value, packaged)` is true only for an unpackaged run with the variable set to exactly `1`; `main.ts` passes the result to the logger. With it on, a logged error carries `error.raw` (the raw message of a non-`FolioError`, the words the mask hid, and the raw stack with its real paths, clipped at 2,000 and 8,000 characters), the same for every cause, and `privateField` values are written as they are. Everything else about the line is unchanged, so the masked and scrubbed forms are still there to compare.
 - Acceptance criteria: a test that the switch works unpackaged and is ignored when packaged.
 - Verified by: the unit run.
 

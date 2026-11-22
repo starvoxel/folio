@@ -14,6 +14,7 @@ import {
   combineWriters,
   createLogger,
   parseLogLevel,
+  parseUnredacted,
   privateField,
   type LogFields,
   type LogLevel,
@@ -27,6 +28,7 @@ import {
 function collect(
   level: LogLevel,
   appFolder?: string,
+  unredacted = false,
 ): {
   logger: ReturnType<typeof createLogger>;
   lines: Record<string, unknown>[];
@@ -42,6 +44,7 @@ function collect(
     },
     now: () => Date.UTC(2026, 10, 13, 12, 0, 0),
     ...(appFolder === undefined ? {} : { appFolder }),
+    unredacted,
   });
   return { logger, lines, raw };
 }
@@ -556,6 +559,115 @@ describe('combineWriters', () => {
         write('x');
       }).not.toThrow();
       expect(seen).toEqual(['first x', 'third x']);
+    });
+  });
+});
+
+describe('logError', () => {
+  describe('theUnredactedSwitchOff', () => {
+    it('writesNoRawDetailsAndKeepsPrivateFieldsHidden', () => {
+      const { logger, lines, raw } = collect('info', undefined, false);
+      const error = errorWithStack('TypeError', 'balance 5000 for Acme', [
+        '    at f (/Users/jo smith/x.js:1:2)',
+      ]);
+      logger.logError('failed', error, { value: privateField('secret') });
+      expect(lines[0]?.['error']).not.toHaveProperty('raw');
+      expect(lines[0]?.['fields']).toEqual({ value: '[private]' });
+      expect(raw[0]).not.toContain('5000');
+      expect(raw[0]).not.toContain('jo smith');
+      expect(raw[0]).not.toContain('secret');
+    });
+  });
+
+  describe('theUnredactedSwitchOn', () => {
+    it('writesTheRawMessageTheRawStackAndTheHiddenWords', () => {
+      const { logger, lines } = collect('info', undefined, true);
+      const error = errorWithStack('TypeError', 'cannot parse "Rent 1200" in budget.csv', [
+        '    at f (/Users/jo smith/x.js:1:2)',
+      ]);
+      logger.logError('failed', error);
+      const logged = lines[0]?.['error'] as {
+        maskedMessage: string;
+        stack: string[];
+        raw: { message: string; hiddenWords: string[]; stack: string };
+      };
+      expect(logged.maskedMessage).toBe('cannot <?> "<?>" in <?>');
+      expect(logged.stack).toEqual(['at f (x.js:1:2)']);
+      expect(logged.raw.message).toBe('cannot parse "Rent 1200" in budget.csv');
+      expect(logged.raw.hiddenWords).toEqual(['parse', 'budget', 'csv']);
+      expect(logged.raw.stack).toContain('/Users/jo smith/x.js:1:2');
+    });
+
+    it('writesPrivateFieldValuesAsTheyAre', () => {
+      const { logger, lines } = collect('info', undefined, true);
+      logger.info('imported', {
+        payee: privateField('Acme Bank'),
+        amount: privateField(120000),
+        flag: privateField(false),
+      });
+      expect(lines[0]?.['fields']).toEqual({ payee: 'Acme Bank', amount: 120000, flag: false });
+    });
+
+    it('writesTheRawDetailsOfEveryCause', () => {
+      const { logger, lines } = collect('info', undefined, true);
+      const cause = errorWithStack('SyntaxError', 'bad "Acme"', ['    at p (a.js:1:1)']);
+      logger.logError('failed', errorWithStack('Error', 'wrapped 5000', [], cause));
+      const logged = lines[0]?.['error'] as {
+        raw: { message: string };
+        cause: { raw: { message: string; stack: string } };
+      };
+      expect(logged.raw.message).toBe('wrapped 5000');
+      expect(logged.cause.raw.message).toBe('bad "Acme"');
+      expect(logged.cause.raw.stack).toContain('at p (a.js:1:1)');
+    });
+
+    it('writesNoRawMessageForAFolioErrorBecauseItsMessageIsAlreadyPlain', () => {
+      const { logger, lines } = collect('info', undefined, true);
+      logger.logError('failed', new FolioError('row 4 is not an amount'));
+      const logged = lines[0]?.['error'] as { message: string; raw: Record<string, unknown> };
+      expect(logged.message).toBe('row 4 is not an amount');
+      expect(logged.raw).not.toHaveProperty('message');
+      expect(logged.raw['stack']).toEqual(expect.any(String));
+    });
+
+    it('clipsAVeryLongRawMessageAndStack', () => {
+      const { logger, lines } = collect('info', undefined, true);
+      const frames = Array.from({ length: 600 }, (_, index) => `    at f${index} (a.js:1:1)`);
+      logger.logError('failed', errorWithStack('Error', 'm'.repeat(5000), frames));
+      const raw = (lines[0]?.['error'] as { raw: { message: string; stack: string } }).raw;
+      expect(raw.message.length).toBeLessThan(2010);
+      expect(raw.stack.length).toBeLessThan(8010);
+    });
+
+    it('writesAThrownNonErrorWithNoRawContent', () => {
+      const { logger, lines, raw } = collect('info', undefined, true);
+      logger.logError('failed', 'secret balance 100');
+      expect(lines[0]?.['error']).toEqual({ name: 'NonError', kind: 'string', stack: [] });
+      expect(raw[0]).not.toContain('secret');
+    });
+  });
+});
+
+describe('parseUnredacted', () => {
+  describe('anUnpackagedRunWithTheVariableSetToOne', () => {
+    it('returnsTrue', () => {
+      expect(parseUnredacted('1', false)).toBe(true);
+    });
+  });
+
+  describe('aPackagedBuildWithTheVariableSetToOne', () => {
+    it('returnsFalse', () => {
+      expect(parseUnredacted('1', true)).toBe(false);
+    });
+  });
+
+  describe('missingOrAnyOtherValue', () => {
+    it('returnsFalse', () => {
+      expect(parseUnredacted(undefined, false)).toBe(false);
+      expect(parseUnredacted('', false)).toBe(false);
+      expect(parseUnredacted('true', false)).toBe(false);
+      expect(parseUnredacted('0', false)).toBe(false);
+      expect(parseUnredacted(' 1 ', false)).toBe(false);
     });
   });
 });

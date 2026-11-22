@@ -15,7 +15,7 @@ import { installErrorHandlers } from './error-handlers.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
 import { createRotatingFileWriter, nodeLogFileOperations } from './log-file.js';
-import { combineWriters, createLogger, parseLogLevel } from './logger.js';
+import { combineWriters, createLogger, parseLogLevel, parseUnredacted } from './logger.js';
 import { registerAppProtocol, registerAppScheme } from './protocol.js';
 import { createSettingsStore } from './settings-store.js';
 import { createMainWindow } from './window.js';
@@ -44,6 +44,9 @@ const logger = createLogger({
   ),
   now: () => Date.now(),
   appFolder: app.getAppPath(),
+  // Development only: ignored in a packaged build. Packaged builds are the only ones that write
+  // the log file, so the raw details never reach a file (plans/logging.md, milestone 6).
+  unredacted: parseUnredacted(process.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
 });
 
 installErrorHandlers({

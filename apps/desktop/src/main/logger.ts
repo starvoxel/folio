@@ -8,7 +8,7 @@
 
 import { FolioError } from '@folio/core';
 
-import { maskMessage } from './log-message-mask.js';
+import { maskMessageWithReport } from './log-message-mask.js';
 import { scrubStack } from './log-stack.js';
 
 /** How serious a log line is, from most to least verbose. */
@@ -61,6 +61,12 @@ export interface LoggedError {
    * numbers are replaced by `<?>`. A different key from `message`, so the two cannot be confused.
    */
   readonly maskedMessage?: string;
+  /**
+   * The raw details, only when the development-only unredacted switch is on: the raw message of an
+   * error that is not a `FolioError`, the raw stack and the words the mask hid. Never present in a
+   * packaged build.
+   */
+  readonly raw?: RawErrorDetails;
   /** The error's class name when it looks like an identifier, else `Error`; `NonError` for a thrown value that was not an error. */
   readonly name: string;
   /** The `typeof` of a thrown value that was not an error. */
@@ -75,6 +81,16 @@ export interface LoggedError {
   readonly cause?: LoggedError;
   /** True when the cause chain went deeper than the limit and the rest was left out. */
   readonly causeOmitted?: true;
+}
+
+/** What the unredacted output adds to a logged error. */
+export interface RawErrorDetails {
+  /** The raw message, for an error that is not a `FolioError` (whose message is already plain). */
+  readonly message?: string;
+  /** The words of the message that the mask hid, so the word list can be grown. */
+  readonly hiddenWords?: readonly string[];
+  /** The stack as the error carries it, with its real paths. */
+  readonly stack: string;
 }
 
 /** The main process's logger. */
@@ -106,6 +122,12 @@ export interface LoggerOptions {
    * its file name (see `scrubPath`).
    */
   readonly appFolder?: string;
+  /**
+   * Development only: write raw messages, raw stacks and private field values next to the masked
+   * ones. Get it from `parseUnredacted`, which refuses it in a packaged build. The lines then go
+   * to the terminal of an unpackaged run, which has no log file.
+   */
+  readonly unredacted?: boolean;
 }
 
 const ORDER: Readonly<Record<LogLevel, number>> = { debug: 10, info: 20, warn: 30, error: 40 };
@@ -117,6 +139,10 @@ const MAX_FIELD_LENGTH = 120;
 // Stacks have their own limits, so the 120 characters of a field never cut a frame in half. Frame
 // length and count are in log-stack.ts. A cause chain of more than a few links is a loop or noise.
 const MAX_CAUSE_DEPTH = 3;
+// The raw message and stack of the unredacted output get their own limits, so one huge error does
+// not make a line unreadable. Judgement, not measured.
+const MAX_RAW_MESSAGE_LENGTH = 2000;
+const MAX_RAW_STACK_LENGTH = 8000;
 const ERROR_NAME = /^[A-Za-z_$][\w$]{0,59}$/u;
 const ERROR_CODE = /^[A-Z][A-Z0-9_]{1,39}$/u;
 // Written when a line cannot be built or written. It is fixed text, with no time, because the time
@@ -134,6 +160,18 @@ export function parseLogLevel(text: string | undefined): LogLevel {
 }
 
 /**
+ * Decide whether the development-only unredacted output is on. It needs `FOLIO_LOG_UNREDACTED=1`
+ * and an unpackaged app, so a household machine can never be set to write personal data in the
+ * clear, whatever its environment holds.
+ * @param text - The value of the environment variable, or undefined when unset.
+ * @param packaged - Whether this is a packaged build.
+ * @returns True only for an unpackaged run with the variable set to `1`.
+ */
+export function parseUnredacted(text: string | undefined, packaged: boolean): boolean {
+  return !packaged && text === '1';
+}
+
+/**
  * Shorten text so one log line stays small.
  * @param text - The text.
  * @param limit - The longest allowed length.
@@ -146,9 +184,13 @@ function clip(text: string, limit: number): string {
 /**
  * Turn the fields of a line into safe values: plain values only, strings clipped.
  * @param fields - The fields given by the caller, which may break the type at run time.
+ * @param unredacted - Whether private values are written as they are (development only).
  * @returns The cleaned fields.
  */
-function cleanFields(fields: LogFields | undefined): Record<string, string | number | boolean> {
+function cleanFields(
+  fields: LogFields | undefined,
+  unredacted: boolean,
+): Record<string, string | number | boolean> {
   const cleaned: Record<string, string | number | boolean> = {};
   for (const [key, value] of Object.entries(fields ?? {})) {
     // The value may break its type at run time, so check what it really is.
@@ -158,7 +200,14 @@ function cleanFields(fields: LogFields | undefined): Record<string, string | num
     } else if (typeof raw === 'number' || typeof raw === 'boolean') {
       cleaned[key] = raw;
     } else {
-      cleaned[key] = raw instanceof PrivateField ? '[private]' : '[omitted]';
+      cleaned[key] =
+        raw instanceof PrivateField
+          ? unredacted
+            ? typeof raw.value === 'string'
+              ? clip(raw.value, MAX_FIELD_LENGTH)
+              : raw.value
+            : '[private]'
+          : '[omitted]';
     }
   }
   return cleaned;
@@ -184,9 +233,15 @@ function read<Value>(get: () => Value): Value | undefined {
  * @param value - The thrown value.
  * @param appFolder - The folder the app is installed in, or undefined when unknown.
  * @param depth - How many causes deep this value is.
+ * @param unredacted - Whether to add the raw message, stack and hidden words (development only).
  * @returns The description.
  */
-function describeError(value: unknown, appFolder: string | undefined, depth: number): LoggedError {
+function describeError(
+  value: unknown,
+  appFolder: string | undefined,
+  depth: number,
+  unredacted: boolean,
+): LoggedError {
   const stack =
     typeof value === 'object' && value !== null ? read(() => (value as Error).stack) : undefined;
   if (typeof stack !== 'string' && !(value instanceof Error)) {
@@ -199,21 +254,38 @@ function describeError(value: unknown, appFolder: string | undefined, depth: num
   const code = read(() => (error as { code?: unknown }).code);
   const cause = read(() => error.cause);
   const scrubbed = typeof stack === 'string' ? scrubStack(stack, appFolder) : undefined;
+  const report =
+    typeof message === 'string' && message !== '' && !isFolioError
+      ? maskMessageWithReport(message)
+      : undefined;
   return {
     name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
     ...(typeof message !== 'string' || message === ''
       ? {}
       : isFolioError
         ? { message: clip(message, MAX_MESSAGE_LENGTH) }
-        : { maskedMessage: clip(maskMessage(message), MAX_MESSAGE_LENGTH) }),
+        : { maskedMessage: clip(report?.masked ?? '', MAX_MESSAGE_LENGTH) }),
     ...(typeof code === 'string' && ERROR_CODE.test(code) ? { code } : {}),
     stack: scrubbed?.frames ?? [],
     ...(scrubbed?.truncated === true ? { truncated: true as const } : {}),
+    ...(unredacted
+      ? {
+          raw: {
+            ...(report === undefined || typeof message !== 'string'
+              ? {}
+              : {
+                  message: clip(message, MAX_RAW_MESSAGE_LENGTH),
+                  hiddenWords: report.hiddenWords,
+                }),
+            stack: typeof stack === 'string' ? clip(stack, MAX_RAW_STACK_LENGTH) : '',
+          },
+        }
+      : {}),
     ...(cause === undefined
       ? {}
       : depth >= MAX_CAUSE_DEPTH
         ? { causeOmitted: true as const }
-        : { cause: describeError(cause, appFolder, depth + 1) }),
+        : { cause: describeError(cause, appFolder, depth + 1, unredacted) }),
   };
 }
 
@@ -259,10 +331,19 @@ export function createLogger(options: LoggerOptions): Logger {
           time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
           level,
           message: clip(message, MAX_MESSAGE_LENGTH),
-          ...(fields === undefined ? {} : { fields: cleanFields(fields) }),
+          ...(fields === undefined
+            ? {}
+            : { fields: cleanFields(fields, options.unredacted === true) }),
           ...(error === undefined
             ? {}
-            : { error: describeError(error.value, options.appFolder, 0) }),
+            : {
+                error: describeError(
+                  error.value,
+                  options.appFolder,
+                  0,
+                  options.unredacted === true,
+                ),
+              }),
         }),
       );
     } catch {
