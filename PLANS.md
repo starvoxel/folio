@@ -7,7 +7,7 @@ The high-level list of what is planned or under way. One line each; the detail l
 - Diagnostic logging, one milestone per branch and pull request. [plans/logging.md](plans/logging.md)
   - 1 to 3, done: safe stack traces, a log file, uncaught errors.
   - 4, done: `FolioError` messages and private fields.
-  - 5: masked third-party messages.
+  - 5, done: masked third-party messages.
   - 6: a developer-only unredacted switch.
   - 7, last and optional: encrypted details (age), per install.
 
@@ -42,6 +42,7 @@ Product features, from the [product requirements](knowledge/product/month-end-re
 - Phone app, not required.
 - Performance and stress testing, a separate initiative. [knowledge/research/performance-and-e2e-testing.md](knowledge/research/performance-and-e2e-testing.md)
 - Logging: a Settings toggle for protected diagnostic details, in place of the `FOLIO_LOG_SEAL_KEY` variable.
+- Logging: boundary wrappers for third-party failures (`JSON.parse`, file reads, zip, schema) and a lint rule for `FolioError`.
 - Logging: an in-app "open logs" or "copy diagnostics" command.
 
 ## Not planned

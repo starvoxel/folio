@@ -2,7 +2,7 @@
 
 | Field       | Value                                |
 | ----------- | ------------------------------------ |
-| Status      | In progress (milestones 1 to 4 done) |
+| Status      | In progress (milestones 1 to 5 done) |
 | Approved by |                                      |
 | Created     | 2026-11-16                           |
 
@@ -12,8 +12,8 @@ Make the main-process logger good enough to debug a failure on a household machi
 
 ## Scope
 
-- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark.
-- In, next: masked third-party messages and a developer-only unredacted switch (milestones 5 and 6). Sealed details that only the owner can decrypt are milestone 7, last and optional.
+- In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark, and masked third-party messages.
+- In, next: a developer-only unredacted switch (milestone 6). Sealed details that only the owner can decrypt are milestone 7, last and optional.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -70,15 +70,15 @@ Why: the cheapest way to keep a useful message free of data is to never put the 
 - Acceptance criteria: unit tests that a `FolioError` message is written as is and a third-party cause is not; a private field never appears in a line; existing field behaviour is unchanged.
 - Verified by: the unit run; AD-10 and this plan updated for the message rule. Whether the message standard also goes in `project-standards.md` is Jeremy's choice (not a stack rule).
 
-### 5. Masked third-party messages
+### 5. Masked third-party messages (done)
 
-- Does: vocabulary masking for every message that is not a `FolioError`'s. Quoted text is masked, a word is kept only if it is in a fixed list of error words, everything else becomes `<?>`, and a number is kept only after `position`, `line`, `column` or `index`. The masker fails closed: a word it does not know is hidden, not shown.
+- Does: vocabulary masking for every message that is not a `FolioError`'s. Quoted text is masked, a word is kept only if it is in a fixed list of error words, everything else becomes `<?>`, and a number is kept only after `position`, `line`, `column` or `index`. The masker fails closed: a word it does not know is hidden, not shown. Neighbouring masks merge into one, so even the number of hidden words is not shown; input is cut at 1000 characters before it is looked at. The result is written as `error.maskedMessage`, a different key from the `message` of a `FolioError`, so the two cannot be confused. The word list is `log-vocabulary.ts`; adding a word is a review item, and a test keeps names, brands and finance terms out of it. The word list was grown from 45 recorded Node and V8 messages (`RECORDED_MESSAGES` in the test, with the reviewed masked text for each, so any change to the masker or the list shows up as a diff to review); 80% of their words are kept. Variable, property and module names are never added, because they can come from data (`reading 'Acme'` when an object is keyed by payee). Known limitation: a message whose quoted text itself contains quotes (the newer `JSON.parse` message) is masked more heavily than needed, which is safe but loses detail; known-template extraction is in Later.
 - Acceptance criteria: a test set of messages that hold data (amounts, account numbers, names, merchants, file names, emails, IBANs) in several shapes, none of whose values survive; `TypeError` and `ENOENT` style messages keep their structure.
 - Verified by: the unit run.
 
 ### 6. Developer-only unredacted switch
 
-- Does: `FOLIO_LOG_UNREDACTED=1` writes plain messages and raw stacks to the log. The code ignores the variable in packaged builds, so a household machine cannot be set to write personal data in the clear.
+- Does: `FOLIO_LOG_UNREDACTED=1` writes plain messages and raw stacks to the log, and next to each masked message the raw one and the list of words the masker hid, so the word list can be grown from real use. The code ignores the variable in packaged builds, so a household machine cannot be set to write personal data in the clear.
 - Acceptance criteria: a test that the switch works unpackaged and is ignored when packaged.
 - Verified by: the unit run.
 
@@ -99,17 +99,18 @@ Do this only if milestones 4 to 6 leave failures that cannot be debugged without
 
 Recorded so they are not lost. None is scheduled. The ones that are plans of their own (the Settings toggle, an in-app logs command) are also listed in [PLANS.md](../PLANS.md).
 
-| Item                                                                                                                                                     | Why it waits                                                                                               |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| A Settings toggle ("include protected details in diagnostics") in place of the `FOLIO_LOG_SEAL_KEY` variable                                             | Touches the settings schema (AD-11) and the UI; the household is not technical, so this is the real switch |
-| Known-template extraction for third-party errors (rebuild the message of a `TypeError`, a Node system error or a `JSON.parse` error from its safe parts) | Only if vocabulary masking loses too much                                                                  |
-| A message hash for grouping repeated failures (needs a random per-install salt, because a hash of a short value can be guessed)                          | Not needed until repeats are hard to count                                                                 |
-| Source maps for the main bundle (decided: wait)                                                                                                          | Packaging work                                                                                             |
-| `AggregateError.errors`, `Error.stackTraceLimit`, async stack depth                                                                                      | Ten frames is enough for now                                                                               |
-| An end-to-end check that a packaged app writes `logs/folio.log`                                                                                          | Needs a packaged run                                                                                       |
-| An "open logs folder" or "copy diagnostics" command in the app                                                                                           | Needs UI and the menu plan                                                                                 |
-| Logging in the renderer and the preload script                                                                                                           | Needs a bridge and its own privacy review                                                                  |
-| A log file in unpackaged runs                                                                                                                            | A developer has the terminal                                                                               |
+| Item                                                                                                                                                                                                                                                                                                        | Why it waits                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| A Settings toggle ("include protected details in diagnostics") in place of the `FOLIO_LOG_SEAL_KEY` variable                                                                                                                                                                                                | Touches the settings schema (AD-11) and the UI; the household is not technical, so this is the real switch |
+| Known-template extraction for third-party errors (rebuild the message of a `TypeError`, a Node system error or a `JSON.parse` error from its safe parts)                                                                                                                                                    | Only if vocabulary masking loses too much                                                                  |
+| A message hash for grouping repeated failures (needs a random per-install salt, because a hash of a short value can be guessed)                                                                                                                                                                             | Not needed until repeats are hard to count                                                                 |
+| Boundary wrappers for the third-party calls that fail often (`JSON.parse`, file reads, zip, schema validation): each turns the failure into a `FolioError` with the safe parts (position, error code, operation), plus an ESLint rule against `throw new Error(` in app code so own errors use `FolioError` | Belongs with the first code that parses files; better detail than any masker                               |
+| Source maps for the main bundle (decided: wait)                                                                                                                                                                                                                                                             | Packaging work                                                                                             |
+| `AggregateError.errors`, `Error.stackTraceLimit`, async stack depth                                                                                                                                                                                                                                         | Ten frames is enough for now                                                                               |
+| An end-to-end check that a packaged app writes `logs/folio.log`                                                                                                                                                                                                                                             | Needs a packaged run                                                                                       |
+| An "open logs folder" or "copy diagnostics" command in the app                                                                                                                                                                                                                                              | Needs UI and the menu plan                                                                                 |
+| Logging in the renderer and the preload script                                                                                                                                                                                                                                                              | Needs a bridge and its own privacy review                                                                  |
+| A log file in unpackaged runs                                                                                                                                                                                                                                                                               | A developer has the terminal                                                                               |
 
 ## Requirements
 
@@ -128,6 +129,7 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 - Source maps for the main bundle wait for the packaging work (Jeremy, 2026-11-19).
 - The message standard lives in AD-10 and this plan, not in `project-standards.md` (Jeremy, 2026-11-19).
 - The end-to-end check of `logs/folio.log` stays in Later (Jeremy, 2026-11-19).
+- If a bug investigation stalls on hidden text, the list is not widened and no identifier mode is added: raise a `FolioError` with ids at that spot instead, and if it happens twice, bring milestone 7 forward (Jeremy and Engineer, 2026-11-21).
 - The master secret is stored in Bitwarden Secrets Manager (Jeremy, 2026-11-19). The key script reads it from an environment variable supplied by the secret manager's command-line tool, and never writes it to a file, a log or the repository. It is not given to CI.
 - Order: positions-not-values and per-field privacy first, masking second, the developer switch third, sealing last (Jeremy, 2026-11-19).
 - Messages: own errors as written, third-party messages masked by vocabulary, known-template extraction left for later (Jeremy and Engineer, 2026-11-17).

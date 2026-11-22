@@ -147,6 +147,7 @@ describe('logError', () => {
           fields: { step: 'parse' },
           error: {
             name: 'RangeError',
+            maskedMessage: 'bad <?> "<?>" for <?>',
             stack: [
               'at parseRow (<app>/dist/main.cjs:100:7)',
               'at async (helper.js:5:1)',
@@ -206,7 +207,12 @@ describe('logError', () => {
         },
       );
       logger.logError('read failed', error);
-      expect(lines[0]?.['error']).toEqual({ name: 'Error', code: 'ENOENT', stack: [] });
+      expect(lines[0]?.['error']).toEqual({
+        name: 'Error',
+        maskedMessage: "ENOENT: no such file '<?>'",
+        code: 'ENOENT',
+        stack: [],
+      });
       expect(raw[0]).not.toContain('a.csv');
     });
   });
@@ -218,7 +224,7 @@ describe('logError', () => {
         code: 'owes 1200 to Bob',
       });
       logger.logError('failed', error);
-      expect(lines[0]?.['error']).toEqual({ name: 'Error', stack: [] });
+      expect(lines[0]?.['error']).toEqual({ name: 'Error', maskedMessage: '<?>', stack: [] });
     });
   });
 
@@ -283,11 +289,17 @@ describe('logError', () => {
       logger.logError('failed', top);
       expect(lines[0]?.['error']).toEqual({
         name: 'CommandError',
+        maskedMessage: '<?>',
         stack: ['at c (c.js:3:3)'],
         cause: {
           name: 'ImportError',
+          maskedMessage: '<?>',
           stack: ['at b (b.js:2:2)'],
-          cause: { name: 'ParseError', stack: ['at x.js:1:1'] },
+          cause: {
+            name: 'ParseError',
+            maskedMessage: 'value "<?>" invalid',
+            stack: ['at x.js:1:1'],
+          },
         },
       });
       expect(raw[0]).not.toContain('7,500');
@@ -305,11 +317,18 @@ describe('logError', () => {
       logger.logError('failed', error);
       expect(lines[0]?.['error']).toEqual({
         name: 'E0',
+        maskedMessage: '<?>',
         stack: [],
         cause: {
           name: 'E1',
+          maskedMessage: '<?>',
           stack: [],
-          cause: { name: 'E2', stack: [], cause: { name: 'E3', stack: [], causeOmitted: true } },
+          cause: {
+            name: 'E2',
+            maskedMessage: '<?>',
+            stack: [],
+            cause: { name: 'E3', maskedMessage: '<?>', stack: [], causeOmitted: true },
+          },
         },
       });
     });
@@ -350,7 +369,7 @@ describe('logError', () => {
         });
       }
       logger.logError('failed', error);
-      expect(lines[0]?.['error']).toEqual({ name: 'Error', stack: [] });
+      expect(lines[0]?.['error']).toEqual({ name: 'Error', maskedMessage: '<?>', stack: [] });
     });
   });
 
@@ -397,7 +416,11 @@ describe('logError', () => {
       logger.logError('failed', new FolioError('could not read row 4', { cause }));
       const logged = lines[0]?.['error'] as { message: string; cause: Record<string, unknown> };
       expect(logged.message).toBe('could not read row 4');
-      expect(logged.cause).toEqual({ name: 'SyntaxError', stack: ['at parse (a.js:1:1)'] });
+      expect(logged.cause).toEqual({
+        name: 'SyntaxError',
+        maskedMessage: 'Unexpected "<?>"',
+        stack: ['at parse (a.js:1:1)'],
+      });
       expect(raw[0]).not.toContain('Acme');
     });
   });
