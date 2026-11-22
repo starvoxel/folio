@@ -6,6 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { randomBytes } from 'node:crypto';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, dialog, Menu } from 'electron';
@@ -16,7 +17,7 @@ import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
 import { createRotatingFileWriter, nodeLogFileOperations } from './log-file.js';
 import { createLogDestinations } from './log-destinations.js';
-import { createLogger, parseLogLevel, parseUnredacted } from './logger.js';
+import { createLogger, createSessionId, parseLogLevel, parseUnredacted } from './logger.js';
 import { registerAppProtocol, registerAppScheme } from './protocol.js';
 import { createSettingsStore } from './settings-store.js';
 import { createMainWindow } from './window.js';
@@ -56,6 +57,7 @@ const logger = createLogger({
   ...destinations,
   now: () => Date.now(),
   appFolder: app.getAppPath(),
+  sessionId: createSessionId((size) => randomBytes(size)),
 });
 
 installErrorHandlers({

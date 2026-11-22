@@ -61,12 +61,6 @@ export interface LoggedError {
    * numbers are replaced by `<?>`. A different key from `message`, so the two cannot be confused.
    */
   readonly maskedMessage?: string;
-  /**
-   * The raw details, only on the unredacted line of the development-only switch: the raw message of an
-   * error that is not a `FolioError`, the raw stack and the words the mask hid. Never present in a
-   * packaged build.
-   */
-  readonly raw?: RawErrorDetails;
   /** The error's class name when it looks like an identifier, else `Error`; `NonError` for a thrown value that was not an error. */
   readonly name: string;
   /** The `typeof` of a thrown value that was not an error. */
@@ -83,7 +77,7 @@ export interface LoggedError {
   readonly causeOmitted?: true;
 }
 
-/** What the unredacted output adds to a logged error. */
+/** The raw details of one error, for the development-only unredacted line. */
 export interface RawErrorDetails {
   /** The raw message, for an error that is not a `FolioError` (whose message is already plain). */
   readonly message?: string;
@@ -91,6 +85,19 @@ export interface RawErrorDetails {
   readonly hiddenWords?: readonly string[];
   /** The stack as the error carries it, with its real paths. */
   readonly stack: string;
+  /** What was thrown, when it was not an error at all (a string, an object, `undefined`). */
+  readonly thrown?: string;
+}
+
+/** An error and its causes as the unredacted line shows them. */
+export interface RawErrorLink {
+  /** The class name, as in the normal line. */
+  readonly name: string;
+  readonly raw: RawErrorDetails;
+  /** The error's `cause`, described by the same rules. */
+  readonly cause?: RawErrorLink;
+  /** True when the cause chain went deeper than the limit and the rest was left out. */
+  readonly causeOmitted?: true;
 }
 
 /** The main process's logger. */
@@ -123,11 +130,18 @@ export interface LoggerOptions {
    */
   readonly appFolder?: string;
   /**
-   * Development only: where the unredacted line goes. When set, each log call also writes a second
-   * line to it, the same as the normal one plus the raw message, raw stack, hidden words and
-   * private field values, and marked `"unredacted":true`. The normal line is never changed, so it
-   * stays safe to share. Set it only when `parseUnredacted` allows, which refuses a packaged
-   * build.
+   * A short id for this run, such as `k7q2m9` (see `createSessionId`). When set, every line gets an
+   * `id` made of it, a hyphen and a counter, such as `k7q2m9-0042`, so a line can be found by
+   * searching for the id, in the log file and in anything written about it (the unredacted line
+   * below, and later the saved diagnostic details).
+   */
+  readonly sessionId?: string;
+  /**
+   * Development only: where the unredacted line goes. When set, a log call that has an error or a
+   * private field also writes a second line to it with the same `id`, marked `"unredacted":true`,
+   * holding only what the normal line hides: the raw message, raw stack and hidden words of the
+   * error and each cause, and the private field values. The normal line is never changed. Set it
+   * only when `parseUnredacted` allows, which refuses a packaged build.
    */
   readonly writeUnredacted?: (line: string) => void;
 }
@@ -186,13 +200,9 @@ function clip(text: string, limit: number): string {
 /**
  * Turn the fields of a line into safe values: plain values only, strings clipped.
  * @param fields - The fields given by the caller, which may break the type at run time.
- * @param unredacted - Whether private values are written as they are (development only).
  * @returns The cleaned fields.
  */
-function cleanFields(
-  fields: LogFields | undefined,
-  unredacted: boolean,
-): Record<string, string | number | boolean> {
+function cleanFields(fields: LogFields | undefined): Record<string, string | number | boolean> {
   const cleaned: Record<string, string | number | boolean> = {};
   for (const [key, value] of Object.entries(fields ?? {})) {
     // The value may break its type at run time, so check what it really is.
@@ -202,14 +212,7 @@ function cleanFields(
     } else if (typeof raw === 'number' || typeof raw === 'boolean') {
       cleaned[key] = raw;
     } else {
-      cleaned[key] =
-        raw instanceof PrivateField
-          ? unredacted
-            ? typeof raw.value === 'string'
-              ? clip(raw.value, MAX_FIELD_LENGTH)
-              : raw.value
-            : '[private]'
-          : '[omitted]';
+      cleaned[key] = raw instanceof PrivateField ? '[private]' : '[omitted]';
     }
   }
   return cleaned;
@@ -235,15 +238,9 @@ function read<Value>(get: () => Value): Value | undefined {
  * @param value - The thrown value.
  * @param appFolder - The folder the app is installed in, or undefined when unknown.
  * @param depth - How many causes deep this value is.
- * @param unredacted - Whether to add the raw message, stack and hidden words (development only).
  * @returns The description.
  */
-function describeError(
-  value: unknown,
-  appFolder: string | undefined,
-  depth: number,
-  unredacted: boolean,
-): LoggedError {
+function describeError(value: unknown, appFolder: string | undefined, depth: number): LoggedError {
   const stack =
     typeof value === 'object' && value !== null ? read(() => (value as Error).stack) : undefined;
   if (typeof stack !== 'string' && !(value instanceof Error)) {
@@ -270,25 +267,80 @@ function describeError(
     ...(typeof code === 'string' && ERROR_CODE.test(code) ? { code } : {}),
     stack: scrubbed?.frames ?? [],
     ...(scrubbed?.truncated === true ? { truncated: true as const } : {}),
-    ...(unredacted
-      ? {
-          raw: {
-            ...(report === undefined || typeof message !== 'string'
-              ? {}
-              : {
-                  message: clip(message, MAX_RAW_MESSAGE_LENGTH),
-                  hiddenWords: report.hiddenWords,
-                }),
-            stack: typeof stack === 'string' ? clip(stack, MAX_RAW_STACK_LENGTH) : '',
-          },
-        }
-      : {}),
     ...(cause === undefined
       ? {}
       : depth >= MAX_CAUSE_DEPTH
         ? { causeOmitted: true as const }
-        : { cause: describeError(cause, appFolder, depth + 1, unredacted) }),
+        : { cause: describeError(cause, appFolder, depth + 1) }),
   };
+}
+
+/**
+ * Collect the values of the fields marked private, as they are, for the unredacted line.
+ * @param fields - The fields given by the caller.
+ * @returns The private fields with their real values, or undefined when there are none.
+ */
+function rawFields(
+  fields: LogFields | undefined,
+): Record<string, string | number | boolean> | undefined {
+  const found: Record<string, string | number | boolean> = {};
+  for (const [key, value] of Object.entries(fields ?? {})) {
+    const raw: unknown = value;
+    if (raw instanceof PrivateField) {
+      found[key] =
+        typeof raw.value === 'string' ? clip(raw.value, MAX_RAW_MESSAGE_LENGTH) : raw.value;
+    }
+  }
+  return Object.keys(found).length === 0 ? undefined : found;
+}
+
+/**
+ * Describe a thrown value with everything the error carries, for the development-only unredacted
+ * line: the raw message, the words the mask hid, the raw stack, and the same for each cause.
+ * @param value - The thrown value.
+ * @param depth - How many causes deep this value is.
+ * @returns The description.
+ */
+function describeRaw(value: unknown, depth: number): RawErrorLink {
+  const stack =
+    typeof value === 'object' && value !== null ? read(() => (value as Error).stack) : undefined;
+  if (typeof stack !== 'string' && !(value instanceof Error)) {
+    const text =
+      typeof value === 'string' ? value : (read(() => JSON.stringify(value)) ?? typeof value);
+    return { name: 'NonError', raw: { stack: '', thrown: clip(text, MAX_RAW_MESSAGE_LENGTH) } };
+  }
+  const error = value as Error;
+  const message = read(() => error.message);
+  const name = read(() => error.name);
+  const cause = read(() => error.cause);
+  const report =
+    typeof message === 'string' && message !== '' && !(error instanceof FolioError)
+      ? maskMessageWithReport(message)
+      : undefined;
+  return {
+    name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
+    raw: {
+      ...(report === undefined || typeof message !== 'string'
+        ? {}
+        : { message: clip(message, MAX_RAW_MESSAGE_LENGTH), hiddenWords: report.hiddenWords }),
+      stack: typeof stack === 'string' ? clip(stack, MAX_RAW_STACK_LENGTH) : '',
+    },
+    ...(cause === undefined
+      ? {}
+      : depth >= MAX_CAUSE_DEPTH
+        ? { causeOmitted: true as const }
+        : { cause: describeRaw(cause, depth + 1) }),
+  };
+}
+
+/**
+ * Make the short random id of a logging session, such as `k7q2m9`.
+ * @param randomBytes - A source of random bytes, such as `crypto.randomBytes`.
+ * @returns Six lower case characters from a base 32 alphabet without look-alike letters.
+ */
+export function createSessionId(randomBytes: (size: number) => Uint8Array): string {
+  const alphabet = '0123456789abcdefghjkmnpqrstvwxyz';
+  return Array.from(randomBytes(6), (byte) => alphabet.charAt(byte % 32)).join('');
 }
 
 /**
@@ -318,23 +370,7 @@ export function combineWriters(
  * @returns The logger.
  */
 export function createLogger(options: LoggerOptions): Logger {
-  const build = (
-    level: LogLevel,
-    message: string,
-    unredacted: boolean,
-    fields?: LogFields,
-    error?: { value: unknown },
-  ): string =>
-    JSON.stringify({
-      time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
-      level,
-      message: clip(message, MAX_MESSAGE_LENGTH),
-      ...(unredacted ? { unredacted: true } : {}),
-      ...(fields === undefined ? {} : { fields: cleanFields(fields, unredacted) }),
-      ...(error === undefined
-        ? {}
-        : { error: describeError(error.value, options.appFolder, 0, unredacted) }),
-    });
+  let counter = 0;
   const emit = (
     level: LogLevel,
     message: string,
@@ -344,8 +380,24 @@ export function createLogger(options: LoggerOptions): Logger {
     if (ORDER[level] < ORDER[options.level]) {
       return;
     }
+    counter += 1;
+    const id =
+      options.sessionId === undefined
+        ? undefined
+        : `${options.sessionId}-${String(counter).padStart(4, '0')}`;
     try {
-      options.write(build(level, message, false, fields, error));
+      options.write(
+        JSON.stringify({
+          time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
+          ...(id === undefined ? {} : { id }),
+          level,
+          message: clip(message, MAX_MESSAGE_LENGTH),
+          ...(fields === undefined ? {} : { fields: cleanFields(fields) }),
+          ...(error === undefined
+            ? {}
+            : { error: describeError(error.value, options.appFolder, 0) }),
+        }),
+      );
     } catch {
       try {
         options.write(FALLBACK_LINE);
@@ -354,12 +406,25 @@ export function createLogger(options: LoggerOptions): Logger {
       }
     }
     const { writeUnredacted } = options;
-    if (writeUnredacted !== undefined) {
-      try {
-        writeUnredacted(build(level, message, true, fields, error));
-      } catch {
-        // The development output is optional; losing a line is fine.
+    if (writeUnredacted === undefined) {
+      return;
+    }
+    try {
+      const privateValues = rawFields(fields);
+      // A message with nothing raw to add gets no second line.
+      if (error === undefined && privateValues === undefined) {
+        return;
       }
+      writeUnredacted(
+        JSON.stringify({
+          ...(id === undefined ? {} : { id }),
+          unredacted: true,
+          ...(privateValues === undefined ? {} : { fields: privateValues }),
+          ...(error === undefined ? {} : { error: describeRaw(error.value, 0) }),
+        }),
+      );
+    } catch {
+      // The development output is optional; losing a line is fine.
     }
   };
   const log =

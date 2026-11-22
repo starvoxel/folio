@@ -77,13 +77,13 @@ describe('createLogDestinations', () => {
   });
 
   describe('anUnpackagedRunWithTheSwitch', () => {
-    it('sendsTheRawLineToStderrAndTheUnredactedFileAndTheNormalLineToTheLogFileOnly', () => {
+    it('sendsTheNormalLineToStderrAndTheLogFileAndTheUnredactedLineToStderrAndItsOwnFile', () => {
       const { destinations, written } = setup(false, true);
       destinations.write('normal');
       destinations.writeUnredacted?.('raw');
       expect(written['folio.log']).toEqual(['normal']);
       expect(written['folio-unredacted.log']).toEqual(['raw']);
-      expect(written['stderr']).toEqual(['raw']);
+      expect(written['stderr']).toEqual(['normal', 'raw']);
     });
 
     it('opensTheUnredactedFileOnlyWhenItIsNeeded', () => {

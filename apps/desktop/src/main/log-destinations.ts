@@ -32,20 +32,20 @@ export interface LogDestinations {
  * Decide which destinations get which lines.
  *
  * - Every run: the normal line goes to `folio.log` and to standard error.
- * - An unpackaged run with the unredacted output on: the raw line goes to the terminal and to
- *   `folio-unredacted.log`, and the terminal gets only the raw line, which holds everything the
- *   normal line does, so each message shows once. The normal line still goes to `folio.log`.
- * - A packaged build never gets a raw line, whatever `unredacted` says.
+ * - An unpackaged run with the unredacted output on: the unredacted line, which has the same `id`
+ *   as its normal line and only what that one hides, goes to the terminal and to
+ *   `folio-unredacted.log`.
+ * - A packaged build never gets an unredacted line, whatever `unredacted` says.
  * @param options - The build kind, the switch and the destinations.
- * @returns The writer for normal lines and, when allowed, the writer for raw lines.
+ * @returns The writer for normal lines and, when allowed, the writer for unredacted lines.
  */
 export function createLogDestinations(options: LogDestinationOptions): LogDestinations {
-  const normalFile = options.file('folio.log');
+  const write = combineWriters(options.stderr, options.file('folio.log'));
   if (options.packaged || !options.unredacted) {
-    return { write: combineWriters(options.stderr, normalFile) };
+    return { write };
   }
   return {
-    write: normalFile,
+    write,
     writeUnredacted: combineWriters(options.stderr, options.file('folio-unredacted.log')),
   };
 }
