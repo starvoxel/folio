@@ -21,6 +21,7 @@ npm ci                    # install from the lockfile
 npm run check             # lint, formatter check, type check, architecture tests
 npm run test:unit         # unit tests, next to the code as *.test.ts
 npm run test:integration  # real Chromium and real folders (run "npx playwright install chromium" once; add --with-deps on Linux)
+npm run dev               # build the app and start it unpackaged, for development (a .env file is read, see below)
 npm run package           # build the desktop app and package it (unsigned) into apps/desktop/release
 npm run test:e2e          # drive the packaged app; run "npm run package" first
 npm test                  # everything, in CI order
@@ -30,7 +31,7 @@ npm run depcruise         # the boundary rules from the command line, for readab
 
 `npm run test:architecture` runs the boundary rules (dependency-cruiser, through its API, over the real tree and over deliberate-violation fixtures), the test placement, file naming and test-shape checks, and the licence check. On Linux the end-to-end tests need a display, for example `xvfb-run -a npm run test:e2e`, and a Linux machine whose Chromium sandbox is not configured gets `--no-sandbox` for those tests only; CI runs every kind on Windows, and the whole chain on macOS once a week. If Playwright's Chromium is somewhere unusual, set `FOLIO_CHROMIUM_PATH`. The packaged app can be driven only when started with `FOLIO_AUTOMATION=1` (AD-16).
 
-For development runs, copy [.env.example](.env.example) to `.env` in the folder you start the app from to set the logging variables (`FOLIO_LOG_LEVEL`, `FOLIO_LOG_UNREDACTED`) without exporting them each time. Only unpackaged runs read the file, only those two keys are used, and a variable already set in your shell wins. `.env` is ignored by git.
+`npm run dev` builds the app and starts it unpackaged, with the repository root as its working folder; arguments after `--` go to Electron (a Linux container that runs as root needs `npm run dev -- --no-sandbox`). To set the logging variables (`FOLIO_LOG_LEVEL`, `FOLIO_LOG_UNREDACTED`) without exporting them each time, copy [.env.example](.env.example) to `.env` in that folder. Only unpackaged runs read the file, only those two keys are used, and a variable already set in your shell wins. `.env` is ignored by git. An unpackaged run writes its logs to `logs-dev` in the app's user-data folder, not `logs`.
 
 ### Kinds of test
 

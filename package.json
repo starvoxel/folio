@@ -18,6 +18,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspace @folio/desktop --",
     "package": "npm run package --workspace @folio/desktop",
     "typecheck": "npm run typecheck --workspaces --if-present && tsc --project tsconfig.json",
     "test:architecture": "vitest run --project architecture",
