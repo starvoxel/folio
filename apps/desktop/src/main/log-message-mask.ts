@@ -59,6 +59,14 @@ function maskQuotes(text: string): string {
   return result;
 }
 
+/** A masked message and the words the mask hid, for the development-only unredacted output. */
+export interface MaskReport {
+  /** The masked message, as `maskMessage` returns it. */
+  readonly masked: string;
+  /** The distinct words that were hidden because they are not in the vocabulary, lower case. */
+  readonly hiddenWords: readonly string[];
+}
+
 /**
  * Make the message of an error the app did not raise safe to log. Library messages quote values
  * (a parse error quotes the text it choked on), so nothing is trusted: quoted text is hidden, a
@@ -71,6 +79,18 @@ function maskQuotes(text: string): string {
  * @returns The masked message.
  */
 export function maskMessage(message: string): string {
+  return maskMessageWithReport(message).masked;
+}
+
+/**
+ * Mask a message like `maskMessage` and also report which words were hidden, so the word list can
+ * be grown from real use. Words inside quoted text are not reported: they were hidden as a whole
+ * and are the data the mask exists to hide.
+ * @param message - The error's message.
+ * @returns The masked message and the hidden words.
+ */
+export function maskMessageWithReport(message: string): MaskReport {
+  const hidden = new Set<string>();
   const text = maskQuotes(message.slice(0, MAX_INPUT_LENGTH).replace(CONTROL, ' '));
   let result = '';
   // The last word that was kept, and what has come after it, to decide about a number.
@@ -87,6 +107,9 @@ export function maskMessage(message: string): string {
       const kept =
         LOG_VOCABULARY.has(lower) || (afterApostrophe && CONTRACTION_SUFFIXES.has(lower));
       result += kept ? token : MASK;
+      if (!kept) {
+        hidden.add(lower);
+      }
       lastWord = kept ? lower : '';
       gap = '';
     } else if (/^\p{N}/u.test(token)) {
@@ -103,5 +126,5 @@ export function maskMessage(message: string): string {
     beforePrevious = previous;
     previous = token;
   }
-  return result.replace(ADJACENT_MASKS, MASK).trim();
+  return { masked: result.replace(ADJACENT_MASKS, MASK).trim(), hiddenWords: [...hidden] };
 }

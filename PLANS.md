@@ -8,7 +8,7 @@ The high-level list of what is planned or under way. One line each; the detail l
   - 1 to 3, done: safe stack traces, a log file, uncaught errors.
   - 4, done: `FolioError` messages and private fields.
   - 5, done: masked third-party messages.
-  - 6: a developer-only unredacted switch.
+  - 6, done: a developer-only unredacted switch.
   - 7, last: save diagnostic details (raw details kept in memory, saved only by the person).
 
 ## Planned

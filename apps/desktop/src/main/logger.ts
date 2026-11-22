@@ -8,7 +8,7 @@
 
 import { FolioError } from '@folio/core';
 
-import { maskMessage } from './log-message-mask.js';
+import { maskMessageWithReport } from './log-message-mask.js';
 import { scrubStack } from './log-stack.js';
 
 /** How serious a log line is, from most to least verbose. */
@@ -77,6 +77,29 @@ export interface LoggedError {
   readonly causeOmitted?: true;
 }
 
+/** The raw details of one error, for the development-only unredacted line. */
+export interface RawErrorDetails {
+  /** The raw message, for an error that is not a `FolioError` (whose message is already plain). */
+  readonly message?: string;
+  /** The words of the message that the mask hid, so the word list can be grown. */
+  readonly hiddenWords?: readonly string[];
+  /** The stack as the error carries it, with its real paths. */
+  readonly stack: string;
+  /** What was thrown, when it was not an error at all (a string, an object, `undefined`). */
+  readonly thrown?: string;
+}
+
+/** An error and its causes as the unredacted line shows them. */
+export interface RawErrorLink {
+  /** The class name, as in the normal line. */
+  readonly name: string;
+  readonly raw: RawErrorDetails;
+  /** The error's `cause`, described by the same rules. */
+  readonly cause?: RawErrorLink;
+  /** True when the cause chain went deeper than the limit and the rest was left out. */
+  readonly causeOmitted?: true;
+}
+
 /** The main process's logger. */
 export interface Logger {
   debug(message: string, fields?: LogFields): void;
@@ -106,6 +129,21 @@ export interface LoggerOptions {
    * its file name (see `scrubPath`).
    */
   readonly appFolder?: string;
+  /**
+   * A short id for this run, such as `k7q2m9` (see `createSessionId`). When set, every line gets an
+   * `id` made of it, a hyphen and a counter, such as `k7q2m9-0042`, so a line can be found by
+   * searching for the id, in the log file and in anything written about it (the unredacted line
+   * below, and later the saved diagnostic details).
+   */
+  readonly sessionId?: string;
+  /**
+   * Development only: where the unredacted line goes. When set, a log call that has an error or a
+   * private field also writes a second line to it with the same `id`, marked `"unredacted":true`,
+   * holding only what the normal line hides: the raw message, raw stack and hidden words of the
+   * error and each cause, and the private field values. The normal line is never changed. Set it
+   * only when `parseUnredacted` allows, which refuses a packaged build.
+   */
+  readonly writeUnredacted?: (line: string) => void;
 }
 
 const ORDER: Readonly<Record<LogLevel, number>> = { debug: 10, info: 20, warn: 30, error: 40 };
@@ -117,6 +155,10 @@ const MAX_FIELD_LENGTH = 120;
 // Stacks have their own limits, so the 120 characters of a field never cut a frame in half. Frame
 // length and count are in log-stack.ts. A cause chain of more than a few links is a loop or noise.
 const MAX_CAUSE_DEPTH = 3;
+// The raw message and stack of the unredacted output get their own limits, so one huge error does
+// not make a line unreadable. Judgement, not measured.
+const MAX_RAW_MESSAGE_LENGTH = 2000;
+const MAX_RAW_STACK_LENGTH = 8000;
 const ERROR_NAME = /^[A-Za-z_$][\w$]{0,59}$/u;
 const ERROR_CODE = /^[A-Z][A-Z0-9_]{1,39}$/u;
 // Written when a line cannot be built or written. It is fixed text, with no time, because the time
@@ -131,6 +173,18 @@ const FALLBACK_LINE = '{"level":"error","message":"a log line could not be writt
 export function parseLogLevel(text: string | undefined): LogLevel {
   const name = text?.trim().toLowerCase();
   return name === 'debug' || name === 'info' || name === 'warn' || name === 'error' ? name : 'info';
+}
+
+/**
+ * Decide whether the development-only unredacted output is on. It needs `FOLIO_LOG_UNREDACTED=1`
+ * and an unpackaged app, so a household machine can never be set to write personal data in the
+ * clear, whatever its environment holds.
+ * @param text - The value of the environment variable, or undefined when unset.
+ * @param packaged - Whether this is a packaged build.
+ * @returns True only for an unpackaged run with the variable set to `1`.
+ */
+export function parseUnredacted(text: string | undefined, packaged: boolean): boolean {
+  return !packaged && text === '1';
 }
 
 /**
@@ -199,13 +253,17 @@ function describeError(value: unknown, appFolder: string | undefined, depth: num
   const code = read(() => (error as { code?: unknown }).code);
   const cause = read(() => error.cause);
   const scrubbed = typeof stack === 'string' ? scrubStack(stack, appFolder) : undefined;
+  const report =
+    typeof message === 'string' && message !== '' && !isFolioError
+      ? maskMessageWithReport(message)
+      : undefined;
   return {
     name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
     ...(typeof message !== 'string' || message === ''
       ? {}
       : isFolioError
         ? { message: clip(message, MAX_MESSAGE_LENGTH) }
-        : { maskedMessage: clip(maskMessage(message), MAX_MESSAGE_LENGTH) }),
+        : { maskedMessage: clip(report?.masked ?? '', MAX_MESSAGE_LENGTH) }),
     ...(typeof code === 'string' && ERROR_CODE.test(code) ? { code } : {}),
     stack: scrubbed?.frames ?? [],
     ...(scrubbed?.truncated === true ? { truncated: true as const } : {}),
@@ -215,6 +273,74 @@ function describeError(value: unknown, appFolder: string | undefined, depth: num
         ? { causeOmitted: true as const }
         : { cause: describeError(cause, appFolder, depth + 1) }),
   };
+}
+
+/**
+ * Collect the values of the fields marked private, as they are, for the unredacted line.
+ * @param fields - The fields given by the caller.
+ * @returns The private fields with their real values, or undefined when there are none.
+ */
+function rawFields(
+  fields: LogFields | undefined,
+): Record<string, string | number | boolean> | undefined {
+  const found: Record<string, string | number | boolean> = {};
+  for (const [key, value] of Object.entries(fields ?? {})) {
+    const raw: unknown = value;
+    if (raw instanceof PrivateField) {
+      found[key] =
+        typeof raw.value === 'string' ? clip(raw.value, MAX_RAW_MESSAGE_LENGTH) : raw.value;
+    }
+  }
+  return Object.keys(found).length === 0 ? undefined : found;
+}
+
+/**
+ * Describe a thrown value with everything the error carries, for the development-only unredacted
+ * line: the raw message, the words the mask hid, the raw stack, and the same for each cause.
+ * @param value - The thrown value.
+ * @param depth - How many causes deep this value is.
+ * @returns The description.
+ */
+function describeRaw(value: unknown, depth: number): RawErrorLink {
+  const stack =
+    typeof value === 'object' && value !== null ? read(() => (value as Error).stack) : undefined;
+  if (typeof stack !== 'string' && !(value instanceof Error)) {
+    const text =
+      typeof value === 'string' ? value : (read(() => JSON.stringify(value)) ?? typeof value);
+    return { name: 'NonError', raw: { stack: '', thrown: clip(text, MAX_RAW_MESSAGE_LENGTH) } };
+  }
+  const error = value as Error;
+  const message = read(() => error.message);
+  const name = read(() => error.name);
+  const cause = read(() => error.cause);
+  const report =
+    typeof message === 'string' && message !== '' && !(error instanceof FolioError)
+      ? maskMessageWithReport(message)
+      : undefined;
+  return {
+    name: typeof name === 'string' && ERROR_NAME.test(name) ? name : 'Error',
+    raw: {
+      ...(report === undefined || typeof message !== 'string'
+        ? {}
+        : { message: clip(message, MAX_RAW_MESSAGE_LENGTH), hiddenWords: report.hiddenWords }),
+      stack: typeof stack === 'string' ? clip(stack, MAX_RAW_STACK_LENGTH) : '',
+    },
+    ...(cause === undefined
+      ? {}
+      : depth >= MAX_CAUSE_DEPTH
+        ? { causeOmitted: true as const }
+        : { cause: describeRaw(cause, depth + 1) }),
+  };
+}
+
+/**
+ * Make the short random id of a logging session, such as `k7q2m9`.
+ * @param randomBytes - A source of random bytes, such as `crypto.randomBytes`.
+ * @returns Six lower case characters from a base 32 alphabet without look-alike letters.
+ */
+export function createSessionId(randomBytes: (size: number) => Uint8Array): string {
+  const alphabet = '0123456789abcdefghjkmnpqrstvwxyz';
+  return Array.from(randomBytes(6), (byte) => alphabet.charAt(byte % 32)).join('');
 }
 
 /**
@@ -244,19 +370,26 @@ export function combineWriters(
  * @returns The logger.
  */
 export function createLogger(options: LoggerOptions): Logger {
+  let counter = 0;
   const emit = (
     level: LogLevel,
     message: string,
     fields?: LogFields,
     error?: { value: unknown },
   ): void => {
+    if (ORDER[level] < ORDER[options.level]) {
+      return;
+    }
+    counter += 1;
+    const id =
+      options.sessionId === undefined
+        ? undefined
+        : `${options.sessionId}-${String(counter).padStart(4, '0')}`;
     try {
-      if (ORDER[level] < ORDER[options.level]) {
-        return;
-      }
       options.write(
         JSON.stringify({
           time: read(() => new Date(options.now()).toISOString()) ?? 'unknown',
+          ...(id === undefined ? {} : { id }),
           level,
           message: clip(message, MAX_MESSAGE_LENGTH),
           ...(fields === undefined ? {} : { fields: cleanFields(fields) }),
@@ -271,6 +404,27 @@ export function createLogger(options: LoggerOptions): Logger {
       } catch {
         // Nothing left to try; dropping the line is the only safe choice.
       }
+    }
+    const { writeUnredacted } = options;
+    if (writeUnredacted === undefined) {
+      return;
+    }
+    try {
+      const privateValues = rawFields(fields);
+      // A message with nothing raw to add gets no second line.
+      if (error === undefined && privateValues === undefined) {
+        return;
+      }
+      writeUnredacted(
+        JSON.stringify({
+          ...(id === undefined ? {} : { id }),
+          unredacted: true,
+          ...(privateValues === undefined ? {} : { fields: privateValues }),
+          ...(error === undefined ? {} : { error: describeRaw(error.value, 0) }),
+        }),
+      );
+    } catch {
+      // The development output is optional; losing a line is fine.
     }
   };
   const log =

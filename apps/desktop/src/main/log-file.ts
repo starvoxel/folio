@@ -37,6 +37,8 @@ export interface RotatingFileOptions {
   readonly folder: string;
   /** The file operations; `nodeLogFileOperations` in the app. */
   readonly files: LogFileOperations;
+  /** The name of the current file; its rotated copies add `.1`, `.2`. Defaults to `folio.log`. */
+  readonly fileName?: string;
   /** Rotate before a line would take the file past this size. */
   readonly maxBytes?: number;
   /** How many rotated files to keep. */
@@ -71,7 +73,7 @@ export const nodeLogFileOperations: LogFileOperations = {
 };
 
 /**
- * Create a writer that appends lines to `folio.log` and keeps the file from growing without
+ * Create a writer that appends lines to a log file (`folio.log` unless another name is given) and keeps the file from growing without
  * limit. When a line would take the file past the size limit, `folio.log` becomes `folio.log.1`,
  * `.1` becomes `.2`, and the oldest is deleted, so at most `(backups + 1) * maxBytes` stay on disk.
  * The writer throws when a file operation fails, so the logger can fall back, and it starts clean
@@ -83,7 +85,7 @@ export function createRotatingFileWriter(options: RotatingFileOptions): (line: s
   const { folder, files } = options;
   const maxBytes = options.maxBytes ?? MAX_LOG_FILE_BYTES;
   const backups = options.backups ?? LOG_BACKUP_COUNT;
-  const current = join(folder, 'folio.log');
+  const current = join(folder, options.fileName ?? 'folio.log');
   let size: number | undefined;
   let folderReady = false;
 
