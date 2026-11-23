@@ -1,0 +1,544 @@
+#!/usr/bin/env node
+// ------------------------------
+// findings.js
+//
+// Author: Starvoxel AI Agent - 2026-10-24
+//
+// Copyright (c) StarVoxel. All rights reserved.
+// ------------------------------
+
+/**
+ * Findings: durable, conflict-free tracking of review and scan results that
+ * are not worth blocking a PR. Each finding is a GitHub issue labelled
+ * `finding`; this script derives a map of file path -> findings from the open
+ * ones, so an engineer can see what is already known about the files in play.
+ * Nothing is stored in the repo, so nothing can conflict or go stale.
+ *
+ * Zero dependencies on purpose: installed with its skill, away from the
+ * repo's node_modules. GitHub is reached only through `ai-git gh-api`.
+ *
+ * Usage:
+ *   node findings.js [path ...] [--json]      findings touching those paths (all when none given)
+ *   node findings.js file --title T --severity S --source X --rule R --files a,b [--effort E] [--detail D]
+ *                                             comment on a matching finding, or open a new one
+ *   node findings.js batch [--max N] [--max-simple N] [--include-large]
+ *                                             a batch of open findings to fix in one PR (default 5 M, 15 S)
+ *   All accept --repo owner/name (default: derived from the origin remote) and
+ *   --from-file <issues.json> (offline: read issues from a file instead of GitHub).
+ *
+ * Issue body format (first lines, then free text):
+ *   files: a.js, b.js
+ *   rule: <standard or check violated>
+ *   source: <review | scan name>
+ *   effort: <optional>
+ */
+
+import { spawnSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
+import { delimiter, dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export const FINDING_LABEL = 'finding';
+export const SEVERITIES = ['critical', 'high', 'medium', 'low'];
+
+/**
+ * Parse the `key: value` header lines of a finding body.
+ * @param {string|null|undefined} body
+ * @returns {{ files: string[], rule: string, source: string, effort: string }}
+ */
+export function parseBody(body) {
+  const out = { files: [], rule: '', source: '', effort: '' };
+  for (const line of String(body ?? '').split(/\r?\n/)) {
+    const m = /^(files|rule|source|effort):\s*(.*)$/i.exec(line.trim());
+    if (!m) continue;
+    const key = m[1].toLowerCase();
+    if (key === 'files') out.files = splitFiles(m[2]);
+    else out[key] = m[2].trim();
+  }
+  return out;
+}
+
+/**
+ * @param {string} value - Comma-separated paths
+ * @returns {string[]}
+ */
+export function splitFiles(value) {
+  return value
+    .split(',')
+    .map((s) => s.trim().replace(/^`|`$/g, ''))
+    .filter(Boolean);
+}
+
+/**
+ * Severity from an issue's `severity:<level>` label ('' when unlabelled).
+ * @param {{ labels?: Array<string|{name:string}> }} issue
+ * @returns {string}
+ */
+export function severityOf(issue) {
+  for (const label of issue.labels ?? []) {
+    const name = typeof label === 'string' ? label : label.name;
+    const m = /^severity:(.+)$/.exec(name ?? '');
+    if (m && SEVERITIES.includes(m[1])) return m[1];
+  }
+  return '';
+}
+
+/**
+ * Invert open finding issues into { path: [entry] }. An issue appears under
+ * every file it lists. Pull requests (which the issues API also returns) and
+ * issues without a `files:` line are skipped.
+ * @param {Array<any>} issues - GitHub issue objects
+ * @returns {Record<string, Array<{n:number,title:string,rule:string,severity:string,source:string,effort:string,files:string[]}>>}
+ */
+export function buildMap(issues) {
+  const map = {};
+  for (const issue of issues) {
+    if (issue.pull_request || issue.state === 'closed') continue;
+    const parsed = parseBody(issue.body);
+    const entry = {
+      n: issue.number,
+      title: issue.title,
+      rule: parsed.rule,
+      severity: severityOf(issue),
+      source: parsed.source,
+      effort: parsed.effort,
+      files: parsed.files,
+    };
+    for (const file of parsed.files) (map[file] ??= []).push(entry);
+  }
+  return map;
+}
+
+/**
+ * Entries for the given paths, de-duplicated by issue number. No paths: all.
+ * @param {ReturnType<typeof buildMap>} map
+ * @param {string[]} paths
+ * @returns {Array<ReturnType<typeof buildMap>[string][number]>}
+ */
+export function lookup(map, paths) {
+  const keys = paths.length ? paths : Object.keys(map);
+  const seen = new Map();
+  for (const key of keys) for (const entry of map[key] ?? []) seen.set(entry.n, entry);
+  return [...seen.values()];
+}
+
+/**
+ * Map keys that no longer exist in the repo: the file was deleted or renamed.
+ * @param {ReturnType<typeof buildMap>} map
+ * @param {(path: string) => boolean} exists
+ * @returns {string[]}
+ */
+export function staleKeys(map, exists) {
+  return Object.keys(map).filter((p) => !exists(p));
+}
+
+/**
+ * Decide how to file a finding: comment on an open one that shares a file and
+ * a rule, otherwise open a new issue.
+ * @param {ReturnType<typeof buildMap>} map
+ * @param {{title:string,severity:string,source:string,rule:string,files:string[],effort?:string,detail?:string}} f
+ * @returns {{action:'comment',n:number,body:string,missingFiles:string[]}|{action:'create',title:string,body:string,labels:string[]}}
+ */
+export function planFiling(map, f) {
+  if (!SEVERITIES.includes(f.severity)) {
+    throw new Error(`Invalid severity "${f.severity}". Use one of: ${SEVERITIES.join(', ')}`);
+  }
+  if (!f.files.length || !f.rule || !f.title)
+    throw new Error('A finding needs --title, --rule and --files');
+  const match = lookup(map, f.files).find((e) => e.rule === f.rule);
+  const detail = f.detail ? `\n\n${f.detail}` : '';
+  if (match) {
+    const missingFiles = f.files.filter((p) => !match.files.includes(p));
+    const extra = missingFiles.length ? `\n\nAlso affects: ${missingFiles.join(', ')}` : '';
+    return {
+      action: 'comment',
+      n: match.n,
+      missingFiles,
+      body: `Seen again (${f.source}).${extra}${detail}`,
+    };
+  }
+  const header = [`files: ${f.files.join(', ')}`, `rule: ${f.rule}`, `source: ${f.source}`];
+  if (f.effort) header.push(`effort: ${f.effort}`);
+  return {
+    action: 'create',
+    title: f.title,
+    body: header.join('\n') + detail,
+    labels: [FINDING_LABEL, `severity:${f.severity}`, `source:${f.source}`],
+  };
+}
+
+/**
+ * One compact line per finding.
+ * @param {{n:number,severity:string,files:string[],rule:string,title:string,effort:string}} e
+ * @returns {string}
+ */
+export function formatLine(e) {
+  const parts = [`#${e.n}`, e.severity || '-', e.files.join(','), e.rule || e.title];
+  if (e.effort) parts.push(`(${e.effort})`);
+  return parts.join(' ');
+}
+
+/** Default cap on the M group of a batch. */
+export const DEFAULT_MAX = 5;
+/** Default cap on the S findings of a batch. */
+export const DEFAULT_MAX_SIMPLE = 15;
+
+/**
+ * Parse the options of the `batch` subcommand.
+ * @param {string[]} argv - Arguments after `batch`
+ * @returns {{ max: number, maxSimple: number, includeLarge: boolean }}
+ * @throws {Error} When `--max` or `--max-simple` is not a positive integer
+ */
+export function parseBatchOptions(argv) {
+  const count = (name, fallback) => {
+    const raw = flag(argv, name);
+    if (raw === undefined) return fallback;
+    if (!/^[1-9]\d*$/.test(raw))
+      throw new Error(`--${name} needs a positive integer, got "${raw}"`);
+    return Number(raw);
+  };
+  return {
+    max: count('max', DEFAULT_MAX),
+    maxSimple: count('max-simple', DEFAULT_MAX_SIMPLE),
+    includeLarge: argv.includes('--include-large'),
+  };
+}
+
+/**
+ * Effort class of a finding: S is simple, L is large, anything else (M, or no
+ * `effort:` line) counts as M.
+ * @param {{ effort: string }} entry
+ * @returns {'S'|'M'|'L'}
+ */
+export function effortClass(entry) {
+  switch (entry.effort.trim().toUpperCase()) {
+    case 'S':
+      return 'S';
+    case 'L':
+      return 'L';
+    default:
+      return 'M';
+  }
+}
+
+/** Effort classes from largest to smallest; the batch order within a severity. */
+export const EFFORT_ORDER = ['L', 'M', 'S'];
+
+/**
+ * Whether a finding counts as simple: size S today. Kept as one function so
+ * the definition can grow to cover smaller sizes.
+ * @param {{ effort: string }} entry
+ * @returns {boolean}
+ */
+export function isSimple(entry) {
+  return effortClass(entry) === 'S';
+}
+
+/**
+ * Comparator for batch order: severity first (critical to low, unrated last),
+ * regardless of size, then size (L, M, S), then oldest issue first.
+ * @param {{ n: number, severity: string, effort: string }} a
+ * @param {{ n: number, severity: string, effort: string }} b
+ * @returns {number}
+ */
+function compareEntries(a, b) {
+  const severity = (e) => {
+    const i = SEVERITIES.indexOf(e.severity);
+    return i === -1 ? SEVERITIES.length : i;
+  };
+  const size = (e) => EFFORT_ORDER.indexOf(effortClass(e));
+  return severity(a) - severity(b) || size(a) - size(b) || a.n - b.n;
+}
+
+/**
+ * Group entries that share a file into clusters (connected components).
+ * @template {{ files: string[] }} T
+ * @param {T[]} entries
+ * @returns {T[][]}
+ */
+function clusterByFile(entries) {
+  const clusters = [];
+  for (const entry of entries) {
+    const touching = clusters.filter((c) =>
+      c.some((e) => e.files.some((f) => entry.files.includes(f))),
+    );
+    const merged = [entry, ...touching.flat()];
+    for (const c of touching) clusters.splice(clusters.indexOf(c), 1);
+    clusters.push(merged);
+  }
+  return clusters;
+}
+
+/**
+ * Directory part of a repo path, '.' for a root file.
+ * @param {string} file
+ * @returns {string}
+ */
+function dirOf(file) {
+  const i = file.lastIndexOf('/');
+  return i === -1 ? '.' : file.slice(0, i);
+}
+
+/**
+ * Pick a batch of open findings to fix in one PR. The main group takes up to
+ * `max` findings of size M or smaller (L too with `includeLarge`), ordered by
+ * severity, then size, then age. Then S findings in the same areas (a shared
+ * file or parent directory) as the picked ones are added up to `maxSimple`, a
+ * separate allowance. Findings that share a file are never split: a cluster is
+ * taken whole, and one that exceeds a cap is taken only when it is the first
+ * selected. The batch comes back in the same severity, size, age order.
+ * @param {ReturnType<typeof buildMap>} map
+ * @param {{ max?: number, maxSimple?: number, includeLarge?: boolean }} [options]
+ * @returns {Array<Array<ReturnType<typeof buildMap>[string][number]>>} Clusters in batch order
+ */
+export function planBatch(
+  map,
+  { max = DEFAULT_MAX, maxSimple = DEFAULT_MAX_SIMPLE, includeLarge = false } = {},
+) {
+  const eligible = lookup(map, []).filter((e) => includeLarge || effortClass(e) !== 'L');
+  const clusters = clusterByFile(eligible).map((c) => [...c].sort(compareEntries));
+  const ordered = [...clusters].sort((a, b) => compareEntries(a[0], b[0]));
+
+  const picked = [];
+  const areas = new Set();
+  const addAreas = (cluster) => {
+    for (const e of cluster) for (const f of e.files) areas.add(f).add(dirOf(f));
+  };
+
+  let mainCount = 0;
+  for (const cluster of ordered) {
+    if (picked.length > 0 && mainCount + cluster.length > max) continue;
+    picked.push(cluster);
+    mainCount += cluster.length;
+    addAreas(cluster);
+  }
+
+  const inArea = (c) => c.some((e) => e.files.some((f) => areas.has(f) || areas.has(dirOf(f))));
+  let simpleCount = 0;
+  for (const cluster of ordered) {
+    if (picked.includes(cluster) || !cluster.every(isSimple) || !inArea(cluster)) continue;
+    if (simpleCount + cluster.length > maxSimple) continue;
+    picked.push(cluster);
+    simpleCount += cluster.length;
+    addAreas(cluster);
+  }
+  return picked.sort((a, b) => compareEntries(a[0], b[0]));
+}
+
+/**
+ * Batch lines: one per finding, a blank line between clusters, then the
+ * `Fixes #n` line for the PR. Empty when the batch is.
+ * @param {ReturnType<typeof planBatch>} batch
+ * @returns {string}
+ */
+export function formatBatch(batch) {
+  if (batch.length === 0) return '';
+  const groups = batch.map((cluster) => cluster.map(formatLine).join('\n'));
+  const fixes = batch.flat().map((e) => `Fixes #${e.n}`);
+  return `${groups.join('\n\n')}\n\n${fixes.join(', ')}`;
+}
+
+// ---- I/O -----------------------------------------------------------------
+
+/**
+ * Node cannot spawn an npm `.cmd` shim without a shell, and a shell would
+ * re-parse finding titles and bodies. On Windows, find the shim's node script
+ * and run it with node directly: no shell, args passed verbatim.
+ * @param {string[]} args - Arguments for ai-git
+ * @param {{ platform?: string, pathEnv?: string, execPath?: string, exists?: (p: string) => boolean, readText?: (p: string) => string }} [env]
+ * @returns {{ command: string, args: string[] }}
+ */
+export function resolveAiGit(args, env = {}) {
+  const {
+    platform = process.platform,
+    pathEnv = process.env.PATH ?? '',
+    execPath = process.execPath,
+    exists = existsSync,
+    readText = (p) => readFileSync(p, 'utf8'),
+  } = env;
+  if (platform !== 'win32') return { command: 'ai-git', args };
+  for (const dir of pathEnv.split(delimiter).filter(Boolean)) {
+    const shim = join(dir, 'ai-git.cmd');
+    if (!exists(shim)) continue;
+    const m = /"%dp0%[\\/]([^"]+\.js)"/i.exec(readText(shim));
+    if (!m) break;
+    const script = join(dirname(shim), m[1]);
+    if (exists(script)) return { command: execPath, args: [script, ...args] };
+    break;
+  }
+  return { command: 'ai-git', args };
+}
+
+/**
+ * Message for a failed spawn: the spawn error (ENOENT etc.), exit status and output.
+ * @param {string} label
+ * @param {{ error?: Error, status: number|null, stderr?: string, stdout?: string }} r
+ * @returns {string}
+ */
+export function describeSpawnFailure(label, r) {
+  const detail = (r.stderr || r.stdout || '').trim();
+  const cause = r.error ? `${r.error.message}; ` : '';
+  return `${label} failed: ${cause}exit status ${r.status}${detail ? `: ${detail}` : ''}`;
+}
+
+/**
+ * Run `ai-git` and return its stdout.
+ * @param {string[]} args
+ * @param {{ input?: string, spawn?: typeof spawnSync, resolveCmd?: typeof resolveAiGit }} [opts]
+ * @returns {string}
+ * @throws {Error} When the process cannot start or exits non-zero
+ */
+export function runAiGit(args, { input, spawn = spawnSync, resolveCmd = resolveAiGit } = {}) {
+  const cmd = resolveCmd(args);
+  const r = spawn(cmd.command, cmd.args, { encoding: 'utf8', input });
+  if (r.error || r.status !== 0) throw new Error(describeSpawnFailure(`ai-git ${args[0]}`, r));
+  return r.stdout ?? '';
+}
+
+/**
+ * Run `ai-git gh-api` and return its stdout.
+ * @param {string[]} args
+ * @param {string} [input] - Optional stdin
+ * @returns {string}
+ * @throws {Error} When the call fails
+ */
+function gh(args, input) {
+  return runAiGit(['gh-api', ...args], { input });
+}
+
+/**
+ * "owner/name" from a GitHub remote URL (https or ssh), dots in the name allowed.
+ * @param {string} url
+ * @returns {string|null}
+ */
+export function parseRepoSlug(url) {
+  const m = /github\.com[:/]([^/\s]+\/[^/\s]+?)(?:\.git)?\s*$/.exec(url.trim());
+  return m ? m[1] : null;
+}
+
+/**
+ * The repo to query: --repo, else the origin remote.
+ * @param {string[]} argv
+ * @returns {string} "owner/name"
+ */
+function repoSlug(argv) {
+  const i = argv.indexOf('--repo');
+  if (i !== -1) return argv[i + 1];
+  let url;
+  try {
+    url = runAiGit(['remote', 'get-url', 'origin']);
+  } catch (err) {
+    throw new Error(`Cannot derive the repo (${err.message}); pass --repo owner/name`, {
+      cause: err,
+    });
+  }
+  const slug = parseRepoSlug(url);
+  if (!slug) throw new Error('Cannot derive the repo; pass --repo owner/name');
+  return slug;
+}
+
+/**
+ * Open finding issues, from --from-file or GitHub.
+ * @param {string[]} argv
+ * @param {string} repo
+ * @returns {Array<any>}
+ */
+function loadIssues(argv, repo) {
+  const i = argv.indexOf('--from-file');
+  if (i !== -1) return JSON.parse(readFileSync(argv[i + 1], 'utf8'));
+  const out = gh([
+    `repos/${repo}/issues?labels=${FINDING_LABEL}&state=open&per_page=100`,
+    '--paginate',
+    '--slurp',
+  ]);
+  return JSON.parse(out).flat();
+}
+
+/**
+ * Value of `--name <value>`, if given.
+ * @param {string[]} argv
+ * @param {string} name
+ * @returns {string|undefined}
+ */
+function flag(argv, name) {
+  const i = argv.indexOf(`--${name}`);
+  return i === -1 ? undefined : argv[i + 1];
+}
+
+/**
+ * @param {string[]} argv
+ * @returns {number} exit code
+ */
+export function main(argv) {
+  try {
+    const batchOptions = argv[0] === 'batch' ? parseBatchOptions(argv.slice(1)) : null;
+    const repo = argv.includes('--from-file') ? '' : repoSlug(argv);
+    const map = buildMap(loadIssues(argv, repo));
+
+    if (argv[0] === 'file') {
+      const plan = planFiling(map, {
+        title: flag(argv, 'title') ?? '',
+        severity: flag(argv, 'severity') ?? '',
+        source: flag(argv, 'source') ?? 'review',
+        rule: flag(argv, 'rule') ?? '',
+        files: splitFiles(flag(argv, 'files') ?? ''),
+        effort: flag(argv, 'effort'),
+        detail: flag(argv, 'detail'),
+      });
+      if (argv.includes('--from-file')) {
+        console.log(JSON.stringify(plan));
+        return 0;
+      }
+      if (plan.action === 'comment') {
+        gh([
+          `repos/${repo}/issues/${plan.n}/comments`,
+          '--method',
+          'POST',
+          '-f',
+          `body=${plan.body}`,
+        ]);
+        console.log(
+          `Commented on #${plan.n}${plan.missingFiles.length ? ` (new files: ${plan.missingFiles.join(', ')}; update its files: line)` : ''}`,
+        );
+      } else {
+        const args = [
+          `repos/${repo}/issues`,
+          '--method',
+          'POST',
+          '-f',
+          `title=${plan.title}`,
+          '-f',
+          `body=${plan.body}`,
+        ];
+        for (const label of plan.labels) args.push('-f', `labels[]=${label}`);
+        console.log(`Opened #${JSON.parse(gh(args)).number}`);
+      }
+      return 0;
+    }
+
+    if (batchOptions) {
+      const text = formatBatch(planBatch(map, batchOptions));
+      if (text) console.log(text);
+      return 0;
+    }
+
+    const paths = argv.filter(
+      (a, i) => !a.startsWith('--') && argv[i - 1] !== '--repo' && argv[i - 1] !== '--from-file',
+    );
+    const found = lookup(map, paths);
+    if (argv.includes('--json')) console.log(JSON.stringify(paths.length ? found : map, null, 2));
+    else for (const e of found) console.log(formatLine(e));
+    for (const p of staleKeys(map, existsSync))
+      console.error(
+        `stale: ${p} no longer exists (${map[p].map((e) => `#${e.n}`).join(' ')}); fix its files: line or close it`,
+      );
+    return 0;
+  } catch (err) {
+    console.error(`✗ ${err.message}`);
+    return 1;
+  }
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  process.exitCode = main(process.argv.slice(2));
+}
