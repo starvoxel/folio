@@ -45,8 +45,8 @@ const logFileWriter = (fileName: string): ((line: string) => void) => {
 };
 
 // Development only: a `.env` file in the folder the app was started from may set the logging
-// variables (`dev-env.ts` lists the only keys it may set). A packaged build never reads it, and the
-// real environment wins over the file.
+// variables and `FOLIO_AUTOMATION` (`dev-env.ts` lists the only keys it may set). A packaged build
+// never reads it, and the real environment wins over the file.
 const devEnv = applyDevEnvFile({
   packaged: app.isPackaged,
   env: process.env,
@@ -98,6 +98,7 @@ async function openWhenReady(): Promise<void> {
     registerIpcHandlers({
       logger,
       settings: createSettingsStore(app.getPath('userData')),
+      env: devEnv.env,
     });
     // Windows and Linux have no menu bar (H1.14 uses the hamburger menu); macOS keeps a minimal
     // native menu so Cmd+Q, Cmd+C and Cmd+V work (H1.16). The full menu arrives with its plan.
@@ -138,7 +139,7 @@ function start(): void {
 
 // Chromium's remote debugging switches hand over complete control of the app and no fuse turns
 // them off, so the app refuses them unless FOLIO_AUTOMATION=1 was set (AD-16, H1.17).
-const refused = findRefusedSwitches(process.argv, process.env);
+const refused = findRefusedSwitches(process.argv, devEnv.env);
 if (refused.length > 0) {
   process.stderr.write('Remote debugging switches are refused unless FOLIO_AUTOMATION=1.\n');
   app.exit(2);

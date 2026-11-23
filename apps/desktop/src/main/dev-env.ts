@@ -9,12 +9,18 @@
 import { parseEnv } from 'node:util';
 
 /**
- * The only settings a `.env` file may supply. Anything else in the file is ignored, so a file can
- * never set a variable the hardening depends on (`GOOGLE_API_KEY` and its siblings, which the app
- * removes from the environment, or `FOLIO_AUTOMATION`, which unlocks the debugging switches) or
- * one that steers the runtime (`NODE_OPTIONS`, `ELECTRON_*`). Adding a key here is a review item.
+ * The only settings a `.env` file may supply, and only in an unpackaged run. Anything else in the
+ * file is ignored, so it can never set a variable the hardening depends on (`GOOGLE_API_KEY` and
+ * its siblings, which the app removes) or one that steers the runtime (`NODE_OPTIONS`,
+ * `ELECTRON_*`). `FOLIO_AUTOMATION` is allowed so engineers can drive a development run from the
+ * command line (AD-16); a packaged build never reads the file, so it cannot reach a household
+ * machine. Adding a key here is a review item.
  */
-export const DEV_ENV_KEYS: readonly string[] = ['FOLIO_LOG_LEVEL', 'FOLIO_LOG_UNREDACTED'];
+export const DEV_ENV_KEYS: readonly string[] = [
+  'FOLIO_LOG_LEVEL',
+  'FOLIO_LOG_UNREDACTED',
+  'FOLIO_AUTOMATION',
+];
 
 /** The environment after the file was applied, and which keys came from the file. */
 export interface DevEnvResult {

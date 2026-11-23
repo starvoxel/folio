@@ -16,11 +16,17 @@ describe('applyDevEnvFile', () => {
       const result = applyDevEnvFile({
         packaged: false,
         env: {},
-        readText: () => '# comment\nFOLIO_LOG_LEVEL=debug\nFOLIO_LOG_UNREDACTED="1"\n',
+        readText: () =>
+          '# comment\nFOLIO_LOG_LEVEL=debug\nFOLIO_LOG_UNREDACTED="1"\nFOLIO_AUTOMATION=1\n',
       });
       expect(result.env['FOLIO_LOG_LEVEL']).toBe('debug');
       expect(result.env['FOLIO_LOG_UNREDACTED']).toBe('1');
-      expect(result.loaded).toEqual(['FOLIO_LOG_LEVEL', 'FOLIO_LOG_UNREDACTED']);
+      expect(result.env['FOLIO_AUTOMATION']).toBe('1');
+      expect(result.loaded).toEqual([
+        'FOLIO_LOG_LEVEL',
+        'FOLIO_LOG_UNREDACTED',
+        'FOLIO_AUTOMATION',
+      ]);
     });
   });
 
@@ -32,12 +38,23 @@ describe('applyDevEnvFile', () => {
         env: { PATH: '/bin' },
         readText: () => {
           read = true;
-          return 'FOLIO_LOG_LEVEL=debug\nFOLIO_LOG_UNREDACTED=1\n';
+          return 'FOLIO_LOG_LEVEL=debug\nFOLIO_LOG_UNREDACTED=1\nFOLIO_AUTOMATION=1\n';
         },
       });
       expect(read).toBe(false);
       expect(result.env).toEqual({ PATH: '/bin' });
       expect(result.loaded).toEqual([]);
+    });
+  });
+
+  describe('automationInAPackagedBuild', () => {
+    it('isNotSetFromTheFile', () => {
+      const result = applyDevEnvFile({
+        packaged: true,
+        env: {},
+        readText: () => 'FOLIO_AUTOMATION=1',
+      });
+      expect(result.env['FOLIO_AUTOMATION']).toBeUndefined();
     });
   });
 
@@ -63,7 +80,6 @@ describe('applyDevEnvFile', () => {
           [
             'GOOGLE_API_KEY=secret',
             'GOOGLE_DEFAULT_CLIENT_ID=x',
-            'FOLIO_AUTOMATION=1',
             'NODE_OPTIONS=--inspect',
             'ELECTRON_RUN_AS_NODE=1',
             'PATH=/evil',
@@ -107,8 +123,12 @@ describe('applyDevEnvFile', () => {
 
 describe('DEV_ENV_KEYS', () => {
   describe('theAllowList', () => {
-    it('holdsOnlyTheLoggingSettings', () => {
-      expect([...DEV_ENV_KEYS]).toEqual(['FOLIO_LOG_LEVEL', 'FOLIO_LOG_UNREDACTED']);
+    it('holdsOnlyTheLoggingSettingsAndAutomation', () => {
+      expect([...DEV_ENV_KEYS]).toEqual([
+        'FOLIO_LOG_LEVEL',
+        'FOLIO_LOG_UNREDACTED',
+        'FOLIO_AUTOMATION',
+      ]);
     });
   });
 });
