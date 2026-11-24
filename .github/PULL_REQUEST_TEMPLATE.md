@@ -7,8 +7,8 @@
 
 ## Checklist
 
-- [ ] CI passes (lint, typecheck, format, tests)
-- [ ] Documentation updated where applicable <!-- README, docs/, standards/, etc. -->
+- [ ] CI passes (lint, format, typecheck, architecture, unit, integration, end-to-end)
+- [ ] Documentation updated where applicable <!-- README, project-standards.md, knowledge/architecture/, etc. -->
 - [ ] Test coverage added/updated for the change
 - [ ] Manual validation testing done
 
