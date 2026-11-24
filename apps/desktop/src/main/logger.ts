@@ -137,11 +137,9 @@ export interface LoggerOptions {
    */
   readonly sessionId?: string;
   /**
-   * Development only: where the unredacted line goes. When set, a log call that has an error or a
-   * private field also writes a second line to it with the same `id`, marked `"unredacted":true`,
-   * holding only what the normal line hides: the raw message, raw stack and hidden words of the
-   * error and each cause, and the private field values. The normal line is never changed. Set it
-   * only when `parseUnredacted` allows, which refuses a packaged build.
+   * Development only. When set, a call with an error or private field also writes a second line
+   * (same `id`, `"unredacted":true`) holding what the normal line hides. Set it only when
+   * `parseUnredacted` allows, which refuses a packaged build.
    */
   readonly writeUnredacted?: (line: string) => void;
 }

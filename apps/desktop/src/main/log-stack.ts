@@ -28,12 +28,9 @@ export interface ScrubbedStack {
 }
 
 /**
- * Turn a path or URL from a stack frame into text that holds no personal data.
- *
- * A path below the app folder keeps its folders (`<app>/main.cjs`), because they only show how
- * the code is laid out. Every other path, below the user's home folder, the temp folder or
- * anywhere unknown, can hold a user name or a folder a person named, so it keeps only its file
- * name. Paths are understood in Windows and POSIX shapes and as `file://` URLs.
+ * Turn a stack-frame path or URL into text with no personal data. A path under the app folder
+ * keeps its folders (`<app>/main.cjs`); any other path can hold a user name, so only its file
+ * name stays. Handles Windows, POSIX and `file://` forms.
  * @param raw - The path as written in the frame.
  * @param appFolder - The folder the app is installed in, or undefined when unknown.
  * @returns The safe text.

@@ -13,15 +13,10 @@ export interface FolioErrorOptions {
 }
 
 /**
- * An error the app raises itself, whose message is safe to write to a diagnostic log (AD-10).
- *
- * The message is the message standard in one place: fixed text, plus ids, counts, dates, positions
- * (row, column, offset) and hashes, and never a value taken from a file, a field or a setting.
- * Write `row 12, column 3 is not an amount`, not `"1,2oo.00" is not an amount`. The logger writes
- * this message as it is, so nothing the caller puts in it is hidden or checked.
- *
- * Code that catches a third-party error wraps it, keeping the original as the cause: the cause's
- * message is never logged, because a library's message can quote data.
+ * An error the app raises itself, whose message is safe to log (AD-10). The logger writes it as it
+ * is, so it holds fixed text, ids, counts, dates, positions and hashes, never a value from a file,
+ * field or setting: `row 12, column 3 is not an amount`, not `"1,2oo.00" is not an amount`. Wrap a
+ * third-party error as the `cause`; its message is never logged.
  */
 export class FolioError extends Error {
   /**

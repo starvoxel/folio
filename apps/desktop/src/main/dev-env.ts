@@ -9,12 +9,10 @@
 import { parseEnv } from 'node:util';
 
 /**
- * The only settings a `.env` file may supply, and only in an unpackaged run. Anything else in the
- * file is ignored, so it can never set a variable the hardening depends on (`GOOGLE_API_KEY` and
- * its siblings, which the app removes) or one that steers the runtime (`NODE_OPTIONS`,
- * `ELECTRON_*`). `FOLIO_AUTOMATION` is allowed so engineers can drive a development run from the
- * command line (AD-16); a packaged build never reads the file, so it cannot reach a household
- * machine. Adding a key here is a review item.
+ * The only settings a `.env` file may supply, and only in an unpackaged run. Anything else is
+ * ignored, so the file cannot set a variable the hardening depends on (`GOOGLE_API_KEY` and its
+ * siblings) or one that steers the runtime (`NODE_OPTIONS`, `ELECTRON_*`). `FOLIO_AUTOMATION` is
+ * allowed for driving a development run (AD-16). Adding a key here is a review item.
  */
 export const DEV_ENV_KEYS: readonly string[] = [
   'FOLIO_LOG_LEVEL',
@@ -41,12 +39,9 @@ export interface DevEnvOptions {
 }
 
 /**
- * Add the settings from a `.env` file to the environment, for development runs only.
- *
- * A packaged build never reads the file, so a household machine cannot be changed by a stray
- * file. Only the keys in `DEV_ENV_KEYS` are used, and a variable that is already set in the real
- * environment is left alone, as with other `.env` loaders. The given environment is not changed;
- * a copy is returned.
+ * Add the settings from a `.env` file to the environment, for development runs only. A packaged
+ * build never reads the file. Only `DEV_ENV_KEYS` are used, and a variable already set in the real
+ * environment wins. Returns a copy; the given environment is not changed.
  * @param options - The build kind, the real environment and the file reader.
  * @returns The environment to use and the keys that came from the file.
  */

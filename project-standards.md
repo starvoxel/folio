@@ -48,7 +48,6 @@ Test files are named `{module}.test.ts`, and end-to-end files `{feature}.e2e.ts`
 These add a size limit to the ai-foundation rule "explain why, not what".
 
 - A comment records what the code cannot show: a constraint, a decision or a trap. Never restate the code or a name.
-- A `//` block is at most 3 lines, a JSDoc description at most 4, and a tag description at most 2. `folio/max-comment-lines` enforces this on new code; `eslint-suppressions.json` holds the existing exceptions.
+- A `//` block is at most 3 lines, a JSDoc description at most 4, and a tag description at most 2. `folio/max-comment-lines` enforces it.
 - Longer explanations belong in the arc42 section or standard that owns the topic. Link to it.
-- Fix a suppressed comment when you touch it, then run `npx eslint --prune-suppressions` to remove its entry.
 - The `concise-comments` skill covers how to write them; `unslop` covers wording.

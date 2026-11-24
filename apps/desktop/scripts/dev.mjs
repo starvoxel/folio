@@ -7,12 +7,10 @@
 // ------------------------------
 
 /**
- * Builds the app and starts it unpackaged, for development: `npm run dev`. The app runs with the
- * repository root as its working folder, so a `.env` file there is read (see `.env.example`).
- * Arguments after `--` go to Electron, for example `npm run dev -- --no-sandbox` for a Linux
- * container that runs as root.
- *
- * An unpackaged run is not the packaged app: it has no fuses and writes its logs to `logs-dev`.
+ * Builds the app and starts it unpackaged (`npm run dev`) with the repository root as working
+ * folder, so its `.env` is read (see `.env.example`). Arguments after `--` go to Electron, for
+ * example `--no-sandbox` in a Linux container that runs as root. An unpackaged run has no fuses and
+ * logs to `logs-dev`.
  */
 
 import { spawn, spawnSync } from 'node:child_process';

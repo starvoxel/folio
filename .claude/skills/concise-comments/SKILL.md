@@ -18,7 +18,6 @@ Keeps comments and JSDoc short. The limits and enforcement are in `project-stand
    - *Explains a rule, convention or design.* Link the arc42 section or standard that owns it. Do not copy it.
    - *History or ticket narrative.* Delete it. It belongs in the commit message.
 4. Check the limits: `//` 3 lines, JSDoc description 4, tag description 2. Run `npx eslint <file>`; the `folio/max-comment-lines` rule reports overruns.
-5. When you fix a suppressed comment, run `npx eslint --prune-suppressions`.
 
 ## Outputs
 
