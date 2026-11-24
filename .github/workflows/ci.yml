@@ -28,6 +28,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # A pull request that changes only Markdown files skips the unit, integration and end-to-end
+  # jobs. They are skipped with `if` rather than a workflow-level `paths-ignore`: a workflow that
+  # never starts leaves its required checks pending forever, whereas a skipped job counts as
+  # passed. Static checks still run because the formatter checks Markdown. Linux is used here
+  # only because this job is a single git command.
+  changes:
+    name: Detect code changes
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.diff.outputs.code }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - id: diff
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Three-dot diff: only what the pull request itself changed. Any non-.md file, at any
+          # depth, counts as code. If the diff cannot be read, fail rather than skip the tests.
+          files=$(git diff --name-only "$BASE_SHA...$HEAD_SHA")
+          echo "Changed files:"
+          echo "$files"
+          if echo "$files" | grep -qv '\.md$'; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Markdown-only change: unit, integration and end-to-end tests skipped"
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   static-checks:
     name: Static checks
     runs-on: windows-latest
@@ -77,7 +109,8 @@ jobs:
 
   unit-tests:
     name: Unit tests
-    needs: static-checks
+    needs: [static-checks, changes]
+    if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -93,7 +126,8 @@ jobs:
 
   integration-tests:
     name: Integration tests
-    needs: static-checks
+    needs: [static-checks, changes]
+    if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -137,7 +171,8 @@ jobs:
 
   end-to-end-tests:
     name: End-to-end tests
-    needs: [unit-tests, integration-tests]
+    needs: [changes, unit-tests, integration-tests]
+    if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
