@@ -1,8 +1,9 @@
 name: CI
 
-# Every job runs on Windows, the platform Folio ships on first. macOS runs the same chain daily
-# (macos-daily.yml). Linux is not a v1 platform and is used only for the AD-18 network capture,
-# which belongs to the Electron foundations plan.
+# Every job runs on Windows, the platform Folio ships on first, except `changes`, a one-command
+# job that decides whether a Markdown-only pull request may skip the test jobs. macOS runs the same
+# chain daily (macos-daily.yml). Linux is not a v1 platform and is otherwise used only for the
+# AD-18 network capture, which belongs to the Electron foundations plan.
 #
 # The order follows project-standards.md: static checks and the architecture tests first, then unit
 # and integration tests in parallel (nearly all of their time is setting up a runner, so waiting for
@@ -49,11 +50,14 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           # Three-dot diff: only what the pull request itself changed. Any non-.md file, at any
-          # depth, counts as code. If the diff cannot be read, fail rather than skip the tests.
-          files=$(git diff --name-only "$BASE_SHA...$HEAD_SHA")
+          # depth, counts as code; --no-renames lists both sides of a rename, so moving code into a
+          # .md file still counts. A here-string avoids a pipe, which pipefail can fail with SIGPIPE
+          # on a large list and wrongly report Markdown-only. If the diff cannot be read, the step
+          # fails rather than skipping the tests.
+          files=$(git diff --name-only --no-renames "$BASE_SHA...$HEAD_SHA")
           echo "Changed files:"
           echo "$files"
-          if echo "$files" | grep -qv '\.md$'; then
+          if grep -qv '\.md$' <<< "$files"; then
             echo "code=true" >> "$GITHUB_OUTPUT"
           else
             echo "::notice::Markdown-only change: unit, integration and end-to-end tests skipped"
