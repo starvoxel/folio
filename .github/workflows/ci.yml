@@ -1,8 +1,9 @@
 name: CI
 
-# Every job runs on Windows, the platform Folio ships on first. macOS runs the same chain daily
-# (macos-daily.yml). Linux is not a v1 platform and is used only for the AD-18 network capture,
-# which belongs to the Electron foundations plan.
+# Every job runs on Windows, the platform Folio ships on first, except `changes`, a one-call
+# job that decides whether a Markdown-only pull request may skip the test jobs. macOS runs the same
+# chain daily (macos-daily.yml). Linux is not a v1 platform and is otherwise used only for the
+# AD-18 network capture, which belongs to the Electron foundations plan.
 #
 # The order follows project-standards.md: static checks and the architecture tests first, then unit
 # and integration tests in parallel (nearly all of their time is setting up a runner, so waiting for
@@ -28,6 +29,52 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # A pull request that changes only Markdown files skips the unit, integration and end-to-end
+  # jobs. They are skipped with `if` rather than a workflow-level `paths-ignore`: a workflow that
+  # never starts leaves its required checks pending forever, whereas a skipped job counts as
+  # passed. Static checks still run because the formatter checks Markdown. Linux is used here
+  # only because this job is a single API call.
+  changes:
+    name: Detect code changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.diff.outputs.code }}
+    steps:
+      # The file list comes from the API, not a checkout: there is nothing to download, and a
+      # transient failure is retried below.
+      - id: diff
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          # Any non-.md file, at any depth, counts as code. The old path of a rename is listed too,
+          # so moving code into a .md file still counts. Try up to three times, then fail the job
+          # rather than skip the tests.
+          files=
+          for attempt in 1 2 3; do
+            if files=$(gh api --paginate "repos/$REPO/pulls/$PR/files" \
+              --jq '.[] | .filename, (.previous_filename // empty)'); then
+              break
+            fi
+            echo "::warning::Listing the changed files failed (attempt $attempt of 3)"
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+          echo "Changed files:"
+          echo "$files"
+          # The API lists at most 3000 files; at that size, assume code. A here-string, not a pipe:
+          # pipefail would turn grep -q closing early into a failure.
+          if [ "$(wc -l <<< "$files")" -ge 3000 ] || grep -qv '\.md$' <<< "$files"; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Markdown-only change: unit, integration and end-to-end tests skipped"
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   static-checks:
     name: Static checks
     runs-on: windows-latest
@@ -77,7 +124,8 @@ jobs:
 
   unit-tests:
     name: Unit tests
-    needs: static-checks
+    needs: [static-checks, changes]
+    if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -93,7 +141,8 @@ jobs:
 
   integration-tests:
     name: Integration tests
-    needs: static-checks
+    needs: [static-checks, changes]
+    if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -137,7 +186,8 @@ jobs:
 
   end-to-end-tests:
     name: End-to-end tests
-    needs: [unit-tests, integration-tests]
+    needs: [changes, unit-tests, integration-tests]
+    if: needs.changes.outputs.code == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
