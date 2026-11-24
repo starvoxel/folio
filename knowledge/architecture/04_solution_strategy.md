@@ -27,7 +27,7 @@ key_files:
 
 4. _The domain knows nothing about the UI or the host._ The `core` package holds the model, classifier, rules, matching, commands, undo and file format. It is plain TypeScript with no Node, DOM or Electron imports, so it runs unchanged in the desktop app, in plain Node tests, and in a browser (AD-14, AD-19). Tests enforce the boundary.
 
-5. _The platform is one interface._ The renderer reaches the operating system only through a `HostApi` (dialogs, file reads and atomic writes, locks, backups, menus, drops). Electron implements it for the desktop, a mock implements it for tests, and a browser implementation can serve a read-only web build later. A server-backed store would be another `FileStore` behind the same door (AD-19).
+5. _The platform is one interface._ The renderer reaches the operating system only through a `HostApi` (dialogs, file reads and atomic writes, locks, backups, menus, drops) and reports the form-factor profile and input style. The renderer picks a layout from that profile and the measured width class, and screens hold no layout code (AD-21). Electron implements it for the desktop, a mock implements it for tests, and a browser implementation can serve a read-only web build later. A server-backed store would be another `FileStore` behind the same door (AD-19).
 
 6. _The running app is drivable by machine._ Playwright drives the exact release binary through a debugging pipe, and the same core runs in plain Node tests without a window, so agents and CI can test both without clicking pixels or opening a network port (AD-16).
 
