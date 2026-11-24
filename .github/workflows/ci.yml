@@ -32,8 +32,9 @@ jobs:
   # A pull request that changes only Markdown files skips the unit, integration and end-to-end
   # jobs. They are skipped with `if` rather than a workflow-level `paths-ignore`: a workflow that
   # never starts leaves its required checks pending forever, whereas a skipped job counts as
-  # passed. Static checks still run because the formatter checks Markdown. Linux is used here
-  # only because this job is a single API call.
+  # passed. Static checks still run because the formatter checks Markdown, but on a Markdown-only
+  # change they skip every step except the install and the formatter. Linux is used here only
+  # because this job is a single API call.
   changes:
     name: Detect code changes
     runs-on: ubuntu-latest
@@ -77,6 +78,10 @@ jobs:
 
   static-checks:
     name: Static checks
+    needs: [changes]
+    # Runs even if `changes` failed, so a failure there cannot skip the checks. The code-only steps
+    # below test for `!= 'false'`, so an empty output from a failed `changes` also runs them.
+    if: ${{ !cancelled() }}
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -93,6 +98,7 @@ jobs:
         run: npm ci
 
       - name: Verify registry signatures
+        if: needs.changes.outputs.code != 'false'
         run: |
           # The registry sometimes answers an attestation lookup with a non-JSON body. Try up to three
           # times, then fail: a genuine signature failure fails all three.
@@ -104,10 +110,11 @@ jobs:
           exit 1
 
       - name: An unreviewed install script must fail the install
+        if: needs.changes.outputs.code != 'false'
         run: npm run check:install-policy
 
       - name: Lint
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
         run: npm run lint
 
       - name: Formatter check
@@ -115,11 +122,11 @@ jobs:
         run: npm run format:check
 
       - name: Type check
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
         run: npm run typecheck
 
       - name: Architecture tests and licence check
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
         run: npm run test:architecture
 
   unit-tests:
