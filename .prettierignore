@@ -11,4 +11,3 @@ knowledge/architecture/index.json
 tests/architecture/fixtures/
 .claude/
 knowledge/research/
-eslint-suppressions.json
