@@ -21,10 +21,10 @@ permissions:
 
 jobs:
   update:
-    name: Refresh installed AIF bundles
+    name: Update AIF bundles
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repository
+      - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
@@ -34,7 +34,7 @@ jobs:
         with:
           node-version-file: .node-version
 
-      - name: Refresh the installed AIF bundles
+      - name: Update AIF bundles
         id: bundles
         uses: starvoxel/ai-foundation/.github/actions/bundles@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
         with:
@@ -42,7 +42,7 @@ jobs:
 
       # Fetched after the bundles action, which runs npm ci, so no dependency code sees the token:
       # the action exports it to the steps that follow, and the only one is the next step.
-      - name: Get the update token from Bitwarden
+      - name: Get update token
         uses: bitwarden/sm-action@1238aae8fc64b212641190a9227c8a734ab1a793 # v3.0.1
         with:
           access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
       # One branch, one pull request. Every run closes the open update pull request and its branch,
       # then opens a new one from the current state of main, so the pull request never goes stale.
       # With nothing to update, the old pull request is closed and none is opened.
-      - name: Replace the open update pull request
+      - name: Replace update PR
         env:
           GH_TOKEN: ${{ env.AIF_UPDATE_TOKEN }}
           CHANGED: ${{ steps.bundles.outputs.changed }}
