@@ -143,11 +143,9 @@ describe('maskMessage', () => {
 });
 
 /**
- * Messages recorded from real Node and V8 errors (generated with a small script that provokes each
- * one, then pasted here with file paths made generic), and the masked text that was reviewed for
- * each. A change to the masker or the word list that changes any line shows up here as a diff to
- * review: a hidden word that should be visible is a word to add to the list, and a visible word
- * that could be data is a bug.
+ * Real Node and V8 error messages (paths made generic) with their reviewed masked text. A diff here
+ * means the masker or word list changed: a hidden word may belong in the list, a visible word that
+ * could be data is a bug.
  */
 const RECORDED_MESSAGES: readonly (readonly [string, string])[] = [
   [

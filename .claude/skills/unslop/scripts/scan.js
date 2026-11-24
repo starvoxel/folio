@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 // Scans text for AI-writing patterns. Usage: node scan.js [<file...|->] [--json]  (no files or "-" reads stdin)
 // Skips frontmatter, fenced code, and inline code. Exit 1 when findings exist.
-'use strict';
-const fs = require('fs');
-const path = require('path');
+import { readFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Builds the compiled rule list from patterns.json. Pure. */
-function buildRules(p) {
+export function buildRules(p) {
   const rules = [];
   for (const [category, { fix, terms }] of Object.entries(p.words)) {
     for (const term of terms) {
@@ -29,7 +29,7 @@ function buildRules(p) {
 }
 
 /** Replaces code spans and fences with spaces, keeping line numbers. Pure. */
-function maskCode(text) {
+export function maskCode(text) {
   const lines = text.split(/\r?\n/);
   let start = 0;
   if (lines[0] && lines[0].trim() === '---') {
@@ -51,7 +51,7 @@ function maskCode(text) {
 }
 
 /** Heading title-case check: 2+ later words capitalized, excluding acronyms. Pure. */
-function titleCaseHeading(line) {
+export function titleCaseHeading(line) {
   const m = line.match(/^#{1,6}\s+(.*)$/);
   if (!m) return null;
   const words = m[1].replace(/[*_]/g, '').split(/\s+/).slice(1);
@@ -60,7 +60,7 @@ function titleCaseHeading(line) {
 }
 
 /** Returns findings for one file's text. Pure. */
-function scanText(text, rules) {
+export function scanText(text, rules) {
   const findings = [];
   maskCode(text).forEach((line, i) => {
     if (!line.trim()) return;
@@ -98,10 +98,10 @@ function main(argv) {
   }
   const all = [];
   try {
-    const patterns = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.json'), 'utf8'));
+    const patterns = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'patterns.json'), 'utf8'));
     const rules = buildRules(patterns);
     for (const file of files) {
-      const text = file === '-' ? fs.readFileSync(0, 'utf8') : fs.readFileSync(file, 'utf8');
+      const text = file === '-' ? readFileSync(0, 'utf8') : readFileSync(file, 'utf8');
       const label = file === '-' ? '<stdin>' : file;
       for (const f of scanText(text, rules)) all.push({ file: label, ...f });
     }
@@ -114,5 +114,6 @@ function main(argv) {
   return all.length ? 1 : 0;
 }
 
-if (require.main === module) process.exit(main(process.argv.slice(2)));
-module.exports = { buildRules, maskCode, scanText, titleCaseHeading };
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  process.exit(main(process.argv.slice(2)));
+}

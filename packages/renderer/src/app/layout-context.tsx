@@ -36,11 +36,9 @@ export interface LayoutState {
 const LayoutContext = createContext<LayoutState | null>(null);
 
 /**
- * Measure the area the app has and make the layout for it available below. This is the only
- * place that reads a width (AD-21): the width of its own element, so a split view or an embedding
- * is handled like a window, and only the class is kept in state so a resize re-renders the app
- * when the class changes, not on every pixel. Nothing below is drawn until the first measurement,
- * which happens before the first paint.
+ * Measure the app's own element and provide the layout below. The only place that reads a width
+ * (AD-21), so an embedding counts like a window. Only the width class is kept in state, so a
+ * resize re-renders on class changes. Nothing draws before the first measurement.
  * @param props - The content.
  * @param props.children - The app.
  * @returns The measured area with the layout context.

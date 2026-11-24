@@ -29,13 +29,9 @@ export interface LogDestinations {
 }
 
 /**
- * Decide which destinations get which lines.
- *
- * - Every run: the normal line goes to `folio.log` and to standard error.
- * - An unpackaged run with the unredacted output on: the unredacted line, which has the same `id`
- *   as its normal line and only what that one hides, goes to the terminal and to
- *   `folio-unredacted.log`.
- * - A packaged build never gets an unredacted line, whatever `unredacted` says.
+ * Decide which destinations get which lines. Normal lines go to `folio.log` and standard error.
+ * Unredacted lines go to the terminal and `folio-unredacted.log`, only in an unpackaged run with
+ * `unredacted` on; a packaged build never gets them.
  * @param options - The build kind, the switch and the destinations.
  * @returns The writer for normal lines and, when allowed, the writer for unredacted lines.
  */

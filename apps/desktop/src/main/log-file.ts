@@ -73,11 +73,9 @@ export const nodeLogFileOperations: LogFileOperations = {
 };
 
 /**
- * Create a writer that appends lines to a log file (`folio.log` unless another name is given) and keeps the file from growing without
- * limit. When a line would take the file past the size limit, `folio.log` becomes `folio.log.1`,
- * `.1` becomes `.2`, and the oldest is deleted, so at most `(backups + 1) * maxBytes` stay on disk.
- * The writer throws when a file operation fails, so the logger can fall back, and it starts clean
- * on the next line.
+ * Create a writer that appends lines to a log file and rotates it (`folio.log` to `.1` to `.2`,
+ * the oldest deleted) when a line would pass the size limit, so at most `(backups + 1) * maxBytes`
+ * stay on disk. It throws when a file operation fails, so the logger can fall back.
  * @param options - The folder, the file operations and the limits.
  * @returns The writer, which takes one line without its newline.
  */

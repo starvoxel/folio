@@ -51,6 +51,7 @@ export default tseslint.config(
     plugins: { folio },
     rules: {
       'folio/file-header': 'error',
+      'folio/max-comment-lines': 'error',
 
       // javascript_base: declarations, equality, strings, functions, objects.
       'no-var': 'error',
@@ -174,7 +175,7 @@ export default tseslint.config(
   },
   {
     // Tool configuration files need a default export.
-    files: ['**/*.config.{js,ts,mjs,cjs}', 'tools/eslint/folio-plugin.js'],
+    files: ['**/*.config.{js,ts,mjs,cjs}', 'tools/eslint/folio-plugin.{js,d.ts}'],
     rules: { 'no-restricted-exports': 'off' },
   },
   {

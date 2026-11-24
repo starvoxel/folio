@@ -40,3 +40,14 @@ Tests are named in three levels: `describe` the subject, `describe` the conditio
 - Expected result: a present-tense verb phrase (`returnsNoLines`, `throwsRangeError`, `importsNothingFromNode`).
 
 Test files are named `{module}.test.ts`, and end-to-end files `{feature}.e2e.ts`. An architecture test enforces the three-level shape; review checks the wording.
+
+---
+
+## Comments
+
+These add a size limit to the ai-foundation rule "explain why, not what".
+
+- A comment records what the code cannot show: a constraint, a decision or a trap. Never restate the code or a name.
+- A `//` block is at most 3 lines, a JSDoc description at most 4, and a tag description at most 2. `folio/max-comment-lines` enforces it.
+- Longer explanations belong in the arc42 section or standard that owns the topic. Link to it.
+- The `concise-comments` skill covers how to write them; `unslop` covers wording.
