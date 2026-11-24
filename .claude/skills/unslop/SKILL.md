@@ -1,6 +1,6 @@
 ---
 name: 'unslop'
-version: '0.2.0'
+version: '0.2.1'
 description: 'Detects and rewrites AI-sounding patterns in documentation so the prose is plain, specific, and direct.'
 ---
 
