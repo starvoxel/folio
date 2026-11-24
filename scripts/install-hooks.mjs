@@ -18,8 +18,13 @@ import { join } from 'node:path';
 const root = join(import.meta.dirname, '..');
 
 if (existsSync(join(root, '.git'))) {
-  const result = spawnSync('git', ['config', 'core.hooksPath', '.githooks'], { cwd: root });
-  if (result.status !== 0) {
+  const current = spawnSync('git', ['config', 'core.hooksPath'], { cwd: root, encoding: 'utf8' });
+  const existing = current.stdout.trim();
+  if (existing !== '' && existing !== '.githooks') {
+    console.warn(`warning: core.hooksPath is already "${existing}"; left unchanged`);
+  } else if (
+    spawnSync('git', ['config', 'core.hooksPath', '.githooks'], { cwd: root }).status !== 0
+  ) {
     console.warn('warning: could not set core.hooksPath to .githooks');
   }
 }
