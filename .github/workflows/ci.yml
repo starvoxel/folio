@@ -84,7 +84,11 @@ jobs:
     if: ${{ !cancelled() }}
     runs-on: windows-latest
     steps:
+      # Full history: the architecture index computes a doc's staleness from git (key_files changes
+      # against the commits that edited the doc).
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -128,6 +132,16 @@ jobs:
       - name: Architecture tests and licence check
         if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
         run: npm run test:architecture
+
+      # ai-foundation's reusable actions, pinned to a release commit; Dependabot bumps the pin.
+      # Both need the full history and Node, which the steps above set up.
+      - name: AIF architecture index
+        if: ${{ !cancelled() }}
+        uses: starvoxel/ai-foundation/.github/actions/index@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
+
+      - name: AIF bundle drift
+        if: ${{ !cancelled() }}
+        uses: starvoxel/ai-foundation/.github/actions/bundles@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
 
   unit-tests:
     name: Unit tests
