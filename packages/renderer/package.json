@@ -13,8 +13,8 @@
     "typecheck": "tsc --project tsconfig.json"
   },
   "dependencies": {
-    "@fluentui/react-components": "9.75.1",
-    "@fluentui/react-icons": "2.0.345",
+    "@fluentui/react-components": "9.75.2",
+    "@fluentui/react-icons": "2.0.346",
     "@folio/core": "0.0.0",
     "@folio/host-api": "0.0.0",
     "react": "19.3.1",
