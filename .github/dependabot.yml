@@ -108,14 +108,26 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    # ai-foundation is ours, so its releases skip the cooldown; its own group is reviewed by a
+    # person and never auto-merged. The pattern matches the action by repository, whatever
+    # subpath Dependabot reports it under.
     cooldown:
       default-days: 7
+      exclude:
+        - 'starvoxel/ai-foundation*'
     groups:
       security:
         applies-to: security-updates
         patterns:
           - '*'
+      aif:
+        patterns:
+          - 'starvoxel/ai-foundation*'
       patches:
         update-types: [patch]
+        exclude-patterns:
+          - 'starvoxel/ai-foundation*'
       minors:
         update-types: [minor]
+        exclude-patterns:
+          - 'starvoxel/ai-foundation*'

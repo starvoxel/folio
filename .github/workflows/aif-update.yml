@@ -1,0 +1,55 @@
+name: AIF bundle update
+
+# Refreshes the committed ai-foundation install (.claude/) to match the pinned action's release and
+# opens a pull request when anything changed. It only updates the bundles already recorded in
+# .claude/.installs.yaml; it never installs new ones. Runs on Linux: it gates nothing, so it does
+# not need the Windows runner the pull-request checks use.
+#
+# AIF_UPDATE_TOKEN must be a token that can push branches and open pull requests. A pull request
+# opened with the default GITHUB_TOKEN does not start other workflows, so the required checks would
+# never run and it could not merge.
+on:
+  schedule:
+    - cron: '41 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: Update AIF bundles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: ${{ secrets.AIF_UPDATE_TOKEN }}
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+
+      - id: bundles
+        uses: starvoxel/ai-foundation/.github/actions/bundles@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
+        with:
+          mode: update
+
+      - name: Open a pull request
+        if: steps.bundles.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AIF_UPDATE_TOKEN }}
+        run: |
+          branch="aif/update-bundles-$(date +%Y%m%d)"
+          if [ -n "$(gh pr list --state open --json headRefName --jq '.[] | select(.headRefName | startswith("aif/update-bundles")) | .headRefName')" ]; then
+            echo "An update pull request is already open; leaving it."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add .claude .kiro 2>/dev/null || git add .claude
+          git commit -m "Update the installed AIF bundles"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Update the installed AIF bundles" \
+            --body "Refreshes the committed project install to match the pinned ai-foundation release. Opened by the weekly aif-update workflow."
