@@ -21,3 +21,6 @@ playwright-report/
 .DS_Store
 Thumbs.db
 apps/desktop/stage/
+
+# Local settings for development runs
+.env

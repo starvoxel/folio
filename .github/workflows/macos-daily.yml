@@ -26,7 +26,16 @@ jobs:
 
       - run: npm install -g npm@12 && npm --version
       - run: npm ci
-      - run: npm audit signatures
+      - name: Verify registry signatures
+        run: |
+          # The registry sometimes answers an attestation lookup with a non-JSON body. Try up to three
+          # times, then fail: a genuine signature failure fails all three.
+          for attempt in 1 2 3; do
+            npm audit signatures && exit 0
+            echo "::warning::npm audit signatures failed (attempt $attempt of 3)"
+            if [ "$attempt" -lt 3 ]; then sleep 10; fi
+          done
+          exit 1
       - run: npm run lint
       - run: npm run format:check
       - run: npm run typecheck

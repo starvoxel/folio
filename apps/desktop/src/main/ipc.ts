@@ -55,16 +55,18 @@ async function guarded<Value>(
 export interface IpcServices {
   readonly logger: Logger;
   readonly settings: SettingsStore;
+  /** The environment the app runs with, which decides whether automation is on (AD-16). */
+  readonly env: Readonly<Record<string, string | undefined>>;
 }
 
 /**
  * Register the handlers for the channels in `IPC_CHANNELS`. Only the host operations the
  * scaffold implements are registered; the rest are refused in the preload bridge, so the main
  * process has no handler to attack for them.
- * @param services - The logger and the settings store.
+ * @param services - The logger, the settings store and the environment.
  */
 export function registerIpcHandlers(services: IpcServices): void {
-  const { logger, settings } = services;
+  const { logger, settings, env } = services;
   ipcMain.handle(IPC_CHANNELS.getInfo, (event): Promise<IpcResult<HostInfo>> => {
     assertTrustedSender(event);
     return guarded(logger, 'getInfo', () => ({
@@ -72,7 +74,7 @@ export function registerIpcHandlers(services: IpcServices): void {
         process.platform === 'win32' || process.platform === 'darwin' ? process.platform : 'linux',
       formFactor: 'desktop',
       input: { pointer: 'fine', hover: true },
-      automation: isAutomationEnabled(process.env),
+      automation: isAutomationEnabled(env),
       appVersion: app.getVersion(),
     }));
   });
