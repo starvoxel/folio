@@ -9,7 +9,7 @@ name: AIF bundle update
 # fetched the same way ai-foundation's morning-check does. A pull request opened with the default
 # GITHUB_TOKEN would not start other workflows, so the required checks would never run. Configured
 # in the repository's Actions settings, not in this file: the secret BWS_ACCESS_TOKEN (a machine
-# account that can read only that one secret), and the variables UPDATE_TOKEN_SECRET_ID (the
+# account that can read only that one secret), and the variables AIF_UPDATE_TOKEN_SECRET_ID (the
 # Bitwarden secret's ID, not the token) and, off the US cloud, BWS_CLOUD_REGION.
 on:
   schedule:
@@ -45,14 +45,14 @@ jobs:
           access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
           cloud_region: ${{ vars.BWS_CLOUD_REGION || 'us' }}
           secrets: |
-            ${{ vars.UPDATE_TOKEN_SECRET_ID }} > UPDATE_TOKEN
+            ${{ vars.AIF_UPDATE_TOKEN_SECRET_ID }} > AIF_UPDATE_TOKEN
 
       # One branch, one pull request. Every run closes the open update pull request and its branch,
       # then opens a new one from the current state of main, so the pull request never goes stale.
       # With nothing to update, the old pull request is closed and none is opened.
       - name: Replace the update pull request
         env:
-          GH_TOKEN: ${{ env.UPDATE_TOKEN }}
+          GH_TOKEN: ${{ env.AIF_UPDATE_TOKEN }}
           CHANGED: ${{ steps.bundles.outputs.changed }}
         run: |
           branch="aif/update-bundles"
