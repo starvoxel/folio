@@ -4,14 +4,11 @@ The high-level list of what is planned or under way. One line each; the detail l
 
 ## In progress
 
-- Diagnostic logging, one milestone per branch and pull request. [plans/logging.md](plans/logging.md)
-  - 1 to 3, done: safe stack traces, a log file, uncaught errors.
-  - 4, done: `FolioError` messages and private fields.
-  - 5, done: masked third-party messages.
-  - 6, done: a developer-only unredacted switch.
-  - 7, last: save diagnostic details (raw details kept in memory, saved only by the person).
+None.
 
 ## Planned
+
+- Diagnostic logging, milestone 7: save diagnostic details (raw details kept in memory, saved only by the person). Approved 2026-11-24, not started; the plan has a start-here list. [plans/logging.md](plans/logging.md)
 
 Foundations, in the order the risks suggest:
 
@@ -30,6 +27,7 @@ Still without a plan:
 
 ## Done
 
+- Diagnostic logging, milestones 1 to 6: safe stack traces, a log file, uncaught errors, `FolioError` and private fields, masked third-party messages, line ids and the developer-only unredacted switch, plus `npm run dev` and a `.env` file. [plans/logging.md](plans/logging.md)
 - App scaffold: workspace, `core`, `host-api` with a mock, renderer shell, hardened Electron app, four kinds of test, and CI. [plans/app-scaffold.md](plans/app-scaffold.md)
 - Layout foundation: form-factor profiles and width classes, with the desktop profile. [plans/layout-foundation.md](plans/layout-foundation.md)
 
