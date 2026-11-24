@@ -26,6 +26,7 @@
     "test:integration": "vitest run --project integration --passWithNoTests",
     "test:e2e": "playwright test",
     "test": "npm run test:architecture && npm run test:unit && npm run test:integration && npm run test:e2e",
+    "prepare": "node scripts/install-hooks.mjs",
     "check:install-policy": "node scripts/check-install-policy.mjs",
     "check": "npm run lint && npm run format:check && npm run typecheck && npm run test:architecture"
   },
