@@ -26,10 +26,8 @@ import { createMainWindow } from './window.js';
 // would crash the app. Logging must never do that.
 process.stderr.on('error', () => undefined);
 
-// Packaged builds have no console, so their lines also go to a file in the app's own data folder
-// (see plans/logging.md). Unpackaged runs write to `logs-dev` instead, so a developer's logs never
-// mix with an installed app's. The folder is read on the first line, which is the earliest it is
-// needed.
+// Packaged builds have no console, so lines also go to a file in the app's data folder (see
+// plans/logging.md); unpackaged runs use `logs-dev`. The folder is read on the first line.
 const logFileWriter = (fileName: string): ((line: string) => void) => {
   let writer: ((line: string) => void) | undefined;
   return (line) => {

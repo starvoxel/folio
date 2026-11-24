@@ -52,13 +52,9 @@ export interface AppShellProps {
 }
 
 /**
- * The frame of every screen (design notes, Shell). The layout decides how the navigation is
- * arranged: a pane beside the page, or a drawer that a top bar button opens and that closes after
- * a page is chosen, on Escape and on the backdrop, and gives focus back to its button.
- *
- * It is one component for every layout, so the page keeps its place in the tree when the window
- * is resized across a threshold: its state (an open dialog, a scroll position) survives the change
- * from one navigation form to the other (AD-21).
+ * The frame of every screen (design notes, Shell). The layout picks a pane beside the page or a
+ * drawer. It is one component for every layout, so page state (an open dialog, a scroll position)
+ * survives a resize across a threshold (AD-21).
  * @param props - The layout, the interaction rules, the navigation, the top bar and the page.
  * @returns The shell element.
  */

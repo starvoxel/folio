@@ -68,13 +68,10 @@ export interface MaskReport {
 }
 
 /**
- * Make the message of an error the app did not raise safe to log. Library messages quote values
- * (a parse error quotes the text it choked on), so nothing is trusted: quoted text is hidden, a
- * word is kept only if it is in `LOG_VOCABULARY`, and a number is kept only straight after a word
- * such as `position` or `line`. Everything else becomes `<?>`, and neighbouring masks merge, so
- * even the number of hidden words is not shown. The result is one line.
- *
- * The check is a whitelist, so it fails closed: a word nobody thought of is hidden.
+ * Make a third-party error message safe to log, because libraries quote values. Only words in
+ * `LOG_VOCABULARY` and numbers right after a word like `position` or `line` stay; everything else
+ * becomes `<?>`, merged with its neighbours so the count of hidden words is not shown. A whitelist,
+ * so a word nobody thought of is hidden. The result is one line.
  * @param message - The error's message.
  * @returns The masked message.
  */
