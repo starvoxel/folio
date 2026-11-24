@@ -135,11 +135,11 @@ jobs:
 
       # ai-foundation's reusable actions, pinned to a release commit; Dependabot bumps the pin.
       # Both need the full history and Node, which the steps above set up.
-      - name: Architecture index (key_files staleness and relative links)
+      - name: AIF architecture docs are current (key_files and links)
         if: ${{ !cancelled() }}
         uses: starvoxel/ai-foundation/.github/actions/index@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
 
-      - name: Project install drift (warning only)
+      - name: AIF installed bundles are current (warning only)
         if: ${{ !cancelled() }}
         uses: starvoxel/ai-foundation/.github/actions/bundles@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
 
