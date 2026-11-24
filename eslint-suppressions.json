@@ -1,4 +1,14 @@
 {
+  "apps/desktop/scripts/dev.mjs": {
+    "folio/max-comment-lines": {
+      "count": 1
+    }
+  },
+  "apps/desktop/src/main/dev-env.ts": {
+    "folio/max-comment-lines": {
+      "count": 2
+    }
+  },
   "apps/desktop/src/main/log-destinations.ts": {
     "folio/max-comment-lines": {
       "count": 1
