@@ -1,10 +1,10 @@
 # Plan: Diagnostic logging
 
-| Field       | Value                                |
-| ----------- | ------------------------------------ |
-| Status      | In progress (milestones 1 to 6 done) |
-| Approved by |                                      |
-| Created     | 2026-11-16                           |
+| Field       | Value                                           |
+| ----------- | ----------------------------------------------- |
+| Status      | Milestones 1 to 6 done; 7 approved, not started |
+| Approved by | Jeremy, 2026-11-24 (milestone 7)                |
+| Created     | 2026-11-16                                      |
 
 ## Goal
 
@@ -13,7 +13,7 @@ Make the main-process logger good enough to debug a failure on a household machi
 ## Scope
 
 - In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark, masked third-party messages and the developer-only unredacted switch.
-- In, next: saving diagnostic details (milestone 7, last): raw details kept in memory only and saved to a file the person chooses.
+- Approved, not started: saving diagnostic details (milestone 7, last): raw details kept in memory only and saved to a file the person chooses. Parked by choice, not blocked; see "Start here" under milestone 7.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -85,6 +85,16 @@ Why: the cheapest way to keep a useful message free of data is to never put the 
 
 ### 7. Save diagnostic details (last)
 
+Status: approved by Jeremy, 2026-11-24; implementation parked until asked for.
+
+Start here:
+
+- Branch `logging-m7-diagnostic-buffer` from the latest `main`; PR title `Logging milestone 7: ...`. Everything it builds on is merged: the error box (milestone 3), `privateField` (4), the raw-details path and line ids (6).
+- New files, each with a test: `diagnostic-buffer.ts` (pure, no Electron, injected clock) and `diagnostic-save.ts` (builds the JSON, writes through injected file operations, takes the dialog as a function).
+- Wiring: `logger.ts` feeds the buffer from the original error and fields, before anything is scrubbed; `error-handlers.ts` and the `startup failed` catch in `main.ts` (before `app.exit(1)`) get the button and the reference id.
+- First check: whether a dialog with buttons can be shown before the app is ready. Handle the answer then; there is no fallback decision yet.
+- Docs: AD-10 already describes this as the design; mark it built when it is, and add the new files to `key_files`.
+
 Why: some failures cannot be debugged from a scrubbed line: the raw message, the raw stack, a value the code marked private. Instead of writing that to disk or encrypting it into the log, keep it in memory and let the person hand it over on purpose.
 
 - Does:
@@ -127,6 +137,7 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 
 ## Decisions
 
+- Milestone 7 is approved and its implementation is parked until asked for (Jeremy, 2026-11-24).
 - Frames only, app-relative paths, everything else cut to the file name (Engineer, 2026-11-16; proposal changed from "strip the install, home and temp folders").
 - A log file under the user-data folder in packaged builds, with 1 MB size rotation and two backups (Engineer, 2026-11-16; the owner asked for the decision to be made here).
 
@@ -138,6 +149,7 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 - Per-line ids are `session-counter` in one string, shown the same way in log lines, the unredacted file, the saved file and the error boxes, so a log entry and its raw details are easy to connect. They are built in milestone 6, because the unredacted file needs them; milestone 7 reuses them (Jeremy, 2026-11-22).
 - The unredacted file does not repeat the normal line: it holds only the raw details, linked to the normal log by the line `id` (Jeremy, 2026-11-22).
 - A repeated stack collapses into one entry that keeps the latest message: with the same stack, a meaningfully different message is unlikely, so the first message is not kept as well (Jeremy, 2026-11-22).
+- `npm run dev` builds and starts the app unpackaged from the repository root, and a `.env` file there can set `FOLIO_LOG_LEVEL`, `FOLIO_LOG_UNREDACTED` and `FOLIO_AUTOMATION`, so engineers can drive a development run from the command line (AD-16). Packaged builds never read it, only those keys are used (it cannot set `GOOGLE_API_KEY`, `NODE_OPTIONS` and the like), and the real environment wins (Jeremy, 2026-11-22; `FOLIO_AUTOMATION` added after review, 2026-11-23).
 - Unpackaged runs write a log file too, in `logs-dev`, and the unredacted details go to their own rotating file there (Jeremy, 2026-11-22; they asked for a written log in dev builds).
 - Milestone 6 is kept: it is development-only and ignored in packaged builds, where milestone 7 is the only way to see raw details (Jeremy, 2026-11-22).
 - Whether a dialog with buttons can be shown before the app is ready is dealt with when milestone 7 reaches it; there is no fallback decision until then (Jeremy, 2026-11-22).

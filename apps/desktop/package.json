@@ -5,11 +5,13 @@
   "description": "The Electron main process, preload bridge, hardening and packaging.",
   "license": "UNLICENSED",
   "type": "module",
+  "main": "dist/main/main.cjs",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs",
     "package": "node scripts/build.mjs && node scripts/package.mjs",
     "typecheck": "tsc --project tsconfig.json"
   },
@@ -18,8 +20,8 @@
     "@electron/fuses": "2.1.3",
     "@electron/packager": "20.3.0",
     "@types/ws": "8.18.2",
-    "electron": "45.2.3",
-    "ws": "8.22.2"
+    "electron": "45.3.3",
+    "ws": "8.23.0"
   },
   "dependencies": {
     "@folio/core": "0.0.0",

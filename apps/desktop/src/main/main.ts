@@ -7,11 +7,13 @@
 // ------------------------------
 
 import { randomBytes } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, dialog, Menu } from 'electron';
 
 import { findRefusedSwitches } from './debug-guard.js';
+import { applyDevEnvFile } from './dev-env.js';
 import { installErrorHandlers } from './error-handlers.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
@@ -40,23 +42,42 @@ const logFileWriter = (fileName: string): ((line: string) => void) => {
   };
 };
 
+// Development only: a `.env` file in the folder the app was started from may set the logging
+// variables and `FOLIO_AUTOMATION` (`dev-env.ts` lists the only keys it may set). A packaged build
+// never reads it, and the real environment wins over the file.
+const devEnv = applyDevEnvFile({
+  packaged: app.isPackaged,
+  env: process.env,
+  readText: () => {
+    try {
+      return readFileSync(join(process.cwd(), '.env'), 'utf8');
+    } catch {
+      return undefined;
+    }
+  },
+});
+
 // Development only: `FOLIO_LOG_UNREDACTED=1` adds raw details in a second line. A packaged build
 // ignores it (`parseUnredacted`, and `createLogDestinations` again), so no raw line is ever
 // written there.
 const destinations = createLogDestinations({
   packaged: app.isPackaged,
-  unredacted: parseUnredacted(process.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
+  unredacted: parseUnredacted(devEnv.env['FOLIO_LOG_UNREDACTED'], app.isPackaged),
   stderr: (line) => process.stderr.write(`${line}\n`),
   file: logFileWriter,
 });
 
 const logger = createLogger({
-  level: parseLogLevel(process.env['FOLIO_LOG_LEVEL']),
+  level: parseLogLevel(devEnv.env['FOLIO_LOG_LEVEL']),
   ...destinations,
   now: () => Date.now(),
   appFolder: app.getAppPath(),
   sessionId: createSessionId((size) => randomBytes(size)),
 });
+
+if (devEnv.loaded.length > 0) {
+  logger.debug('dev env file applied', { keys: devEnv.loaded.join(',') });
+}
 
 installErrorHandlers({
   logger,
@@ -75,6 +96,7 @@ async function openWhenReady(): Promise<void> {
     registerIpcHandlers({
       logger,
       settings: createSettingsStore(app.getPath('userData')),
+      env: devEnv.env,
     });
     // Windows and Linux have no menu bar (H1.14 uses the hamburger menu); macOS keeps a minimal
     // native menu so Cmd+Q, Cmd+C and Cmd+V work (H1.16). The full menu arrives with its plan.
@@ -115,7 +137,7 @@ function start(): void {
 
 // Chromium's remote debugging switches hand over complete control of the app and no fuse turns
 // them off, so the app refuses them unless FOLIO_AUTOMATION=1 was set (AD-16, H1.17).
-const refused = findRefusedSwitches(process.argv, process.env);
+const refused = findRefusedSwitches(process.argv, devEnv.env);
 if (refused.length > 0) {
   process.stderr.write('Remote debugging switches are refused unless FOLIO_AUTOMATION=1.\n');
   app.exit(2);
