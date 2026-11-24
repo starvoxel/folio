@@ -1,10 +1,10 @@
 # Plan: Diagnostic logging
 
-| Field       | Value                                |
-| ----------- | ------------------------------------ |
-| Status      | In progress (milestones 1 to 6 done) |
-| Approved by |                                      |
-| Created     | 2026-11-16                           |
+| Field       | Value                                           |
+| ----------- | ----------------------------------------------- |
+| Status      | Milestones 1 to 6 done; 7 approved, not started |
+| Approved by | Jeremy, 2026-11-24 (milestone 7)                |
+| Created     | 2026-11-16                                      |
 
 ## Goal
 
@@ -13,7 +13,7 @@ Make the main-process logger good enough to debug a failure on a household machi
 ## Scope
 
 - In, done: `apps/desktop/src/main/logger.ts` (error logging, a write that never throws), a stack scrubber, a small rotating file sink, the call sites in `main.ts` and `ipc.ts`, logging of uncaught errors, `FolioError` and the private-field mark, masked third-party messages and the developer-only unredacted switch.
-- In, next: saving diagnostic details (milestone 7, last): raw details kept in memory only and saved to a file the person chooses.
+- Approved, not started: saving diagnostic details (milestone 7, last): raw details kept in memory only and saved to a file the person chooses. Parked by choice, not blocked; see "Start here" under milestone 7.
 - Out, for now: everything under "Later" below. Each item is recorded there so it is not forgotten; none is started.
 - Out for good: uploading logs (nothing leaves the computer, H1.12).
 
@@ -85,6 +85,16 @@ Why: the cheapest way to keep a useful message free of data is to never put the 
 
 ### 7. Save diagnostic details (last)
 
+Status: approved by Jeremy, 2026-11-24; implementation parked until asked for.
+
+Start here:
+
+- Branch `logging-m7-diagnostic-buffer` from the latest `main`; PR title `Logging milestone 7: ...`. Everything it builds on is merged: the error box (milestone 3), `privateField` (4), the raw-details path and line ids (6).
+- New files, each with a test: `diagnostic-buffer.ts` (pure, no Electron, injected clock) and `diagnostic-save.ts` (builds the JSON, writes through injected file operations, takes the dialog as a function).
+- Wiring: `logger.ts` feeds the buffer from the original error and fields, before anything is scrubbed; `error-handlers.ts` and the `startup failed` catch in `main.ts` (before `app.exit(1)`) get the button and the reference id.
+- First check: whether a dialog with buttons can be shown before the app is ready. Handle the answer then; there is no fallback decision yet.
+- Docs: AD-10 already describes this as the design; mark it built when it is, and add the new files to `key_files`.
+
 Why: some failures cannot be debugged from a scrubbed line: the raw message, the raw stack, a value the code marked private. Instead of writing that to disk or encrypting it into the log, keep it in memory and let the person hand it over on purpose.
 
 - Does:
@@ -127,6 +137,7 @@ Recorded so they are not lost. None is scheduled. The ones that are plans of the
 
 ## Decisions
 
+- Milestone 7 is approved and its implementation is parked until asked for (Jeremy, 2026-11-24).
 - Frames only, app-relative paths, everything else cut to the file name (Engineer, 2026-11-16; proposal changed from "strip the install, home and temp folders").
 - A log file under the user-data folder in packaged builds, with 1 MB size rotation and two backups (Engineer, 2026-11-16; the owner asked for the decision to be made here).
 
