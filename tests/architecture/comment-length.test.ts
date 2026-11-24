@@ -73,4 +73,27 @@ describe('maxCommentLines', () => {
       expect(lint('/**\n * @param a - x\n * y\n * z\n */\nfunction f() {}')).toHaveLength(1);
     });
   });
+
+  describe('blockComments', () => {
+    it('flagsAPlainBlockOfFourLines', () => {
+      expect(lint('/*\n a\n b\n c\n*/\nconst a = 1;')).toHaveLength(1);
+    });
+
+    it('allowsAPlainBlockOfThreeLines', () => {
+      expect(lint('/*\n a\n*/\nconst a = 1;')).toEqual([]);
+    });
+  });
+
+  describe('windowsLineEndings', () => {
+    it('flagsFourLineComments', () => {
+      expect(
+        lint(`const a = 1;\r\n${lines(4).replaceAll('\n', '\r\n')}\r\nconst b = 2;`),
+      ).toHaveLength(1);
+    });
+
+    it('flagsFiveDescriptionLines', () => {
+      const code = '/**\r\n * a\r\n * b\r\n * c\r\n * d\r\n * e\r\n */\r\nfunction f() {}';
+      expect(lint(code)).toHaveLength(1);
+    });
+  });
 });
