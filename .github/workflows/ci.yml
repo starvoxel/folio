@@ -9,9 +9,11 @@ name: CI
 # one another would only add minutes), then the end-to-end tests once both have passed. Third-party actions are pinned to full commit SHAs; the comment
 # names the release each SHA belongs to. No stable Node bundles npm 12 yet (Node 24 LTS bundles
 # npm 11), so every job installs it explicitly.
+#
+# It runs on pull requests only, not again on push to main. That is safe because branch protection
+# requires a pull request's branch to be up to date with main before it merges, so the pull-request
+# run is a run of exactly what lands. If that setting is ever switched off, add `push` back.
 on:
-  push:
-    branches: [main]
   pull_request:
 
 permissions:
@@ -44,7 +46,15 @@ jobs:
         run: npm ci
 
       - name: Verify registry signatures
-        run: npm audit signatures
+        run: |
+          # The registry sometimes answers an attestation lookup with a non-JSON body. Try up to three
+          # times, then fail: a genuine signature failure fails all three.
+          for attempt in 1 2 3; do
+            npm audit signatures && exit 0
+            echo "::warning::npm audit signatures failed (attempt $attempt of 3)"
+            if [ "$attempt" -lt 3 ]; then sleep 10; fi
+          done
+          exit 1
 
       - name: An unreviewed install script must fail the install
         run: npm run check:install-policy
