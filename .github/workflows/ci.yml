@@ -133,15 +133,11 @@ jobs:
         if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
         run: npm run test:architecture
 
-      # ai-foundation's reusable actions, pinned to a release commit; Dependabot bumps the pin.
-      # Both need the full history and Node, which the steps above set up.
-      - name: AIF architecture index
+      # ai-foundation's reusable action, pinned to a release commit; Dependabot bumps the pin. It
+      # needs the full history and Node, which the steps above set up.
+      - name: AIF checks
         if: ${{ !cancelled() }}
-        uses: starvoxel/ai-foundation/.github/actions/index@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
-
-      - name: AIF bundle drift
-        if: ${{ !cancelled() }}
-        uses: starvoxel/ai-foundation/.github/actions/bundles@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
+        uses: starvoxel/ai-foundation/.github/actions/checks@<v0.5.0-release-sha> # v0.5.0
 
   unit-tests:
     name: Unit tests
