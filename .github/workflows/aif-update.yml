@@ -1,16 +1,10 @@
 name: AIF bundle update
 
-# Refreshes the committed ai-foundation install (.claude/) to match the pinned action's release and
-# replaces the one open update pull request with a fresh one when anything changed. It only updates the bundles already recorded in
-# .claude/.installs.yaml; it never installs new ones. Runs daily and on demand, on Linux: it gates nothing, so it does
-# not need the Windows runner the pull-request checks use.
-#
-# The token that pushes the branch and opens the pull request lives in Bitwarden Secrets Manager,
-# fetched the same way ai-foundation's morning-check does. A pull request opened with the default
-# GITHUB_TOKEN would not start other workflows, so the required checks would never run. Configured
-# in the repository's Actions settings, not in this file: the secret BWS_ACCESS_TOKEN (a machine
-# account that can read only that one secret), and the variables AIF_UPDATE_TOKEN_SECRET_ID (the
-# Bitwarden secret's ID, not the token) and, off the US cloud, BWS_CLOUD_REGION.
+# Refreshes the committed ai-foundation install (.claude/) and replaces the one open update pull
+# request with a fresh one when anything changed. The logic is ai-foundation's reusable workflow;
+# this file only sets the schedule and passes the Bitwarden settings, which live in the
+# repository's Actions settings: the secret BWS_ACCESS_TOKEN and the variables
+# AIF_UPDATE_TOKEN_SECRET_ID and, off the US cloud, BWS_CLOUD_REGION.
 on:
   schedule:
     - cron: '47 5 * * *'
@@ -22,59 +16,9 @@ permissions:
 jobs:
   update:
     name: Update AIF bundles
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Set up Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .node-version
-
-      - name: Update AIF bundles
-        id: bundles
-        uses: starvoxel/ai-foundation/.github/actions/bundles@de134ebd32cb0d544cdd8955cd5a0eec1acafbe6 # v0.4.0
-        with:
-          mode: update
-
-      # Fetched after the bundles action, which runs npm ci, so no dependency code sees the token:
-      # the action exports it to the steps that follow, and the only one is the next step.
-      - name: Get update token
-        uses: bitwarden/sm-action@1238aae8fc64b212641190a9227c8a734ab1a793 # v3.0.1
-        with:
-          access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
-          cloud_region: ${{ vars.BWS_CLOUD_REGION || 'us' }}
-          secrets: |
-            ${{ vars.AIF_UPDATE_TOKEN_SECRET_ID }} > AIF_UPDATE_TOKEN
-
-      # One branch, one pull request. Every run closes the open update pull request and its branch,
-      # then opens a new one from the current state of main, so the pull request never goes stale.
-      # With nothing to update, the old pull request is closed and none is opened.
-      - name: Replace update PR
-        env:
-          GH_TOKEN: ${{ env.AIF_UPDATE_TOKEN }}
-          CHANGED: ${{ steps.bundles.outputs.changed }}
-        run: |
-          branch="aif/update-bundles"
-          # Checkout kept no credentials; give git the token for the pushes only.
-          auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
-          for number in $(gh pr list --head "$branch" --state open --json number --jq '.[].number'); do
-            gh pr close "$number" --delete-branch --comment "Replaced by the next run of the aif-update workflow."
-          done
-          git -c http.extraheader="$auth" push origin --delete "$branch" 2>/dev/null || true
-          if [ "$CHANGED" != "true" ]; then
-            echo "The installed bundles are current."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -C "$branch"
-          git add .claude .kiro 2>/dev/null || git add .claude
-          git commit -m "Update the installed AIF bundles"
-          git -c http.extraheader="$auth" push origin "$branch"
-          gh pr create --base main --head "$branch" \
-            --title "Update the installed AIF bundles" \
-            --body "Refreshes the committed project install to match the pinned ai-foundation release. Opened by the daily aif-update workflow."
+    uses: starvoxel/ai-foundation/.github/workflows/update-bundles.yml@c531629bbf3f5e561eb763d59a9876ca123752b6 # v0.5.0
+    with:
+      token-secret-id: ${{ vars.AIF_UPDATE_TOKEN_SECRET_ID }}
+      cloud-region: ${{ vars.BWS_CLOUD_REGION || 'us' }}
+    secrets:
+      BWS_ACCESS_TOKEN: ${{ secrets.BWS_ACCESS_TOKEN }}
