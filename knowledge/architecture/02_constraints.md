@@ -13,6 +13,8 @@ key_files:
   - tests/architecture/licences.test.ts
   - apps/desktop/package.json
   - packages/renderer/package.json
+  - .github/workflows/cleanup-branches.yml
+  - .github/scripts/cleanup-branches.mjs
 ---
 
 > The fixed choices the architecture works within: platform, pinned stack, coding standards and product rules.
@@ -64,6 +66,10 @@ The build enforces what it can: strict compiler settings, lint with warnings as 
 - A locked month changes only through the guarded reopen (M1.7, M1.14, H1.8).
 - Months close in order (M1.17).
 - Closing, reopening and completing an import save immediately (H1.6b).
+
+## Branches age out
+
+Cloud sessions cannot delete remote branches, so a scheduled workflow (Mondays and Thursdays) sorts unprotected branches into Active (under 14 days, kept), Stale (up to 30 days, PR closed and labelled `stale`) and Archive (older, deleted). The 5 most recently active branches count as Active and the 15 most recent as at least Stale, whatever their age. Kept regardless: the default branch, the protected list in the workflow, branches not forked from the default branch unless named as throwaway tests (`FOL-test/…`), and empty branches, except unused AI session branches (`claude/`, `copilot/`, `kiro/`, `ai/`), which age out from creation. A manual dispatch can dry-run or name branches to delete; branches with an open PR are refused. The rules live in `.github/scripts/cleanup-branches.mjs`, copied from the ai-foundation project template.
 
 ## Dependency updates and security
 
