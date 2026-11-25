@@ -1,72 +1,15 @@
-#!/usr/bin/env node
+// ------------------------------
+// cleanup-branches.mjs
+//
+// Author: Starvoxel AI Agent - 2026-11-25
+//
+// Copyright (c) Starvoxel. All rights reserved.
+// ------------------------------
 
 /**
- * Branch cleanup, run by .github/workflows/cleanup-branches.yml.
- *
- * Cloud sessions can't delete remote branches, so GitHub does it. Every branch
- * other than the default branch and the protected list is sorted into exactly
- * one category, checked in this order (first match wins):
- *
- *   Mandatory  default branch, protected branches, branches not forked from
- *              the default branch (unrelated history) unless their name marks
- *              them as throwaway tests (see isThrowawayTestName) or
- *              KEEP_UNRELATED_BRANCHES is "false".                     -> keep
- *   Archive    merged by a PR whose head was exactly this tip; or a
- *              `push-check/` branch the default branch already contains;
- *              or last activity older than ARCHIVE_DAYS and outside the
- *              ARCHIVE_BRANCHES most recently active, with no open PR.   -> delete
- *   Active     last activity within ACTIVE_DAYS, or among the ACTIVE_BRANCHES
- *              most recently active, or an open PR younger than ACTIVE_DAYS
- *              (or one reopened after being marked stale).               -> keep
- *   Stale      an open PR ACTIVE_DAYS or older, or last activity between
- *              ACTIVE_DAYS and ARCHIVE_DAYS old, or among the ARCHIVE_BRANCHES
- *              most recently active.  -> close the PR, label it `stale`; the
- *              branch is kept until it reaches Archive.
- *
- * Time is forgiving by design: a branch ages out only once it is both old in
- * days and pushed down the recency ranking by newer branches, so a quiet repo
- * keeps its latest branches however long ago they were touched.
- *
- * "Last activity" is the date of the branch's last commit. An empty branch (no
- * commits of its own) is kept as Mandatory, with two exceptions: AI session
- * branches (AI_BRANCH_PREFIXES, e.g. `claude/`), which are often created and
- * never used, and throwaway test branches; KEEP_EMPTY_BRANCHES="false" makes
- * every empty branch an exception. For those, last activity is when the
- * branch was created, from the repository activity log (falling back to the
- * date of the commit it points at), so an unused one goes Active, Stale,
- * Archive like any other.
- *
- * A branch with an open PR is never deleted: the PR is closed first, and the
- * branch only reaches Archive on a later run.
- *
- * Environment:
- *   GH_TOKEN / GITHUB_TOKEN  token (needs contents: write, pull-requests: write)
- *   REPO                     owner/name
- *   ENFORCE                  "true" to act; anything else only reports
- *   DRY_RUN                  "true" forces report-only, overriding ENFORCE
- *   BRANCHES                 optional space/comma list: delete exactly these
- *                            instead of running the sweep (see runList)
- *   PROTECTED_BRANCHES       space-separated names that are never touched
- *   AI_BRANCH_PREFIXES       space-separated prefixes of AI session branches
- *                            (default: "copilot/ kiro/ claude/ ccr- ai/")
- *   PROJECT_SHORTCODE        e.g. AIF; defaults to .aiconfig.json's
- *                            project_shortname (else project_name). Without
- *                            one, only the whole-word test names count (see
- *                            isThrowawayTestName).
- *   THROWAWAY_WORDS          space-separated regular expressions, each
- *                            matching one whole name segment that marks a
- *                            throwaway test branch (default: test, validate
- *                            and verify with their variations). Replaces the
- *                            defaults, so repeat them to keep them.
- *   KEEP_EMPTY_BRANCHES      "false": an empty branch ages out whatever its
- *                            name. Default "true" (kept unless AI or test).
- *   KEEP_UNRELATED_BRANCHES  "false": an unrelated-history branch ages out
- *                            like any other. Default "true" (kept unless a
- *                            throwaway test; list real orphans such as
- *                            gh-pages in PROTECTED_BRANCHES).
- *   ACTIVE_DAYS (14), ARCHIVE_DAYS (30)
- *   ACTIVE_BRANCHES (5), ARCHIVE_BRANCHES (15)
- *   GITHUB_STEP_SUMMARY      file the Markdown report is appended to
+ * Branch cleanup, run by .github/workflows/cleanup-branches.yml: cloud sessions can't delete
+ * remote branches, so GitHub does. Categories, thresholds and environment variables are in
+ * knowledge/architecture/02_constraints.md ("Branches age out") and the ai-foundation template.
  */
 
 import { appendFileSync, readFileSync } from 'node:fs';
@@ -140,13 +83,10 @@ export function buildThrowawayWords(list) {
 const DEFAULT_WORD_MATCHER = buildThrowawayWords('');
 
 /**
- * A throwaway test branch has a whole segment (split on anything that is not a
- * letter or digit) that is a test, validate or verify word or a variation, or
- * another word the project lists in THROWAWAY_WORDS (`test/x`, `validation`,
- * `spike/slice-tauri`), so `latest` and `contest` do not count. With a project short code, any test, valid or verif text in a
- * name that also carries the code counts too (`AIF-010-verification`,
- * `aif_retest`). Long-lived branches such as `agent-testing` must be listed in
- * PROTECTED_BRANCHES, which is checked first.
+ * A throwaway test branch has a whole name segment (split on non-alphanumerics) matching a
+ * THROWAWAY_WORDS entry, so `latest` and `contest` do not count. The short code plus any test,
+ * valid or verif text also counts (`FOL-010-verification`). List long-lived branches such as
+ * `agent-testing` in PROTECTED_BRANCHES, which is checked first.
  *
  * @param {string} name
  * @param {string} shortcode
@@ -161,11 +101,9 @@ export function isThrowawayTestName(name, shortcode, words = DEFAULT_WORD_MATCHE
 }
 
 /**
- * Whether an empty branch (no commits of its own) goes through the age-out
- * flow instead of being kept: AI session branches (`claude/…`, `ccr-…`,
- * `copilot/…`, `kiro/…`, `ai/…`), which are created and then often never
- * used, and throwaway test branches. Any other empty branch is kept, unless
- * `keepEmpty` is false.
+ * Whether an empty branch (no commits of its own) goes through the age-out flow: AI session
+ * branches (AI_BRANCH_PREFIXES), which are often never used, and throwaway test branches.
+ * Any other empty branch is kept, unless `keepEmpty` is false.
  *
  * @param {string} name
  * @param {Pick<Config, 'aiPrefixes' | 'shortcode' | 'keepEmpty' | 'throwawayWords'>} cfg
@@ -192,11 +130,9 @@ function keepsUnrelated(name, cfg) {
 }
 
 /**
- * The date a branch's age is measured from. An empty session or test branch
- * has no commits of its own: its last commit is just the default branch's tip,
- * which says nothing about the branch, so it ages from creation when GitHub has
- * the record; the tip's date is the fallback, which can only make it look
- * older, and deleting an empty branch loses no commits.
+ * The date a branch's age is measured from. An empty branch has no commits of its own, so its
+ * last commit is just the default branch's tip: it ages from creation when GitHub has the
+ * record, else from that tip, which can only make it look older (deleting loses no commits).
  *
  * @param {BranchFacts} f
  */
@@ -525,7 +461,7 @@ export async function gatherFacts(api, repo, cfg) {
  * @param {{api: ReturnType<typeof createApi>, repo: string, cfg: Config, enforce: boolean, now: Date, log?: (s: string) => void}} o
  * @returns {Promise<Row[]>}
  */
-export async function runSweep({ api, repo, cfg, enforce, now, log = () => {} }) {
+export async function runSweep({ api, repo, cfg, enforce, now, log = () => undefined }) {
   const facts = await gatherFacts(api, repo, cfg);
   const ranks = rankBranches(facts, cfg);
   for (const f of facts) f.rank = ranks.get(f.name);
@@ -590,7 +526,7 @@ export async function runSweep({ api, repo, cfg, enforce, now, log = () => {} })
  * @param {{api: ReturnType<typeof createApi>, repo: string, cfg: Config, names: string[], dryRun: boolean, log?: (s: string) => void}} o
  * @returns {Promise<Row[]>}
  */
-export async function runList({ api, repo, cfg, names, dryRun, log = () => {} }) {
+export async function runList({ api, repo, cfg, names, dryRun, log = () => undefined }) {
   const openPrs = await readOpenPrs(api, repo);
   /** @type {Row[]} */
   const rows = [];
@@ -715,7 +651,7 @@ function readAiconfigFile() {
 export async function run(
   env,
   api,
-  { now = new Date(), log = () => {}, readAiconfig = readAiconfigFile } = {},
+  { now = new Date(), log = () => undefined, readAiconfig = readAiconfigFile } = {},
 ) {
   const repo = env.REPO;
   if (!repo) throw new Error('REPO is required');
