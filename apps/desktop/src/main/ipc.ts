@@ -198,6 +198,7 @@ export function registerIpcHandlers(services: IpcServices): void {
       parseMenuPath,
       (path): boolean => {
         const item = findMenuItem(items(), path);
+        logger.info('automation clicked a menu item', { depth: path.length, found: item !== null });
         item?.click();
         return item !== null;
       },

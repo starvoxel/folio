@@ -229,7 +229,9 @@ export function parseMenuPath(value: unknown): readonly string[] | null {
   return Array.isArray(value) &&
     value.length >= 1 &&
     value.length <= 4 &&
-    (value as unknown[]).every((label) => typeof label === 'string' && label.length <= 100)
+    (value as unknown[]).every(
+      (label) => typeof label === 'string' && label.length > 0 && label.length <= 100,
+    )
     ? (value as string[])
     : null;
 }

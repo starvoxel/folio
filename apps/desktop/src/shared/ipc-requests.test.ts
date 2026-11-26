@@ -175,7 +175,16 @@ describe('parseMenuPath', () => {
 
   describe('badInput', () => {
     it('isRejected', () => {
-      for (const bad of [[], ['a', 'b', 'c', 'd', 'e'], [1], 'File', null, ['x'.repeat(101)]]) {
+      for (const bad of [
+        [],
+        ['a', 'b', 'c', 'd', 'e'],
+        [1],
+        'File',
+        null,
+        ['x'.repeat(101)],
+        [''],
+        ['File', ''],
+      ]) {
         expect(parseMenuPath(bad)).toBeNull();
       }
     });
