@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
@@ -23,7 +23,7 @@ const backupRoot = join(resolve('/app'), 'backups');
 /**
  * @returns A host on an in-memory disk where `chosen` is the only granted file, and the log lines.
  */
-function setup() {
+function setup(platform: NodeJS.Platform = 'linux') {
   const fs = createMemoryFs();
   const lines: string[] = [];
   const note = (level: string) => (message: string, fields?: Record<string, unknown>) => {
@@ -36,7 +36,7 @@ function setup() {
     error: note('error'),
     logError: note('error'),
   };
-  const grants = createPathGrants('linux');
+  const grants = createPathGrants(platform);
   grants.grant(chosen.path);
   let id = 0;
   const host = createFileHost({
@@ -101,6 +101,16 @@ describe('createFileHost', () => {
       expect(fs.files.has(`${chosen.path}.lock`)).toBe(true);
       await host.releaseLock(chosen);
       expect(fs.files.has(`${chosen.path}.lock`)).toBe(false);
+    });
+  });
+
+  describe('backUpOfTwoSpellingsOfOneFileOnAMac', () => {
+    it('usesOneBackupFolder', async () => {
+      const { host } = setup('darwin');
+      const lower = { path: chosen.path.toLowerCase(), name: 'household.folio' };
+      const first = await host.backUp(chosen, new Uint8Array([1]));
+      const second = await host.backUp(lower, new Uint8Array([2]));
+      expect(dirname(second.path)).toBe(dirname(first.path));
     });
   });
 

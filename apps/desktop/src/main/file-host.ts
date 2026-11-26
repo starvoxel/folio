@@ -71,6 +71,7 @@ export function createFileHost(deps: FileHostDeps): FileHost {
     self: deps.self,
     nowMs: deps.nowMs,
     isProcessAlive: deps.isProcessAlive,
+    uniqueId: deps.uniqueId,
     onStaleTakenOver: () => {
       logger.warn('replaced a stale lock');
     },
@@ -111,12 +112,13 @@ export function createFileHost(deps: FileHostDeps): FileHost {
       return result;
     },
     releaseLock: async (file) => {
-      await locks.release(checked(file, 'releaseLock'));
-      logger.info('released a file lock');
+      if (await locks.release(checked(file, 'releaseLock'))) {
+        logger.info('released a file lock');
+      }
     },
     backUp: async (file, bytes) => {
       const path = checked(file, 'backUp');
-      const directory = join(deps.backupRoot, deps.hashOf(path));
+      const directory = join(deps.backupRoot, deps.hashOf(grants.keyOf(path) ?? path));
       const { backup, pruned } = await writeBackup(
         fs,
         directory,
