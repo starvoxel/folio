@@ -24,6 +24,7 @@ import type { FsOps } from './fs-ops.js';
 import { createLockManager, type LockManager } from './lock-manager.js';
 import type { Logger } from './logger.js';
 import type { PathGrants } from './path-grants.js';
+import { createSerialQueue } from './serial-queue.js';
 import type { LockInfo } from './lock-file.js';
 
 /** What the file host needs from the machine. */
@@ -77,6 +78,9 @@ export function createFileHost(deps: FileHostDeps): FileHost {
     },
   });
 
+  // Two backups of one file in flight at once would pick the same name and lose one.
+  const backupQueue = createSerialQueue();
+
   const checked = (file: FileRef, operation: string): string => {
     if (!grants.isGranted(file.path)) {
       logger.warn('refused a file the person did not choose', { operation });
@@ -119,13 +123,8 @@ export function createFileHost(deps: FileHostDeps): FileHost {
     backUp: async (file, bytes) => {
       const path = checked(file, 'backUp');
       const directory = join(deps.backupRoot, deps.hashOf(grants.keyOf(path) ?? path));
-      const { backup, pruned } = await writeBackup(
-        fs,
-        directory,
-        basename(path),
-        bytes,
-        deps.nowMs(),
-        deps.uniqueId(),
+      const { backup, pruned } = await backupQueue.run(directory, () =>
+        writeBackup(fs, directory, basename(path), bytes, deps.nowMs(), deps.uniqueId()),
       );
       logger.info('wrote a backup', { bytes: bytes.byteLength, pruned });
       return backup;

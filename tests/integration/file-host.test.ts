@@ -195,19 +195,21 @@ describe('sidecarLock', () => {
 });
 
 describe('backups', () => {
-  describe('moreBackupsThanAreKept', () => {
+  describe('moreBackupsThanAreKeptInOneSecond', () => {
     it('keepsTheNewestTenInsideTheBackupRootAndNothingBesideTheFile', async () => {
       const host = makeHost('a');
       for (let index = 0; index < 12; index += 1) {
         await host.backUp(budget, text(`version ${String(index)}`));
-        // Backup names carry milliseconds, so each needs its own.
-        await new Promise((resolve) => setTimeout(resolve, 3));
       }
-      const kept = await readdir(join(root, 'backups', 'file'));
-      expect(kept).toHaveLength(10);
+      const folder = join(root, 'backups', 'file');
+      const kept = await Promise.all(
+        (await readdir(folder)).map(async (name) => readText(join(folder, name))),
+      );
+      expect(kept.sort()).toEqual(
+        Array.from({ length: 10 }, (_, index) => `version ${String(index + 2)}`).sort(),
+      );
+      expect(kept).toContain('version 11');
       expect(await readdir(root)).toEqual(['backups']);
-      const newest = [...kept].sort().at(-1) ?? '';
-      expect(await readText(join(root, 'backups', 'file', newest))).toBe('version 11');
     });
   });
 });
