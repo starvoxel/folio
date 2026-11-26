@@ -90,7 +90,13 @@ async function fixtureViolations(): Promise<string[]> {
 describe('packageImports', () => {
   describe('theRealWorkspace', () => {
     it('hasNoBoundaryViolations', async () => {
-      const violations = await violationsIn(['packages', 'apps', 'tests/integration', 'tests/e2e']);
+      const violations = await violationsIn([
+        'packages',
+        'apps',
+        'tools',
+        'tests/integration',
+        'tests/e2e',
+      ]);
       expect(violations.map(describeViolation)).toEqual([]);
     });
   });

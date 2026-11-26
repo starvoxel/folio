@@ -21,7 +21,7 @@ const SCREENS = '(^|/)packages/renderer/src/screens/';
 const LAYOUT = '(^|/)packages/renderer/src/layout/';
 // The React glue that reads the layout: the one hook that measures the width and shares it.
 const LAYOUT_CONTEXT = '(^|/)packages/renderer/src/app/layout-context';
-const UNIT_TESTS = '(^|/)(packages|apps)/[^/]+/src/.*\\.test\\.tsx?$';
+const UNIT_TESTS = '(^|/)(packages|apps|tools)/[^/]+/src/.*\\.test\\.tsx?$';
 
 // Test files and the tests/ tree, except the architecture fixtures, which pose as production code.
 const TEST_FILES = ['\\.test\\.tsx?$', '\\.e2e\\.ts$', '(^|/)tests/(?!architecture/fixtures/)'];
