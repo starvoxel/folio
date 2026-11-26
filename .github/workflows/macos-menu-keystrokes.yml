@@ -1,0 +1,30 @@
+name: macOS menu keystrokes (experiment)
+
+# A one-off, run by hand: can a macOS runner press real keys with osascript, so the native menu's
+# shortcuts (Cmd+S, Cmd+Z and so on) can be checked? Record the result, then delete this file and
+# tests/e2e/menu-keystrokes.e2e.ts. It has no schedule and no pull-request trigger on purpose.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  keystrokes:
+    name: osascript keystrokes
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+      - run: npm run package
+      - run: npx playwright test menu-keystrokes
+        env:
+          FOLIO_MENU_KEYSTROKES: '1'
