@@ -22,6 +22,7 @@ key_files:
   - apps/desktop/src/main/lock-file.ts
   - apps/desktop/src/main/backups.ts
   - apps/desktop/src/main/backup-store.ts
+  - apps/desktop/src/main/serial-queue.ts
   - apps/desktop/src/main/hardening.ts
   - apps/desktop/src/main/logger.ts
   - packages/core/src/support/folio-error.ts
