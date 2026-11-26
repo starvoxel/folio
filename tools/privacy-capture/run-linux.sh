@@ -38,4 +38,6 @@ in_ns ip neigh add 10.99.0.2 lladdr 02:00:00:00:00:02 dev sink0 nud permanent
 in_ns ip route add default via 10.99.0.2 dev sink0
 
 cd "$root"
-in_ns xvfb-run --auto-servernum -- npm run test:capture
+# Playwright is called directly: npm itself looks up its registry, and tcpdump records the whole
+# namespace, so anything else that touches the network here would be reported as the app's.
+in_ns xvfb-run --auto-servernum -- ./node_modules/.bin/playwright test --config playwright.capture.config.ts
