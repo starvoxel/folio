@@ -75,7 +75,8 @@ export const nodeFsOps: FsOps = {
     retryOnCodes(
       () => rename(from, to),
       TRANSIENT_FILE_ERRORS,
-      RENAME_RETRY_DELAYS_MS,
+      // Only Windows reports a briefly held file this way; elsewhere EPERM is a real refusal.
+      process.platform === 'win32' ? RENAME_RETRY_DELAYS_MS : [],
       (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
     ),
   remove: (path) => rm(path, { force: true }),
