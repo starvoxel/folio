@@ -9,6 +9,8 @@
 export {
   FORM_FACTORS,
   HostError,
+  hostErrorCode,
+  tagHostErrorMessage,
   type FileContents,
   type FileFilter,
   type FileRef,

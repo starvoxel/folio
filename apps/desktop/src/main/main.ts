@@ -12,14 +12,18 @@ import { join } from 'node:path';
 
 import { app, BrowserWindow, dialog, Menu } from 'electron';
 
-import { findRefusedSwitches } from './debug-guard.js';
+import { automationDialogAnswer, findRefusedSwitches } from './debug-guard.js';
+import { createDesktopFileHost } from './desktop-file-host.js';
 import { applyDevEnvFile } from './dev-env.js';
 import { installErrorHandlers } from './error-handlers.js';
+import { createFileDialogs } from './file-dialogs.js';
+import type { FileHost } from './file-host.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
 import { createRotatingFileWriter, nodeLogFileOperations } from './log-file.js';
 import { createLogDestinations } from './log-destinations.js';
 import { createLogger, createSessionId, parseLogLevel, parseUnredacted } from './logger.js';
+import { createPathGrants } from './path-grants.js';
 import { registerAppProtocol, registerAppScheme } from './protocol.js';
 import { createSettingsStore } from './settings-store.js';
 import { createMainWindow } from './window.js';
@@ -87,17 +91,45 @@ installErrorHandlers({
   source: process,
 });
 
+/**
+ * Release the file locks before the app exits, once, so a normal quit leaves no stale lock.
+ * @param files - The file host that holds the locks.
+ */
+function releaseLocksBeforeQuit(files: FileHost): void {
+  let released = false;
+  app.on('before-quit', (event) => {
+    if (released) {
+      return;
+    }
+    event.preventDefault();
+    released = true;
+    void files
+      .releaseAllLocks()
+      .catch((error: unknown) => {
+        logger.logError('releasing file locks failed', error);
+      })
+      .finally(() => {
+        app.quit();
+      });
+  });
+}
+
 /** Open the window once the app is ready, with the hardening and the handlers in place. */
 async function openWhenReady(): Promise<void> {
   try {
     await app.whenReady();
     installHardening(logger);
     registerAppProtocol(join(app.getAppPath(), 'dist', 'renderer'));
+    const grants = createPathGrants();
+    const files = createDesktopFileHost(app.getPath('userData'), grants, logger);
     registerIpcHandlers({
       logger,
       settings: createSettingsStore(app.getPath('userData')),
+      files,
+      dialogs: createFileDialogs(grants, automationDialogAnswer(devEnv.env)),
       env: devEnv.env,
     });
+    releaseLocksBeforeQuit(files);
     // Windows and Linux have no menu bar (H1.14 uses the hamburger menu); macOS keeps a minimal
     // native menu so Cmd+Q, Cmd+C and Cmd+V work (H1.16). The full menu arrives with its plan.
     Menu.setApplicationMenu(

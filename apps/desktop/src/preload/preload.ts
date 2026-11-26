@@ -12,11 +12,15 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 import {
   HostError,
+  tagHostErrorMessage,
+  type FileContents,
   type FileRef,
   type HostApi,
   type HostInfo,
+  type LockResult,
   type MenuCommand,
   type Unsubscribe,
+  type WriteResult,
 } from '@folio/host-api';
 
 import { IPC_CHANNELS, type IpcResult } from '../shared/ipc.js';
@@ -44,7 +48,8 @@ const MENU_COMMANDS: readonly string[] = [
 async function call<Value>(channel: string, ...args: unknown[]): Promise<Value> {
   const result = (await ipcRenderer.invoke(channel, ...args)) as IpcResult<Value>;
   if (!result.ok) {
-    throw new HostError(result.code, result.message);
+    // The context bridge copies only the message, so the code travels in it.
+    throw new HostError(result.code, tagHostErrorMessage(result.code, result.message));
   }
   return result.value;
 }
@@ -105,13 +110,16 @@ const host: HostApi = {
       (payload) => (Array.isArray(payload) ? (payload as readonly FileRef[]) : null),
       listener,
     ),
-  showOpenDialog: notImplemented,
-  showSaveDialog: notImplemented,
-  readFile: notImplemented,
-  writeFileAtomic: notImplemented,
-  acquireLock: notImplemented,
-  releaseLock: notImplemented,
-  backUp: notImplemented,
+  showOpenDialog: (options) => call<FileRef | null>(IPC_CHANNELS.showOpenDialog, options),
+  showSaveDialog: (options) => call<FileRef | null>(IPC_CHANNELS.showSaveDialog, options),
+  readFile: (file) => call<FileContents>(IPC_CHANNELS.readFile, file),
+  writeFileAtomic: (file, bytes, expected) =>
+    call<WriteResult>(IPC_CHANNELS.writeFileAtomic, { file, bytes, expected }),
+  acquireLock: (file, options) => call<LockResult>(IPC_CHANNELS.acquireLock, { file, options }),
+  releaseLock: async (file) => {
+    await call<null>(IPC_CHANNELS.releaseLock, file);
+  },
+  backUp: (file, bytes) => call<FileRef>(IPC_CHANNELS.backUp, { file, bytes }),
   revealInFolder: notImplemented,
 };
 

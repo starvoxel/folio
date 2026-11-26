@@ -6,6 +6,8 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { join, resolve } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -17,7 +19,8 @@ import {
 } from './atomic-write.js';
 import { createMemoryFs } from './memory-fs.js';
 
-const target = '/data/Household.folio';
+const folder = resolve('/data');
+const target = join(folder, 'Household.folio');
 const bytes = (...values: number[]): Uint8Array => new Uint8Array(values);
 
 describe('stampOf', () => {
@@ -42,7 +45,7 @@ describe('sameStamp', () => {
 describe('temporaryPathFor', () => {
   describe('aTarget', () => {
     it('staysInTheTargetsFolderAndCarriesTheId', () => {
-      expect(temporaryPathFor(target, 'abc')).toBe('/data/.Household.folio.abc.tmp');
+      expect(temporaryPathFor(target, 'abc')).toBe(join(folder, '.Household.folio.abc.tmp'));
     });
   });
 });

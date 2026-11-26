@@ -6,12 +6,14 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { join, resolve } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
 import { writeBackup } from './backup-store.js';
 import { createMemoryFs } from './memory-fs.js';
 
-const directory = '/backups/abc';
+const directory = join(resolve('/backups'), 'abc');
 
 describe('writeBackup', () => {
   describe('firstBackup', () => {

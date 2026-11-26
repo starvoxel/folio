@@ -8,7 +8,13 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { HostError, type FileRef, type MenuCommand } from './host-api.js';
+import {
+  HostError,
+  hostErrorCode,
+  tagHostErrorMessage,
+  type FileRef,
+  type MenuCommand,
+} from './host-api.js';
 import { createMockHost } from './mock-host.js';
 
 const budget: FileRef = { path: 'folders/Household 2026.folio', name: 'Household 2026.folio' };
@@ -245,6 +251,31 @@ describe('revealInFolderAndQuit', () => {
       await host.quit();
       expect(host.controls.revealed).toEqual([budget]);
       expect(host.controls.quitCount).toBe(1);
+    });
+  });
+});
+
+describe('hostErrorCode', () => {
+  describe('aHostError', () => {
+    it('returnsItsCode', () => {
+      expect(hostErrorCode(new HostError('notFound', 'gone'))).toBe('notFound');
+    });
+  });
+
+  describe('anErrorThatCrossedTheBridge', () => {
+    it('readsTheCodeFromTheMessagePrefix', () => {
+      const copy = new Error(tagHostErrorMessage('permissionDenied', 'no'));
+      expect(copy.message).toBe('[permissionDenied] no');
+      expect(hostErrorCode(copy)).toBe('permissionDenied');
+    });
+  });
+
+  describe('anythingElse', () => {
+    it('returnsNull', () => {
+      expect(hostErrorCode(new Error('x'))).toBeNull();
+      expect(hostErrorCode(new Error('[bogus] x'))).toBeNull();
+      expect(hostErrorCode(null)).toBeNull();
+      expect(hostErrorCode('text')).toBeNull();
     });
   });
 });

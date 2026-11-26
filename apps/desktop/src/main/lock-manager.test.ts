@@ -6,6 +6,8 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { join, resolve } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
 import { serializeLock, type LockInfo } from './lock-file.js';
@@ -13,7 +15,8 @@ import { createLockManager } from './lock-manager.js';
 import { createMemoryFs } from './memory-fs.js';
 
 const self: LockInfo = { instance: 'me', host: 'KITCHEN-PC', pid: 10, takenMs: 0 };
-const file = '/data/Household.folio';
+const folder = resolve('/data');
+const file = join(folder, 'Household.folio');
 const lockPath = `${file}.lock`;
 
 /**
@@ -125,7 +128,7 @@ describe('lockManagerRelease', () => {
     it('releasesEveryHeldLock', async () => {
       const { fs, manager } = setup();
       await manager.acquire(file);
-      await manager.acquire('/data/Other.folio');
+      await manager.acquire(join(folder, 'Other.folio'));
       await manager.releaseAll();
       expect([...fs.files.keys()]).toEqual([]);
     });
