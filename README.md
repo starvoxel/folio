@@ -24,6 +24,7 @@ npm run test:integration  # real Chromium and real folders (run "npx playwright 
 npm run dev               # build the app and start it unpackaged, for development (a .env file is read, see below)
 npm run package           # build the desktop app and package it (unsigned) into apps/desktop/release
 npm run test:e2e          # drive the packaged app; run "npm run package" first
+npm run test:capture      # the privacy capture (AD-18): minutes long; on Linux use sudo bash tools/privacy-capture/run-linux.sh
 npm test                  # everything, in CI order
 npm run format            # fix formatting
 npm run depcruise         # the boundary rules from the command line, for readable output while debugging
