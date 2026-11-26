@@ -43,10 +43,10 @@ export async function writeBackup(
   keep: number = BACKUPS_KEPT,
 ): Promise<BackupOutcome> {
   await fs.makeDirectory(directory);
-  const name = backupFileName(fileName, nowMs);
+  const name = backupFileName(fileName, nowMs, await fs.listDirectory(directory));
   const path = join(directory, name);
   await writeAtomically(fs, path, bytes, null, id);
-  const stale = backupsToDelete(await fs.listDirectory(directory), fileName, keep);
+  const stale = backupsToDelete(await fs.listDirectory(directory), fileName, keep, name);
   for (const old of stale) {
     await fs.remove(join(directory, old));
   }

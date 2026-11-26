@@ -28,7 +28,7 @@ describe('writeBackup', () => {
         'x',
         3,
       );
-      expect(outcome.backup.name).toBe('a-20260101T000000000Z.folio');
+      expect(outcome.backup.name).toBe('a_20260101-000000.folio');
       expect(fs.files.get(outcome.backup.path)).toEqual(new Uint8Array([1, 2]));
       expect(outcome.pruned).toBe(0);
     });
@@ -49,9 +49,50 @@ describe('writeBackup', () => {
         );
       }
       expect(await fs.listDirectory(directory)).toEqual([
-        'a-20260103T000000000Z.folio',
-        'a-20260104T000000000Z.folio',
+        'a_20260103-000000.folio',
+        'a_20260104-000000.folio',
       ]);
+    });
+  });
+
+  describe('twoBackupsInTheSameSecond', () => {
+    it('keepsBothUnderDifferentNames', async () => {
+      const fs = createMemoryFs();
+      const now = Date.UTC(2026, 0, 1);
+      await writeBackup(fs, directory, 'a.folio', new Uint8Array([1]), now, 'x', 3);
+      await writeBackup(fs, directory, 'a.folio', new Uint8Array([2]), now, 'y', 3);
+      expect((await fs.listDirectory(directory)).sort()).toEqual([
+        'a_20260101-000000.folio',
+        'a_20260101-000000_2.folio',
+      ]);
+    });
+  });
+
+  describe('theClockMovingBackwardsBetweenBackups', () => {
+    it('keepsTheBackupJustWritten', async () => {
+      const fs = createMemoryFs();
+      for (let day = 10; day <= 11; day += 1) {
+        await writeBackup(
+          fs,
+          directory,
+          'a.folio',
+          new Uint8Array([day]),
+          Date.UTC(2026, 0, day),
+          'x',
+          2,
+        );
+      }
+      const earlier = await writeBackup(
+        fs,
+        directory,
+        'a.folio',
+        new Uint8Array([1]),
+        Date.UTC(2026, 0, 1),
+        'y',
+        2,
+      );
+      expect(await fs.listDirectory(directory)).toContain(earlier.backup.name);
+      expect(await fs.listDirectory(directory)).toHaveLength(2);
     });
   });
 
@@ -71,7 +112,7 @@ describe('writeBackup', () => {
       await expect(
         writeBackup(fs, directory, 'a.folio', new Uint8Array([2]), Date.UTC(2026, 0, 2), 'y', 2),
       ).rejects.toThrow('simulated');
-      expect(await fs.listDirectory(directory)).toEqual(['a-20260101T000000000Z.folio']);
+      expect(await fs.listDirectory(directory)).toEqual(['a_20260101-000000.folio']);
     });
   });
 });

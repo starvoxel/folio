@@ -43,6 +43,18 @@ describe('buildMacMenuTemplate', () => {
     });
   });
 
+  describe('theFileMenu', () => {
+    it('hasOnlySaveForNow', () => {
+      expect([...menu('File').keys()]).toEqual(['Save']);
+    });
+  });
+
+  describe('theMenuBar', () => {
+    it('hasNoWindowMenu', () => {
+      expect(template.map((entry) => entry.label ?? entry.role)).toEqual(['Folio', 'File', 'Edit']);
+    });
+  });
+
   describe('theFileAndEditMenus', () => {
     it('bindTheStandardShortcutsToFolioCommands', () => {
       expect(menu('File').get('Save')?.accelerator).toBe('Cmd+S');
@@ -67,20 +79,7 @@ describe('buildMacMenuTemplate', () => {
           (item.click as () => void)();
         }
       }
-      expect(sent.sort()).toEqual(
-        [
-          'about',
-          'settings',
-          'new',
-          'open',
-          'save',
-          'saveAs',
-          'closeFile',
-          'importCsv',
-          'undo',
-          'redo',
-        ].sort(),
-      );
+      expect(sent.sort()).toEqual(['about', 'redo', 'save', 'settings', 'undo']);
     });
   });
 });

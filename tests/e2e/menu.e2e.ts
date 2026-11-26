@@ -50,12 +50,7 @@ test.describe('nativeMenu', () => {
 
       const clicks: [string[], string][] = [
         [['Folio', 'About Folio'], 'about'],
-        [['File', 'New'], 'new'],
-        [['File', 'Open…'], 'open'],
         [['File', 'Save'], 'save'],
-        [['File', 'Save As…'], 'saveAs'],
-        [['File', 'Close file'], 'closeFile'],
-        [['File', 'Import CSV…'], 'importCsv'],
         [['Edit', 'Undo'], 'undo'],
         [['Edit', 'Redo'], 'redo'],
         [['Folio', 'Settings…'], 'settings'],

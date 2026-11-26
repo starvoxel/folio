@@ -11,10 +11,9 @@ import type { MenuItemConstructorOptions } from 'electron';
 import type { MenuCommand } from '@folio/host-api';
 
 /**
- * Build the macOS menu bar (H1.16). Items that are Folio commands send a `MenuCommand` to the page
- * through `send`; the standard Edit items for text use the system's own roles. Undo and Redo are
- * Folio commands, not roles, because they change the budget; the page decides when a focused text
- * field should take them instead. Windows and Linux have no menu bar (H1.14 is the hamburger menu).
+ * Build the macOS menu bar (H1.16), kept to the minimum for now. Folio commands go to the page
+ * through `send`; the text editing items use the system's roles. Undo and Redo are Folio commands
+ * because they change the budget; the page decides when a focused text field takes them instead.
  * @param send - Delivers a command to the page.
  * @returns The menu template.
  */
@@ -40,26 +39,11 @@ export function buildMacMenuTemplate(
         { type: 'separator' },
         command('Settings…', 'settings', 'Cmd+,'),
         { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
-        { type: 'separator' },
         { role: 'quit' },
       ],
     },
-    {
-      label: 'File',
-      submenu: [
-        command('New', 'new', 'Cmd+N'),
-        command('Open…', 'open', 'Cmd+O'),
-        { type: 'separator' },
-        command('Save', 'save', 'Cmd+S'),
-        command('Save As…', 'saveAs', 'Shift+Cmd+S'),
-        command('Close file', 'closeFile', 'Cmd+W'),
-        { type: 'separator' },
-        command('Import CSV…', 'importCsv', 'Cmd+I'),
-      ],
-    },
+    // Only Save, for Cmd+S (H1.16). The other file commands join when files can be opened.
+    { label: 'File', submenu: [command('Save', 'save', 'Cmd+S')] },
     {
       label: 'Edit',
       submenu: [
@@ -72,6 +56,5 @@ export function buildMacMenuTemplate(
         { role: 'selectAll' },
       ],
     },
-    { role: 'windowMenu' },
   ];
 }
