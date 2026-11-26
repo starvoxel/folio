@@ -8,7 +8,7 @@
 
 // A sandboxed preload may require only `electron`; everything else is bundled in. Keep it small:
 // this file is the whole surface the page can reach (AD-18).
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, webUtils } from 'electron';
 
 import {
   HostError,
@@ -24,6 +24,8 @@ import {
 } from '@folio/host-api';
 
 import { IPC_CHANNELS, type IpcResult } from '../shared/ipc.js';
+import { parseFileRef } from '../shared/ipc-requests.js';
+import { watchFileDrops, type DropTarget } from './file-drops.js';
 
 const MENU_COMMANDS: readonly string[] = [
   'new',
@@ -107,7 +109,12 @@ const host: HostApi = {
   onFilesDropped: (listener) =>
     listen<readonly FileRef[]>(
       IPC_CHANNELS.filesDropped,
-      (payload) => (Array.isArray(payload) ? (payload as readonly FileRef[]) : null),
+      (payload) => {
+        const refs = Array.isArray(payload)
+          ? (payload as unknown[]).map((entry) => parseFileRef(entry))
+          : [];
+        return refs.length > 0 && refs.every((ref) => ref !== null) ? refs : null;
+      },
       listener,
     ),
   showOpenDialog: (options) => call<FileRef | null>(IPC_CHANNELS.showOpenDialog, options),
@@ -123,4 +130,11 @@ const host: HostApi = {
   revealInFolder: notImplemented,
 };
 
+watchFileDrops(
+  globalThis as unknown as DropTarget,
+  (file) => webUtils.getPathForFile(file as File),
+  (paths) => {
+    void ipcRenderer.invoke(IPC_CHANNELS.dropFiles, paths);
+  },
+);
 contextBridge.exposeInMainWorld('folioHost', Object.freeze(host));
