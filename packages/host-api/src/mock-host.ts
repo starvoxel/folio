@@ -156,14 +156,19 @@ export function createMockHost(options: MockHostOptions = {}): MockHost {
     },
     writeFileAtomic: (file, bytes, expected): Promise<WriteResult> => {
       const current = files.get(file.path);
+      if (expected !== null && current === undefined) {
+        return Promise.reject(new HostError('notFound', 'The file does not exist'));
+      }
       if (expected !== null && current !== undefined && !sameStamp(expected, current.stamp)) {
         return Promise.resolve({ kind: 'changedOnDisk', current: current.stamp });
       }
       return Promise.resolve({ kind: 'saved', stamp: store(file.path, bytes) });
     },
-    acquireLock: (file): Promise<LockResult> => {
+    acquireLock: (file, lockOptions): Promise<LockResult> => {
       const foreign = foreignLocks.get(file.path);
-      if (foreign !== undefined) {
+      if (foreign?.stale === true && lockOptions?.takeOverStale === true) {
+        foreignLocks.delete(file.path);
+      } else if (foreign !== undefined) {
         return Promise.resolve({ kind: 'held', holder: foreign.holder, stale: foreign.stale });
       }
       ownLocks.add(file.path);

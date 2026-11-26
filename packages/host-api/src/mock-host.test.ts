@@ -125,6 +125,17 @@ describe('writeFileAtomic', () => {
   });
 });
 
+describe('writeFileAtomicOfAMissingFile', () => {
+  describe('withAnExpectedStamp', () => {
+    it('rejectsWithANotFoundHostError', async () => {
+      const host = createMockHost();
+      await expect(
+        host.writeFileAtomic(budget, bytes(1), { modifiedMs: 1, sizeBytes: 1 }),
+      ).rejects.toMatchObject({ code: 'notFound' });
+    });
+  });
+});
+
 describe('locks', () => {
   describe('freeFile', () => {
     it('isAcquiredAndReleased', async () => {
@@ -146,6 +157,26 @@ describe('locks', () => {
         stale: true,
       });
       expect(host.controls.heldLocks).toEqual([]);
+    });
+  });
+
+  describe('staleLockWithTakeOver', () => {
+    it('isReplacedAndAcquired', async () => {
+      const host = createMockHost();
+      host.controls.lockFromElsewhere(budget.path, 'KITCHEN-PC', true);
+      expect(await host.acquireLock(budget, { takeOverStale: true })).toEqual({ kind: 'acquired' });
+      expect(host.controls.heldLocks).toEqual([budget.path]);
+    });
+  });
+
+  describe('liveLockWithTakeOver', () => {
+    it('isStillHeld', async () => {
+      const host = createMockHost();
+      host.controls.lockFromElsewhere(budget.path, 'KITCHEN-PC', false);
+      expect(await host.acquireLock(budget, { takeOverStale: true })).toMatchObject({
+        kind: 'held',
+        stale: false,
+      });
     });
   });
 });
