@@ -56,6 +56,12 @@ export type LockResult =
   | { readonly kind: 'acquired' }
   | { readonly kind: 'held'; readonly holder: string; readonly stale: boolean };
 
+/** Options of `acquireLock`. */
+export interface LockOptions {
+  /** Replace a lock that is stale (its holder is gone) instead of reporting it. */
+  readonly takeOverStale?: boolean;
+}
+
 /** Commands the native or hamburger menu can send to the renderer (H1.14, H1.16). */
 export type MenuCommand =
   | 'new'
@@ -141,15 +147,19 @@ export interface HostApi {
   readFile(file: FileRef): Promise<FileContents>;
   /**
    * Replace a file atomically: write a temporary file, flush, rename over the target (AD-12).
-   * When `expected` is given and the file on disk no longer matches it, nothing is written.
+   * When `expected` is given and the file on disk no longer matches it, nothing is written; when
+   * the file is gone it rejects with `notFound`.
    */
   writeFileAtomic(
     file: FileRef,
     bytes: Uint8Array,
     expected: FileStamp | null,
   ): Promise<WriteResult>;
-  /** Take the sidecar lock of a file, or report who holds it and whether the lock is stale. */
-  acquireLock(file: FileRef): Promise<LockResult>;
+  /**
+   * Take the sidecar lock of a file, or report who holds it and whether the lock is stale. A stale
+   * lock is replaced only when the caller asks for it, after the person has been told.
+   */
+  acquireLock(file: FileRef, options?: LockOptions): Promise<LockResult>;
   /** Release a lock this host holds. */
   releaseLock(file: FileRef): Promise<void>;
   /** Copy bytes into the app-data backup folder and return where they went (AD-12). */

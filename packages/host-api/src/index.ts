@@ -18,6 +18,7 @@ export {
   type HostErrorCode,
   type HostInfo,
   type InputStyle,
+  type LockOptions,
   type LockResult,
   type MenuCommand,
   type OpenDialogOptions,

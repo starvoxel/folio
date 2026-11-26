@@ -11,6 +11,7 @@ import type {
   FileRef,
   FileStamp,
   HostApi,
+  LockOptions,
   LockResult,
   WriteResult,
 } from './host-api.js';
@@ -25,7 +26,7 @@ export interface FileStore {
   /** Save a budget file, refusing when it changed on disk since `expected`. */
   save(file: FileRef, bytes: Uint8Array, expected: FileStamp | null): Promise<WriteResult>;
   /** Take the lock of a file. */
-  lock(file: FileRef): Promise<LockResult>;
+  lock(file: FileRef, options?: LockOptions): Promise<LockResult>;
   /** Release the lock of a file. */
   unlock(file: FileRef): Promise<void>;
   /** Keep a copy of the bytes as a backup. */
@@ -41,7 +42,7 @@ export function createHostFileStore(host: HostApi): FileStore {
   return {
     open: (file) => host.readFile(file),
     save: (file, bytes, expected) => host.writeFileAtomic(file, bytes, expected),
-    lock: (file) => host.acquireLock(file),
+    lock: (file, options) => host.acquireLock(file, options),
     unlock: (file) => host.releaseLock(file),
     backUp: (file, bytes) => host.backUp(file, bytes),
   };
