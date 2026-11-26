@@ -9,6 +9,8 @@
 export {
   FORM_FACTORS,
   HostError,
+  hostErrorCode,
+  tagHostErrorMessage,
   type FileContents,
   type FileFilter,
   type FileRef,
@@ -18,6 +20,7 @@ export {
   type HostErrorCode,
   type HostInfo,
   type InputStyle,
+  type LockOptions,
   type LockResult,
   type MenuCommand,
   type OpenDialogOptions,

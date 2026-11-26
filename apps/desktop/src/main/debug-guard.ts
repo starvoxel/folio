@@ -35,3 +35,15 @@ export function findRefusedSwitches(
 export function isAutomationEnabled(env: Readonly<Record<string, string | undefined>>): boolean {
   return env['FOLIO_AUTOMATION'] === '1';
 }
+
+/**
+ * The path that answers every file dialog without showing one, for end-to-end tests. It exists
+ * only while automation is on (AD-16), so a normal run can never skip the person's choice.
+ * @param env - The environment the app runs with.
+ * @returns The path, or null when automation is off or none is set.
+ */
+export function automationDialogAnswer(
+  env: Readonly<Record<string, string | undefined>>,
+): string | null {
+  return isAutomationEnabled(env) ? (env['FOLIO_AUTOMATION_DIALOG_PATH'] ?? null) : null;
+}

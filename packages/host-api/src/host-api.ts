@@ -56,6 +56,12 @@ export type LockResult =
   | { readonly kind: 'acquired' }
   | { readonly kind: 'held'; readonly holder: string; readonly stale: boolean };
 
+/** Options of `acquireLock`. */
+export interface LockOptions {
+  /** Replace a lock that is stale (its holder is gone) instead of reporting it. */
+  readonly takeOverStale?: boolean;
+}
+
 /** Commands the native or hamburger menu can send to the renderer (H1.14, H1.16). */
 export type MenuCommand =
   | 'new'
@@ -125,6 +131,39 @@ export class HostError extends Error {
   }
 }
 
+const HOST_ERROR_CODES: readonly HostErrorCode[] = [
+  'notFound',
+  'permissionDenied',
+  'unavailable',
+  'invalid',
+];
+
+/**
+ * Put a code in front of a message, for crossing Electron's context bridge, which copies an
+ * error's message but nothing else.
+ * @param code - The failure's code.
+ * @param message - The message, which carries no financial data.
+ * @returns The message as `[code] message`.
+ */
+export function tagHostErrorMessage(code: HostErrorCode, message: string): string {
+  return `[${code}] ${message}`;
+}
+
+/**
+ * Read the code of a failed host call. A `HostError` from the mock or from the same world carries
+ * it as `code`; one that crossed the context bridge carries it in a `[code]` message prefix.
+ * @param error - Whatever a host call rejected with.
+ * @returns The code, or null when the error did not come from a host call.
+ */
+export function hostErrorCode(error: unknown): HostErrorCode | null {
+  if (error instanceof HostError) {
+    return error.code;
+  }
+  const message = (error as { message?: unknown } | null)?.message;
+  const found = typeof message === 'string' ? /^\[(\w+)\] /u.exec(message)?.[1] : undefined;
+  return HOST_ERROR_CODES.find((code) => code === found) ?? null;
+}
+
 /**
  * The one door from the renderer to the operating system (AD-19). Electron implements it with a
  * preload bridge, tests use the in-memory mock, and a browser build can implement a read-only
@@ -141,15 +180,19 @@ export interface HostApi {
   readFile(file: FileRef): Promise<FileContents>;
   /**
    * Replace a file atomically: write a temporary file, flush, rename over the target (AD-12).
-   * When `expected` is given and the file on disk no longer matches it, nothing is written.
+   * When `expected` is given and the file on disk no longer matches it, nothing is written; when
+   * the file is gone it rejects with `notFound`.
    */
   writeFileAtomic(
     file: FileRef,
     bytes: Uint8Array,
     expected: FileStamp | null,
   ): Promise<WriteResult>;
-  /** Take the sidecar lock of a file, or report who holds it and whether the lock is stale. */
-  acquireLock(file: FileRef): Promise<LockResult>;
+  /**
+   * Take the sidecar lock of a file, or report who holds it and whether the lock is stale. A stale
+   * lock is replaced only when the caller asks for it, after the person has been told.
+   */
+  acquireLock(file: FileRef, options?: LockOptions): Promise<LockResult>;
   /** Release a lock this host holds. */
   releaseLock(file: FileRef): Promise<void>;
   /** Copy bytes into the app-data backup folder and return where they went (AD-12). */

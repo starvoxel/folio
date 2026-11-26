@@ -35,6 +35,8 @@ export interface LaunchOptions {
   readonly userDataDirectory: string;
   /** A command and arguments to put in front of the app, such as `strace`; the capture uses it. */
   readonly wrapper?: readonly string[];
+  /** Extra environment variables for the app, such as the automation dialog answer. */
+  readonly environment?: Readonly<Record<string, string>>;
 }
 
 const WAIT_FOR_PAGE_MS = 30_000;
@@ -62,7 +64,7 @@ export async function launchApp(app: PackagedApp, options: LaunchOptions): Promi
     ],
     {
       stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'],
-      env: { ...process.env, FOLIO_AUTOMATION: '1' },
+      env: { ...process.env, FOLIO_AUTOMATION: '1', ...options.environment },
     },
   );
   let stderrText = '';

@@ -8,7 +8,13 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { HostError, type FileRef, type MenuCommand } from './host-api.js';
+import {
+  HostError,
+  hostErrorCode,
+  tagHostErrorMessage,
+  type FileRef,
+  type MenuCommand,
+} from './host-api.js';
 import { createMockHost } from './mock-host.js';
 
 const budget: FileRef = { path: 'folders/Household 2026.folio', name: 'Household 2026.folio' };
@@ -125,6 +131,17 @@ describe('writeFileAtomic', () => {
   });
 });
 
+describe('writeFileAtomicOfAMissingFile', () => {
+  describe('withAnExpectedStamp', () => {
+    it('rejectsWithANotFoundHostError', async () => {
+      const host = createMockHost();
+      await expect(
+        host.writeFileAtomic(budget, bytes(1), { modifiedMs: 1, sizeBytes: 1 }),
+      ).rejects.toMatchObject({ code: 'notFound' });
+    });
+  });
+});
+
 describe('locks', () => {
   describe('freeFile', () => {
     it('isAcquiredAndReleased', async () => {
@@ -146,6 +163,26 @@ describe('locks', () => {
         stale: true,
       });
       expect(host.controls.heldLocks).toEqual([]);
+    });
+  });
+
+  describe('staleLockWithTakeOver', () => {
+    it('isReplacedAndAcquired', async () => {
+      const host = createMockHost();
+      host.controls.lockFromElsewhere(budget.path, 'KITCHEN-PC', true);
+      expect(await host.acquireLock(budget, { takeOverStale: true })).toEqual({ kind: 'acquired' });
+      expect(host.controls.heldLocks).toEqual([budget.path]);
+    });
+  });
+
+  describe('liveLockWithTakeOver', () => {
+    it('isStillHeld', async () => {
+      const host = createMockHost();
+      host.controls.lockFromElsewhere(budget.path, 'KITCHEN-PC', false);
+      expect(await host.acquireLock(budget, { takeOverStale: true })).toMatchObject({
+        kind: 'held',
+        stale: false,
+      });
     });
   });
 });
@@ -214,6 +251,31 @@ describe('revealInFolderAndQuit', () => {
       await host.quit();
       expect(host.controls.revealed).toEqual([budget]);
       expect(host.controls.quitCount).toBe(1);
+    });
+  });
+});
+
+describe('hostErrorCode', () => {
+  describe('aHostError', () => {
+    it('returnsItsCode', () => {
+      expect(hostErrorCode(new HostError('notFound', 'gone'))).toBe('notFound');
+    });
+  });
+
+  describe('anErrorThatCrossedTheBridge', () => {
+    it('readsTheCodeFromTheMessagePrefix', () => {
+      const copy = new Error(tagHostErrorMessage('permissionDenied', 'no'));
+      expect(copy.message).toBe('[permissionDenied] no');
+      expect(hostErrorCode(copy)).toBe('permissionDenied');
+    });
+  });
+
+  describe('anythingElse', () => {
+    it('returnsNull', () => {
+      expect(hostErrorCode(new Error('x'))).toBeNull();
+      expect(hostErrorCode(new Error('[bogus] x'))).toBeNull();
+      expect(hostErrorCode(null)).toBeNull();
+      expect(hostErrorCode('text')).toBeNull();
     });
   });
 });
