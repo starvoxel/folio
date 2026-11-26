@@ -5,6 +5,12 @@
     "types": ["node"],
     "jsx": "react-jsx"
   },
-  "include": ["tests", "tools/privacy-capture", "vitest.config.ts", "playwright.config.ts", "playwright.capture.config.ts"],
+  "include": [
+    "tests",
+    "tools/privacy-capture",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "playwright.capture.config.ts"
+  ],
   "exclude": ["tests/architecture/fixtures"]
 }
