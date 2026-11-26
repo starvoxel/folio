@@ -13,6 +13,7 @@ key_files:
   - tests/architecture/licences.test.ts
   - apps/desktop/package.json
   - packages/renderer/package.json
+  - .github/workflows/aif-cleanup.yml
 ---
 
 > The fixed choices the architecture works within: platform, pinned stack, coding standards and product rules.
@@ -64,6 +65,18 @@ The build enforces what it can: strict compiler settings, lint with warnings as 
 - A locked month changes only through the guarded reopen (M1.7, M1.14, H1.8).
 - Months close in order (M1.17).
 - Closing, reopening and completing an import save immediately (H1.6b).
+
+## Branches age out
+
+Cloud sessions cannot delete remote branches, so a scheduled workflow (Mondays and Thursdays, installed by `aif install -I cleanup`) sorts unprotected branches into Active (under 14 days, kept), Stale (up to 30 days, PR closed and labelled `stale`) and Archive (older, deleted). The 5 most recently active branches count as Active and the 15 most recent as at least Stale, whatever their age. The rules live in ai-foundation's `cleanup-branches` action (pinned in the workflow, bumped by Dependabot), not in this repository; the settings are repository Actions variables `CLEANUP_*` that need no code change. A manual dispatch can dry-run or name branches to delete; branches with an open PR are refused.
+
+| Variable                        | Folio value | Effect                                                                                               |
+| ------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| `CLEANUP_KEEP_EMPTY_BRANCHES`   | `false`     | An empty branch ages out whatever its name; the default keeps one unless it is an AI or test branch  |
+| `CLEANUP_PROTECTED_BRANCHES`    | `docs`      | Kept for ever, with the default branch                                                               |
+| every other `CLEANUP_*` setting | unset       | The ai-foundation default: AI session prefixes, throwaway words such as `test` and `spike`, the ages |
+
+A branch with unrelated history is kept for ever unless its name marks it a throwaway test (`CLEANUP_KEEP_UNRELATED_BRANCHES` stays at its default `true`).
 
 ## Dependency updates and security
 
