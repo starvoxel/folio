@@ -98,7 +98,7 @@ export function ownExternalAddress(): string {
 }
 
 /**
- * The positive control for the samplers: a child process that connects to this machine's own
+ * The positive control for the samplers: a process whose child connects to this machine's own
  * non-loopback address and holds the connection. The sampler must see it. A navigation by the app
  * itself cannot serve as the control, because the app refuses every outside request (AD-18).
  * @returns Whether the sampler saw the connection, and what it saw.
@@ -110,11 +110,14 @@ export async function runSamplerControl(): Promise<{ seen: boolean; findings: Fi
   });
   await new Promise<void>((resolve) => server.listen(0, '0.0.0.0', resolve));
   const port = (server.address() as { port: number }).port;
+  // The connection is made by a grandchild of the process the sampler watches, the way Chromium's
+  // web processes are descendants of the app, so the control also proves the tree walk.
+  const grandchild = `const s = require('node:net').connect(${String(port)}, '${address}'); s.on('error', () => {}); setTimeout(() => process.exit(0), 15000);`;
   const child = spawn(
     process.execPath,
     [
       '-e',
-      `const s = require('node:net').connect(${String(port)}, '${address}'); s.on('error', () => {}); setTimeout(() => process.exit(0), 15000);`,
+      `require('node:child_process').spawn(process.execPath, ['-e', ${JSON.stringify(grandchild)}], { stdio: 'ignore' }); setTimeout(() => process.exit(0), 15000);`,
     ],
     { stdio: 'ignore' },
   );
