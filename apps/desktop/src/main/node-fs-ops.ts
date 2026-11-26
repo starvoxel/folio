@@ -9,6 +9,7 @@
 import { mkdir, open, readdir, readFile, rename, rm, stat } from 'node:fs/promises';
 
 import type { FsOps } from './fs-ops.js';
+import { RENAME_RETRY_DELAYS_MS, retryOnCodes, TRANSIENT_FILE_ERRORS } from './retry.js';
 
 /**
  * @param error - A thrown value.
@@ -69,7 +70,14 @@ export const nodeFsOps: FsOps = {
       throw error;
     }
   },
-  rename: (from, to) => rename(from, to),
+  // Windows refuses to replace a file that antivirus or a sync client is holding for a moment.
+  rename: (from, to) =>
+    retryOnCodes(
+      () => rename(from, to),
+      TRANSIENT_FILE_ERRORS,
+      RENAME_RETRY_DELAYS_MS,
+      (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+    ),
   remove: (path) => rm(path, { force: true }),
   syncDirectory: async (path) => {
     // Windows cannot open a folder for flushing; its rename is already durable enough for our use.

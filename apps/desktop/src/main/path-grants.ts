@@ -18,6 +18,11 @@ export interface PathGrants {
   grant(path: string): void;
   /** Tell whether a path was chosen. */
   isGranted(path: string): boolean;
+  /**
+   * The key two spellings of one file share (resolved, and lower-cased where the file system
+   * ignores case), or null for a path that is never valid.
+   */
+  keyOf(path: string): string | null;
 }
 
 /**
@@ -36,6 +41,7 @@ export function createPathGrants(platform: NodeJS.Platform = process.platform): 
     return platform === 'win32' || platform === 'darwin' ? resolved.toLowerCase() : resolved;
   };
   return {
+    keyOf,
     grant: (path) => {
       const key = keyOf(path);
       if (key !== null) {

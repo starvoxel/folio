@@ -18,6 +18,8 @@ export interface LockManagerDeps {
   readonly self: LockInfo;
   readonly nowMs: () => number;
   readonly isProcessAlive: (pid: number) => boolean;
+  /** A short unique id, for the name a stale lock is moved to. */
+  readonly uniqueId: () => string;
   /** Called when a stale lock was replaced, so the host can log it. */
   readonly onStaleTakenOver?: () => void;
 }
@@ -25,8 +27,8 @@ export interface LockManagerDeps {
 /** Takes and releases the sidecar locks of budget files (AD-12). */
 export interface LockManager {
   acquire(file: string, options?: LockOptions): Promise<LockResult>;
-  /** Release the lock of a file, but only if this app holds it. */
-  release(file: string): Promise<void>;
+  /** Release the lock of a file, but only if this app holds it; true when it was released. */
+  release(file: string): Promise<boolean>;
   /** Release every lock this app holds, for quitting. */
   releaseAll(): Promise<void>;
   /** The files this app holds locks for. */
@@ -44,6 +46,30 @@ const MAX_ATTEMPTS = 3;
 export function createLockManager(deps: LockManagerDeps): LockManager {
   const heldFiles = new Set<string>();
 
+  /**
+   * Remove a lock judged stale. It is moved aside first and checked: if another app replaced it
+   * with a live lock in the meantime, that lock is put back instead of being destroyed. A third
+   * app creating a lock in that instant can still win; the window is a few file-system calls.
+   * @param lockPath - The lock file.
+   * @param staleText - The text that was judged stale.
+   */
+  const clearStaleLock = async (lockPath: string, staleText: string): Promise<void> => {
+    const aside = `${lockPath}.${deps.uniqueId()}.stale`;
+    try {
+      await deps.fs.rename(lockPath, aside);
+    } catch {
+      // The lock is already gone or moved: another app got there first; the next pass re-reads.
+      return;
+    }
+    const moved = await deps.fs.readText(aside);
+    await deps.fs.remove(aside);
+    if (moved === staleText) {
+      deps.onStaleTakenOver?.();
+    } else if (moved !== null) {
+      await deps.fs.createExclusive(lockPath, moved);
+    }
+  };
+
   const acquire = async (file: string, options?: LockOptions): Promise<LockResult> => {
     const lockPath = lockPathFor(file);
     for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt += 1) {
@@ -52,8 +78,9 @@ export function createLockManager(deps: LockManagerDeps): LockManager {
         heldFiles.add(file);
         return { kind: 'acquired' };
       }
+      const staleText = await deps.fs.readText(lockPath);
       const verdict = judgeLock({
-        existing: await deps.fs.readText(lockPath),
+        existing: staleText,
         self: deps.self,
         nowMs: deps.nowMs(),
         isProcessAlive: deps.isProcessAlive,
@@ -63,11 +90,10 @@ export function createLockManager(deps: LockManagerDeps): LockManager {
         return { kind: 'acquired' };
       }
       if (verdict.kind === 'held') {
-        if (!(verdict.stale && options?.takeOverStale === true)) {
+        if (!(verdict.stale && options?.takeOverStale === true && staleText !== null)) {
           return { kind: 'held', holder: verdict.holder, stale: verdict.stale };
         }
-        await deps.fs.remove(lockPath);
-        deps.onStaleTakenOver?.();
+        await clearStaleLock(lockPath, staleText);
       }
     }
     // Another app keeps winning the race; report what is there now.
@@ -76,14 +102,16 @@ export function createLockManager(deps: LockManagerDeps): LockManager {
     return { kind: 'held', holder: holder?.host ?? 'unknown', stale: false };
   };
 
-  const release = async (file: string): Promise<void> => {
+  const release = async (file: string): Promise<boolean> => {
     const lockPath = lockPathFor(file);
     const existing = await deps.fs.readText(lockPath);
     const holder = existing === null ? null : parseLock(existing);
+    heldFiles.delete(file);
     if (holder?.instance === deps.self.instance) {
       await deps.fs.remove(lockPath);
+      return true;
     }
-    heldFiles.delete(file);
+    return false;
   };
 
   return {

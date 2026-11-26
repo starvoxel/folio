@@ -49,3 +49,18 @@ describe('createPathGrants', () => {
     });
   });
 });
+
+describe('keyOf', () => {
+  describe('twoSpellingsOfOneFileOnAMac', () => {
+    it('shareAKey', () => {
+      const grants = createPathGrants('darwin');
+      expect(grants.keyOf('/Home/A.folio')).toBe(grants.keyOf('/home/x/../a.folio'));
+    });
+  });
+
+  describe('anInvalidPath', () => {
+    it('hasNoKey', () => {
+      expect(createPathGrants('linux').keyOf('relative')).toBeNull();
+    });
+  });
+});
