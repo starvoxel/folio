@@ -17,6 +17,7 @@ import { createDesktopFileHost } from './desktop-file-host.js';
 import { applyDevEnvFile } from './dev-env.js';
 import { installErrorHandlers } from './error-handlers.js';
 import { createFileDialogs } from './file-dialogs.js';
+import { buildMacMenuTemplate } from './menu-template.js';
 import type { FileHost } from './file-host.js';
 import { hardenBeforeReady, installHardening } from './hardening.js';
 import { registerIpcHandlers } from './ipc.js';
@@ -27,6 +28,7 @@ import { createPathGrants } from './path-grants.js';
 import { registerAppProtocol, registerAppScheme } from './protocol.js';
 import { createSettingsStore } from './settings-store.js';
 import { createMainWindow } from './window.js';
+import { IPC_CHANNELS } from '../shared/ipc.js';
 
 // A closed pipe (EPIPE) makes standard error emit an error event, and an event nobody listens to
 // would crash the app. Logging must never do that.
@@ -127,14 +129,19 @@ async function openWhenReady(): Promise<void> {
       settings: createSettingsStore(app.getPath('userData')),
       files,
       dialogs: createFileDialogs(grants, automationDialogAnswer(devEnv.env)),
+      grants,
       env: devEnv.env,
     });
     releaseLocksBeforeQuit(files);
-    // Windows and Linux have no menu bar (H1.14 uses the hamburger menu); macOS keeps a minimal
-    // native menu so Cmd+Q, Cmd+C and Cmd+V work (H1.16). The full menu arrives with its plan.
+    // Windows and Linux have no menu bar (H1.14 is the hamburger menu in the page); macOS has the
+    // native menu of H1.16, whose commands go to the focused window.
     Menu.setApplicationMenu(
       process.platform === 'darwin'
-        ? Menu.buildFromTemplate([{ role: 'appMenu' }, { role: 'editMenu' }])
+        ? Menu.buildFromTemplate(
+            buildMacMenuTemplate((command) => {
+              BrowserWindow.getFocusedWindow()?.webContents.send(IPC_CHANNELS.menuCommand, command);
+            }),
+          )
         : null,
     );
     createMainWindow();

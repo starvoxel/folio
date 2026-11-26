@@ -21,6 +21,9 @@ key_files:
   - apps/desktop/src/main/atomic-write.ts
   - apps/desktop/src/main/lock-file.ts
   - apps/desktop/src/main/backups.ts
+  - apps/desktop/src/main/menu-template.ts
+  - apps/desktop/src/main/dropped-files.ts
+  - apps/desktop/src/preload/file-drops.ts
   - apps/desktop/src/main/backup-store.ts
   - apps/desktop/src/main/serial-queue.ts
   - apps/desktop/src/main/hardening.ts
@@ -332,6 +335,10 @@ _Decision._ The renderer reaches the operating system only through a `HostApi` d
 - _Web, later and read-only first._ A browser implementation reads a `.folio` file picked with a plain file input and parses it locally with no upload, so it works in every browser without the File System Access API. There is no save, no lock and no native menu there.
 - _Server backend, later._ A household-hosted server is another `FileStore` implementation, opt-in and controlled by the household. It is not built and not designed in v1; the interface is the only preparation, and the data layer avoids assuming a local file where that costs nothing. When it arrives, H1.12 is reworded, the content security policy allows exactly that origin, and the AD-18 capture allowlists it.
 - _Mobile, later._ A wrapper around the same renderer is possible. It is not evaluated.
+
+_Menus and drops (Electron foundations milestone 3)._ Windows and Linux have no menu bar; the hamburger menu in the page (H1.14) is the menu. macOS gets a native menu, kept to the minimum of H1.16 for now (`buildMacMenuTemplate`: Folio with About, Settings and Quit; File with Save, for Cmd+S; Edit with Undo and Redo as Folio commands and the system cut, copy, paste and select-all roles). The other file commands (New, Open, Save As, Close file, Import CSV) join when files can be opened. Folio commands go to the focused window as `MenuCommand`s and reach the page through `HostApi.onMenuCommand`, the same door the hamburger menu uses. Undo and Redo are not system roles because they change the budget; the page decides when a focused text field takes them instead.
+
+Dropped files: the sandboxed page cannot read a dropped file's path, so the preload watches the window for a drop the user made (a trusted event; a script's synthetic drop is ignored), reads each file's real path with `webUtils.getPathForFile`, and tells the main process. The main process keeps only absolute paths of `.csv` files (at most 50), grants them like dialog results, logs the counts, and sends the references back to the page through `HostApi.onFilesDropped`. _Known conflict._ The preload cancels the browser's default for any drag that carries files (otherwise the window would navigate to the file), and it does not stop the event, so a drop zone in the page still sees it, but without a path. Drags inside the page carry no files, so in-page drag and drop (for example reordering) is unaffected; a page feature that wants to accept files must use `onFilesDropped`, not the DOM `File` objects.
 
 _Consequences._ Every feature that touches the file system or the OS goes through the interface and has a mock. The Tauri slice showed a second host can be written in about a hundred lines of Rust plus a thin adapter, which is the check that the boundary holds.
 

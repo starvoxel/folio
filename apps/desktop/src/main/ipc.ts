@@ -14,6 +14,8 @@ import { isAppUrl } from './app-origin.js';
 import { isAutomationEnabled } from './debug-guard.js';
 import type { FileDialogs } from './file-dialogs.js';
 import type { FileHost } from './file-host.js';
+import type { PathGrants } from './path-grants.js';
+import { acceptDroppedPaths } from './dropped-files.js';
 import { failureFor, invalidRequest } from './ipc-failures.js';
 import type { Logger } from './logger.js';
 import type { SettingsStore } from './settings-store.js';
@@ -67,6 +69,8 @@ export interface IpcServices {
   readonly settings: SettingsStore;
   readonly files: FileHost;
   readonly dialogs: FileDialogs;
+  /** Remembers the paths of dropped files, as the dialogs do for chosen ones. */
+  readonly grants: PathGrants;
   /** The environment the app runs with, which decides whether automation is on (AD-16). */
   readonly env: Readonly<Record<string, string | undefined>>;
 }
@@ -78,7 +82,7 @@ export interface IpcServices {
  * @param services - The logger, settings, file host, dialogs and the environment.
  */
 export function registerIpcHandlers(services: IpcServices): void {
-  const { logger, settings, env, files, dialogs } = services;
+  const { logger, settings, env, files, dialogs, grants } = services;
   ipcMain.handle(IPC_CHANNELS.getInfo, (event): Promise<IpcResult<HostInfo>> => {
     assertTrustedSender(event);
     return guarded(logger, 'getInfo', () => ({
@@ -169,6 +173,19 @@ export function registerIpcHandlers(services: IpcServices): void {
     files.backUp(request.file, request.bytes),
   );
 
+  handleChecked(IPC_CHANNELS.dropFiles, 'dropFiles', acceptDroppedPaths, (outcome, event): null => {
+    for (const file of outcome.accepted) {
+      grants.grant(file.path);
+    }
+    logger.info('files dropped', {
+      accepted: outcome.accepted.length,
+      rejected: outcome.rejected,
+    });
+    if (outcome.accepted.length > 0) {
+      event.sender.send(IPC_CHANNELS.filesDropped, outcome.accepted);
+    }
+    return null;
+  });
   ipcMain.handle(IPC_CHANNELS.quit, (event): Promise<IpcResult<null>> => {
     assertTrustedSender(event);
     return guarded(logger, 'quit', () => {
