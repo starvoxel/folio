@@ -17,6 +17,10 @@ key_files:
   - tests/e2e/support/linux-capture.ts
   - tests/e2e/support/socket-sampler.ts
   - tools/privacy-capture/run-linux.sh
+  - apps/desktop/src/main/file-host.ts
+  - apps/desktop/src/main/atomic-write.ts
+  - apps/desktop/src/main/lock-file.ts
+  - apps/desktop/src/main/backups.ts
   - apps/desktop/src/main/hardening.ts
   - apps/desktop/src/main/logger.ts
   - packages/core/src/support/folio-error.ts
@@ -193,6 +197,13 @@ The online-lookup opt-in lives in the file because it decides whether household 
 
 _Decision._ Back up the file on open and on a rotating schedule, to the local app-data folder rather than beside the file, so a synced folder does not fill with copies (H1.10). A sidecar `.lock` file warns when another computer has the file open. Before saving, check whether the file changed on disk since it was loaded and warn instead of overwriting. Frequency and retention are set in the backup plan.
 
+_Built (Electron foundations milestone 2)._ The main process implements these behind `HostApi` and `FileStore`, and the mock follows the same rules.
+
+- _Save._ `writeAtomically` writes a temporary file beside the target, flushes it, renames it over the target, and flushes the folder where the operating system allows (not on Windows). When the caller passes the stamp it last saw (modification time in whole milliseconds and size) and the file differs, nothing is written and the result is `changedOnDisk`; a file deleted since it was read rejects with `notFound` instead of being recreated. A crash leaves the old file or the new one; a crash can leave a leftover `.name.id.tmp` file, which later saves ignore.
+- _Lock._ `<file>.lock` is created with "fail if it exists", so two apps never both take it. It holds the computer's name, the process id, a per-run id and the time. A lock is stale when its process has died on this computer, or after 24 hours when it came from another computer, which cannot be asked. A stale lock is reported, and replaced only when the renderer asks with `takeOverStale` after telling the person. A normal quit releases the app's locks.
+- _Backups._ Each file gets a folder under `<app data>/backups`, named by a hash of its path, holding copies named `name-<UTC time>.ext`; the newest 10 stay (`BACKUPS_KEPT`, until the backup settings arrive with the app shell plan). Nothing is written beside the budget file.
+- _Paths._ The renderer may name only files the person chose: the native dialogs return a path and the main process remembers it (`PathGrants`); every operation refuses any other path with `permissionDenied`. Logs carry sizes, counts and outcomes, never names, paths or contents. The context bridge copies only an error's message, so the failure code travels as a `[code]` prefix that `hostErrorCode` reads.
+
 ## AD-13. Charts are ECharts behind chart models
 
 _Decision._ The four chart types (donut, stacked bar, column bars, diverging bars) are drawn with ECharts (Apache-2.0, SVG renderer). A chart model feeds each chart with series data, colours taken from the design tokens, and click events for drill-down (A1.6). Rendering is replaceable without touching the chart models.
@@ -270,7 +281,7 @@ _Decision._ Three layers, each usable on its own:
 2. _The real app through Playwright._ Tests start the packaged release binary with `FOLIO_AUTOMATION=1`. That turns on a renderer hook, `window.__folio` (`getState`, `navigate`, `settled`), which returns structured page state as JSON, and the test process attaches through Chromium's `--remote-debugging-pipe`, relayed by the test process, so no network port exists. The exact release binary is tested, with no extra build and no changes to production code for the drive itself. A main-process guard refuses `--remote-debugging-port`, `--remote-debugging-pipe`, `--remote-allow-origins` and `--inspect*` unless `FOLIO_AUTOMATION=1`, and the Node inspect fuse stays off in release builds. Playwright locates controls by role, name and `data-testid`.
 3. _Real-window smoke and checks per OS._ On Windows and macOS runners, an end-to-end suite visits every page, reads state, takes screenshots, and compares them with per-OS baselines (fonts and rendering differ by OS, so baselines are never shared). The network-capture job of AD-18 runs on every Electron update.
 
-_Consequences._ The release binary contains no automation server. A user who sets `FOLIO_AUTOMATION=1` on their own machine can drive their own app, which is the point of H1.17. The guard runs after Chromium starts parsing flags, so a very early attach is not covered; this window was not tested. Keyboard behaviour that depends on real focus (Tab order, dialog focus) is checked with real key events where the platform allows; synthetic key events through a driver do not move focus the way a user does. A guarded loopback server can be added later, if agents need to inspect release builds remotely, as its own decision with its own threat checks: loopback binding, a per-session token, a `Host` check, rejection of any `Origin` header, no CORS headers, no static files and size limits.
+_Consequences._ The release binary contains no automation server. With automation on, `FOLIO_AUTOMATION_DIALOG_PATH` answers every file dialog, so end-to-end tests can reach the file operations; without automation it does nothing. A user who sets `FOLIO_AUTOMATION=1` on their own machine can drive their own app, which is the point of H1.17. The guard runs after Chromium starts parsing flags, so a very early attach is not covered; this window was not tested. Keyboard behaviour that depends on real focus (Tab order, dialog focus) is checked with real key events where the platform allows; synthetic key events through a driver do not move focus the way a user does. A guarded loopback server can be added later, if agents need to inspect release builds remotely, as its own decision with its own threat checks: loopback binding, a per-session token, a `Host` check, rejection of any `Origin` header, no CORS headers, no static files and size limits.
 
 ## AD-17. Electron with TypeScript is the stack
 
