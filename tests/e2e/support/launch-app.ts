@@ -17,6 +17,8 @@ import '../../support/window-types.js';
 /** A running packaged app and the handles to drive it. */
 export interface LaunchedApp {
   readonly page: Page;
+  /** The process id of what was spawned: the app itself, or the wrapper when there is one. */
+  readonly pid: number | undefined;
   /** Everything the app wrote to its standard error stream so far. */
   stderr(): string;
   /** The page's console errors and uncaught exceptions so far. */
@@ -31,6 +33,8 @@ export interface LaunchedApp {
 export interface LaunchOptions {
   /** The app-data folder; every launch of a test uses its own, so runs never share settings. */
   readonly userDataDirectory: string;
+  /** A command and arguments to put in front of the app, such as `strace`; the capture uses it. */
+  readonly wrapper?: readonly string[];
 }
 
 const WAIT_FOR_PAGE_MS = 30_000;
@@ -46,9 +50,12 @@ const WAIT_FOR_EXIT_MS = 20_000;
  * @returns The running app.
  */
 export async function launchApp(app: PackagedApp, options: LaunchOptions): Promise<LaunchedApp> {
+  const [command = app.executable, ...wrapperArguments] =
+    options.wrapper === undefined ? [] : [...options.wrapper, app.executable];
   const child: ChildProcess = spawn(
-    app.executable,
+    command,
     [
+      ...wrapperArguments,
       '--remote-debugging-pipe',
       `--user-data-dir=${options.userDataDirectory}`,
       ...platformLaunchArguments(),
@@ -126,6 +133,7 @@ export async function launchApp(app: PackagedApp, options: LaunchOptions): Promi
 
   return {
     page,
+    pid: child.pid,
     stderr: () => stderrText,
     pageProblems: () => problems,
     exited,

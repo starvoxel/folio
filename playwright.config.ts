@@ -16,6 +16,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: 'tests/e2e',
   testMatch: '**/*.e2e.ts',
+  testIgnore: '**/privacy-capture.e2e.ts',
   outputDir: 'test-results/e2e',
   fullyParallel: false,
   workers: 1,
