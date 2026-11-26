@@ -1,9 +1,14 @@
 name: macOS menu keystrokes (experiment)
 
-# A one-off, run by hand: can a macOS runner press real keys with osascript, so the native menu's
-# shortcuts (Cmd+S, Cmd+Z and so on) can be checked? Record the result, then delete this file and
-# tests/e2e/menu-keystrokes.e2e.ts. It has no schedule and no pull-request trigger on purpose.
+# A one-off: can a macOS runner press real keys with osascript, so the native menu's shortcuts
+# (Cmd+S, Cmd+Z and so on) can be checked? A new workflow cannot be dispatched before it is on the
+# default branch, so it runs on the pull request that adds it, and only when its own files change.
+# Record the result, then delete this file and tests/e2e/menu-keystrokes.e2e.ts.
 on:
+  pull_request:
+    paths:
+      - .github/workflows/macos-menu-keystrokes.yml
+      - tests/e2e/menu-keystrokes.e2e.ts
   workflow_dispatch:
 
 permissions:
