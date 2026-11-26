@@ -138,3 +138,13 @@ watchFileDrops(
   },
 );
 contextBridge.exposeInMainWorld('folioHost', Object.freeze(host));
+// The main process answers these only when started with FOLIO_AUTOMATION=1; otherwise it has no
+// handler and a call is refused, so exposing the functions grants nothing (AD-16).
+contextBridge.exposeInMainWorld(
+  'folioAutomation',
+  Object.freeze({
+    clickMenuItem: (path: readonly string[]) =>
+      call<boolean>(IPC_CHANNELS.automationClickMenu, path),
+    describeMenu: () => call<unknown>(IPC_CHANNELS.automationDescribeMenu),
+  }),
+);

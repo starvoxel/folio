@@ -219,3 +219,17 @@ export function parseDialogOptions(
     ...(filters.length > 0 ? { filters } : {}),
   };
 }
+
+/**
+ * Check the labels that name a menu item, for the automation command.
+ * @param value - Untrusted input: an array of one to four labels.
+ * @returns The labels, or null when malformed.
+ */
+export function parseMenuPath(value: unknown): readonly string[] | null {
+  return Array.isArray(value) &&
+    value.length >= 1 &&
+    value.length <= 4 &&
+    (value as unknown[]).every((label) => typeof label === 'string' && label.length <= 100)
+    ? (value as string[])
+    : null;
+}

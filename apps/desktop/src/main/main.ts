@@ -139,7 +139,9 @@ async function openWhenReady(): Promise<void> {
       process.platform === 'darwin'
         ? Menu.buildFromTemplate(
             buildMacMenuTemplate((command) => {
-              BrowserWindow.getFocusedWindow()?.webContents.send(IPC_CHANNELS.menuCommand, command);
+              // One window: when none is focused (the app just launched), use it anyway.
+              const target = BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0];
+              target?.webContents.send(IPC_CHANNELS.menuCommand, command);
             }),
           )
         : null,

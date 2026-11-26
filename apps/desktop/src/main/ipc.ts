@@ -6,7 +6,7 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-import { app, ipcMain, type IpcMainInvokeEvent } from 'electron';
+import { app, ipcMain, Menu, type IpcMainInvokeEvent } from 'electron';
 
 import type { FileContents, FileRef, HostInfo, LockResult, WriteResult } from '@folio/host-api';
 
@@ -16,6 +16,7 @@ import type { FileDialogs } from './file-dialogs.js';
 import type { FileHost } from './file-host.js';
 import type { PathGrants } from './path-grants.js';
 import { acceptDroppedPaths } from './dropped-files.js';
+import { describeMenu, findMenuItem, type MenuItemLike } from './menu-automation.js';
 import { failureFor, invalidRequest } from './ipc-failures.js';
 import type { Logger } from './logger.js';
 import type { SettingsStore } from './settings-store.js';
@@ -25,6 +26,7 @@ import {
   parseDialogOptions,
   parseFileRef,
   parseLockRequest,
+  parseMenuPath,
   parseWriteRequest,
 } from '../shared/ipc-requests.js';
 
@@ -186,6 +188,25 @@ export function registerIpcHandlers(services: IpcServices): void {
     }
     return null;
   });
+  // Registered only with automation on, so a normal run has no handler to attack (AD-16).
+  if (isAutomationEnabled(env)) {
+    const items = (): readonly MenuItemLike[] =>
+      (Menu.getApplicationMenu()?.items ?? []) as unknown as readonly MenuItemLike[];
+    handleChecked(
+      IPC_CHANNELS.automationClickMenu,
+      'automationClickMenu',
+      parseMenuPath,
+      (path): boolean => {
+        const item = findMenuItem(items(), path);
+        item?.click();
+        return item !== null;
+      },
+    );
+    ipcMain.handle(IPC_CHANNELS.automationDescribeMenu, (event) => {
+      assertTrustedSender(event);
+      return guarded(logger, 'automationDescribeMenu', () => describeMenu(items()));
+    });
+  }
   ipcMain.handle(IPC_CHANNELS.quit, (event): Promise<IpcResult<null>> => {
     assertTrustedSender(event);
     return guarded(logger, 'quit', () => {
