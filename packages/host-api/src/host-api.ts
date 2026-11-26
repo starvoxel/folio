@@ -131,6 +131,39 @@ export class HostError extends Error {
   }
 }
 
+const HOST_ERROR_CODES: readonly HostErrorCode[] = [
+  'notFound',
+  'permissionDenied',
+  'unavailable',
+  'invalid',
+];
+
+/**
+ * Put a code in front of a message, for crossing Electron's context bridge, which copies an
+ * error's message but nothing else.
+ * @param code - The failure's code.
+ * @param message - The message, which carries no financial data.
+ * @returns The message as `[code] message`.
+ */
+export function tagHostErrorMessage(code: HostErrorCode, message: string): string {
+  return `[${code}] ${message}`;
+}
+
+/**
+ * Read the code of a failed host call. A `HostError` from the mock or from the same world carries
+ * it as `code`; one that crossed the context bridge carries it in a `[code]` message prefix.
+ * @param error - Whatever a host call rejected with.
+ * @returns The code, or null when the error did not come from a host call.
+ */
+export function hostErrorCode(error: unknown): HostErrorCode | null {
+  if (error instanceof HostError) {
+    return error.code;
+  }
+  const message = (error as { message?: unknown } | null)?.message;
+  const found = typeof message === 'string' ? /^\[(\w+)\] /u.exec(message)?.[1] : undefined;
+  return HOST_ERROR_CODES.find((code) => code === found) ?? null;
+}
+
 /**
  * The one door from the renderer to the operating system (AD-19). Electron implements it with a
  * preload bridge, tests use the in-memory mock, and a browser build can implement a read-only

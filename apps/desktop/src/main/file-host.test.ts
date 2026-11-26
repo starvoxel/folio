@@ -6,6 +6,8 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { join, resolve } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
 import { createFileHost } from './file-host.js';
@@ -13,8 +15,10 @@ import type { Logger } from './logger.js';
 import { createMemoryFs } from './memory-fs.js';
 import { createPathGrants } from './path-grants.js';
 
-const chosen = { path: '/data/Household.folio', name: 'Household.folio' };
-const stranger = { path: '/etc/passwd', name: 'passwd' };
+const chosen = { path: join(resolve('/data'), 'Household.folio'), name: 'Household.folio' };
+const stranger = { path: join(resolve('/etc'), 'passwd'), name: 'passwd' };
+
+const backupRoot = join(resolve('/app'), 'backups');
 
 /**
  * @returns A host on an in-memory disk where `chosen` is the only granted file, and the log lines.
@@ -39,7 +43,7 @@ function setup() {
     fs,
     grants,
     logger,
-    backupRoot: '/app/backups',
+    backupRoot,
     self: { instance: 'me', host: 'PC', pid: 1, takenMs: 0 },
     nowMs: () => Date.UTC(2026, 0, 1),
     isProcessAlive: () => true,
@@ -104,7 +108,7 @@ describe('createFileHost', () => {
     it('writesUnderTheBackupRootInAFolderForThatFile', async () => {
       const { host, fs, lines } = setup();
       const backup = await host.backUp(chosen, new Uint8Array([3]));
-      expect(backup.path).toBe('/app/backups/hash/Household-20260101T000000000Z.folio');
+      expect(backup.path).toBe(join(backupRoot, 'hash', 'Household-20260101T000000000Z.folio'));
       expect(fs.files.has(backup.path)).toBe(true);
       expect(lines.at(-1)).toBe('info wrote a backup {"bytes":1,"pruned":0}');
     });

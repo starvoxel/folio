@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { findRefusedSwitches, isAutomationEnabled } from './debug-guard.js';
+import { automationDialogAnswer, findRefusedSwitches, isAutomationEnabled } from './debug-guard.js';
 
 describe('findRefusedSwitches', () => {
   describe('noDebuggingSwitches', () => {
@@ -74,6 +74,28 @@ describe('isAutomationEnabled', () => {
     it('returnsFalse', () => {
       expect(isAutomationEnabled({})).toBe(false);
       expect(isAutomationEnabled({ FOLIO_AUTOMATION: 'true' })).toBe(false);
+    });
+  });
+});
+
+describe('automationDialogAnswer', () => {
+  describe('automationOnWithAPath', () => {
+    it('returnsThePath', () => {
+      expect(
+        automationDialogAnswer({ FOLIO_AUTOMATION: '1', FOLIO_AUTOMATION_DIALOG_PATH: '/x.folio' }),
+      ).toBe('/x.folio');
+    });
+  });
+
+  describe('automationOffWithAPath', () => {
+    it('returnsNullSoNoDialogIsSkipped', () => {
+      expect(automationDialogAnswer({ FOLIO_AUTOMATION_DIALOG_PATH: '/x.folio' })).toBeNull();
+    });
+  });
+
+  describe('automationOnWithoutAPath', () => {
+    it('returnsNull', () => {
+      expect(automationDialogAnswer({ FOLIO_AUTOMATION: '1' })).toBeNull();
     });
   });
 });
