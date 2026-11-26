@@ -14,16 +14,7 @@ import { expect, test } from '@playwright/test';
 
 import { findPackagedApp } from './support/app-path.js';
 import { launchApp, type LaunchedApp } from './support/launch-app.js';
-
-const PAGES = [
-  ['overview', 'Overview'],
-  ['transactions', 'Transactions'],
-  ['reporting', 'Reporting'],
-  ['net-worth', 'Net worth'],
-  ['accounts', 'Accounts'],
-  ['rules', 'Rules & categories'],
-  ['settings', 'Settings'],
-] as const;
+import { PAGES } from './support/pages.js';
 
 /**
  * Read the log lines the app wrote to standard error that are warnings or errors. Chromium's own

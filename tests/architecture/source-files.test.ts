@@ -14,8 +14,8 @@ import { describe, expect, it } from 'vitest';
 import { listSourceFiles, repositoryRoot } from './support/repository.js';
 import { findShapeProblems } from './support/test-shape.js';
 
-const sourceFiles = listSourceFiles(['packages', 'apps', 'tests']);
-const unitTestPattern = /^(packages|apps)\/[^/]+\/src\/.+\.test\.tsx?$/u;
+const sourceFiles = listSourceFiles(['packages', 'apps', 'tests', 'tools']);
+const unitTestPattern = /^(packages|apps|tools)\/[^/]+\/src\/.+\.test\.tsx?$/u;
 const kebabFilePattern = /^[a-z0-9]+(-[a-z0-9]+)*(\.(test|e2e|d|config))?\.tsx?$/u;
 
 const goodShape = `

@@ -1,0 +1,115 @@
+name: Privacy capture
+
+# AD-18: proves the packaged app makes no outbound attempt through launch, every page and five idle
+# minutes. It runs when something that can change the app's network behaviour changes (an Electron
+# or dependency update, the hardening, the capture itself) and on demand. It is a separate workflow
+# because a workflow-level path filter on ci.yml would leave its required checks pending. A person
+# reads each run: the result is in the job summary, and the raw logs are uploaded.
+on:
+  pull_request:
+    paths:
+      - apps/desktop/package.json
+      - apps/desktop/src/main/hardening.ts
+      - apps/desktop/src/main/window.ts
+      - apps/desktop/src/main/protocol.ts
+      - package-lock.json
+      - playwright.capture.config.ts
+      - tools/privacy-capture/**
+      - tests/e2e/privacy-capture.e2e.ts
+      - tests/e2e/support/**
+      - .github/workflows/privacy-capture.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: privacy-capture-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux namespace capture
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+
+      - name: Install the capture tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends iproute2 strace tcpdump xauth xvfb
+
+      - name: Build and package the app
+        run: npm run package
+
+      # Root is needed for namespaces, strace and tcpdump; the script keeps the user's PATH.
+      - name: Run the capture in a network namespace
+        run: sudo -E env "PATH=$PATH" bash tools/privacy-capture/run-linux.sh
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: privacy-capture-linux
+          path: test-results/capture
+          if-no-files-found: warn
+
+  windows:
+    name: Windows socket sampling
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+      - run: npm run package
+      - run: npm run test:capture
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: privacy-capture-windows
+          path: test-results/capture
+          if-no-files-found: warn
+
+  macos:
+    name: macOS socket sampling
+    runs-on: macos-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm install -g npm@12 && npm --version
+      - run: npm ci
+      - run: npm run package
+      - run: npm run test:capture
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: privacy-capture-macos
+          path: test-results/capture
+          if-no-files-found: warn
