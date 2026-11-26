@@ -8,7 +8,7 @@ integrations:
       - path: .github/workflows/aif-merge.yml
         hash: sha256:1ff725edc7a299415d23eff4106a8fb3435050070a6fda087212e00ad2abbbc4
   cleanup:
-    version: 0.8.4
+    version: 0.9.1
     files:
       - path: .github/workflows/aif-cleanup.yml
-        hash: sha256:634c2b0002bcc2ba9a20d81ae33dd65ba571674c15795ef9a3c5471d8d987883
+        hash: sha256:d5becff53b99bc692bac0d9535410e8a49e19d0f5e98e16b5b458f259a525766
