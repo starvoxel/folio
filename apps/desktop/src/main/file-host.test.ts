@@ -114,11 +114,24 @@ describe('createFileHost', () => {
     });
   });
 
+  describe('twoBackupsStartedAtOnce', () => {
+    it('bothSurviveUnderDifferentNames', async () => {
+      const { host, fs } = setup();
+      const [first, second] = await Promise.all([
+        host.backUp(chosen, new Uint8Array([1])),
+        host.backUp(chosen, new Uint8Array([2])),
+      ]);
+      expect(first.path).not.toBe(second.path);
+      expect(fs.files.get(first.path)).toEqual(new Uint8Array([1]));
+      expect(fs.files.get(second.path)).toEqual(new Uint8Array([2]));
+    });
+  });
+
   describe('backUp', () => {
     it('writesUnderTheBackupRootInAFolderForThatFile', async () => {
       const { host, fs, lines } = setup();
       const backup = await host.backUp(chosen, new Uint8Array([3]));
-      expect(backup.path).toBe(join(backupRoot, 'hash', 'Household-20260101T000000000Z.folio'));
+      expect(backup.path).toBe(join(backupRoot, 'hash', 'Household_20260101-000000.folio'));
       expect(fs.files.has(backup.path)).toBe(true);
       expect(lines.at(-1)).toBe('info wrote a backup {"bytes":1,"pruned":0}');
     });

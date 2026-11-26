@@ -103,7 +103,7 @@ test.describe('packagedAppFiles', () => {
         bytes: [1, 2, 3],
         stale: 'changedOnDisk',
       });
-      expect(outcome.backupName).toMatch(/^Household-\d{8}T\d{9}Z\.folio$/u);
+      expect(outcome.backupName).toMatch(/^Household_\d{8}-\d{6}\.folio$/u);
       expect(existsSync(`${budget}.lock`)).toBe(true);
       expect(await readdir(folder)).not.toContain(outcome.backupName);
 
