@@ -17,7 +17,7 @@ Replace the placeholder .NET scaffold with the TypeScript workspace the architec
 
 ## Approach
 
-The selection slice on `spike/slice-electron` is reference only: read its hardening code, tests, scripts and workflows for lessons, and write the scaffold fresh. Copying it wholesale would carry the spike's shortcuts (fixture-path hacks, a test build that differs from the shipped one, hard-coded sizes) into the real history. Decisions are in [AD-14](../knowledge/architecture/09_architecture_decisions.md#ad-14-package-layout-ui-state-and-testing) (layout and test kinds), AD-15 (design system), AD-16 (testing), AD-18 (hardening) and AD-19 (host interface). Affected arc42 sections: 02, 04, 09. Conventions are in [project-standards.md](../project-standards.md).
+The selection slice on `spike/slice-electron` is reference only: read its hardening code, tests, scripts and workflows for lessons, and write the scaffold fresh. Copying it wholesale would carry the spike's shortcuts (fixture-path hacks, a test build that differs from the shipped one, hard-coded sizes) into the real history. Decisions are in [AD-14](../knowledge/architecture/09_04_ui_and_structure.md#ad-14-package-layout-ui-state-and-testing) (layout and test kinds), AD-15 (design system), AD-16 (testing), AD-18 (hardening) and AD-19 (host interface). Affected arc42 sections: 02, 04, 09. Conventions are in [project-standards.md](../project-standards.md).
 
 ## Milestones
 

@@ -98,10 +98,20 @@ export {
   type Placed,
 } from './commands/change-set.js';
 export {
+  COMMAND_KIND,
+  FAILURE,
   type AccountChanges,
   type Command,
   type CommandContext,
   type CommandFailure,
+  type CommandKind,
 } from './commands/command.js';
 export { applyCommand, type CommandOutcome } from './commands/apply-command.js';
 export { checkLocks, type MonthLockedFailure } from './commands/lock-guard.js';
+export { decodeFolio, encodeFolio } from './file/codec.js';
+export type { CarriedParts, DecodeOptions, DecodeOutcome, EncodeOptions } from './file/codec.js';
+export type { Digest } from './file/digest.js';
+export type { DamagedLine, DecodeFailure } from './file/failures.js';
+export { FORMAT_VERSION } from './file/manifest.js';
+export { MIGRATIONS, runMigrations, type MigrationStep, type RawParts } from './file/migrations.js';
+export { PART_REGISTRY, type PartKind, type PartSpec } from './file/parts.js';
