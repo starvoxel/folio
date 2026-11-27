@@ -12,6 +12,7 @@
     "typecheck": "tsc --project tsconfig.json"
   },
   "dependencies": {
+    "fflate": "0.8.3",
     "zod": "4.6.7"
   }
 }
