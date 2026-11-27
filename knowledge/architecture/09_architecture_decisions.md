@@ -106,7 +106,7 @@ _Version 1 (in `packages/core/src/file/`)._ The container is pure bytes in, byte
 - _Checksums._ SHA-256 per part, in the manifest, through an injected `Digest`. `core` has no `crypto` typings and must stay free of Node and the DOM, so the host passes `crypto.subtle` and tests pass the same call. A mismatch refuses the whole file (`checksumMismatch`, naming the part), which is the corruption check and the trigger for the backup offer (H1.11).
 - _Damaged lines._ In a file whose checksums match, a JSONL line that does not parse or fit its schema is dropped and reported by line number; the rest opens.
 - _Determinism._ Entries are written in registry order, JSON keys are sorted, and every zip timestamp is overwritten with 1980-01-01, because fflate writes local time. The same model gives the same bytes on every machine.
-- _Failures._ `notAZip` (also for an entry that claims to inflate past 256 MiB), `manifestMissing`, `manifestInvalid`, `newerFormat`, `partMissing`, `checksumMismatch`, `schemaInvalid` (part and path, no value) and `migrationFailed`. The migration chain is empty while version 1 is a draft.
+- _Failures._ `notAZip` (also for a zip that claims more than 64 MiB for an entry, 256 MiB in all, or more than 64 entries, checked before anything is inflated), `manifestMissing`, `manifestInvalid`, `newerFormat`, `partMissing`, `checksumMismatch`, `schemaInvalid` (part and path, no value) and `migrationFailed`. The migration chain is empty while version 1 is a draft.
 
 Filtering stays in memory: array methods over the model plus a few lookup indexes (by month, by account) that change sets keep up to date. An in-memory database was rejected because it would be a second copy of the data to keep in sync with every command, undo and redo.
 

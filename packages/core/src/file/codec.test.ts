@@ -263,7 +263,7 @@ describe('decodeFolio', () => {
     it('neverOpensAsIfNothingHappenedAndNeverThrows', async () => {
       const bytes = await encodeFolio(household, { digest });
       const original = await decodeFolio(bytes, { digest });
-      for (let at = 0; at < bytes.length; at += 7) {
+      for (let at = 0; at < bytes.length; at += 1) {
         const damaged = bytes.slice();
         damaged[at] = (damaged[at] ?? 0) ^ 0xff;
         const result = await decodeFolio(damaged, { digest });

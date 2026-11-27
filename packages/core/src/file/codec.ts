@@ -6,6 +6,8 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
+import { z } from 'zod';
+
 import type { BudgetModel } from '../budget/model.js';
 import { yearMonthOf } from '../domain/local-date.js';
 import { err, ok, type Result } from '../support/result.js';
@@ -15,6 +17,13 @@ import type { DamagedLine, DecodeFailure } from './failures.js';
 import { FORMAT_VERSION, manifestSchema, type Manifest } from './manifest.js';
 import { checkModel } from './model-checks.js';
 import { MIGRATIONS, runMigrations, type MigrationStep } from './migrations.js';
+import {
+  accountsPartSchema,
+  carriedJsonSchema,
+  carriedLineSchema,
+  categoriesPartSchema,
+  settingsPartSchema,
+} from './part-schemas.js';
 import { PART_REGISTRY, type PartSpec } from './parts.js';
 import { stableStringify } from './stable-json.js';
 import { entryText, unzipEntries, zipEntries, type ZipEntry } from './zip-bytes.js';
@@ -57,7 +66,8 @@ function partText(spec: PartSpec, value: unknown): string {
   if (spec.kind === 'json') {
     return `${stableStringify(value, 2)}\n`;
   }
-  return (value as readonly unknown[]).map((record) => `${stableStringify(record, 0)}\n`).join('');
+  const records = Array.isArray(value) ? value : [];
+  return records.map((record) => `${stableStringify(record, 0)}\n`).join('');
 }
 
 /**
@@ -157,6 +167,9 @@ function readLines(text: string): Line[] {
   return lines;
 }
 
+/** Reads only the version, so a newer format is refused even if the rest of its manifest differs. */
+const versionPeekSchema = z.object({ formatVersion: z.number().int() });
+
 const NOT_JSON: ValidationIssue = { path: '', message: 'Not valid JSON' };
 
 /**
@@ -175,9 +188,9 @@ function readManifest(entries: Map<string, Uint8Array>): Result<Manifest, Decode
   } catch {
     return err({ code: 'manifestInvalid' });
   }
-  const version = (parsed as { formatVersion?: unknown } | null)?.formatVersion;
-  if (typeof version === 'number' && Number.isInteger(version) && version > FORMAT_VERSION) {
-    return err({ code: 'newerFormat', formatVersion: version });
+  const peeked = parseWithSchema(versionPeekSchema, parsed);
+  if (peeked.ok && peeked.value.formatVersion > FORMAT_VERSION) {
+    return err({ code: 'newerFormat', formatVersion: peeked.value.formatVersion });
   }
   const checked = parseWithSchema(manifestSchema, parsed);
   return checked.ok ? ok(checked.value) : err({ code: 'manifestInvalid' });
@@ -259,29 +272,74 @@ export async function decodeFolio(
 }
 
 /**
+ * @param value - A part as read.
+ * @returns True when it is the list of lines `readLines` makes.
+ */
+function isLines(value: unknown): value is readonly Line[] {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => typeof item === 'object' && item !== null && 'line' in item)
+  );
+}
+
+/**
+ * Validate one part, naming it in the failure.
+ * @param part - The part's name.
+ * @param schema - Its schema.
+ * @param value - What was read.
+ * @returns The validated content, or the failure.
+ */
+function validatePart<S extends z.ZodType>(
+  part: string,
+  schema: S,
+  value: unknown,
+): Result<z.output<S>, DecodeFailure> {
+  const checked = parseWithSchema(schema, value);
+  return checked.ok ? checked : err({ code: 'schemaInvalid', part, issues: checked.error.issues });
+}
+
+/**
  * Validate the parts and build the model.
  * @param raw - The parts at the current version.
  * @returns The outcome, or the first part that does not fit its schema or breaks a rule.
  */
 function assemble(raw: Record<string, unknown>): Result<DecodeOutcome, DecodeFailure> {
-  const parsed: Record<string, unknown> = {};
+  const settings = validatePart('settings', settingsPartSchema, raw['settings']);
+  const accounts = validatePart('accounts', accountsPartSchema, raw['accounts']);
+  const categories = validatePart('categories', categoriesPartSchema, raw['categories']);
+  if (!settings.ok) {
+    return settings;
+  }
+  if (!accounts.ok) {
+    return accounts;
+  }
+  if (!categories.ok) {
+    return categories;
+  }
+  const model: BudgetModel = {
+    settings: settings.value,
+    accounts: accounts.value,
+    categories: categories.value,
+  };
+  const broken = [...checkModel(model).entries()][0];
+  if (broken !== undefined) {
+    return err({ code: 'schemaInvalid', part: broken[0], issues: broken[1] });
+  }
   const carried: Record<string, readonly unknown[]> = {};
   const damagedLines: DamagedLine[] = [];
-  for (const spec of PART_REGISTRY) {
+  for (const spec of PART_REGISTRY.filter((part) => part.carried)) {
+    const value = raw[spec.name];
     if (spec.kind === 'json') {
-      const checked = parseWithSchema(spec.schema, raw[spec.name]);
-      if (!checked.ok) {
-        return err({ code: 'schemaInvalid', part: spec.name, issues: checked.error.issues });
+      const list = validatePart(spec.name, carriedJsonSchema, value);
+      if (!list.ok) {
+        return list;
       }
-      parsed[spec.name] = checked.value;
-      if (spec.carried) {
-        carried[spec.name] = checked.value as readonly unknown[];
-      }
+      carried[spec.name] = list.value;
       continue;
     }
     const kept: unknown[] = [];
-    for (const line of raw[spec.name] as readonly Line[]) {
-      const checked = line.readable ? parseWithSchema(spec.schema, line.value) : null;
+    for (const line of isLines(value) ? value : []) {
+      const checked = line.readable ? parseWithSchema(carriedLineSchema, line.value) : null;
       if (checked?.ok === true) {
         kept.push(checked.value);
       } else {
@@ -290,15 +348,5 @@ function assemble(raw: Record<string, unknown>): Result<DecodeOutcome, DecodeFai
     }
     carried[spec.name] = kept;
   }
-  const built: BudgetModel = {
-    settings: parsed['settings'] as BudgetModel['settings'],
-    accounts: parsed['accounts'] as BudgetModel['accounts'],
-    categories: parsed['categories'] as BudgetModel['categories'],
-  };
-  const broken = checkModel(built);
-  const first = [...broken.entries()][0];
-  if (first !== undefined) {
-    return err({ code: 'schemaInvalid', part: first[0], issues: first[1] });
-  }
-  return ok({ model: built, carried, damagedLines });
+  return ok({ model, carried, damagedLines });
 }

@@ -8,7 +8,14 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { entryText, MAX_ENTRY_BYTES, unzipEntries, zipEntries } from './zip-bytes.js';
+import {
+  entryText,
+  MAX_ENTRIES,
+  MAX_ENTRY_BYTES,
+  MAX_TOTAL_BYTES,
+  unzipEntries,
+  zipEntries,
+} from './zip-bytes.js';
 
 describe('zipEntries', () => {
   describe('theSameEntriesTwice', () => {
@@ -61,6 +68,36 @@ describe('unzipEntries', () => {
     it('returnsNotAZip', () => {
       const zip = zipEntries([{ name: 'a.json', text: 'x'.repeat(500) }]);
       expect(unzipEntries(zip.slice(0, zip.length - 30))).toEqual({ ok: false, error: 'notAZip' });
+    });
+  });
+
+  describe('manyEntriesEachClaimingAFairShare', () => {
+    it('returnsNotAZipWhenTheClaimsAddUpTooHigh', () => {
+      const count = Math.floor(MAX_TOTAL_BYTES / MAX_ENTRY_BYTES) + 1;
+      const zip = zipEntries(
+        Array.from({ length: count }, (_, n) => ({ name: `${String(n)}.json`, text: 'x' })),
+      );
+      const view = new DataView(zip.buffer, zip.byteOffset, zip.byteLength);
+      let offset = view.getUint32(zip.length - 22 + 16, true);
+      for (let entry = 0; entry < count; entry += 1) {
+        view.setUint32(offset + 24, MAX_ENTRY_BYTES, true);
+        offset +=
+          46 +
+          view.getUint16(offset + 28, true) +
+          view.getUint16(offset + 30, true) +
+          view.getUint16(offset + 32, true);
+      }
+      expect(unzipEntries(zip)).toEqual({ ok: false, error: 'notAZip' });
+    });
+  });
+
+  describe('moreEntriesThanAFileCanHold', () => {
+    it('returnsNotAZip', () => {
+      const entries = Array.from({ length: MAX_ENTRIES + 1 }, (_, n) => ({
+        name: `${String(n)}.json`,
+        text: '1',
+      }));
+      expect(unzipEntries(zipEntries(entries))).toEqual({ ok: false, error: 'notAZip' });
     });
   });
 

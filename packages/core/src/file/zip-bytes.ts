@@ -17,7 +17,11 @@ export interface ZipEntry {
 }
 
 /** The most one entry may expand to; a bigger claim is refused before anything is inflated. */
-export const MAX_ENTRY_BYTES = 256 * 1024 * 1024;
+export const MAX_ENTRY_BYTES = 64 * 1024 * 1024;
+/** The most all entries together may expand to; a household file is a few megabytes. */
+export const MAX_TOTAL_BYTES = 256 * 1024 * 1024;
+/** The most entries a file may hold; version 1 has ten. */
+export const MAX_ENTRIES = 64;
 
 const FIXED_DOS_DATE = 33;
 const FIXED_DOS_TIME = 0;
@@ -74,20 +78,26 @@ export function zipEntries(entries: readonly ZipEntry[]): Uint8Array {
 
 /**
  * Read a zip into text entries. Untrusted input: it never throws and never inflates an entry that
- * claims to be larger than `MAX_ENTRY_BYTES`.
+ * claims to be too large, singly or together, or that holds too many entries.
  * @param bytes - The file's bytes.
  * @returns The entries by name, or `notAZip` for anything that is not a readable zip.
  */
 export function unzipEntries(bytes: Uint8Array): Result<Map<string, Uint8Array>, 'notAZip'> {
   try {
-    const seen = { tooLarge: false };
+    const seen = { refused: false, bytes: 0, entries: 0 };
     const files = unzipSync(bytes, {
       filter: (file) => {
-        seen.tooLarge ||= file.originalSize > MAX_ENTRY_BYTES;
-        return file.originalSize <= MAX_ENTRY_BYTES;
+        seen.bytes += file.originalSize;
+        seen.entries += 1;
+        const refuse =
+          file.originalSize > MAX_ENTRY_BYTES ||
+          seen.bytes > MAX_TOTAL_BYTES ||
+          seen.entries > MAX_ENTRIES;
+        seen.refused ||= refuse;
+        return !refuse;
       },
     });
-    return seen.tooLarge ? err('notAZip') : ok(new Map(Object.entries(files)));
+    return seen.refused ? err('notAZip') : ok(new Map(Object.entries(files)));
   } catch {
     return err('notAZip');
   }
