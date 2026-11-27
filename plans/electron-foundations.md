@@ -1,10 +1,10 @@
 # Plan: Electron foundations
 
-| Field       | Value      |
-| ----------- | ---------- |
-| Status      | Approved   |
-| Approved by | Jeremy     |
-| Created     | 2026-11-12 |
+| Field       | Value                                                |
+| ----------- | ---------------------------------------------------- |
+| Status      | Milestones 1 to 3 done; 4 to 6 approved, not started |
+| Approved by | Jeremy                                               |
+| Created     | 2026-11-12                                           |
 
 ## Goal
 
@@ -21,19 +21,19 @@ This plan follows the [app scaffold plan](app-scaffold.md), which provides the w
 
 ## Milestones
 
-### 1. The privacy capture in CI
+### 1. The privacy capture in CI (done)
 
 - Does: a job that runs the built app in an isolated Linux network namespace with `strace` on network syscalls and `tcpdump`, a sink route so an attempt would be emitted, a positive control, and an analyzer that reports non-loopback `connect()` calls and external DNS queries, with the Chromium IPv6 reachability notice allowlisted. It runs through launch, every page and five minutes idle, and on every Electron update. For Windows and macOS: per-process socket sampling of the app and every web-process descendant, validated with a positive control (navigating the window to an external address must be seen), and a documented statement of what cannot be observed from a runner.
 - Acceptance criteria: the job passes on the shipped scaffold; deliberately re-enabling the spellcheck dictionary download makes it fail; the Windows and macOS samplers see the positive control and report nothing else from the app.
 - Verified by: the passing run and the deliberate-failure run.
 
-### 2. Host implementations: save, lock, backups
+### 2. Host implementations: save, lock, backups (done)
 
 - Does: the main-process implementation of the atomic save (write a temporary file, flush, rename over the target, flush the directory where the OS allows), the sidecar lock file with stale-lock detection, rotating backups in the app-data folder, and the on-disk change check (AD-12), all behind `HostApi` and `FileStore`, with the mock kept in step.
 - Acceptance criteria: a simulated crash between write and rename leaves either the old or the new file, never a mix; a stale lock is detected after a process dies; integration tests cover each on real temporary folders on Windows and macOS.
 - Verified by: the integration run in CI.
 
-### 3. Menus and file drops
+### 3. Menus and file drops (done)
 
 - Does: the macOS native menu (About, Settings, Quit and the Edit items, so Cmd+Q, Cmd+Z and Cmd+S work, H1.16), the hamburger menu elsewhere (H1.14), and CSV drag-and-drop import using the native drop event so the host receives real file paths.
 - Acceptance criteria: menu commands reach the renderer through the host interface; dropping a CSV starts an import with the file's path on both OSes; the known conflict between native drops and in-page drag-and-drop is documented.
