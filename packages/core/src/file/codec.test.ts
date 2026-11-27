@@ -21,6 +21,7 @@ import { PART_REGISTRY } from './parts.js';
 import { testDigest } from './test-digest.js';
 import { entryText, unzipEntries, zipEntries } from './zip-bytes.js';
 import type { DecodeFailure } from './failures.js';
+import type { Account } from '../budget/account.js';
 
 const digest = testDigest;
 const accountId = (n: number): ReturnType<typeof id<'Account'>> =>
@@ -101,6 +102,29 @@ async function failureOf(bytes: Uint8Array): Promise<DecodeFailure> {
     throw new Error('Expected a failure');
   }
   return result.error;
+}
+
+const ACCOUNTS = 2_000;
+const TRANSACTIONS = 30_000;
+// Generous: the test timeout only has to catch a codec that is quadratic, which would take minutes.
+const TIMEOUT_MS = 20_000;
+
+/**
+ * @param count - How many accounts.
+ * @returns A model with that many accounts.
+ */
+function bigModel(count: number): BudgetModel {
+  const base = createBudget('Stress', fixedClock(localDate('2026-11-27')));
+  const accounts: Account[] = Array.from({ length: count }, (_, index) => ({
+    id: id<'Account'>(`aaaaaaaa-0000-4000-8000-${String(index).padStart(12, '0')}`),
+    name: `Account ${String(index)}`,
+    type: 'chequing',
+    provider: null,
+    includeInAnalysis: true,
+    transferTreatment: 'notApplicable',
+    archivePeriods: [],
+  }));
+  return { ...base, accounts };
 }
 
 describe('encodeFolio', () => {
@@ -360,5 +384,27 @@ describe('decodeFolio', () => {
       ]);
       expect(decoded.ok && decoded.value.model).toEqual(household);
     });
+  });
+
+  describe('aLargeFile', () => {
+    it(
+      'roundTripsWithinTheTimeout',
+      async () => {
+        const model = bigModel(ACCOUNTS);
+        const transactions = Array.from({ length: TRANSACTIONS }, (_, index) => ({
+          n: index,
+          account: index % ACCOUNTS,
+          cents: index * 7,
+          memo: `synthetic row ${String(index)}`,
+        }));
+        const bytes = await encodeFolio(model, { digest, carried: { transactions } });
+        const decoded = await decodeFolio(bytes, { digest });
+
+        expect(decoded.ok && decoded.value.model.accounts).toHaveLength(ACCOUNTS);
+        expect(decoded.ok && decoded.value.carried['transactions']).toHaveLength(TRANSACTIONS);
+        expect(decoded.ok && decoded.value.damagedLines).toEqual([]);
+      },
+      TIMEOUT_MS,
+    );
   });
 });
