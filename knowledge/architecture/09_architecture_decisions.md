@@ -10,6 +10,7 @@ key_files:
   - packages/core/src/domain/money.ts
   - packages/core/src/domain/clock.ts
   - packages/core/src/commands/apply-command.ts
+  - packages/core/src/commands/command.ts
   - packages/core/src/commands/change-set.ts
   - packages/core/src/commands/lock-guard.ts
   - packages/core/src/budget/account-rules.ts
@@ -124,7 +125,7 @@ _Decision._ All mutations are command objects that produce a change set. Before 
 
 _Consequences._ No code path may mutate the model except through a command; the UI, the importer and undo all use the same path.
 
-_Implementation._ `applyCommand` in `packages/core/src/commands/` plans a command into a change set, runs `checkLocks` on its `touchedMonths`, then applies it; the model is never changed in place. Callers supply ids and dates, so a command is deterministic. Each part records an entity's value and list position before and after, so `invertChangeSet` restores the model exactly (a property test checks this). Account and category parts are `global` (AD-5); month-scoped parts arrive with the plans that own months. The transaction check an account rule needs (delete, change type) comes in through `CommandContext`, since transactions belong to a later plan. An account's archive history is a list of dated periods, and `isIncludedInMonth` reads it (S1.14, S1.15).
+_Implementation._ `applyCommand` in `packages/core/src/commands/` looks the command's kind up in one map of kind to planner function (a new command is one entry and one function; the type forces an entry per kind), which plans it into a change set, runs `checkLocks` on its `touchedMonths`, then applies it; the model is never changed in place. Callers supply ids and dates, so a command is deterministic. Each part records an entity's value and list position before and after, so `invertChangeSet` restores the model exactly (a property test checks this). Account and category parts are `global` (AD-5); month-scoped parts arrive with the plans that own months. The transaction check an account rule needs (delete, change type) comes in through `CommandContext`, since transactions belong to a later plan. An account's archive history is a list of dated periods, and `isIncludedInMonth` reads it (S1.14, S1.15).
 
 ## AD-5. Undo replays month-tagged change sets
 
