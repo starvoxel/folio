@@ -15,5 +15,10 @@ declare global {
     __folio?: AutomationApi;
     /** The host bridge the desktop preload script exposes. */
     folioHost?: HostApi;
+    /** Menu automation, answered by the app only with FOLIO_AUTOMATION=1. */
+    folioAutomation?: {
+      clickMenuItem(path: readonly string[]): Promise<boolean>;
+      describeMenu(): Promise<unknown>;
+    };
   }
 }

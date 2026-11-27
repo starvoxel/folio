@@ -13,6 +13,7 @@ import {
   parseDialogOptions,
   parseFileRef,
   parseLockRequest,
+  parseMenuPath,
   parseStamp,
   parseWriteRequest,
 } from './ipc-requests.js';
@@ -160,6 +161,31 @@ describe('parseDialogOptions', () => {
         [{ name: 'a', extensions: 'folio' }],
       ]) {
         expect(parseDialogOptions({ filters }, false)).toBeNull();
+      }
+    });
+  });
+});
+
+describe('parseMenuPath', () => {
+  describe('oneToFourLabels', () => {
+    it('isAccepted', () => {
+      expect(parseMenuPath(['File', 'Save'])).toEqual(['File', 'Save']);
+    });
+  });
+
+  describe('badInput', () => {
+    it('isRejected', () => {
+      for (const bad of [
+        [],
+        ['a', 'b', 'c', 'd', 'e'],
+        [1],
+        'File',
+        null,
+        ['x'.repeat(101)],
+        [''],
+        ['File', ''],
+      ]) {
+        expect(parseMenuPath(bad)).toBeNull();
       }
     });
   });
