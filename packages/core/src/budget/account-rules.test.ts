@@ -54,6 +54,14 @@ describe('isIncludedInMonth', () => {
     });
   });
 
+  describe('archivedOnTheLastDay', () => {
+    it('excludesThatMonth', () => {
+      const account = accountWith(open('2026-03-31'));
+      expect(isIncludedInMonth(account, yearMonth('2026-03'))).toBe(false);
+      expect(isIncludedInMonth(account, yearMonth('2026-02'))).toBe(true);
+    });
+  });
+
   describe('archivedOnTheFirst', () => {
     it('excludesThatMonth', () => {
       expect(isIncludedInMonth(accountWith(open('2026-03-01')), yearMonth('2026-03'))).toBe(false);

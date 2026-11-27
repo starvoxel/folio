@@ -138,13 +138,17 @@ describe('applyCommand', () => {
   });
 
   describe('updateAccountTypeBeforeImport', () => {
-    it('changesTheTypeAndItsDefaultsAreKeptUnlessAsked', () => {
+    it('changesTheTypeAndKeepsTheAnalysisSettings', () => {
       const model = run(withChequing, {
         kind: 'updateAccount',
         id: accountId(1),
         changes: { type: 'savings' },
       });
-      expect(model.accounts[0]?.type).toBe('savings');
+      expect(model.accounts[0]).toMatchObject({
+        type: 'savings',
+        includeInAnalysis: true,
+        transferTreatment: 'notApplicable',
+      });
     });
   });
 
@@ -378,6 +382,28 @@ describe('applyCommand', () => {
       expect(refusal(empty, { kind: 'removeCategory', id: categoryId(9) })).toEqual({
         code: 'unknownCategory',
       });
+    });
+  });
+
+  describe('unarchiveInALockedMonth', () => {
+    it('isRefusedAndOneInAnOpenMonthIsNot', () => {
+      const archived = run(withChequing, {
+        kind: 'archiveAccount',
+        id: accountId(1),
+        on: localDate('2026-02-10'),
+      });
+      const context: CommandContext = { ...noContext, lockedMonths: [yearMonth('2026-03')] };
+      const command: Command = {
+        kind: 'unarchiveAccount',
+        id: accountId(1),
+        on: localDate('2026-03-05'),
+      };
+      expect(refusal(archived, command, context)).toEqual({
+        code: 'monthLocked',
+        months: ['2026-03'],
+      });
+      const restored = run(archived, { ...command, on: localDate('2026-04-05') }, context);
+      expect(restored.accounts[0]?.archivePeriods[0]?.unarchivedOn).toBe('2026-04-05');
     });
   });
 
