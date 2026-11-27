@@ -8,7 +8,7 @@
 
 ## Goal
 
-A household can drop one or more provider CSVs on Folio, check a preview of exactly what will be added, and import it as one step that can be undone, without any row reaching the file before the user confirms. This is area I of the [product requirements](../knowledge/product/month-end-review-import.md): the import pipeline of [AD-8](../knowledge/architecture/09_architecture_decisions.md#ad-8-import-is-a-pipeline-of-pure-stages), the six built-in provider profiles, the column mapping for an unknown file, duplicate and coverage checks, local suspicious-transaction flags, and the preview and Settings screens.
+A household can drop one or more provider CSVs on Folio, check a preview of exactly what will be added, and import it as one step that can be undone, without any row reaching the file before the user confirms. This is area I of the [product requirements](../knowledge/product/month-end-review-import.md): the import pipeline of [AD-8](../knowledge/architecture/09_01_domain_model.md#ad-8-import-is-a-pipeline-of-pure-stages), the six built-in provider profiles, the column mapping for an unknown file, duplicate and coverage checks, local suspicious-transaction flags, and the preview and Settings screens.
 
 ## Scope
 

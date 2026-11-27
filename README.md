@@ -10,7 +10,7 @@ The product requirements and architecture are decided, and the application scaff
 
 ## Stack
 
-Electron with React and TypeScript, Fluent UI React v9 for components, TanStack Virtual for large tables and ECharts for charts. The domain core is plain TypeScript with no Node, DOM or Electron imports, so the same code can later serve a read-only web build. Tests use Vitest, fast-check, dependency-cruiser and Playwright. Windows and macOS are the v1 platforms. The reasoning is in [AD-17](knowledge/architecture/09_architecture_decisions.md#ad-17-electron-with-typescript-is-the-stack) and the research behind it in [knowledge/research/](knowledge/research/). Coding standards come from ai-foundation, configured in [.aiconfig.json](.aiconfig.json); [project-standards.md](project-standards.md) holds only Folio's test conventions.
+Electron with React and TypeScript, Fluent UI React v9 for components, TanStack Virtual for large tables and ECharts for charts. The domain core is plain TypeScript with no Node, DOM or Electron imports, so the same code can later serve a read-only web build. Tests use Vitest, fast-check, dependency-cruiser and Playwright. Windows and macOS are the v1 platforms. The reasoning is in [AD-17](knowledge/architecture/09_03_platform_privacy_logging.md#ad-17-electron-with-typescript-is-the-stack) and the research behind it in [knowledge/research/](knowledge/research/). Coding standards come from ai-foundation, configured in [.aiconfig.json](.aiconfig.json); [project-standards.md](project-standards.md) holds only Folio's test conventions.
 
 ## Build and test
 

@@ -17,7 +17,7 @@ The app must look right at any window width and shape, ultrawide included, and m
 
 ## Approach
 
-Decisions are in [AD-14](../knowledge/architecture/09_architecture_decisions.md#ad-14-package-layout-ui-state-and-testing) (thin components, pure modules unit tested), AD-15 (Fluent contained), AD-17 (one renderer for desktop, web and later mobile) and AD-19 (the host reports facts). The result is recorded as AD-21. The design notes (Shell) are updated in the same change.
+Decisions are in [AD-14](../knowledge/architecture/09_04_ui_and_structure.md#ad-14-package-layout-ui-state-and-testing) (thin components, pure modules unit tested), AD-15 (Fluent contained), AD-17 (one renderer for desktop, web and later mobile) and AD-19 (the host reports facts). The result is recorded as AD-21. The design notes (Shell) are updated in the same change.
 
 1. Two separate inputs. The profile and the input style come from the host through `HostInfo` and are never guessed from the window width. The width class is computed in one place, from the measured width of the root element (not `window.innerWidth`, so a split view or an embedding still works), with its thresholds in one table.
 2. A layout is a lookup `(profile, width class) → LayoutDefinition`: the navigation form, what the top bar shows and what moves to an overflow menu, and the content column rules (maximum width, padding step). A profile lists only the classes it needs.

@@ -8,7 +8,7 @@
 
 ## Goal
 
-A household can create a budget file, add its accounts, pick a category template and open the result, and can later add, edit, archive and unarchive accounts and look at one account in detail. This is area S of the [product requirements](../knowledge/product/month-end-review-setup.md). It is also the first plan that needs a real budget file, so it builds the file format of [AD-2](../knowledge/architecture/09_architecture_decisions.md#ad-2-the-budget-file-is-a-zip-of-json-and-jsonl-parts) in `packages/core`, which every later feature saves into.
+A household can create a budget file, add its accounts, pick a category template and open the result, and can later add, edit, archive and unarchive accounts and look at one account in detail. This is area S of the [product requirements](../knowledge/product/month-end-review-setup.md). It is also the first plan that needs a real budget file, so it builds the file format of [AD-2](../knowledge/architecture/09_02_file_and_host.md#ad-2-the-budget-file-is-a-zip-of-json-and-jsonl-parts) in `packages/core`, which every later feature saves into.
 
 ## Scope
 
