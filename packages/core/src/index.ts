@@ -70,3 +70,38 @@ export {
   type MachineSettings,
   type ThemePreference,
 } from './settings/machine-settings.js';
+export {
+  ACCOUNT_TYPES,
+  accountDefaults,
+  isArchived,
+  type Account,
+  type AccountDefaults,
+  type AccountType,
+  type ArchivePeriod,
+  type TransferTreatment,
+} from './budget/account.js';
+export { isIncludedInMonth } from './budget/account-rules.js';
+export { INCOME_CATEGORY_ID, INCOME_CATEGORY_NAME, type Category } from './budget/category.js';
+export {
+  createBudget,
+  type BudgetModel,
+  type HouseholdSettings,
+  type SetupState,
+  type SetupStep,
+} from './budget/model.js';
+export {
+  applyChangeSet,
+  invertChangeSet,
+  type ChangePart,
+  type ChangeSet,
+  type EntityChange,
+  type Placed,
+} from './commands/change-set.js';
+export {
+  type AccountChanges,
+  type Command,
+  type CommandContext,
+  type CommandFailure,
+} from './commands/command.js';
+export { applyCommand, type CommandOutcome } from './commands/apply-command.js';
+export { checkLocks, type MonthLockedFailure } from './commands/lock-guard.js';

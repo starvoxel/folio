@@ -25,7 +25,7 @@ key_files:
 
 3. _One classification entry point decides how every line counts, and its output is frozen at close._ The classifier asks the owning areas in a fixed order whether each transaction line is income, spending, savings, a neutral transfer, or excluded (AD-3, AD-6). Open months are classified live. Closing a month stores the results, and reports on locked months read the stored data, so those months cannot drift, even when the app's own code changes.
 
-4. _The domain knows nothing about the UI or the host._ The `core` package holds the model, classifier, rules, matching, commands, undo and file format. It is plain TypeScript with no Node, DOM or Electron imports, so it runs unchanged in the desktop app, in plain Node tests, and in a browser (AD-14, AD-19). Tests enforce the boundary.
+4. _The domain knows nothing about the UI or the host._ The `core` package holds the budget model (accounts, categories, settings), classifier, rules, matching, commands, undo and file format. It is plain TypeScript with no Node, DOM or Electron imports, so it runs unchanged in the desktop app, in plain Node tests, and in a browser (AD-14, AD-19). Tests enforce the boundary.
 
 5. _The platform is one interface._ The renderer reaches the operating system only through a `HostApi` (dialogs, file reads and atomic writes, locks, backups, menus, drops) and reports the form-factor profile and input style. The renderer picks a layout from that profile and the measured width class, and screens hold no layout code (AD-21). Electron implements it for the desktop, a mock implements it for tests, and a browser implementation can serve a read-only web build later. A server-backed store would be another `FileStore` behind the same door (AD-19).
 
@@ -38,7 +38,7 @@ key_files:
 ```
 folio/
 ├── packages/
-│   ├── core                   domain, classifier, rules, matching, commands, change sets, lock guard, undo, file format
+│   ├── core                   domain, budget model, classifier, rules, matching, commands, change sets, lock guard, undo, file format
 │   ├── host-api               the HostApi and FileStore interfaces, plus an in-memory mock
 │   └── renderer               React app: screens, chart models, app components
 │       └── src/ui/fluent/     the only place Fluent UI types appear
