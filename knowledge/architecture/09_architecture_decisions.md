@@ -10,6 +10,9 @@ key_files:
   - packages/core/src/domain/money.ts
   - packages/core/src/domain/clock.ts
   - packages/core/src/commands/apply-command.ts
+  - packages/core/src/file/codec.ts
+  - packages/core/src/file/parts.ts
+  - packages/core/src/file/zip-bytes.ts
   - packages/core/src/commands/change-set.ts
   - packages/core/src/commands/lock-guard.ts
   - packages/core/src/budget/account-rules.ts
@@ -96,6 +99,14 @@ _Decision._ A budget file uses the `.folio` extension and is a zip container, li
 - `summary.json`: what the start screen shows (H1.1) without loading the rest.
 
 Save writes a complete new file beside the original, flushes it, then atomically replaces the original. Save goes through the host (AD-19), which owns file-system access. Format upgrades are one migration step per format version on the way in. Parts are read and written with `JSON.parse` and `JSON.stringify` (JSONL line by line) and zipped with fflate. Every part is validated against a schema (for example with zod) on the way in, because parsed JSON is untrusted input.
+
+_Version 1 (in `packages/core/src/file/`)._ The container is pure bytes in, bytes out; `encodeFolio` and `decodeFolio` do no file I/O and return typed failures, never throw on input.
+
+- _Parts._ One registry (`parts.ts`) lists `settings`, `accounts`, `categories` (JSON), `transactions` (JSONL), `rules`, `months`, `networth` (JSON) and `audit` (JSONL), plus the derived `summary.json`. Encode, decode and the manifest walk it. A part whose plan has not landed is _carried_: validated as any list or object, kept unread and written back as it was, so a file saved by this version loses nothing a later one wrote.
+- _Checksums._ SHA-256 per part, in the manifest, through an injected `Digest`. `core` has no `crypto` typings and must stay free of Node and the DOM, so the host passes `crypto.subtle` and tests pass the same call. A mismatch refuses the whole file (`checksumMismatch`, naming the part), which is the corruption check and the trigger for the backup offer (H1.11).
+- _Damaged lines._ In a file whose checksums match, a JSONL line that does not parse or fit its schema is dropped and reported by line number; the rest opens.
+- _Determinism._ Entries are written in registry order, JSON keys are sorted, and every zip timestamp is overwritten with 1980-01-01, because fflate writes local time. The same model gives the same bytes on every machine.
+- _Failures._ `notAZip` (also for an entry that claims to inflate past 256 MiB), `manifestMissing`, `manifestInvalid`, `newerFormat`, `partMissing`, `checksumMismatch`, `schemaInvalid` (part and path, no value) and `migrationFailed`. The migration chain is empty while version 1 is a draft.
 
 Filtering stays in memory: array methods over the model plus a few lookup indexes (by month, by account) that change sets keep up to date. An in-memory database was rejected because it would be a second copy of the data to keep in sync with every command, undo and redo.
 
