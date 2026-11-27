@@ -24,6 +24,8 @@ export const IPC_CHANNELS = {
   menuCommand: 'folio:menu-command',
   filesDropped: 'folio:files-dropped',
   dropFiles: 'folio:drop-files',
+  automationClickMenu: 'folio:automation-click-menu',
+  automationDescribeMenu: 'folio:automation-describe-menu',
 } as const;
 
 /** The answer of a main-process handler: a value, or a failure the bridge turns into a HostError. */
