@@ -9,10 +9,11 @@
 import { err, ok, type Result } from '../support/result.js';
 import type { YearMonth } from '../domain/local-date.js';
 import type { ChangeSet } from './change-set.js';
+import { FAILURE } from './command.js';
 
 /** Why the guard refused a change set. */
 export interface MonthLockedFailure {
-  readonly code: 'monthLocked';
+  readonly code: typeof FAILURE.monthLocked;
   readonly months: readonly YearMonth[];
 }
 
@@ -28,5 +29,5 @@ export function checkLocks(
   lockedMonths: readonly YearMonth[],
 ): Result<null, MonthLockedFailure> {
   const hit = changeSet.touchedMonths.filter((month) => lockedMonths.includes(month));
-  return hit.length === 0 ? ok(null) : err({ code: 'monthLocked', months: hit });
+  return hit.length === 0 ? ok(null) : err({ code: FAILURE.monthLocked, months: hit });
 }

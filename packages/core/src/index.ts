@@ -98,10 +98,13 @@ export {
   type Placed,
 } from './commands/change-set.js';
 export {
+  COMMAND_KIND,
+  FAILURE,
   type AccountChanges,
   type Command,
   type CommandContext,
   type CommandFailure,
+  type CommandKind,
 } from './commands/command.js';
 export { applyCommand, type CommandOutcome } from './commands/apply-command.js';
 export { checkLocks, type MonthLockedFailure } from './commands/lock-guard.js';

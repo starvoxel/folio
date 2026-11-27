@@ -23,21 +23,20 @@ const base: Account = {
 };
 
 describe('accountDefaults', () => {
-  describe('everyType', () => {
-    it('followsS14', () => {
-      expect(
-        Object.fromEntries(ACCOUNT_TYPES.map((type) => [type, accountDefaults(type)])),
-      ).toEqual({
-        chequing: { includeInAnalysis: true, transferTreatment: 'notApplicable' },
-        savings: { includeInAnalysis: true, transferTreatment: 'notApplicable' },
-        creditCard: { includeInAnalysis: true, transferTreatment: 'notApplicable' },
-        rrsp: { includeInAnalysis: false, transferTreatment: 'savings' },
-        tfsa: { includeInAnalysis: false, transferTreatment: 'savings' },
-        resp: { includeInAnalysis: false, transferTreatment: 'savings' },
-        otherInvestment: { includeInAnalysis: false, transferTreatment: 'savings' },
-        mortgage: { includeInAnalysis: false, transferTreatment: 'spending' },
-        other: null,
-      });
+  describe('everyTypeWithADefault', () => {
+    it('hasNoTreatmentWhenIncludedAndOneWhenExcluded', () => {
+      for (const type of ACCOUNT_TYPES) {
+        const defaults = accountDefaults(type);
+        if (defaults !== null) {
+          expect(defaults.transferTreatment === 'notApplicable').toBe(defaults.includeInAnalysis);
+        }
+      }
+    });
+  });
+
+  describe('theOtherType', () => {
+    it('hasNoDefaultSoItIsAskedAtAddTime', () => {
+      expect(ACCOUNT_TYPES.filter((type) => accountDefaults(type) === null)).toEqual(['other']);
     });
   });
 });

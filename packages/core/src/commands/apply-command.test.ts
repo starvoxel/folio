@@ -16,7 +16,13 @@ import { id } from '../domain/id.js';
 import { localDate, yearMonth } from '../domain/local-date.js';
 import { applyCommand } from './apply-command.js';
 import { applyChangeSet, invertChangeSet } from './change-set.js';
-import type { Command, CommandContext, CommandFailure } from './command.js';
+import {
+  COMMAND_KIND,
+  FAILURE,
+  type Command,
+  type CommandContext,
+  type CommandFailure,
+} from './command.js';
 
 const clock = fixedClock(localDate('2026-11-27'));
 const accountId = (n: number): ReturnType<typeof id<'Account'>> =>
@@ -55,7 +61,7 @@ function refusal(model: BudgetModel, command: Command, context = noContext): Com
 
 const empty = createBudget('Household 2027', clock);
 const withChequing = run(empty, {
-  kind: 'addAccount',
+  kind: COMMAND_KIND.addAccount,
   id: accountId(1),
   name: 'Everyday',
   type: 'chequing',
@@ -65,7 +71,7 @@ describe('applyCommand', () => {
   describe('addAccountOfAKnownType', () => {
     it('usesTheTypeDefaults', () => {
       const model = run(empty, {
-        kind: 'addAccount',
+        kind: COMMAND_KIND.addAccount,
         id: accountId(1),
         name: '  TFSA  ',
         type: 'tfsa',
@@ -88,20 +94,20 @@ describe('applyCommand', () => {
   describe('addAccountOfTypeOther', () => {
     it('requiresAChoice', () => {
       const command: Command = {
-        kind: 'addAccount',
+        kind: COMMAND_KIND.addAccount,
         id: accountId(1),
         name: 'Cash',
         type: 'other',
       };
-      expect(refusal(empty, command)).toEqual({ code: 'choiceRequired' });
+      expect(refusal(empty, command)).toEqual({ code: FAILURE.choiceRequired });
       expect(refusal(empty, { ...command, includeInAnalysis: false })).toEqual({
-        code: 'choiceRequired',
+        code: FAILURE.choiceRequired,
       });
     });
 
     it('acceptsAChoice', () => {
       const model = run(empty, {
-        kind: 'addAccount',
+        kind: COMMAND_KIND.addAccount,
         id: accountId(1),
         name: 'Cash',
         type: 'other',
@@ -115,7 +121,7 @@ describe('applyCommand', () => {
   describe('addAccountThatIsIncluded', () => {
     it('hasNoTransferTreatment', () => {
       const model = run(empty, {
-        kind: 'addAccount',
+        kind: COMMAND_KIND.addAccount,
         id: accountId(1),
         name: 'Cash',
         type: 'other',
@@ -129,18 +135,28 @@ describe('applyCommand', () => {
   describe('addAccountWithBadInput', () => {
     it('refusesAnEmptyNameAndADuplicateId', () => {
       expect(
-        refusal(empty, { kind: 'addAccount', id: accountId(1), name: '   ', type: 'chequing' }),
-      ).toEqual({ code: 'nameEmpty' });
+        refusal(empty, {
+          kind: COMMAND_KIND.addAccount,
+          id: accountId(1),
+          name: '   ',
+          type: 'chequing',
+        }),
+      ).toEqual({ code: FAILURE.nameEmpty });
       expect(
-        refusal(withChequing, { kind: 'addAccount', id: accountId(1), name: 'B', type: 'savings' }),
-      ).toEqual({ code: 'duplicateId' });
+        refusal(withChequing, {
+          kind: COMMAND_KIND.addAccount,
+          id: accountId(1),
+          name: 'B',
+          type: 'savings',
+        }),
+      ).toEqual({ code: FAILURE.duplicateId });
     });
   });
 
   describe('updateAccountTypeBeforeImport', () => {
     it('changesTheTypeAndKeepsTheAnalysisSettings', () => {
       const model = run(withChequing, {
-        kind: 'updateAccount',
+        kind: COMMAND_KIND.updateAccount,
         id: accountId(1),
         changes: { type: 'savings' },
       });
@@ -158,13 +174,13 @@ describe('applyCommand', () => {
       expect(
         refusal(
           withChequing,
-          { kind: 'updateAccount', id: accountId(1), changes: { type: 'savings' } },
+          { kind: COMMAND_KIND.updateAccount, id: accountId(1), changes: { type: 'savings' } },
           context,
         ),
-      ).toEqual({ code: 'typeLocked' });
+      ).toEqual({ code: FAILURE.typeLocked });
       const renamed = run(
         withChequing,
-        { kind: 'updateAccount', id: accountId(1), changes: { name: 'Main' } },
+        { kind: COMMAND_KIND.updateAccount, id: accountId(1), changes: { name: 'Main' } },
         context,
       );
       expect(renamed.accounts[0]?.name).toBe('Main');
@@ -174,11 +190,11 @@ describe('applyCommand', () => {
   describe('updateAccountToExcluded', () => {
     it('needsASavingsOrSpendingTreatment', () => {
       const command: Command = {
-        kind: 'updateAccount',
+        kind: COMMAND_KIND.updateAccount,
         id: accountId(1),
         changes: { includeInAnalysis: false },
       };
-      expect(refusal(withChequing, command)).toEqual({ code: 'choiceRequired' });
+      expect(refusal(withChequing, command)).toEqual({ code: FAILURE.choiceRequired });
       const model = run(withChequing, {
         ...command,
         changes: { includeInAnalysis: false, transferTreatment: 'savings' },
@@ -193,12 +209,12 @@ describe('applyCommand', () => {
   describe('archiveThenUnarchive', () => {
     it('recordsTheDatesAndKeepsTheAccount', () => {
       const archived = run(withChequing, {
-        kind: 'archiveAccount',
+        kind: COMMAND_KIND.archiveAccount,
         id: accountId(1),
         on: localDate('2026-03-15'),
       });
       const restored = run(archived, {
-        kind: 'unarchiveAccount',
+        kind: COMMAND_KIND.unarchiveAccount,
         id: accountId(1),
         on: localDate('2026-05-01'),
       });
@@ -210,9 +226,9 @@ describe('applyCommand', () => {
     it('allowsASecondArchiveAfterwards', () => {
       let model = withChequing;
       for (const [kind, on] of [
-        ['archiveAccount', '2026-03-15'],
-        ['unarchiveAccount', '2026-05-01'],
-        ['archiveAccount', '2026-07-01'],
+        [COMMAND_KIND.archiveAccount, '2026-03-15'],
+        [COMMAND_KIND.unarchiveAccount, '2026-05-01'],
+        [COMMAND_KIND.archiveAccount, '2026-07-01'],
       ] as const) {
         model = run(model, { kind, id: accountId(1), on: localDate(on) });
       }
@@ -223,49 +239,61 @@ describe('applyCommand', () => {
   describe('archiveWrongWay', () => {
     it('refusesRepeatsAndDatesBeforeTheLastChange', () => {
       const archived = run(withChequing, {
-        kind: 'archiveAccount',
+        kind: COMMAND_KIND.archiveAccount,
         id: accountId(1),
         on: localDate('2026-03-15'),
       });
       const on = localDate('2026-03-20');
-      expect(refusal(archived, { kind: 'archiveAccount', id: accountId(1), on })).toEqual({
-        code: 'alreadyArchived',
+      expect(
+        refusal(archived, { kind: COMMAND_KIND.archiveAccount, id: accountId(1), on }),
+      ).toEqual({
+        code: FAILURE.alreadyArchived,
       });
-      expect(refusal(withChequing, { kind: 'unarchiveAccount', id: accountId(1), on })).toEqual({
-        code: 'notArchived',
+      expect(
+        refusal(withChequing, { kind: COMMAND_KIND.unarchiveAccount, id: accountId(1), on }),
+      ).toEqual({
+        code: FAILURE.notArchived,
       });
       expect(
         refusal(archived, {
-          kind: 'unarchiveAccount',
+          kind: COMMAND_KIND.unarchiveAccount,
           id: accountId(1),
           on: localDate('2026-03-01'),
         }),
-      ).toEqual({ code: 'dateOutOfOrder' });
+      ).toEqual({ code: FAILURE.dateOutOfOrder });
     });
   });
 
   describe('editingAnArchivedAccount', () => {
     it('isRefused', () => {
       const archived = run(withChequing, {
-        kind: 'archiveAccount',
+        kind: COMMAND_KIND.archiveAccount,
         id: accountId(1),
         on: localDate('2026-03-15'),
       });
       expect(
-        refusal(archived, { kind: 'updateAccount', id: accountId(1), changes: { name: 'X' } }),
-      ).toEqual({ code: 'accountArchived' });
+        refusal(archived, {
+          kind: COMMAND_KIND.updateAccount,
+          id: accountId(1),
+          changes: { name: 'X' },
+        }),
+      ).toEqual({ code: FAILURE.accountArchived });
     });
   });
 
   describe('deleteAccount', () => {
     it('removesAnAccountWithNoTransactions', () => {
-      expect(run(withChequing, { kind: 'deleteAccount', id: accountId(1) }).accounts).toEqual([]);
+      expect(
+        run(withChequing, { kind: COMMAND_KIND.deleteAccount, id: accountId(1) }).accounts,
+      ).toEqual([]);
     });
 
     it('refusesAnAccountWithTransactions', () => {
       const context: CommandContext = { ...noContext, accountHasTransactions: () => true };
-      expect(refusal(withChequing, { kind: 'deleteAccount', id: accountId(1) }, context)).toEqual({
-        code: 'hasTransactions',
+      expect(
+        refusal(withChequing, { kind: COMMAND_KIND.deleteAccount, id: accountId(1) }, context),
+      ).toEqual({
+        code: FAILURE.hasTransactions,
       });
     });
   });
@@ -275,13 +303,13 @@ describe('applyCommand', () => {
       const unknown = accountId(9);
       const on = localDate('2026-03-15');
       const commands: Command[] = [
-        { kind: 'updateAccount', id: unknown, changes: {} },
-        { kind: 'archiveAccount', id: unknown, on },
-        { kind: 'unarchiveAccount', id: unknown, on },
-        { kind: 'deleteAccount', id: unknown },
+        { kind: COMMAND_KIND.updateAccount, id: unknown, changes: {} },
+        { kind: COMMAND_KIND.archiveAccount, id: unknown, on },
+        { kind: COMMAND_KIND.unarchiveAccount, id: unknown, on },
+        { kind: COMMAND_KIND.deleteAccount, id: unknown },
       ];
       expect(commands.map((command) => refusal(withChequing, command).code)).toEqual(
-        Array.from({ length: 4 }, () => 'unknownAccount'),
+        Array.from({ length: 4 }, () => FAILURE.unknownAccount),
       );
     });
   });
@@ -289,18 +317,22 @@ describe('applyCommand', () => {
   describe('categoryEdits', () => {
     it('addsMainAndSubCategoriesAndRenamesThem', () => {
       let model = run(empty, {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(1),
         name: 'Food',
         parentId: null,
       });
       model = run(model, {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(2),
         name: 'Groceries',
         parentId: categoryId(1),
       });
-      model = run(model, { kind: 'renameCategory', id: categoryId(2), name: ' Supermarket ' });
+      model = run(model, {
+        kind: COMMAND_KIND.renameCategory,
+        id: categoryId(2),
+        name: ' Supermarket ',
+      });
       expect(model.categories.map((category) => category.name)).toEqual([
         'Income',
         'Food',
@@ -310,43 +342,43 @@ describe('applyCommand', () => {
 
     it('refusesAThirdLevelAndAMissingParent', () => {
       let model = run(empty, {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(1),
         name: 'Food',
         parentId: null,
       });
       model = run(model, {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(2),
         name: 'Groceries',
         parentId: categoryId(1),
       });
       const third: Command = {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(3),
         name: 'Deep',
         parentId: categoryId(2),
       };
-      expect(refusal(model, third)).toEqual({ code: 'invalidParent' });
+      expect(refusal(model, third)).toEqual({ code: FAILURE.invalidParent });
       expect(refusal(model, { ...third, parentId: categoryId(9) })).toEqual({
-        code: 'invalidParent',
+        code: FAILURE.invalidParent,
       });
     });
 
     it('removesAMainCategoryWithItsSubcategories', () => {
       let model = run(empty, {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(1),
         name: 'Food',
         parentId: null,
       });
       model = run(model, {
-        kind: 'addCategory',
+        kind: COMMAND_KIND.addCategory,
         id: categoryId(2),
         name: 'Groceries',
         parentId: categoryId(1),
       });
-      model = run(model, { kind: 'removeCategory', id: categoryId(1) });
+      model = run(model, { kind: COMMAND_KIND.removeCategory, id: categoryId(1) });
       expect(model.categories.map((category) => category.name)).toEqual(['Income']);
     });
   });
@@ -354,13 +386,15 @@ describe('applyCommand', () => {
   describe('theIncomeCategory', () => {
     it('canBeRenamedButNotRemoved', () => {
       const renamed = run(empty, {
-        kind: 'renameCategory',
+        kind: COMMAND_KIND.renameCategory,
         id: INCOME_CATEGORY_ID,
         name: 'Pay and other',
       });
       expect(renamed.categories[0]?.name).toBe('Pay and other');
-      expect(refusal(renamed, { kind: 'removeCategory', id: INCOME_CATEGORY_ID })).toEqual({
-        code: 'incomeProtected',
+      expect(
+        refusal(renamed, { kind: COMMAND_KIND.removeCategory, id: INCOME_CATEGORY_ID }),
+      ).toEqual({
+        code: FAILURE.incomeProtected,
       });
     });
   });
@@ -368,19 +402,31 @@ describe('applyCommand', () => {
   describe('categoryWithBadInput', () => {
     it('refusesEmptyNamesDuplicatesAndUnknowns', () => {
       expect(
-        refusal(empty, { kind: 'addCategory', id: categoryId(1), name: ' ', parentId: null }),
-      ).toEqual({ code: 'nameEmpty' });
+        refusal(empty, {
+          kind: COMMAND_KIND.addCategory,
+          id: categoryId(1),
+          name: ' ',
+          parentId: null,
+        }),
+      ).toEqual({ code: FAILURE.nameEmpty });
       expect(
-        refusal(empty, { kind: 'addCategory', id: INCOME_CATEGORY_ID, name: 'X', parentId: null }),
-      ).toEqual({ code: 'duplicateId' });
-      expect(refusal(empty, { kind: 'renameCategory', id: categoryId(9), name: 'X' })).toEqual({
-        code: 'unknownCategory',
+        refusal(empty, {
+          kind: COMMAND_KIND.addCategory,
+          id: INCOME_CATEGORY_ID,
+          name: 'X',
+          parentId: null,
+        }),
+      ).toEqual({ code: FAILURE.duplicateId });
+      expect(
+        refusal(empty, { kind: COMMAND_KIND.renameCategory, id: categoryId(9), name: 'X' }),
+      ).toEqual({
+        code: FAILURE.unknownCategory,
       });
-      expect(refusal(empty, { kind: 'renameCategory', id: INCOME_CATEGORY_ID, name: ' ' })).toEqual(
-        { code: 'nameEmpty' },
-      );
-      expect(refusal(empty, { kind: 'removeCategory', id: categoryId(9) })).toEqual({
-        code: 'unknownCategory',
+      expect(
+        refusal(empty, { kind: COMMAND_KIND.renameCategory, id: INCOME_CATEGORY_ID, name: ' ' }),
+      ).toEqual({ code: FAILURE.nameEmpty });
+      expect(refusal(empty, { kind: COMMAND_KIND.removeCategory, id: categoryId(9) })).toEqual({
+        code: FAILURE.unknownCategory,
       });
     });
   });
@@ -388,18 +434,18 @@ describe('applyCommand', () => {
   describe('unarchiveInALockedMonth', () => {
     it('isRefusedAndOneInAnOpenMonthIsNot', () => {
       const archived = run(withChequing, {
-        kind: 'archiveAccount',
+        kind: COMMAND_KIND.archiveAccount,
         id: accountId(1),
         on: localDate('2026-02-10'),
       });
       const context: CommandContext = { ...noContext, lockedMonths: [yearMonth('2026-03')] };
       const command: Command = {
-        kind: 'unarchiveAccount',
+        kind: COMMAND_KIND.unarchiveAccount,
         id: accountId(1),
         on: localDate('2026-03-05'),
       };
       expect(refusal(archived, command, context)).toEqual({
-        code: 'monthLocked',
+        code: FAILURE.monthLocked,
         months: ['2026-03'],
       });
       const restored = run(archived, { ...command, on: localDate('2026-04-05') }, context);
@@ -414,17 +460,17 @@ describe('applyCommand', () => {
         refusal(
           withChequing,
           {
-            kind: 'archiveAccount',
+            kind: COMMAND_KIND.archiveAccount,
             id: accountId(1),
             on: localDate('2026-03-15'),
           },
           context,
         ),
-      ).toEqual({ code: 'monthLocked', months: ['2026-03'] });
+      ).toEqual({ code: FAILURE.monthLocked, months: ['2026-03'] });
       const open = run(
         withChequing,
         {
-          kind: 'archiveAccount',
+          kind: COMMAND_KIND.archiveAccount,
           id: accountId(1),
           on: localDate('2026-04-02'),
         },
@@ -437,7 +483,7 @@ describe('applyCommand', () => {
   describe('everyCommand', () => {
     it('leavesTheInputModelUnchanged', () => {
       const before = JSON.stringify(withChequing);
-      run(withChequing, { kind: 'deleteAccount', id: accountId(1) });
+      run(withChequing, { kind: COMMAND_KIND.deleteAccount, id: accountId(1) });
       expect(JSON.stringify(withChequing)).toBe(before);
     });
   });
@@ -453,33 +499,33 @@ const dayOfYear = fc
 /** Commands that mostly apply, built from small id pools so that they interact. */
 const anyCommand: fc.Arbitrary<Command> = fc.oneof(
   fc.record({
-    kind: fc.constant('addAccount' as const),
+    kind: fc.constant(COMMAND_KIND.addAccount),
     id: fc.integer({ min: 1, max: 4 }).map(accountId),
     name: fc.constantFrom('A', 'B', ' '),
     type: accountTypes,
   }),
   fc.record({
-    kind: fc.constant('updateAccount' as const),
+    kind: fc.constant(COMMAND_KIND.updateAccount),
     id: fc.integer({ min: 1, max: 4 }).map(accountId),
     changes: fc.record({ name: fc.constantFrom('X', 'Y') }),
   }),
   fc.record({
-    kind: fc.constantFrom('archiveAccount' as const, 'unarchiveAccount' as const),
+    kind: fc.constantFrom(COMMAND_KIND.archiveAccount, COMMAND_KIND.unarchiveAccount),
     id: fc.integer({ min: 1, max: 4 }).map(accountId),
     on: dayOfYear,
   }),
   fc.record({
-    kind: fc.constant('deleteAccount' as const),
+    kind: fc.constant(COMMAND_KIND.deleteAccount),
     id: fc.integer({ min: 1, max: 4 }).map(accountId),
   }),
   fc.record({
-    kind: fc.constant('addCategory' as const),
+    kind: fc.constant(COMMAND_KIND.addCategory),
     id: fc.integer({ min: 1, max: 6 }).map(categoryId),
     name: fc.constantFrom('Food', 'Fun'),
     parentId: fc.oneof(fc.constant(null), fc.integer({ min: 1, max: 6 }).map(categoryId)),
   }),
   fc.record({
-    kind: fc.constant('removeCategory' as const),
+    kind: fc.constant(COMMAND_KIND.removeCategory),
     id: fc.integer({ min: 1, max: 6 }).map(categoryId),
   }),
 );

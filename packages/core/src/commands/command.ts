@@ -10,6 +10,39 @@ import type { Id } from '../domain/id.js';
 import type { LocalDate, YearMonth } from '../domain/local-date.js';
 import type { AccountType, TransferTreatment } from '../budget/account.js';
 
+/** The kind of every command, named once so a typo cannot compile. */
+export const COMMAND_KIND = {
+  addAccount: 'addAccount',
+  updateAccount: 'updateAccount',
+  archiveAccount: 'archiveAccount',
+  unarchiveAccount: 'unarchiveAccount',
+  deleteAccount: 'deleteAccount',
+  addCategory: 'addCategory',
+  renameCategory: 'renameCategory',
+  removeCategory: 'removeCategory',
+} as const;
+
+/** One of the command kinds. */
+export type CommandKind = (typeof COMMAND_KIND)[keyof typeof COMMAND_KIND];
+
+/** Why a command can be refused, named once so a typo cannot compile. */
+export const FAILURE = {
+  monthLocked: 'monthLocked',
+  nameEmpty: 'nameEmpty',
+  choiceRequired: 'choiceRequired',
+  duplicateId: 'duplicateId',
+  unknownAccount: 'unknownAccount',
+  unknownCategory: 'unknownCategory',
+  typeLocked: 'typeLocked',
+  hasTransactions: 'hasTransactions',
+  accountArchived: 'accountArchived',
+  alreadyArchived: 'alreadyArchived',
+  notArchived: 'notArchived',
+  dateOutOfOrder: 'dateOutOfOrder',
+  incomeProtected: 'incomeProtected',
+  invalidParent: 'invalidParent',
+} as const;
+
 /** The edits to an account that `updateAccount` may make; omitted fields stay as they are. */
 export interface AccountChanges {
   readonly name?: string;
@@ -25,7 +58,7 @@ export interface AccountChanges {
  */
 export type Command =
   | {
-      readonly kind: 'addAccount';
+      readonly kind: typeof COMMAND_KIND.addAccount;
       readonly id: Id<'Account'>;
       readonly name: string;
       readonly type: AccountType;
@@ -34,18 +67,34 @@ export type Command =
       readonly includeInAnalysis?: boolean;
       readonly transferTreatment?: TransferTreatment;
     }
-  | { readonly kind: 'updateAccount'; readonly id: Id<'Account'>; readonly changes: AccountChanges }
-  | { readonly kind: 'archiveAccount'; readonly id: Id<'Account'>; readonly on: LocalDate }
-  | { readonly kind: 'unarchiveAccount'; readonly id: Id<'Account'>; readonly on: LocalDate }
-  | { readonly kind: 'deleteAccount'; readonly id: Id<'Account'> }
   | {
-      readonly kind: 'addCategory';
+      readonly kind: typeof COMMAND_KIND.updateAccount;
+      readonly id: Id<'Account'>;
+      readonly changes: AccountChanges;
+    }
+  | {
+      readonly kind: typeof COMMAND_KIND.archiveAccount;
+      readonly id: Id<'Account'>;
+      readonly on: LocalDate;
+    }
+  | {
+      readonly kind: typeof COMMAND_KIND.unarchiveAccount;
+      readonly id: Id<'Account'>;
+      readonly on: LocalDate;
+    }
+  | { readonly kind: typeof COMMAND_KIND.deleteAccount; readonly id: Id<'Account'> }
+  | {
+      readonly kind: typeof COMMAND_KIND.addCategory;
       readonly id: Id<'Category'>;
       readonly name: string;
       readonly parentId: Id<'Category'> | null;
     }
-  | { readonly kind: 'renameCategory'; readonly id: Id<'Category'>; readonly name: string }
-  | { readonly kind: 'removeCategory'; readonly id: Id<'Category'> };
+  | {
+      readonly kind: typeof COMMAND_KIND.renameCategory;
+      readonly id: Id<'Category'>;
+      readonly name: string;
+    }
+  | { readonly kind: typeof COMMAND_KIND.removeCategory; readonly id: Id<'Category'> };
 
 /** What a command needs to know that the model does not hold. */
 export interface CommandContext {
@@ -56,20 +105,8 @@ export interface CommandContext {
 
 /** Why a command was refused. None of them carries a name or an amount. */
 export type CommandFailure =
-  | { readonly code: 'monthLocked'; readonly months: readonly YearMonth[] }
   | {
-      readonly code:
-        | 'nameEmpty'
-        | 'choiceRequired'
-        | 'duplicateId'
-        | 'unknownAccount'
-        | 'unknownCategory'
-        | 'typeLocked'
-        | 'hasTransactions'
-        | 'accountArchived'
-        | 'alreadyArchived'
-        | 'notArchived'
-        | 'dateOutOfOrder'
-        | 'incomeProtected'
-        | 'invalidParent';
-    };
+      readonly code: typeof FAILURE.monthLocked;
+      readonly months: readonly YearMonth[];
+    }
+  | { readonly code: Exclude<(typeof FAILURE)[keyof typeof FAILURE], typeof FAILURE.monthLocked> };

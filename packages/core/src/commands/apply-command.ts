@@ -18,7 +18,14 @@ import type { BudgetModel } from '../budget/model.js';
 import { yearMonthOf, type YearMonth } from '../domain/local-date.js';
 import { err, ok, type Result } from '../support/result.js';
 import { applyChangeSet, type ChangePart, type ChangeSet } from './change-set.js';
-import type { Command, CommandContext, CommandFailure } from './command.js';
+import {
+  COMMAND_KIND,
+  FAILURE,
+  type Command,
+  type CommandContext,
+  type CommandFailure,
+  type CommandKind,
+} from './command.js';
 import { checkLocks } from './lock-guard.js';
 
 /** What a successful command gives back: the new model and the change set that made it. */
@@ -54,6 +61,28 @@ export function applyCommand(
   return ok({ model: applyChangeSet(model, planned.value), changeSet: planned.value });
 }
 
+/** The function that plans one kind of command. */
+type Planner<K extends CommandKind> = (
+  model: BudgetModel,
+  command: Extract<Command, { kind: K }>,
+  context: CommandContext,
+) => Planned;
+
+/**
+ * Every command kind and the function that plans it. A new command is one entry here and one
+ * function; the type forces an entry for each kind.
+ */
+const PLANNERS: { readonly [K in CommandKind]: Planner<K> } = {
+  [COMMAND_KIND.addAccount]: planAddAccount,
+  [COMMAND_KIND.updateAccount]: planUpdateAccount,
+  [COMMAND_KIND.archiveAccount]: planArchive,
+  [COMMAND_KIND.unarchiveAccount]: planArchive,
+  [COMMAND_KIND.deleteAccount]: planDeleteAccount,
+  [COMMAND_KIND.addCategory]: planAddCategory,
+  [COMMAND_KIND.renameCategory]: planRenameCategory,
+  [COMMAND_KIND.removeCategory]: planRemoveCategory,
+};
+
 /**
  * Turn a command into a change set, or refuse it.
  * @param model - The model.
@@ -61,26 +90,14 @@ export function applyCommand(
  * @param context - Locked months and the transaction check.
  * @returns The change set or the refusal.
  */
-function plan(model: BudgetModel, command: Command, context: CommandContext): Planned {
-  switch (command.kind) {
-    case 'addAccount':
-      return planAddAccount(model, command);
-    case 'updateAccount':
-      return planUpdateAccount(model, command, context);
-    case 'archiveAccount':
-    case 'unarchiveAccount':
-      return planArchive(model, command);
-    case 'deleteAccount':
-      return planDeleteAccount(model, command, context);
-    case 'addCategory':
-      return planAddCategory(model, command);
-    case 'renameCategory':
-      return planRenameCategory(model, command);
-    case 'removeCategory':
-      return planRemoveCategory(model, command);
-    default:
-      return assertNever(command);
-  }
+// K ties the command to its planner; without it the map lookup does not typecheck.
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+function plan<K extends CommandKind>(
+  model: BudgetModel,
+  command: Extract<Command, { kind: K }>,
+  context: CommandContext,
+): Planned {
+  return PLANNERS[command.kind](model, command, context);
 }
 
 /**
@@ -108,14 +125,14 @@ function settleTreatment(
   const defaults = accountDefaults(type);
   const includeInAnalysis = asked.includeInAnalysis ?? defaults?.includeInAnalysis;
   if (includeInAnalysis === undefined) {
-    return err({ code: 'choiceRequired' });
+    return err({ code: FAILURE.choiceRequired });
   }
   if (includeInAnalysis) {
     return ok({ includeInAnalysis, transferTreatment: 'notApplicable' });
   }
   const treatment = asked.transferTreatment ?? defaults?.transferTreatment;
   if (treatment === undefined || treatment === 'notApplicable') {
-    return err({ code: 'choiceRequired' });
+    return err({ code: FAILURE.choiceRequired });
   }
   return ok({ includeInAnalysis, transferTreatment: treatment });
 }
@@ -131,10 +148,10 @@ function planAddAccount(
 ): Planned {
   const name = command.name.trim();
   if (name === '') {
-    return err({ code: 'nameEmpty' });
+    return err({ code: FAILURE.nameEmpty });
   }
   if (model.accounts.some((account) => account.id === command.id)) {
-    return err({ code: 'duplicateId' });
+    return err({ code: FAILURE.duplicateId });
   }
   const settled = settleTreatment(command.type, command);
   if (!settled.ok) {
@@ -172,19 +189,19 @@ function planUpdateAccount(
   const index = model.accounts.findIndex((account) => account.id === command.id);
   const before = model.accounts[index];
   if (before === undefined) {
-    return err({ code: 'unknownAccount' });
+    return err({ code: FAILURE.unknownAccount });
   }
   if (isArchived(before)) {
-    return err({ code: 'accountArchived' });
+    return err({ code: FAILURE.accountArchived });
   }
   const { changes } = command;
   const name = changes.name === undefined ? before.name : changes.name.trim();
   if (name === '') {
-    return err({ code: 'nameEmpty' });
+    return err({ code: FAILURE.nameEmpty });
   }
   const type = changes.type ?? before.type;
   if (type !== before.type && context.accountHasTransactions(before.id)) {
-    return err({ code: 'typeLocked' });
+    return err({ code: FAILURE.typeLocked });
   }
   const settled = settleTreatment(type, {
     includeInAnalysis: changes.includeInAnalysis ?? before.includeInAnalysis,
@@ -222,21 +239,21 @@ function planArchive(
   const index = model.accounts.findIndex((account) => account.id === command.id);
   const before = model.accounts[index];
   if (before === undefined) {
-    return err({ code: 'unknownAccount' });
+    return err({ code: FAILURE.unknownAccount });
   }
   const archived = isArchived(before);
   const lastPeriod = before.archivePeriods.at(-1);
   if (command.kind === 'archiveAccount') {
     if (archived) {
-      return err({ code: 'alreadyArchived' });
+      return err({ code: FAILURE.alreadyArchived });
     }
     if (lastPeriod?.unarchivedOn != null && command.on < lastPeriod.unarchivedOn) {
-      return err({ code: 'dateOutOfOrder' });
+      return err({ code: FAILURE.dateOutOfOrder });
     }
   } else if (!archived) {
-    return err({ code: 'notArchived' });
+    return err({ code: FAILURE.notArchived });
   } else if (lastPeriod !== undefined && command.on < lastPeriod.archivedFrom) {
-    return err({ code: 'dateOutOfOrder' });
+    return err({ code: FAILURE.dateOutOfOrder });
   }
   const completed = before.archivePeriods.slice(0, archived ? -1 : undefined);
   const archivePeriods =
@@ -273,10 +290,10 @@ function planDeleteAccount(
   const index = model.accounts.findIndex((account) => account.id === command.id);
   const before = model.accounts[index];
   if (before === undefined) {
-    return err({ code: 'unknownAccount' });
+    return err({ code: FAILURE.unknownAccount });
   }
   if (context.accountHasTransactions(before.id)) {
-    return err({ code: 'hasTransactions' });
+    return err({ code: FAILURE.hasTransactions });
   }
   return changeSet([
     { kind: 'account', scope: 'global', before: { index, value: before }, after: null },
@@ -294,15 +311,15 @@ function planAddCategory(
 ): Planned {
   const name = command.name.trim();
   if (name === '') {
-    return err({ code: 'nameEmpty' });
+    return err({ code: FAILURE.nameEmpty });
   }
   if (model.categories.some((category) => category.id === command.id)) {
-    return err({ code: 'duplicateId' });
+    return err({ code: FAILURE.duplicateId });
   }
   if (command.parentId !== null) {
     const parent = model.categories.find((category) => category.id === command.parentId);
     if (parent?.parentId !== null) {
-      return err({ code: 'invalidParent' });
+      return err({ code: FAILURE.invalidParent });
     }
   }
   const category: Category = { id: command.id, name, parentId: command.parentId };
@@ -328,11 +345,11 @@ function planRenameCategory(
   const index = model.categories.findIndex((category) => category.id === command.id);
   const before = model.categories[index];
   if (before === undefined) {
-    return err({ code: 'unknownCategory' });
+    return err({ code: FAILURE.unknownCategory });
   }
   const name = command.name.trim();
   if (name === '') {
-    return err({ code: 'nameEmpty' });
+    return err({ code: FAILURE.nameEmpty });
   }
   return changeSet([
     {
@@ -355,10 +372,10 @@ function planRemoveCategory(
   command: Extract<Command, { kind: 'removeCategory' }>,
 ): Planned {
   if (command.id === INCOME_CATEGORY_ID) {
-    return err({ code: 'incomeProtected' });
+    return err({ code: FAILURE.incomeProtected });
   }
   if (!model.categories.some((category) => category.id === command.id)) {
-    return err({ code: 'unknownCategory' });
+    return err({ code: FAILURE.unknownCategory });
   }
   const parts: ChangePart[] = [];
   model.categories.forEach((category, index) => {
@@ -373,13 +390,4 @@ function planRemoveCategory(
   });
   // Highest index first, so each recorded index is still right when its part is applied.
   return changeSet(parts.reverse());
-}
-
-/**
- * Stop the build when a command kind is not handled.
- * @param value - The unhandled value.
- * @throws {Error} Always.
- */
-function assertNever(value: never): never {
-  throw new Error('Unhandled command', { cause: value });
 }

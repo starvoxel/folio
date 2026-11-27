@@ -11,7 +11,7 @@ import { strToU8 } from 'fflate';
 import { describe, expect, it } from 'vitest';
 
 import { applyCommand } from '../commands/apply-command.js';
-import type { Command } from '../commands/command.js';
+import { COMMAND_KIND, type Command } from '../commands/command.js';
 import { createBudget, type BudgetModel } from '../budget/model.js';
 import { fixedClock } from '../domain/clock.js';
 import { id } from '../domain/id.js';
@@ -46,12 +46,18 @@ function build(model: BudgetModel, commands: readonly Command[]): BudgetModel {
 
 const empty = createBudget('Household 2027', fixedClock(localDate('2026-11-27')));
 const household = build(empty, [
-  { kind: 'addAccount', id: accountId(1), name: 'Everyday', type: 'chequing' },
-  { kind: 'addAccount', id: accountId(2), name: 'Visa', type: 'creditCard', provider: 'RBC' },
-  { kind: 'addAccount', id: accountId(3), name: 'TFSA', type: 'tfsa' },
-  { kind: 'archiveAccount', id: accountId(3), on: localDate('2026-05-10') },
-  { kind: 'addCategory', id: categoryId(1), name: 'Food', parentId: null },
-  { kind: 'addCategory', id: categoryId(2), name: 'Groceries', parentId: categoryId(1) },
+  { kind: COMMAND_KIND.addAccount, id: accountId(1), name: 'Everyday', type: 'chequing' },
+  {
+    kind: COMMAND_KIND.addAccount,
+    id: accountId(2),
+    name: 'Visa',
+    type: 'creditCard',
+    provider: 'RBC',
+  },
+  { kind: COMMAND_KIND.addAccount, id: accountId(3), name: 'TFSA', type: 'tfsa' },
+  { kind: COMMAND_KIND.archiveAccount, id: accountId(3), on: localDate('2026-05-10') },
+  { kind: COMMAND_KIND.addCategory, id: categoryId(1), name: 'Food', parentId: null },
+  { kind: COMMAND_KIND.addCategory, id: categoryId(2), name: 'Groceries', parentId: categoryId(1) },
 ]);
 
 /**
@@ -198,18 +204,18 @@ describe('decodeFolio', () => {
       const names = fc.constantFrom('A', 'Ünïcode ✓', 'with "quotes"', 'line\nbreak', '  spaced');
       const anyCommand: fc.Arbitrary<Command> = fc.oneof(
         fc.record({
-          kind: fc.constant('addAccount' as const),
+          kind: fc.constant(COMMAND_KIND.addAccount),
           id: fc.integer({ min: 1, max: 5 }).map(accountId),
           name: names,
           type: fc.constantFrom('chequing', 'creditCard', 'rrsp', 'mortgage'),
         }),
         fc.record({
-          kind: fc.constant('archiveAccount' as const),
+          kind: fc.constant(COMMAND_KIND.archiveAccount),
           id: fc.integer({ min: 1, max: 5 }).map(accountId),
           on: fc.constantFrom(localDate('2026-02-03'), localDate('2026-09-30')),
         }),
         fc.record({
-          kind: fc.constant('addCategory' as const),
+          kind: fc.constant(COMMAND_KIND.addCategory),
           id: fc.integer({ min: 1, max: 5 }).map(categoryId),
           name: names,
           parentId: fc.oneof(fc.constant(null), fc.integer({ min: 1, max: 5 }).map(categoryId)),
