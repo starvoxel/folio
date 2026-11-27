@@ -5,7 +5,7 @@ The high-level list of what is planned or under way. One line each; the detail l
 ## In progress
 
 - Electron foundations: milestones 1 to 3 done (privacy capture, save, lock and backups, menus and file drops); 4 to 6 not started. [plans/electron-foundations.md](plans/electron-foundations.md)
-- Setup and accounts: milestones 1 and 2 under way. [plans/setup-and-accounts.md](plans/setup-and-accounts.md)
+- Setup and accounts: milestones 1 and 2 done (budget model and commands, the `.folio` container); 3 to 8 not started. [plans/setup-and-accounts.md](plans/setup-and-accounts.md)
 
 ## Planned, in build order
 

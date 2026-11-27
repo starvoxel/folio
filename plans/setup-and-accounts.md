@@ -1,10 +1,10 @@
 # Plan: Setup and accounts
 
-| Field       | Value      |
-| ----------- | ---------- |
-| Status      | Approved   |
-| Approved by | Jeremy     |
-| Created     | 2026-11-21 |
+| Field       | Value                                                 |
+| ----------- | ----------------------------------------------------- |
+| Status      | Milestones 1 and 2 done; 3 to 8 approved, not started |
+| Approved by | Jeremy                                                |
+| Created     | 2026-11-21                                            |
 
 ## Goal
 
@@ -66,13 +66,13 @@ The transfer treatment for included accounts is the business of area T; setup st
 
 Dependencies are named on each milestone. Milestones 1 and 2 need nothing outside `core`.
 
-### 1. The budget model and the command seam
+### 1. The budget model and the command seam (done)
 
 - Does: `Account`, `AccountType`, `Category` (two levels, a fixed Income root that cannot be removed), the file-level `HouseholdSettings` with `setup` state, the `BudgetModel` that holds them, the command and change-set types, `applyCommand` with the lock guard, the account rules of the design above, and `isIncludedInMonth`.
 - Acceptance criteria: unit tests cover each type default (S1.4), the change-type-before-import rule, delete versus archive (S1.13), Income being unremovable and renamable (S1.7), and `isIncludedInMonth` for an account archived mid-month, archived across a whole month, and unarchived later (S1.14, S1.15), using the fixed clock; fast-check properties show that applying a command and its change set's inverse restores the model; `core` imports nothing from Node, the DOM, React or Electron (architecture check).
 - Verified by: the unit and architecture runs.
 
-### 2. The `.folio` container
+### 2. The `.folio` container (done)
 
 - Depends on: milestone 1 for the model; adds `fflate` to `core` (exact version, 7-day release age, licence check).
 - Does: the part registry, the codec (`encodeFolio`, `decodeFolio`), the manifest and checksums with the injected `Digest`, JSONL reading with per-line failure, `summary.json` built from the model (file name, open month, account count, last closed month; the rest of the start screen's fields arrive with their plans), deterministic output, the migration runner with an empty chain, and the failure codes above. AD-2 is updated with the part names and the checksum decision.
