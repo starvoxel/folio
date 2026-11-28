@@ -195,7 +195,42 @@ describe('backUp', () => {
       const copy = await host.backUp(budget, original);
       original[0] = 0;
       expect(copy.name).toBe('Household 2026.folio');
-      expect(host.controls.backups).toEqual([{ file: copy, bytes: bytes(5, 6) }]);
+      expect(host.controls.backups).toEqual([
+        { file: copy, bytes: bytes(5, 6), source: budget.path },
+      ]);
+    });
+  });
+});
+
+describe('latestBackup', () => {
+  describe('noBackupYet', () => {
+    it('returnsNull', async () => {
+      expect(await createMockHost().latestBackup(budget)).toBeNull();
+    });
+  });
+
+  describe('twoBackups', () => {
+    it('returnsTheNewestAndItCanBeRead', async () => {
+      const host = createMockHost();
+      await host.backUp(budget, bytes(1));
+      const second = await host.backUp(budget, bytes(2));
+      const latest = await host.latestBackup(budget);
+      expect(latest).toEqual(second);
+      expect(latest === null ? null : (await host.readFile(latest)).bytes).toEqual(bytes(2));
+    });
+  });
+});
+
+describe('logFileEvent', () => {
+  describe('someEvents', () => {
+    it('recordsThemInOrder', async () => {
+      const host = createMockHost();
+      await host.logFileEvent({ kind: 'created' });
+      await host.logFileEvent({ kind: 'openFailed', reason: 'locked' });
+      expect(host.controls.fileEvents).toEqual([
+        { kind: 'created' },
+        { kind: 'openFailed', reason: 'locked' },
+      ]);
     });
   });
 });

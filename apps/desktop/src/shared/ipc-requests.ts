@@ -6,13 +6,15 @@
 // Copyright (c) Starvoxel. All rights reserved.
 // ------------------------------
 
-import type {
-  FileFilter,
-  FileRef,
-  FileStamp,
-  LockOptions,
-  OpenDialogOptions,
-  SaveDialogOptions,
+import {
+  OPEN_FAILURE_REASONS,
+  type FileEvent,
+  type FileFilter,
+  type FileRef,
+  type FileStamp,
+  type LockOptions,
+  type OpenDialogOptions,
+  type SaveDialogOptions,
 } from '@folio/host-api';
 
 /** The largest file the host will read, write or back up. A household's budget is a few MB (AD-1). */
@@ -234,4 +236,34 @@ export function parseMenuPath(value: unknown): readonly string[] | null {
     )
     ? (value as string[])
     : null;
+}
+
+/**
+ * Check a file event from the page against the closed list the log accepts.
+ * @param value - Untrusted input.
+ * @returns The event, or null when it is not one of the known events.
+ */
+export function parseFileEvent(value: unknown): FileEvent | null {
+  if (!isRecord(value)) {
+    return null;
+  }
+  switch (value['kind']) {
+    case 'created':
+      return { kind: 'created' };
+    case 'opened': {
+      const { damagedLines, fromBackup } = value;
+      return typeof damagedLines === 'number' &&
+        Number.isSafeInteger(damagedLines) &&
+        damagedLines >= 0 &&
+        typeof fromBackup === 'boolean'
+        ? { kind: 'opened', damagedLines, fromBackup }
+        : null;
+    }
+    case 'openFailed': {
+      const reason = OPEN_FAILURE_REASONS.find((known) => known === value['reason']);
+      return reason === undefined ? null : { kind: 'openFailed', reason };
+    }
+    default:
+      return null;
+  }
 }

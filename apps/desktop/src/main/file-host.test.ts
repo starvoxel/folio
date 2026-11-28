@@ -136,4 +136,40 @@ describe('createFileHost', () => {
       expect(lines.at(-1)).toBe('info wrote a backup {"bytes":1,"pruned":0}');
     });
   });
+
+  describe('latestBackup', () => {
+    it('returnsNullWhenThereAreNoBackups', async () => {
+      const { host } = setup();
+      expect(await host.latestBackup(chosen)).toBeNull();
+    });
+
+    it('returnsTheNewestBackupAndGrantsReadingIt', async () => {
+      const { host } = setup();
+      await host.backUp(chosen, new Uint8Array([1]));
+      const second = await host.backUp(chosen, new Uint8Array([2]));
+      const latest = await host.latestBackup(chosen);
+      expect(latest).toEqual(second);
+      expect(latest === null ? null : (await host.readFile(latest)).bytes).toEqual(
+        new Uint8Array([2]),
+      );
+    });
+
+    it('grantsReadingOnlySoThePageCannotReplaceTheBackup', async () => {
+      const { host } = setup();
+      const backup = await host.backUp(chosen, new Uint8Array([1]));
+      const latest = await host.latestBackup(chosen);
+      expect(latest).toEqual(backup);
+      const offered = latest ?? backup;
+      await expect(host.readFile(offered)).resolves.toBeDefined();
+      await expect(host.writeFileAtomic(offered, new Uint8Array([9]), null)).rejects.toMatchObject({
+        code: 'permissionDenied',
+      });
+      await expect(host.acquireLock(offered)).rejects.toMatchObject({ code: 'permissionDenied' });
+    });
+
+    it('refusesAFileThePersonDidNotChoose', async () => {
+      const { host } = setup();
+      await expect(host.latestBackup(stranger)).rejects.toMatchObject({ code: 'permissionDenied' });
+    });
+  });
 });

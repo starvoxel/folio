@@ -18,6 +18,7 @@ import {
   type WriteResult,
 } from '@folio/host-api';
 
+import { newestBackup } from './backups.js';
 import { writeBackup } from './backup-store.js';
 import { readStamped, writeAtomically } from './atomic-write.js';
 import type { FsOps } from './fs-ops.js';
@@ -54,6 +55,8 @@ export interface FileHost {
   acquireLock(file: FileRef, options?: LockOptions): Promise<LockResult>;
   releaseLock(file: FileRef): Promise<void>;
   backUp(file: FileRef, bytes: Uint8Array): Promise<FileRef>;
+  /** The newest backup of a file, which the person may then read; null when there is none. */
+  latestBackup(file: FileRef): Promise<FileRef | null>;
   /** Release every lock this app holds, for quitting. */
   releaseAllLocks(): Promise<void>;
 }
@@ -81,8 +84,9 @@ export function createFileHost(deps: FileHostDeps): FileHost {
   // Two backups of one file in flight at once would pick the same name and lose one.
   const backupQueue = createSerialQueue();
 
-  const checked = (file: FileRef, operation: string): string => {
-    if (!grants.isGranted(file.path)) {
+  const checked = (file: FileRef, operation: string, forReading = false): string => {
+    const allowed = forReading ? grants.isReadable(file.path) : grants.isGranted(file.path);
+    if (!allowed) {
       logger.warn('refused a file the person did not choose', { operation });
       throw new HostError('permissionDenied', 'The file was not chosen in a dialog');
     }
@@ -90,7 +94,7 @@ export function createFileHost(deps: FileHostDeps): FileHost {
   };
 
   return {
-    readFile: async (file) => readStamped(fs, checked(file, 'readFile')),
+    readFile: async (file) => readStamped(fs, checked(file, 'readFile', true)),
     writeFileAtomic: async (file, bytes, expected) => {
       const result = await writeAtomically(
         fs,
@@ -128,6 +132,18 @@ export function createFileHost(deps: FileHostDeps): FileHost {
       );
       logger.info('wrote a backup', { bytes: bytes.byteLength, pruned });
       return backup;
+    },
+    latestBackup: async (file) => {
+      const path = checked(file, 'latestBackup');
+      const directory = join(deps.backupRoot, deps.hashOf(grants.keyOf(path) ?? path));
+      const name = newestBackup(await fs.listDirectory(directory), basename(path));
+      if (name === null) {
+        return null;
+      }
+      // Reading only: a page that can write a backup could replace the copy offered after damage.
+      const backup = join(directory, name);
+      grants.grantReadOnly(backup);
+      return { path: backup, name };
     },
     releaseAllLocks: () => locks.releaseAll(),
   };

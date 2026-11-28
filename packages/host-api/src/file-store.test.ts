@@ -57,6 +57,16 @@ describe('createHostFileStore', () => {
     });
   });
 
+  describe('latestBackup', () => {
+    it('returnsTheNewestBackupOfTheFile', async () => {
+      const host = createMockHost();
+      const store = createHostFileStore(host);
+      expect(await store.latestBackup(budget)).toBeNull();
+      const kept = await store.backUp(budget, new Uint8Array([4]));
+      expect(await store.latestBackup(budget)).toEqual(kept);
+    });
+  });
+
   describe('missingFile', () => {
     it('rejectsOnOpen', async () => {
       const store = createHostFileStore(createMockHost());

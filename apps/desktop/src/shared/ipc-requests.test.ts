@@ -11,6 +11,7 @@ import { describe, expect, it } from 'vitest';
 import {
   parseBackUpRequest,
   parseDialogOptions,
+  parseFileEvent,
   parseFileRef,
   parseLockRequest,
   parseMenuPath,
@@ -187,6 +188,35 @@ describe('parseMenuPath', () => {
       ]) {
         expect(parseMenuPath(bad)).toBeNull();
       }
+    });
+  });
+});
+
+describe('parseFileEvent', () => {
+  describe('theKnownEvents', () => {
+    it('areAccepted', () => {
+      expect(parseFileEvent({ kind: 'created' })).toEqual({ kind: 'created' });
+      expect(parseFileEvent({ kind: 'opened', damagedLines: 0, fromBackup: false })).toEqual({
+        kind: 'opened',
+        damagedLines: 0,
+        fromBackup: false,
+      });
+      expect(parseFileEvent({ kind: 'openFailed', reason: 'locked' })).toEqual({
+        kind: 'openFailed',
+        reason: 'locked',
+      });
+    });
+  });
+
+  describe('anythingElse', () => {
+    it('isRefusedAndExtraFieldsAreDropped', () => {
+      expect(parseFileEvent(null)).toBeNull();
+      expect(parseFileEvent({ kind: 'other' })).toBeNull();
+      expect(parseFileEvent({ kind: 'openFailed', reason: 'my secret note' })).toBeNull();
+      expect(parseFileEvent({ kind: 'opened', damagedLines: -1, fromBackup: false })).toBeNull();
+      expect(parseFileEvent({ kind: 'opened', damagedLines: 1.5, fromBackup: false })).toBeNull();
+      expect(parseFileEvent({ kind: 'opened', damagedLines: 1, fromBackup: 'yes' })).toBeNull();
+      expect(parseFileEvent({ kind: 'created', note: 'Acme Corp' })).toEqual({ kind: 'created' });
     });
   });
 });
