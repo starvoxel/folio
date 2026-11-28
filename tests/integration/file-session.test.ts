@@ -83,7 +83,7 @@ afterEach(async () => {
   await rm(root, { recursive: true, force: true });
 });
 
-describe('FileSession on a real folder', () => {
+describe('FileSession', () => {
   describe('aNewFile', () => {
     it('existsOnDiskAndOpensAtOnceWithNoAccountsAndTheCurrentMonth', async () => {
       const writer = makeApp('a');
