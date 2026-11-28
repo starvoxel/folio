@@ -27,3 +27,8 @@ export {
   describeSaveFailure,
   type FailureMessage,
 } from './session/session-messages.js';
+export {
+  createBudgetDocument,
+  type BudgetDocument,
+  type BudgetDocumentState,
+} from './session/budget-document.js';
