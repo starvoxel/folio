@@ -8,6 +8,7 @@
 
 import type { Id } from '../domain/id.js';
 import type { LocalDate, YearMonth } from '../domain/local-date.js';
+import type { Money } from '../domain/money.js';
 import type { AccountType, TransferTreatment } from '../budget/account.js';
 
 /** The kind of every command, named once so a typo cannot compile. */
@@ -20,6 +21,8 @@ export const COMMAND_KIND = {
   addCategory: 'addCategory',
   renameCategory: 'renameCategory',
   removeCategory: 'removeCategory',
+  setStartingBalance: 'setStartingBalance',
+  dateStartingBalance: 'dateStartingBalance',
 } as const;
 
 /** One of the command kinds. */
@@ -41,6 +44,8 @@ export const FAILURE = {
   dateOutOfOrder: 'dateOutOfOrder',
   incomeProtected: 'incomeProtected',
   invalidParent: 'invalidParent',
+  startingBalanceDated: 'startingBalanceDated',
+  noStartingBalance: 'noStartingBalance',
 } as const;
 
 /** The edits to an account that `updateAccount` may make; omitted fields stay as they are. */
@@ -94,7 +99,19 @@ export type Command =
       readonly id: Id<'Category'>;
       readonly name: string;
     }
-  | { readonly kind: typeof COMMAND_KIND.removeCategory; readonly id: Id<'Category'> };
+  | { readonly kind: typeof COMMAND_KIND.removeCategory; readonly id: Id<'Category'> }
+  | {
+      readonly kind: typeof COMMAND_KIND.setStartingBalance;
+      readonly id: Id<'Account'>;
+      /** What the person typed, or null to skip it (S1.5); the sign for owed amounts is applied here. */
+      readonly entered: Money | null;
+    }
+  | {
+      readonly kind: typeof COMMAND_KIND.dateStartingBalance;
+      readonly id: Id<'Account'>;
+      /** The day before the earliest imported row, set when the first import is confirmed. */
+      readonly on: LocalDate;
+    };
 
 /** What a command needs to know that the model does not hold. */
 export interface CommandContext {

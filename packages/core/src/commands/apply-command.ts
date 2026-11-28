@@ -9,6 +9,7 @@
 import {
   accountDefaults,
   isArchived,
+  storedBalance,
   type Account,
   type AccountType,
   type TransferTreatment,
@@ -81,6 +82,8 @@ const PLANNERS: { readonly [K in CommandKind]: Planner<K> } = {
   [COMMAND_KIND.addCategory]: planAddCategory,
   [COMMAND_KIND.renameCategory]: planRenameCategory,
   [COMMAND_KIND.removeCategory]: planRemoveCategory,
+  [COMMAND_KIND.setStartingBalance]: planSetStartingBalance,
+  [COMMAND_KIND.dateStartingBalance]: planDateStartingBalance,
 };
 
 /**
@@ -164,6 +167,7 @@ function planAddAccount(
     provider: command.provider ?? null,
     ...settled.value,
     archivePeriods: [],
+    startingBalance: null,
   };
   return changeSet([
     {
@@ -390,4 +394,92 @@ function planRemoveCategory(
   });
   // Highest index first, so each recorded index is still right when its part is applied.
   return changeSet(parts.reverse());
+}
+
+/**
+ * Find an account that may be edited.
+ * @param model - The model.
+ * @param id - The account.
+ * @returns The account and its position, or a refusal when it is missing or archived.
+ */
+function editableAccount(
+  model: BudgetModel,
+  id: Account['id'],
+): Result<{ readonly index: number; readonly account: Account }, CommandFailure> {
+  const index = model.accounts.findIndex((candidate) => candidate.id === id);
+  const account = model.accounts[index];
+  if (account === undefined) {
+    return err({ code: FAILURE.unknownAccount });
+  }
+  return isArchived(account) ? err({ code: FAILURE.accountArchived }) : ok({ index, account });
+}
+
+/**
+ * Enter, change or skip an account's starting balance (S1.5). It can change only until the first
+ * import has dated it.
+ * @param model - The model.
+ * @param command - The set command.
+ * @returns The plan.
+ */
+function planSetStartingBalance(
+  model: BudgetModel,
+  command: Extract<Command, { kind: typeof COMMAND_KIND.setStartingBalance }>,
+): Planned {
+  const found = editableAccount(model, command.id);
+  if (!found.ok) {
+    return found;
+  }
+  const { index, account } = found.value;
+  if (account.startingBalance?.on != null) {
+    return err({ code: FAILURE.startingBalanceDated });
+  }
+  const startingBalance =
+    command.entered === null
+      ? null
+      : { amount: storedBalance(account.type, command.entered), on: null };
+  return changeSet([
+    {
+      kind: 'account',
+      scope: 'global',
+      before: { index, value: account },
+      after: { index, value: { ...account, startingBalance } },
+    },
+  ]);
+}
+
+/**
+ * Give the starting balance its date, when the first import is confirmed (S1.5).
+ * @param model - The model.
+ * @param command - The date command.
+ * @returns The plan.
+ */
+function planDateStartingBalance(
+  model: BudgetModel,
+  command: Extract<Command, { kind: typeof COMMAND_KIND.dateStartingBalance }>,
+): Planned {
+  const found = editableAccount(model, command.id);
+  if (!found.ok) {
+    return found;
+  }
+  const { index, account } = found.value;
+  if (account.startingBalance === null) {
+    return err({ code: FAILURE.noStartingBalance });
+  }
+  if (account.startingBalance.on !== null) {
+    return err({ code: FAILURE.startingBalanceDated });
+  }
+  return changeSet(
+    [
+      {
+        kind: 'account',
+        scope: 'global',
+        before: { index, value: account },
+        after: {
+          index,
+          value: { ...account, startingBalance: { ...account.startingBalance, on: command.on } },
+        },
+      },
+    ],
+    [yearMonthOf(command.on)],
+  );
 }

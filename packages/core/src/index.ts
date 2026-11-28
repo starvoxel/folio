@@ -73,11 +73,15 @@ export {
 export {
   ACCOUNT_TYPES,
   accountDefaults,
+  enteredBalance,
   isArchived,
+  isLiability,
+  storedBalance,
   type Account,
   type AccountDefaults,
   type AccountType,
   type ArchivePeriod,
+  type StartingBalance,
   type TransferTreatment,
 } from './budget/account.js';
 export { isIncludedInMonth } from './budget/account-rules.js';
@@ -115,3 +119,16 @@ export type { DamagedLine, DecodeFailure } from './file/failures.js';
 export { FORMAT_VERSION } from './file/manifest.js';
 export { MIGRATIONS, runMigrations, type MigrationStep, type RawParts } from './file/migrations.js';
 export { PART_REGISTRY, type PartKind, type PartSpec } from './file/parts.js';
+export {
+  accountDetail,
+  coveredThrough,
+  currentBalance,
+  pickableAccounts,
+  snapshotAccountSettings,
+  type AccountActivity,
+  type AccountDetail,
+  type AccountSettingsSnapshot,
+  type CurrentBalance,
+  type KnownBalance,
+  type PostedAmount,
+} from './budget/account-balance.js';

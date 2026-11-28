@@ -14,6 +14,7 @@ import { createBudget, type BudgetModel } from '../budget/model.js';
 import { fixedClock } from '../domain/clock.js';
 import { id } from '../domain/id.js';
 import { localDate, yearMonth } from '../domain/local-date.js';
+import { money } from '../domain/money.js';
 import { applyCommand } from './apply-command.js';
 import { applyChangeSet, invertChangeSet } from './change-set.js';
 import {
@@ -86,6 +87,7 @@ describe('applyCommand', () => {
           includeInAnalysis: false,
           transferTreatment: 'savings',
           archivePeriods: [],
+          startingBalance: null,
         },
       ]);
     });
@@ -568,6 +570,164 @@ describe('invertChangeSet', () => {
           }
         }),
       );
+    });
+  });
+});
+
+describe('setStartingBalance', () => {
+  const visaId = accountId(7);
+  const withVisa = run(withChequing, {
+    kind: COMMAND_KIND.addAccount,
+    id: visaId,
+    name: 'Visa',
+    type: 'creditCard',
+  });
+
+  describe('anAssetAccount', () => {
+    it('storesTheAmountAsTyped', () => {
+      const model = run(withChequing, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: accountId(1),
+        entered: money(1_234_56),
+      });
+      expect(model.accounts[0]?.startingBalance).toEqual({ amount: 1_234_56, on: null });
+    });
+  });
+
+  describe('aCreditCardOrMortgage', () => {
+    it('storesAnAmountOwedAsNegative', () => {
+      const model = run(withVisa, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: visaId,
+        entered: money(800_00),
+      });
+      expect(model.accounts[1]?.startingBalance).toEqual({ amount: -800_00, on: null });
+    });
+
+    it('storesATypedNegativeAsACredit', () => {
+      const model = run(withVisa, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: visaId,
+        entered: money(-50_00),
+      });
+      expect(model.accounts[1]?.startingBalance?.amount).toBe(50_00);
+    });
+  });
+
+  describe('skipping', () => {
+    it('clearsAnEarlierEntry', () => {
+      const set = run(withChequing, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: accountId(1),
+        entered: money(5_00),
+      });
+      const skipped = run(set, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: accountId(1),
+        entered: null,
+      });
+      expect(skipped.accounts[0]?.startingBalance).toBeNull();
+    });
+  });
+
+  describe('aBalanceThatWasDated', () => {
+    it('cannotBeChangedAnyMore', () => {
+      const set = run(withChequing, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: accountId(1),
+        entered: money(5_00),
+      });
+      const dated = run(set, {
+        kind: COMMAND_KIND.dateStartingBalance,
+        id: accountId(1),
+        on: localDate('2026-02-28'),
+      });
+      expect(
+        refusal(dated, {
+          kind: COMMAND_KIND.setStartingBalance,
+          id: accountId(1),
+          entered: money(6_00),
+        }),
+      ).toEqual({ code: FAILURE.startingBalanceDated });
+    });
+  });
+
+  describe('anArchivedOrUnknownAccount', () => {
+    it('isRefused', () => {
+      const archived = run(withChequing, {
+        kind: COMMAND_KIND.archiveAccount,
+        id: accountId(1),
+        on: localDate('2026-03-10'),
+      });
+      expect(
+        refusal(archived, {
+          kind: COMMAND_KIND.setStartingBalance,
+          id: accountId(1),
+          entered: money(1),
+        }),
+      ).toEqual({ code: FAILURE.accountArchived });
+      expect(
+        refusal(withChequing, {
+          kind: COMMAND_KIND.setStartingBalance,
+          id: accountId(9),
+          entered: money(1),
+        }),
+      ).toEqual({ code: FAILURE.unknownAccount });
+    });
+  });
+});
+
+describe('dateStartingBalance', () => {
+  describe('anEnteredBalance', () => {
+    it('getsItsDateOnceAndKeepsItsAmount', () => {
+      const set = run(withChequing, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: accountId(1),
+        entered: money(5_00),
+      });
+      const dated = run(set, {
+        kind: COMMAND_KIND.dateStartingBalance,
+        id: accountId(1),
+        on: localDate('2026-02-28'),
+      });
+      expect(dated.accounts[0]?.startingBalance).toEqual({ amount: 5_00, on: '2026-02-28' });
+      expect(
+        refusal(dated, {
+          kind: COMMAND_KIND.dateStartingBalance,
+          id: accountId(1),
+          on: localDate('2026-02-27'),
+        }),
+      ).toEqual({ code: FAILURE.startingBalanceDated });
+    });
+  });
+
+  describe('noBalanceEntered', () => {
+    it('isRefused', () => {
+      expect(
+        refusal(withChequing, {
+          kind: COMMAND_KIND.dateStartingBalance,
+          id: accountId(1),
+          on: localDate('2026-02-28'),
+        }),
+      ).toEqual({ code: FAILURE.noStartingBalance });
+    });
+  });
+
+  describe('aDateInALockedMonth', () => {
+    it('isRefused', () => {
+      const set = run(withChequing, {
+        kind: COMMAND_KIND.setStartingBalance,
+        id: accountId(1),
+        entered: money(5_00),
+      });
+      const context: CommandContext = { ...noContext, lockedMonths: [yearMonth('2026-02')] };
+      expect(
+        refusal(
+          set,
+          { kind: COMMAND_KIND.dateStartingBalance, id: accountId(1), on: localDate('2026-02-28') },
+          context,
+        ),
+      ).toEqual({ code: FAILURE.monthLocked, months: ['2026-02'] });
     });
   });
 });

@@ -14,6 +14,7 @@ key_files:
   - apps/desktop/src/main/backups.ts
   - apps/desktop/src/main/file-event-log.ts
   - packages/renderer/src/session/file-session.ts
+  - packages/renderer/src/session/budget-document.ts
   - apps/desktop/src/main/backup-store.ts
   - apps/desktop/src/main/serial-queue.ts
   - apps/desktop/src/main/menu-template.ts
@@ -70,6 +71,8 @@ _Built (Electron foundations milestone 2)._ The main process implements these be
 - _Paths._ The renderer may name only files the person chose: the native dialogs return a path and the main process remembers it (`PathGrants`); every operation refuses any other path with `permissionDenied`. The newest backup offered after damage (`latestBackup`) is granted for reading only, so a page cannot replace the copy it is about to be offered. Logs carry sizes, counts and outcomes, never names, paths or contents. The context bridge copies only an error's message, so the failure code travels as a `[code]` prefix that `hostErrorCode` reads.
 
 _File session (Setup and accounts milestone 3)._ The renderer opens and saves through one `FileSession` (`packages/renderer/src/session/`), which wraps `FileStore`, the codec and the lock so screens never see bytes or stamps. `create` asks for a location with the save dialog, takes the lock, writes an empty budget and backs it up, so the file exists, is locked and is safe before the first edit. `open` takes the lock, reads and decodes, then backs up the bytes it read; a file that fails to decode is never backed up, so a damaged file cannot push good backups out of the rotation. The previous file is released only when the new one has opened. Every failure is a typed value with a plain message that repeats nothing from the file (`session-messages.ts`). A damaged file offers its newest backup through `latestBackup`, which the main process grants for reading only; `openBackup` opens it bound to the damaged file, so a save replaces it. `save` passes the stamp from the last read and turns `changedOnDisk` into the warning of AD-12, never an overwrite. Decode failures and other outcomes reach the log through `HostApi.logFileEvent`: a closed list of events (a code, a count, a flag), so a log line cannot carry a name, a path or an amount whatever the page sends.
+
+_The open budget (Setup and accounts milestone 5)._ `createBudgetDocument` holds the model of the open file in a core store, changes it only through `applyCommand` and saves through the file session, so screens read one store and call `dispatch` and `save`. It is dirty after any command that succeeded, and clean again after a save only if the model did not change while the save ran. Account parts of the file carry a starting balance, or null when none was entered (AD-4).
 
 ## AD-19. The platform is one interface: HostApi and FileStore
 

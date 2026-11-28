@@ -11,6 +11,7 @@ key_files:
   - packages/core/src/commands/change-set.ts
   - packages/core/src/commands/lock-guard.ts
   - packages/core/src/budget/account-rules.ts
+  - packages/core/src/budget/account-balance.ts
 ---
 
 > Decisions AD-1, AD-3, AD-4, AD-5, AD-6, AD-7, AD-8, AD-9. The list of all decisions is in [09_architecture_decisions.md](09_architecture_decisions.md).
@@ -47,6 +48,8 @@ _Decision._ All mutations are command objects that produce a change set. Before 
 _Consequences._ No code path may mutate the model except through a command; the UI, the importer and undo all use the same path.
 
 _Implementation._ `applyCommand` in `packages/core/src/commands/` looks the command's kind up in one map of kind to planner function (a new command is one entry and one function; the type forces an entry per kind), which plans it into a change set, runs `checkLocks` on its `touchedMonths`, then applies it; the model is never changed in place. Callers supply ids and dates, so a command is deterministic. Each part records an entity's value and list position before and after, so `invertChangeSet` restores the model exactly (a property test checks this). Account and category parts are `global` (AD-5); month-scoped parts arrive with the plans that own months. The transaction check an account rule needs (delete, change type) comes in through `CommandContext`, since transactions belong to a later plan. An account's archive history is a list of dated periods, and `isIncludedInMonth` reads it (S1.14, S1.15).
+
+_Accounts in practice (Setup and accounts milestone 5)._ An account may carry a starting balance (S1.5): a signed amount and a date that stays empty until the first import is confirmed, when `dateStartingBalance` sets it to the day before the earliest imported row; until then it can be entered, changed or skipped with `setStartingBalance`. A credit card or mortgage is entered as an amount owed, typed positive, and stored negative. The current balance (S1.18) is the latest known balance (a file's balance column, a confirmed figure, or the dated starting balance; on one date the person's word wins over a file, which wins over a guess) plus the transactions dated after it, or `unknown` so the screen can offer to enter one. It reads the account's history through a narrow `AccountActivity` shape that the import plan will fill, so until then only the starting balance or `unknown` is reachable. The account detail (S1.17) collects it with the covered-through date, type, provider and analysis settings, `pickableAccounts` leaves archived accounts out of pickers, and `snapshotAccountSettings` copies every account's analysis settings so a month can freeze them when it closes, out of reach of later edits to the live account.
 
 ## AD-5. Undo replays month-tagged change sets
 
