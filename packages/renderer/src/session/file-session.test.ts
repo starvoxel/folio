@@ -144,7 +144,7 @@ describe('FileSession.create', () => {
   });
 });
 
-describe('FileSession.create over the open file', () => {
+describe('FileSession.create', () => {
   describe('aLocationThatIsTheOpenFile', () => {
     it('leavesTheNewFileLocked', async () => {
       const { host, session } = setup();
@@ -321,7 +321,7 @@ describe('FileSession.openBackup', () => {
   });
 });
 
-describe('FileSession.openBackup failing', () => {
+describe('FileSession.openBackup', () => {
   describe('aLockedOriginalWhileAnotherFileIsOpen', () => {
     it('keepsTheFirstFileOpen', async () => {
       const made = setup();
