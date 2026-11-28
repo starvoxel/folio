@@ -26,6 +26,7 @@ function accountWith(...archivePeriods: ArchivePeriod[]): Account {
     includeInAnalysis: true,
     transferTreatment: 'notApplicable',
     archivePeriods,
+    startingBalance: null,
   };
 }
 

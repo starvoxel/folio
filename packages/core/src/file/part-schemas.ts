@@ -9,7 +9,7 @@
 import { z } from 'zod';
 
 import { ACCOUNT_TYPES } from '../budget/account.js';
-import { idSchema, localDateSchema } from '../support/schema.js';
+import { idSchema, localDateSchema, moneySchema } from '../support/schema.js';
 
 const accountId = idSchema<'Account'>();
 const categoryId = idSchema<'Category'>();
@@ -29,6 +29,7 @@ export const accountsPartSchema = z.array(
     includeInAnalysis: z.boolean(),
     transferTreatment: z.enum(['notApplicable', 'savings', 'spending']),
     archivePeriods: z.array(archivePeriodSchema),
+    startingBalance: z.object({ amount: moneySchema, on: localDateSchema.nullable() }).nullable(),
   }),
 );
 

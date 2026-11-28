@@ -8,7 +8,16 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { ACCOUNT_TYPES, accountDefaults, isArchived, type Account } from './account.js';
+import {
+  ACCOUNT_TYPES,
+  accountDefaults,
+  enteredBalance,
+  isArchived,
+  isLiability,
+  storedBalance,
+  type Account,
+} from './account.js';
+import { money } from '../domain/money.js';
 import { id } from '../domain/id.js';
 import { localDate } from '../domain/local-date.js';
 
@@ -20,6 +29,7 @@ const base: Account = {
   includeInAnalysis: true,
   transferTreatment: 'notApplicable',
   archivePeriods: [],
+  startingBalance: null,
 };
 
 describe('accountDefaults', () => {
@@ -67,6 +77,31 @@ describe('isArchived', () => {
         ],
       };
       expect(isArchived(account)).toBe(false);
+    });
+  });
+});
+
+describe('isLiability', () => {
+  describe('everyType', () => {
+    it('isTrueOnlyForCreditCardsAndMortgages', () => {
+      expect(ACCOUNT_TYPES.filter((type) => isLiability(type))).toEqual(['creditCard', 'mortgage']);
+    });
+  });
+});
+
+describe('storedBalance', () => {
+  describe('anAssetType', () => {
+    it('keepsTheSign', () => {
+      expect(storedBalance('chequing', money(5_00))).toBe(5_00);
+      expect(storedBalance('tfsa', money(-5_00))).toBe(-5_00);
+    });
+  });
+
+  describe('aLiabilityType', () => {
+    it('flipsTheSignAndEnteredBalanceFlipsItBack', () => {
+      expect(storedBalance('creditCard', money(5_00))).toBe(-5_00);
+      expect(enteredBalance('creditCard', money(-5_00))).toBe(5_00);
+      expect(storedBalance('mortgage', money(0))).toBe(0);
     });
   });
 });

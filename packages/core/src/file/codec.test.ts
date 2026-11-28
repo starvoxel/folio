@@ -129,6 +129,7 @@ function bigModel(count: number): BudgetModel {
     includeInAnalysis: true,
     transferTreatment: 'notApplicable',
     archivePeriods: [],
+    startingBalance: null,
   }));
   return { ...base, accounts };
 }
