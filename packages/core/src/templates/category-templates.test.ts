@@ -32,7 +32,7 @@ describe('CATEGORY_TEMPLATES', () => {
         const categories = CATEGORY_TEMPLATES[id].categories;
         expect(categories[0]?.name).toBe('Income');
         const fees = categories.find((category) => category.name === 'Fees & interest');
-        expect(fees?.children).toEqual(['Interest charges', 'Bank fees']);
+        expect(fees?.children.slice(0, 2)).toEqual(['Interest charges', 'Bank fees']);
       }
     });
 
@@ -49,6 +49,12 @@ describe('CATEGORY_TEMPLATES', () => {
   });
 
   describe('theDetailedTemplate', () => {
+    it('hasSubcategoriesUnderEveryMainCategory', () => {
+      for (const main of CATEGORY_TEMPLATES.detailed.categories) {
+        expect(main.children.length).toBeGreaterThan(0);
+      }
+    });
+
     it('hasEverythingInSimpleAndChildrenAndPets', () => {
       const detailed = CATEGORY_TEMPLATES.detailed.categories.map((main) => main.name);
       for (const main of CATEGORY_TEMPLATES.simple.categories) {
@@ -85,7 +91,7 @@ describe('applyTemplate', () => {
         const result = applyCommand(
           empty,
           { kind: COMMAND_KIND.applyTemplate, categories },
-          { lockedMonths: [], accountHasTransactions: () => false },
+          { lockedMonths: [], accountHasTransactions: () => false, isCategoryUsed: () => false },
         );
         expect(result.ok && result.value.model.categories).toEqual(categories);
       }

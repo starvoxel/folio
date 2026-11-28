@@ -41,7 +41,11 @@ const quiet: Logger = {
 };
 
 const clock = fixedClock(localDate('2026-11-28'));
-const context = { lockedMonths: [], accountHasTransactions: () => false };
+const context = {
+  lockedMonths: [],
+  accountHasTransactions: () => false,
+  isCategoryUsed: () => false,
+};
 let root = '';
 let counter = 0;
 

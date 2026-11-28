@@ -109,8 +109,8 @@ export interface CommandContext {
   readonly lockedMonths: readonly YearMonth[];
   /** Whether an account has any transactions; the transactions part belongs to a later plan. */
   readonly accountHasTransactions: (accountId: Id<'Account'>) => boolean;
-  /** Whether a category is used by anything; the plans that use categories supply it. */
-  readonly isCategoryUsed?: (categoryId: Id<'Category'>) => boolean;
+  /** Whether a category is used by anything; a template is refused once one is. Required, so a caller cannot forget it. */
+  readonly isCategoryUsed: (categoryId: Id<'Category'>) => boolean;
 }
 
 /** Why a command was refused. None of them carries a name or an amount. */

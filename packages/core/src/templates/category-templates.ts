@@ -80,8 +80,8 @@ export const CATEGORY_TEMPLATES: Readonly<Record<TemplateId, CategoryTemplate>> 
         name: 'Fun and gifts',
         children: ['Entertainment', 'Subscriptions', 'Hobbies', 'Travel', 'Gifts', 'Donations'],
       },
-      { name: 'Fees & interest', children: ['Interest charges', 'Bank fees'] },
-      { name: 'Other', children: [] },
+      { name: 'Fees & interest', children: ['Interest charges', 'Bank fees', 'Card annual fees'] },
+      { name: 'Other', children: ['Taxes and government', 'Professional services'] },
     ],
   },
 };

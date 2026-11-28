@@ -30,7 +30,11 @@ const accountId = (n: number): ReturnType<typeof id<'Account'>> =>
   id<'Account'>(`aaaaaaaa-0000-4000-8000-${String(n).padStart(12, '0')}`);
 const categoryId = (n: number): ReturnType<typeof id<'Category'>> =>
   id<'Category'>(`cccccccc-0000-4000-8000-${String(n).padStart(12, '0')}`);
-const noContext: CommandContext = { lockedMonths: [], accountHasTransactions: () => false };
+const noContext: CommandContext = {
+  lockedMonths: [],
+  accountHasTransactions: () => false,
+  isCategoryUsed: () => false,
+};
 
 /**
  * @param model - The starting model.
@@ -498,6 +502,14 @@ const dayOfYear = fc
   );
 
 /** Commands that mostly apply, built from small id pools so that they interact. */
+/**
+ * @returns A source of distinct UUIDs for a template.
+ */
+function templateIds(): () => string {
+  let n = 0;
+  return () => `ffffffff-0000-4000-8000-${String((n += 1)).padStart(12, '0')}`;
+}
+
 const anyCommand: fc.Arbitrary<Command> = fc.oneof(
   fc.record({
     kind: fc.constant(COMMAND_KIND.addAccount),
@@ -529,6 +541,10 @@ const anyCommand: fc.Arbitrary<Command> = fc.oneof(
     kind: fc.constant(COMMAND_KIND.removeCategory),
     id: fc.integer({ min: 1, max: 6 }).map(categoryId),
   }),
+  fc.constantFrom('simple', 'detailed').map((template): Command => ({
+    kind: COMMAND_KIND.applyTemplate,
+    categories: instantiateTemplate(template, templateIds()),
+  })),
 );
 
 describe('invertChangeSet', () => {
@@ -605,6 +621,18 @@ describe('applyTemplate', () => {
   });
 
   describe('aTemplateThatRenamesIncome', () => {
+    it('isUndoneToTheOldName', () => {
+      const renamed = simple.map((category) =>
+        category.id === INCOME_CATEGORY_ID ? { ...category, name: 'Pay and other' } : category,
+      );
+      const result = applyCommand(empty, apply(renamed), noContext);
+      expect(result.ok && result.value.model.categories[0]?.name).toBe('Pay and other');
+      if (result.ok) {
+        const undone = applyChangeSet(result.value.model, invertChangeSet(result.value.changeSet));
+        expect(undone).toEqual(empty);
+      }
+    });
+
     it('keepsIncomeInPlaceWithTheNewName', () => {
       const renamed = simple.map((category) =>
         category.id === INCOME_CATEGORY_ID ? { ...category, name: ' Pay and other ' } : category,

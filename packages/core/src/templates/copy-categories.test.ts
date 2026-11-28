@@ -36,7 +36,11 @@ function counter(start: number): () => string {
  */
 function sourceModel(): BudgetModel {
   let model = createBudget('Source', fixedClock(localDate('2026-02-01')));
-  const context = { lockedMonths: [], accountHasTransactions: () => false };
+  const context = {
+    lockedMonths: [],
+    accountHasTransactions: () => false,
+    isCategoryUsed: () => false,
+  };
   const applied = applyCommand(
     model,
     {
@@ -97,7 +101,7 @@ describe('categoriesFromFile', () => {
         ? applyCommand(
             target,
             { kind: COMMAND_KIND.applyTemplate, categories: copied.value },
-            { lockedMonths: [], accountHasTransactions: () => false },
+            { lockedMonths: [], accountHasTransactions: () => false, isCategoryUsed: () => false },
           )
         : null;
       expect(applied?.ok && applied.value.model.categories).toEqual(

@@ -395,7 +395,7 @@ function planRemoveCategory(
 
 /**
  * Replace the category set with a template's, or a copied file's (S1.6). It is a starting set for a
- * new budget, so it is refused once any category is in use.
+ * new budget, so it is refused once any category is in use. Income stays first, wherever the list has it.
  * @param model - The model.
  * @param command - The apply command.
  * @param context - Says whether a category is in use.
@@ -410,7 +410,7 @@ function planApplyTemplate(
   if (checked !== null) {
     return err({ code: checked });
   }
-  if (model.categories.some((category) => context.isCategoryUsed?.(category.id) === true)) {
+  if (model.categories.some((category) => context.isCategoryUsed(category.id))) {
     return err({ code: FAILURE.categoryInUse });
   }
   const parts: ChangePart[] = [];
@@ -431,7 +431,7 @@ function planApplyTemplate(
   }
   let next = incomeIndex >= 0 ? 1 : 0;
   for (const category of command.categories) {
-    if (category.id !== INCOME_CATEGORY_ID) {
+    if (category.id !== INCOME_CATEGORY_ID || incomeIndex < 0) {
       parts.push(categoryPart(null, null, { ...category, name: category.name.trim() }, next));
       next += 1;
     }
