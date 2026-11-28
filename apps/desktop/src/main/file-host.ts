@@ -84,8 +84,9 @@ export function createFileHost(deps: FileHostDeps): FileHost {
   // Two backups of one file in flight at once would pick the same name and lose one.
   const backupQueue = createSerialQueue();
 
-  const checked = (file: FileRef, operation: string): string => {
-    if (!grants.isGranted(file.path)) {
+  const checked = (file: FileRef, operation: string, forReading = false): string => {
+    const allowed = forReading ? grants.isReadable(file.path) : grants.isGranted(file.path);
+    if (!allowed) {
       logger.warn('refused a file the person did not choose', { operation });
       throw new HostError('permissionDenied', 'The file was not chosen in a dialog');
     }
@@ -93,7 +94,7 @@ export function createFileHost(deps: FileHostDeps): FileHost {
   };
 
   return {
-    readFile: async (file) => readStamped(fs, checked(file, 'readFile')),
+    readFile: async (file) => readStamped(fs, checked(file, 'readFile', true)),
     writeFileAtomic: async (file, bytes, expected) => {
       const result = await writeAtomically(
         fs,
@@ -139,9 +140,9 @@ export function createFileHost(deps: FileHostDeps): FileHost {
       if (name === null) {
         return null;
       }
-      // The person reads it through the same checked calls as any file they chose.
+      // Reading only: a page that can write a backup could replace the copy offered after damage.
       const backup = join(directory, name);
-      grants.grant(backup);
+      grants.grantReadOnly(backup);
       return { path: backup, name };
     },
     releaseAllLocks: () => locks.releaseAll(),

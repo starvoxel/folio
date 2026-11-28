@@ -154,6 +154,19 @@ describe('createFileHost', () => {
       );
     });
 
+    it('grantsReadingOnlySoThePageCannotReplaceTheBackup', async () => {
+      const { host } = setup();
+      const backup = await host.backUp(chosen, new Uint8Array([1]));
+      const latest = await host.latestBackup(chosen);
+      expect(latest).toEqual(backup);
+      const offered = latest ?? backup;
+      await expect(host.readFile(offered)).resolves.toBeDefined();
+      await expect(host.writeFileAtomic(offered, new Uint8Array([9]), null)).rejects.toMatchObject({
+        code: 'permissionDenied',
+      });
+      await expect(host.acquireLock(offered)).rejects.toMatchObject({ code: 'permissionDenied' });
+    });
+
     it('refusesAFileThePersonDidNotChoose', async () => {
       const { host } = setup();
       await expect(host.latestBackup(stranger)).rejects.toMatchObject({ code: 'permissionDenied' });

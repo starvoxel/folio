@@ -177,9 +177,10 @@ export function createFileSession(deps: FileSessionDeps): FileSession {
   ): Promise<Result<OpenedFile, OpenFailure>> => {
     const decoded = await decodeFolio(contents, { digest });
     if (!decoded.ok) {
-      const backup = DAMAGE_A_BACKUP_CANNOT_REPAIR.has(decoded.error.code)
-        ? null
-        : await store.latestBackup(file).catch(() => null);
+      const backup =
+        fromBackup || DAMAGE_A_BACKUP_CANNOT_REPAIR.has(decoded.error.code)
+          ? null
+          : await store.latestBackup(file).catch(() => null);
       await release(file);
       return failOpen(decoded.error.code, {
         kind: 'invalidFile',
@@ -218,12 +219,17 @@ export function createFileSession(deps: FileSessionDeps): FileSession {
       if (location === null) {
         return err({ kind: 'cancelled' });
       }
+      if (open?.file.path === location.path) {
+        // The lock is ours already; letting go of the old file afterwards would free the new one.
+        await closeCurrent();
+      }
       const locked = await lockFile(location, false);
       if (!locked.ok) {
         return err(
           locked.error === 'failed' ? { kind: 'writeFailed' } : { kind: 'locked', ...locked.error },
         );
       }
+      const previous = open;
       try {
         const model = createBudget(name, deps.clock);
         const bytes = await encodeFolio(model, { digest, appVersion: deps.appVersion });
@@ -232,8 +238,10 @@ export function createFileSession(deps: FileSessionDeps): FileSession {
           throw new Error('Unexpected save result');
         }
         await backUpQuietly(location, bytes);
-        await closeCurrent();
         open = { file: location, stamp: saved.stamp, carried: {} };
+        if (previous !== null) {
+          await release(previous.file);
+        }
         report({ kind: 'created' });
         return ok({ model, file: location, damagedLines: [], fromBackup: false });
       } catch {
@@ -268,16 +276,23 @@ export function createFileSession(deps: FileSessionDeps): FileSession {
     },
 
     openBackup: async (original, backup) => {
-      await closeCurrent();
+      if (open?.file.path === original.path) {
+        await closeCurrent();
+      }
       const locked = await lockFile(original, false);
       if (!locked.ok) {
         return locked.error === 'failed'
           ? failOpen('unreadable', { kind: 'unreadable' })
           : failOpen('locked', { kind: 'locked', ...locked.error });
       }
+      const previous = open;
       try {
         const [copy, current] = await Promise.all([store.open(backup), store.open(original)]);
-        return await decodeInto(original, copy.bytes, current.stamp, true);
+        const result = await decodeInto(original, copy.bytes, current.stamp, true);
+        if (result.ok && previous !== null) {
+          await release(previous.file);
+        }
+        return result;
       } catch (error) {
         await release(original);
         const kind = readFailureKind(error);

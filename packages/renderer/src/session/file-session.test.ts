@@ -18,7 +18,7 @@ import {
   type BudgetModel,
   type Result,
 } from '@folio/core';
-import { createHostFileStore, createMockHost, type FileRef } from '@folio/host-api';
+import { createHostFileStore, createMockHost, type FileRef, type FileStore } from '@folio/host-api';
 
 import { createFileSession, type OpenedFile } from './file-session.js';
 import { webDigest } from './web-digest.js';
@@ -32,11 +32,11 @@ const emptyModel = createBudget('x', clock);
  * @param files - Files that exist from the start.
  * @returns A session on a mock host, and the host.
  */
-function setup(files: Record<string, Uint8Array> = {}) {
+function setup(files: Record<string, Uint8Array> = {}, override: Partial<FileStore> = {}) {
   const host = createMockHost({ files });
   const suggestions: string[] = [];
   const session = createFileSession({
-    store: createHostFileStore(host),
+    store: { ...createHostFileStore(host), ...override },
     digest: webDigest,
     clock,
     appVersion: '0.0.0-test',
@@ -140,6 +140,40 @@ describe('FileSession.create', () => {
         error: { kind: 'locked', holder: 'LAPTOP', stale: false },
       });
       expect(host.controls.fileBytes(where.path)).toBeUndefined();
+    });
+  });
+});
+
+describe('FileSession.create over the open file', () => {
+  describe('aLocationThatIsTheOpenFile', () => {
+    it('leavesTheNewFileLocked', async () => {
+      const { host, session } = setup();
+      host.controls.queueSaveDialog(where);
+      await session.create('Household 2027');
+      host.controls.queueSaveDialog(where);
+      expect((await session.create('Household 2027')).ok).toBe(true);
+      expect(host.controls.heldLocks).toEqual([where.path]);
+      expect(session.current).toEqual(where);
+    });
+  });
+
+  describe('aWriteThatFailsWhileAnotherFileIsOpen', () => {
+    it('releasesOnlyTheNewLocationAndKeepsTheOpenFile', async () => {
+      const made = setup();
+      made.host.controls.queueSaveDialog(where);
+      await made.session.create('Household 2027');
+      const failing = setup(
+        { [where.path]: bytesOf(made.host, where) },
+        { save: () => Promise.reject(new Error('disk full')) },
+      );
+      await failing.session.open(where);
+      failing.host.controls.queueSaveDialog(other);
+      expect(await failing.session.create('Other')).toEqual({
+        ok: false,
+        error: { kind: 'writeFailed' },
+      });
+      expect(failing.host.controls.heldLocks).toEqual([where.path]);
+      expect(failing.session.current).toEqual(where);
     });
   });
 });
@@ -283,6 +317,42 @@ describe('FileSession.openBackup', () => {
       });
       expect((await session.save(withAccount(modelOf(recovered)))).ok).toBe(true);
       expect(host.controls.fileBytes(where.path)).not.toEqual(new Uint8Array([9, 9, 9]));
+    });
+  });
+});
+
+describe('FileSession.openBackup failing', () => {
+  describe('aLockedOriginalWhileAnotherFileIsOpen', () => {
+    it('keepsTheFirstFileOpen', async () => {
+      const made = setup();
+      made.host.controls.queueSaveDialog(where);
+      await made.session.create('Household 2027');
+      const bytes = bytesOf(made.host, where);
+      const { host, session } = setup({ [where.path]: bytes, [other.path]: bytes });
+      await session.open(where);
+      host.controls.lockFromElsewhere(other.path, 'LAPTOP', false);
+      const failed = await session.openBackup(other, where);
+      expect(failed.ok).toBe(false);
+      expect(session.current).toEqual(where);
+      expect(host.controls.heldLocks).toEqual([where.path]);
+    });
+  });
+
+  describe('aBackupThatIsDamagedToo', () => {
+    it('offersNoFurtherBackup', async () => {
+      const made = setup();
+      made.host.controls.queueSaveDialog(where);
+      await made.session.create('Household 2027');
+      const { host, session } = setup({ [where.path]: bytesOf(made.host, where) });
+      await session.open(where);
+      await session.close();
+      host.controls.putFile(where.path, new Uint8Array([9]));
+      const failed = await session.open(where);
+      const backup = !failed.ok && failed.error.kind === 'invalidFile' ? failed.error.backup : null;
+      host.controls.putFile((backup ?? where).path, new Uint8Array([8]));
+      const again = await session.openBackup(where, backup ?? where);
+      expect(!again.ok && again.error.kind === 'invalidFile' && again.error.backup).toBeNull();
+      expect(host.controls.heldLocks).toEqual([]);
     });
   });
 });
