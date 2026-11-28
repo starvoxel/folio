@@ -27,7 +27,7 @@ Decisions are AD-8 (the pipeline), AD-6 (transactions have lines), AD-7 (money, 
 6. _Duplicates:_ same account, date, amount and normalised description as an existing transaction (the PRD's definition, so re-importing an identical file flags every row). Normalised means case-folded, whitespace collapsed, and a provider's known noise removed. Within one file, two identical rows are two transactions (a real double purchase), and only rows matching already-imported transactions are flagged. The user can keep or skip each flagged row.
 7. _Suspicious flags are local and cheap._ Four checks (new merchant with a large amount, repeated charges in a short window, an amount far above the merchant's norm, foreign-currency or unusual-merchant-code markers) read only the file's existing transactions and the draft. They run in the staging step, produce a reason string each, never block and are measured so a slow check is a failing test. Thresholds are household settings with defaults (I1.24; AD-11 lists them in the file). Fraud marking itself is a command in this plan; excluding confirmed fraud from totals is the classifier's job (AD-3, first rule).
 8. _Each imported row keeps a source fingerprint_ (file hash, row number, raw row text) for duplicate detection and audit (AD-8). The raw row can contain a merchant name and an amount, so it lives only in the file's `transactions` part and never in a log, an error or a test snapshot outside fixtures.
-9. _Confirming is one command with month-tagged parts_ (AD-5), saved immediately (H1.6b) through the file session. Undo removes the rows in still-open months of the import (I1.15, as relaxed by AD-5).
+9. _Confirming is one command with month-tagged parts_ (AD-5), saved through the file session under the save rules of the [app shell plan](app-shell-and-settings.md) (H1.6d: an import saves at once unless the last save was within the minimum gap, then once when the gap ends). Undo removes the rows in still-open months of the import (I1.15, as relaxed by AD-5).
 10. _The renderer drives a state machine_ (choose, detect or map, account, preview, importing, done or failed) in a pure module with unit tests; the dialog only renders it. Files arrive from the file dialog, a drop event or an account's Import button (S1.21) as paths read through the host.
 
 ## Milestones
@@ -62,8 +62,8 @@ Depends on the [setup and accounts plan](setup-and-accounts.md), milestones 1 an
 ### 5. Entry points and the setup step
 
 - Depends on: setup and accounts milestone 3 (real save and open); Electron foundations milestone 3 for drops.
-- Does: the file dialog and the native drop route into the dialog (I1.1), several files in one go, immediate save after a confirmed import (H1.6b), the account detail's Import button (S1.21), and the last setup step of S1.8 using the same dialog.
-- Acceptance criteria: dropping two CSVs opens one dialog with both; the file on disk contains the import after Import is pressed; setup's last step imports through the same code path as the normal dialog (no copy).
+- Does: the file dialog and the native drop route into the dialog (I1.1), several files in one go, the save after a confirmed import (H1.6d), the account detail's Import button (S1.21), and the last setup step of S1.8 using the same dialog.
+- Acceptance criteria: dropping two CSVs opens one dialog with both; the file on disk contains the import once the save runs (at once if the last save is older than the minimum gap, otherwise when the gap ends; tested with a fixed clock and the mock host), and two imports inside the gap produce one save; setup's last step imports through the same code path as the normal dialog (no copy).
 - Verified by: the end-to-end scenarios in the regression suite, milestone 3.
 
 ### 6. Provider profiles in Settings
