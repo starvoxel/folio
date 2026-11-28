@@ -57,7 +57,7 @@ Depends on: [transfers and savings](transfers-and-savings.md) milestone 1 (the c
 
 ### 5. The review queue
 
-- Does: the queue with its five groups and thresholds (defaults proposed in the open questions, adjustable in Settings), item actions, the full pass (M1.2), "Mark all as checked", and continue to close.
+- Does: the queue with its five groups and thresholds (the defaults in Decisions, adjustable in Settings), item actions, the full pass (M1.2), "Mark all as checked", and continue to close.
 - Acceptance criteria: each group has a tripping and a non-tripping case; resolving removes an item and sending it back returns it when fixed; changing a threshold changes the next queue and no closed month; the queue is operable by keyboard with accessible names.
 - Verified by: unit tests, component tests, an end-to-end scenario.
 
@@ -85,7 +85,9 @@ Depends on: [transfers and savings](transfers-and-savings.md) milestone 1 (the c
 - A bug in close corrupts a month that is then trusted. Mitigation: close is atomic (one change set, saved at once), frozen results are compared with a fresh classification in a test, and a backup exists from open (AD-12).
 - The net worth seam is inert until N, so M1.11 cannot be proven end to end here. Mitigation: test it with a stub balance source; N repeats it with real balances.
 
-## Open questions
+## Decisions
 
-1. What are the defaults for "unusually large" and "new merchant"? [Jeremy, at milestone 5] _Recommendation:_ large is at least $500 and at least three times the account's median row (the same as import's check, one definition); a new merchant is one with no earlier line in any open or locked month.
-2. Does the full pass record that a month was fully checked? [Jeremy] _Recommendation:_ no stored flag in v1; "Mark all as checked" only clears the session's list.
+Answered by Jeremy, 2026-11-28:
+
+1. "Unusually large" reuses import's check (at least $500 and at least three times the account's median row); a new merchant has no earlier line in any month. One definition for import and review; both adjustable in Settings.
+2. The full pass stores no flag: "Mark all as checked" only clears the session's list.

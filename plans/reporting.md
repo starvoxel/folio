@@ -76,7 +76,9 @@ Depends on: [transfers and savings](transfers-and-savings.md) milestone 1 (the c
 - Drill-down counts drift from chart totals. Mitigation: both derive from one classified month, and milestone 5 tests every element.
 - The chart models are the first use of ECharts in the app. Mitigation: milestone 2 runs before any page, and the privacy capture runs against the first chart.
 
-## Open questions
+## Decisions
 
-1. Which colours encode the categories when there are more than the palette? [Jeremy, at milestone 2] _Recommendation:_ a fixed ordered palette by category id, repeating with patterns; a user-chosen colour is a later idea.
-2. Is the month picker's default the latest open month or the latest closed one? [Jeremy] _Recommendation:_ the oldest open month, since it is the one being worked on.
+Answered by Jeremy, 2026-11-28:
+
+1. Category colours come from a fixed ordered palette by category id; extras repeat with a pattern so colour is never the only cue. User-chosen colours are a later idea.
+2. The month picker defaults to the oldest open month.

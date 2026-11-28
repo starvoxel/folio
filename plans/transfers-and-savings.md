@@ -78,7 +78,9 @@ Depends on: [setup and accounts](setup-and-accounts.md) milestone 1 (accounts an
 - Two real transfers with the same amount inside the window pair wrongly. Mitigation: closest date wins, suggestions need confirming, unpair is always available, and the Transfers view shows both lines.
 - The classifier becomes the most-touched module (every money view depends on it). Mitigation: it is pure, fixture-driven, and its order is a table; AD-3 says to revisit if the order grows past a handful of steps.
 
-## Open questions
+## Decisions
 
-1. Where do suggestions show before M's review queue exists? [Engineer] _Recommendation:_ the Transfers view here; M's queue reuses its list item component.
-2. Should an excluded account's "savings or spending" choice change retroactively for open months? [Jeremy] _Recommendation:_ yes for open months, never for locked ones, since AD-3 freezes locked results.
+Answered by Jeremy, 2026-11-28:
+
+1. Changing an excluded account's savings-or-spending setting recalculates open months only; locked months keep their frozen results (AD-3).
+2. Suggestions show in this plan's Transfers view until the review queue exists; the queue then reuses its list item component.

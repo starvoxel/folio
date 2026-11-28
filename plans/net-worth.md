@@ -22,7 +22,7 @@ Decisions are AD-3 (stored results at close), AD-6 and AD-7 (cents, lines), AD-1
 1. _A balance is computed, never typed in a ledger:_ nearest known balance (a CSV balance column or a confirmed figure) plus or minus the transactions between (N1.1). The function is pure and reads the import plan's known-balance records.
 2. _Close stores the figures:_ each account's balance, each free-form value and the total go into the month's frozen record, so the chart never shifts (N1.8). Overrides keep a note.
 3. _All accounts count_, including those excluded from analysis, liabilities subtract (N1.3), and an account counts until the month it is archived (N1.12). Investment accounts are valued by entering market value; only transfers in and out matter (N1.6).
-4. _Free-form entries default to the last value_ and are asked for once per close (N1.5); gone means archived, with past values kept (N1.10). A rename shows in every month; switching asset and debt changes locked months' net worth presentation but not their spending totals, an accepted exception that Jeremy must confirm (see the PRD).
+4. _Free-form entries default to the last value_ and are asked for once per close (N1.5); gone means archived, with past values kept (N1.10). A rename shows in every month; switching asset and debt changes locked months' net worth presentation but not their spending totals, an exception Jeremy accepted (Decisions).
 5. _The M seams become real:_ the checklist items for closing balances and free-form values, and the re-confirmation comparison (M1.11), take their implementations from here.
 
 ## Milestones
@@ -68,9 +68,11 @@ Depends on: [month-end review](month-end-review-and-locking.md) milestones 2 to 
 ## Risks
 
 - A wrong nearest-known balance gives a wrong net worth that is then frozen. Mitigation: close shows the source of every figure and requires confirmation.
-- Retroactive type switching changes locked presentation. Mitigation: confirm the rule with Jeremy before milestone 2.
+- Retroactive type switching changes locked presentation. Accepted (Decisions).
 
-## Open questions
+## Decisions
 
-1. Is retroactive asset and debt switching accepted as the PRD writes it? [Jeremy] _Recommendation:_ yes, as the write-up says; it affects net worth only, never spending.
-2. How are opening balances before the first close shown? [Jeremy] _Recommendation:_ the first locked month is the first point; earlier months are not charted.
+Answered by Jeremy, 2026-11-28:
+
+1. Switching a free-form entry between asset and debt changes locked months' net worth as the PRD writes it; it never changes a spending total. This exception to "locked months never change" is accepted.
+2. The chart starts at the first locked month; earlier months are not charted.

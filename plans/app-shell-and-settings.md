@@ -24,7 +24,7 @@ Decisions are AD-1 (the file is a document in memory, so Discard is "drop the mo
 3. _Machine settings_ (theme, autosave interval, auto-open, recent files, backup location) stay in the machine settings reader; file settings (AD-11) are edited as commands so they are undoable and audited.
 4. _The Settings page is a list of sections_ each owning plan registers; this plan adds Appearance, Saving and backups, and About, and the page's own shell. The sections keep their component tests in their own plans.
 5. _A corrupt, missing or unreadable file_ shows the error and offers the newest backup; choosing one opens it as a new session and never overwrites the damaged file (H1.11, building on the failure codes of the setup plan).
-6. _Backup policy_ (frequency, retention, location) is decided here and replaces the fixed 10 copies and path of AD-12's interim.
+6. _Backup policy_ replaces the interim of AD-12: a backup on open and at every autosave, the newest 20 kept (Decisions); the location stays a machine setting.
 
 ## Milestones
 
@@ -57,7 +57,7 @@ Depends on: [setup and accounts](setup-and-accounts.md) milestone 3 (`FileSessio
 ### 5. Backups and the corrupt-file flow
 
 - Does: the backup policy in the host, the retention and location settings, listing backups for a file, and Open a backup from the error dialog and the start screen.
-- Acceptance criteria: a backup is made on open and on the schedule; retention deletes the oldest only and never the one just written; opening a backup leaves the damaged file untouched; the error names the failure code and never content.
+- Acceptance criteria: a backup is made on open and at every autosave that wrote changes; retention deletes the oldest only and never the one just written; opening a backup leaves the damaged file untouched; the error names the failure code and never content.
 - Verified by: integration tests on real temporary folders on Windows and macOS.
 
 ### 6. Records and documents
@@ -78,8 +78,10 @@ Depends on: [setup and accounts](setup-and-accounts.md) milestone 3 (`FileSessio
 - Undo is planned last but every earlier plan produces change sets for it. Mitigation: all plans tag parts per AD-5 from the first command, and milestone 1 of the setup plan already inverts exactly; a gap found here is a fix in the owning plan.
 - Autosave while a dialog is half-complete could save a partial import. Mitigation: only confirmed commands change the model; dialogs hold their own state.
 
-## Open questions
+## Decisions
 
-1. Should navigation, the command bar and the Settings shell come earlier than this plan, since the plans before it add pages? [Jeremy] _Recommendation:_ keep the order; earlier plans add pages to the existing shell, and the Settings page shell lands with the first section that needs it (CSV import, milestone 6), which this plan then adopts.
-2. Backup defaults: frequency and retention? [Jeremy, at milestone 5] _Recommendation:_ on open, then at most one per day of use, keeping the newest 10 and one per week for four weeks.
-3. Should the start screen show other recent files' lock state by reading the sidecar? [Engineer] _Recommendation:_ yes, read-only, with no change to the lock.
+Answered by Jeremy, 2026-11-28:
+
+1. The order stays: navigation, command bar and the Settings shell are built in this plan; earlier plans add pages to the existing shell, and the Settings shell lands with CSV import milestone 6, which this plan adopts.
+2. Backups are made on open and at every autosave, keeping the newest 20 (the count is a proposal; the Settings policy may change it). The host's rotation and the 10-copy interim of AD-12 are updated to match.
+3. The start screen shows whether other recent files are locked, by reading the sidecar lock read-only.

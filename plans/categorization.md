@@ -33,7 +33,7 @@ Depends on: [setup and accounts](setup-and-accounts.md) milestones 1 and 2 (cate
 
 ### 1. Rules engine
 
-- Does: rule and condition types, the `rules` part schema, evaluation, computed order, shadow detection, the pattern engine (decided in the open questions), and fixtures of invented descriptions.
+- Does: rule and condition types, the `rules` part schema, evaluation, computed order, shadow detection, the pattern engine (RE2, see Decisions), and fixtures of invented descriptions.
 - Acceptance criteria: each condition kind has a matching and a non-matching case; the C1.7 order has a test for each tie-break; a catastrophic pattern (`(a+)+$`) cannot hang the engine; an invalid pattern is rejected; manual lines are skipped.
 - Verified by: unit and property tests (the order is a total order and independent of input order).
 
@@ -59,7 +59,7 @@ Depends on: [setup and accounts](setup-and-accounts.md) milestones 1 and 2 (cate
 ### 5. Rules & categories page
 
 - Does: the rules list grouped by category and profile with search, match counts, last match, no-match-in-12-months and shadow flags (AD-9); the rule editor with provider picker and live impact preview; the category tree with add, rename, merge, archive and per-parent totals.
-- Acceptance criteria: the impact preview lists the exact lines a save would change; reorder, disable and delete work from the keyboard; archiving a category in use asks what to do with its open lines.
+- Acceptance criteria: the impact preview lists the exact lines a save would change; reorder, disable and delete work from the keyboard; archiving a category in use offers a target category for its open lines and, if none is chosen, makes them uncategorized.
 - Verified by: component tests and an end-to-end scenario.
 
 ### 6. Records and documents
@@ -78,10 +78,12 @@ Depends on: [setup and accounts](setup-and-accounts.md) milestones 1 and 2 (cate
 ## Risks
 
 - A bad rule set can silently miscategorize many lines. Mitigation: the impact preview before save (C1.9), "Why this category?", and undo of the whole rule change.
-- RE2 in WebAssembly adds a dependency and a licence check. Mitigation: decide in milestone 1 with the alternative of a limited worker; the engine sits behind one function.
+- RE2 in WebAssembly adds a dependency and a licence check. Mitigation: the engine sits behind one function; if no maintained, permissively licensed build passes the check, the time-limited worker replaces it.
 
-## Open questions
+## Decisions
 
-1. Which pattern engine: RE2 compiled to WebAssembly, or a time-limited worker? [Engineer, at milestone 1; the human confirms a new dependency] _Recommendation:_ RE2 if a maintained, permissively licensed build passes the licence check; otherwise the worker.
-2. Does the Transactions page belong here or in Reporting (A1.5)? [Jeremy] _Recommendation:_ here, because a category cannot be fixed without it; the reporting plan wires drill-down to it.
-3. What does archiving a category in use do to its open lines? [Jeremy] _Recommendation:_ keep them in the archived category until recategorized, and list them under uncategorized-style attention in the page.
+Answered by Jeremy, 2026-11-28:
+
+1. Pattern engine: RE2 compiled to WebAssembly. Milestone 1 runs the licence check and, only if no maintained, permissively licensed build passes, falls back to a time-limited worker.
+2. The Transactions page is built here, not in Reporting; the reporting plan wires drill-down to it.
+3. Archiving a category in use offers a target category for its open-month lines; if none is chosen they become uncategorized (and so block closing until resolved). Locked months keep their stored treatment.
