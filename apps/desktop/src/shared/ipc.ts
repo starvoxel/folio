@@ -21,6 +21,7 @@ export const IPC_CHANNELS = {
   releaseLock: 'folio:release-lock',
   backUp: 'folio:back-up',
   latestBackup: 'folio:latest-backup',
+  logFileEvent: 'folio:log-file-event',
   quit: 'folio:quit',
   menuCommand: 'folio:menu-command',
   filesDropped: 'folio:files-dropped',

@@ -62,6 +62,33 @@ export interface LockOptions {
   readonly takeOverStale?: boolean;
 }
 
+/** Why opening a budget file failed, as the host logs it; a closed list, so no text crosses over. */
+export const OPEN_FAILURE_REASONS = [
+  'locked',
+  'notFound',
+  'unreadable',
+  'notAZip',
+  'manifestMissing',
+  'manifestInvalid',
+  'newerFormat',
+  'partMissing',
+  'checksumMismatch',
+  'schemaInvalid',
+  'migrationFailed',
+] as const;
+
+/** One of `OPEN_FAILURE_REASONS`. */
+export type OpenFailureReason = (typeof OPEN_FAILURE_REASONS)[number];
+
+/**
+ * What the file session tells the host to log (AD-10). It is a closed list of facts, never text,
+ * names or amounts, so a log line cannot carry financial data whatever the page sends.
+ */
+export type FileEvent =
+  | { readonly kind: 'created' }
+  | { readonly kind: 'opened'; readonly damagedLines: number; readonly fromBackup: boolean }
+  | { readonly kind: 'openFailed'; readonly reason: OpenFailureReason };
+
 /** Commands the native or hamburger menu can send to the renderer (H1.14, H1.16). */
 export type MenuCommand =
   | 'new'
@@ -199,6 +226,8 @@ export interface HostApi {
   backUp(file: FileRef, bytes: Uint8Array): Promise<FileRef>;
   /** The newest backup of a file, which the person may then read; null when there is none. */
   latestBackup(file: FileRef): Promise<FileRef | null>;
+  /** Record a file event in the log. It is fire and forget: a failure to log is never an error. */
+  logFileEvent(event: FileEvent): Promise<void>;
   /** Read the machine settings (AD-11) as untrusted JSON; null when none are stored yet. */
   readSettings(): Promise<unknown>;
   /** Replace the machine settings. */

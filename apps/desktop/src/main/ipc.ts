@@ -17,12 +17,14 @@ import type { FileHost } from './file-host.js';
 import type { PathGrants } from './path-grants.js';
 import { acceptDroppedPaths } from './dropped-files.js';
 import { describeMenu, findMenuItem, type MenuItemLike } from './menu-automation.js';
+import { logFileEvent } from './file-event-log.js';
 import { failureFor, invalidRequest } from './ipc-failures.js';
 import type { Logger } from './logger.js';
 import type { SettingsStore } from './settings-store.js';
 import { IPC_CHANNELS, type IpcResult } from '../shared/ipc.js';
 import {
   parseBackUpRequest,
+  parseFileEvent,
   parseDialogOptions,
   parseFileRef,
   parseLockRequest,
@@ -174,6 +176,10 @@ export function registerIpcHandlers(services: IpcServices): void {
   handleChecked(IPC_CHANNELS.backUp, 'backUp', parseBackUpRequest, (request): Promise<FileRef> =>
     files.backUp(request.file, request.bytes),
   );
+  handleChecked(IPC_CHANNELS.logFileEvent, 'logFileEvent', parseFileEvent, (event): null => {
+    logFileEvent(logger, event);
+    return null;
+  });
   handleChecked(
     IPC_CHANNELS.latestBackup,
     'latestBackup',

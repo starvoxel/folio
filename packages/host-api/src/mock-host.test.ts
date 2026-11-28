@@ -221,6 +221,20 @@ describe('latestBackup', () => {
   });
 });
 
+describe('logFileEvent', () => {
+  describe('someEvents', () => {
+    it('recordsThemInOrder', async () => {
+      const host = createMockHost();
+      await host.logFileEvent({ kind: 'created' });
+      await host.logFileEvent({ kind: 'openFailed', reason: 'locked' });
+      expect(host.controls.fileEvents).toEqual([
+        { kind: 'created' },
+        { kind: 'openFailed', reason: 'locked' },
+      ]);
+    });
+  });
+});
+
 describe('settings', () => {
   describe('noneStored', () => {
     it('readsNull', async () => {
