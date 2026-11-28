@@ -20,6 +20,7 @@ export const IPC_CHANNELS = {
   acquireLock: 'folio:acquire-lock',
   releaseLock: 'folio:release-lock',
   backUp: 'folio:back-up',
+  latestBackup: 'folio:latest-backup',
   quit: 'folio:quit',
   menuCommand: 'folio:menu-command',
   filesDropped: 'folio:files-dropped',

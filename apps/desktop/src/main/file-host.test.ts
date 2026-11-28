@@ -136,4 +136,27 @@ describe('createFileHost', () => {
       expect(lines.at(-1)).toBe('info wrote a backup {"bytes":1,"pruned":0}');
     });
   });
+
+  describe('latestBackup', () => {
+    it('returnsNullWhenThereAreNoBackups', async () => {
+      const { host } = setup();
+      expect(await host.latestBackup(chosen)).toBeNull();
+    });
+
+    it('returnsTheNewestBackupAndGrantsReadingIt', async () => {
+      const { host } = setup();
+      await host.backUp(chosen, new Uint8Array([1]));
+      const second = await host.backUp(chosen, new Uint8Array([2]));
+      const latest = await host.latestBackup(chosen);
+      expect(latest).toEqual(second);
+      expect(latest === null ? null : (await host.readFile(latest)).bytes).toEqual(
+        new Uint8Array([2]),
+      );
+    });
+
+    it('refusesAFileThePersonDidNotChoose', async () => {
+      const { host } = setup();
+      await expect(host.latestBackup(stranger)).rejects.toMatchObject({ code: 'permissionDenied' });
+    });
+  });
 });

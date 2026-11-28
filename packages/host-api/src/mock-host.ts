@@ -45,7 +45,12 @@ export interface MockHostControls {
   /** Mark a file as locked by another computer. */
   lockFromElsewhere(path: string, holder: string, stale: boolean): void;
   /** Backups made so far, oldest first. */
-  readonly backups: readonly { readonly file: FileRef; readonly bytes: Uint8Array }[];
+  readonly backups: readonly {
+    readonly file: FileRef;
+    readonly bytes: Uint8Array;
+    /** The path of the file this is a backup of. */
+    readonly source: string;
+  }[];
   /** Files shown in the file manager so far. */
   readonly revealed: readonly FileRef[];
   /** How many times the app asked to quit. */
@@ -89,7 +94,7 @@ export function createMockHost(options: MockHostOptions = {}): MockHost {
   const files = new Map<string, StoredFile>();
   const foreignLocks = new Map<string, ForeignLock>();
   const ownLocks = new Set<string>();
-  const backups: { file: FileRef; bytes: Uint8Array }[] = [];
+  const backups: { file: FileRef; bytes: Uint8Array; source: string }[] = [];
   const revealed: FileRef[] = [];
   const menuListeners = new Set<(command: MenuCommand) => void>();
   const dropListeners = new Set<(files: readonly FileRef[]) => void>();
@@ -183,9 +188,12 @@ export function createMockHost(options: MockHostOptions = {}): MockHost {
         path: `backups/${String(backups.length + 1)}-${nameOf(file.path)}`,
         name: nameOf(file.path),
       };
-      backups.push({ file: copy, bytes: bytes.slice() });
+      backups.push({ file: copy, bytes: bytes.slice(), source: file.path });
+      store(copy.path, bytes);
       return Promise.resolve(copy);
     },
+    latestBackup: (file) =>
+      Promise.resolve(backups.findLast((backup) => backup.source === file.path)?.file ?? null),
     readSettings: () => Promise.resolve(settings),
     writeSettings: (next) => {
       settings = next;

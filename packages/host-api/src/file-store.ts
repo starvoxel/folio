@@ -31,6 +31,8 @@ export interface FileStore {
   unlock(file: FileRef): Promise<void>;
   /** Keep a copy of the bytes as a backup. */
   backUp(file: FileRef, bytes: Uint8Array): Promise<FileRef>;
+  /** The newest backup of a file, readable with `open`; null when there is none. */
+  latestBackup(file: FileRef): Promise<FileRef | null>;
 }
 
 /**
@@ -45,5 +47,6 @@ export function createHostFileStore(host: HostApi): FileStore {
     lock: (file, options) => host.acquireLock(file, options),
     unlock: (file) => host.releaseLock(file),
     backUp: (file, bytes) => host.backUp(file, bytes),
+    latestBackup: (file) => host.latestBackup(file),
   };
 }

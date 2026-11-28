@@ -174,6 +174,12 @@ export function registerIpcHandlers(services: IpcServices): void {
   handleChecked(IPC_CHANNELS.backUp, 'backUp', parseBackUpRequest, (request): Promise<FileRef> =>
     files.backUp(request.file, request.bytes),
   );
+  handleChecked(
+    IPC_CHANNELS.latestBackup,
+    'latestBackup',
+    parseFileRef,
+    (file): Promise<FileRef | null> => files.latestBackup(file),
+  );
 
   handleChecked(IPC_CHANNELS.dropFiles, 'dropFiles', acceptDroppedPaths, (outcome, event): null => {
     for (const file of outcome.accepted) {

@@ -197,6 +197,8 @@ export interface HostApi {
   releaseLock(file: FileRef): Promise<void>;
   /** Copy bytes into the app-data backup folder and return where they went (AD-12). */
   backUp(file: FileRef, bytes: Uint8Array): Promise<FileRef>;
+  /** The newest backup of a file, which the person may then read; null when there is none. */
+  latestBackup(file: FileRef): Promise<FileRef | null>;
   /** Read the machine settings (AD-11) as untrusted JSON; null when none are stored yet. */
   readSettings(): Promise<unknown>;
   /** Replace the machine settings. */

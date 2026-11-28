@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { backupFileName, backupsToDelete, backupStamp } from './backups.js';
+import { backupFileName, backupsToDelete, backupStamp, newestBackup } from './backups.js';
 
 describe('backupStamp', () => {
   describe('aMoment', () => {
@@ -115,6 +115,28 @@ describe('backupsToDelete', () => {
       expect(backupsToDelete([special, backupFileName('aXb.folio', 0)], 'a(1)+b.folio', 0)).toEqual(
         [special],
       );
+    });
+  });
+});
+
+describe('newestBackup', () => {
+  describe('backupsAcrossSecondsAndCounters', () => {
+    it('picksTheLatestByTimeThenByNumber', () => {
+      const names = [
+        'Household_20260101-000000.folio',
+        'Household_20260101-000001_2.folio',
+        'Household_20260101-000001_10.folio',
+        'Household_20260101-000001.folio',
+        'notes.txt',
+      ];
+      expect(newestBackup(names, 'Household.folio')).toBe('Household_20260101-000001_10.folio');
+    });
+  });
+
+  describe('noBackupsOfThisFile', () => {
+    it('returnsNull', () => {
+      expect(newestBackup(['Other_20260101-000000.folio'], 'Household.folio')).toBeNull();
+      expect(newestBackup([], 'Household.folio')).toBeNull();
     });
   });
 });

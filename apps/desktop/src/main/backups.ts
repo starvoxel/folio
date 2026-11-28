@@ -71,9 +71,34 @@ export function backupFileName(
 }
 
 /**
- * Pick the backups to delete so only the newest few stay. Only names this module made for this
- * file count, so anything else in the folder is left alone. Backups are ordered by time and then
+ * Pick out the backups this module made for a file, oldest first. They are ordered by time and then
  * by counter, as numbers, because `_10` would sort before `_2` as text.
+ * @param names - Everything in the backup folder.
+ * @param fileName - The budget file's name.
+ * @returns The names that are backups of the file, oldest first.
+ */
+function orderedBackups(names: readonly string[], fileName: string): string[] {
+  const { stem, extension } = splitName(fileName);
+  const pattern = new RegExp(
+    `^${escapeForPattern(stem)}_(${STAMP})(?:_(\\d+))?${escapeForPattern(extension)}$`,
+    'u',
+  );
+  return names
+    .flatMap((name) => {
+      const match = pattern.exec(name);
+      return match === null
+        ? []
+        : [{ name, stamp: match[1] ?? '', counter: Number(match[2] ?? 1) }];
+    })
+    .sort((left, right) =>
+      left.stamp === right.stamp ? left.counter - right.counter : left.stamp < right.stamp ? -1 : 1,
+    )
+    .map((entry) => entry.name);
+}
+
+/**
+ * Pick the backups to delete so only the newest few stay. Only names this module made for this
+ * file count, so anything else in the folder is left alone.
  * @param names - Everything in the backup folder.
  * @param fileName - The budget file's name.
  * @param keep - How many to keep.
@@ -87,24 +112,17 @@ export function backupsToDelete(
   keep: number = BACKUPS_KEPT,
   protectedName?: string,
 ): string[] {
-  const { stem, extension } = splitName(fileName);
-  const pattern = new RegExp(
-    `^${escapeForPattern(stem)}_(${STAMP})(?:_(\\d+))?${escapeForPattern(extension)}$`,
-    'u',
-  );
-  const ours = names
-    .flatMap((name) => {
-      const match = pattern.exec(name);
-      return match === null
-        ? []
-        : [{ name, stamp: match[1] ?? '', counter: Number(match[2] ?? 1) }];
-    })
-    .sort((left, right) =>
-      left.stamp === right.stamp ? left.counter - right.counter : left.stamp < right.stamp ? -1 : 1,
-    );
+  const ours = orderedBackups(names, fileName);
   const excess = Math.max(0, ours.length - keep);
-  return ours
-    .filter((entry) => entry.name !== protectedName)
-    .slice(0, excess)
-    .map((entry) => entry.name);
+  return ours.filter((name) => name !== protectedName).slice(0, excess);
+}
+
+/**
+ * Find the newest backup of a file.
+ * @param names - Everything in the backup folder.
+ * @param fileName - The budget file's name.
+ * @returns The newest backup's name, or null when there is none.
+ */
+export function newestBackup(names: readonly string[], fileName: string): string | null {
+  return orderedBackups(names, fileName).at(-1) ?? null;
 }

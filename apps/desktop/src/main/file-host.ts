@@ -18,6 +18,7 @@ import {
   type WriteResult,
 } from '@folio/host-api';
 
+import { newestBackup } from './backups.js';
 import { writeBackup } from './backup-store.js';
 import { readStamped, writeAtomically } from './atomic-write.js';
 import type { FsOps } from './fs-ops.js';
@@ -54,6 +55,8 @@ export interface FileHost {
   acquireLock(file: FileRef, options?: LockOptions): Promise<LockResult>;
   releaseLock(file: FileRef): Promise<void>;
   backUp(file: FileRef, bytes: Uint8Array): Promise<FileRef>;
+  /** The newest backup of a file, which the person may then read; null when there is none. */
+  latestBackup(file: FileRef): Promise<FileRef | null>;
   /** Release every lock this app holds, for quitting. */
   releaseAllLocks(): Promise<void>;
 }
@@ -128,6 +131,18 @@ export function createFileHost(deps: FileHostDeps): FileHost {
       );
       logger.info('wrote a backup', { bytes: bytes.byteLength, pruned });
       return backup;
+    },
+    latestBackup: async (file) => {
+      const path = checked(file, 'latestBackup');
+      const directory = join(deps.backupRoot, deps.hashOf(grants.keyOf(path) ?? path));
+      const name = newestBackup(await fs.listDirectory(directory), basename(path));
+      if (name === null) {
+        return null;
+      }
+      // The person reads it through the same checked calls as any file they chose.
+      const backup = join(directory, name);
+      grants.grant(backup);
+      return { path: backup, name };
     },
     releaseAllLocks: () => locks.releaseAll(),
   };

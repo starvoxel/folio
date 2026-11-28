@@ -127,6 +127,7 @@ const host: HostApi = {
     await call<null>(IPC_CHANNELS.releaseLock, file);
   },
   backUp: (file, bytes) => call<FileRef>(IPC_CHANNELS.backUp, { file, bytes }),
+  latestBackup: (file) => call<FileRef | null>(IPC_CHANNELS.latestBackup, file),
   revealInFolder: notImplemented,
 };
 
