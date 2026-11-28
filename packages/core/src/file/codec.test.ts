@@ -28,7 +28,11 @@ const accountId = (n: number): ReturnType<typeof id<'Account'>> =>
   id<'Account'>(`aaaaaaaa-0000-4000-8000-${String(n).padStart(12, '0')}`);
 const categoryId = (n: number): ReturnType<typeof id<'Category'>> =>
   id<'Category'>(`cccccccc-0000-4000-8000-${String(n).padStart(12, '0')}`);
-const context = { lockedMonths: [], accountHasTransactions: (): boolean => false };
+const context = {
+  lockedMonths: [],
+  accountHasTransactions: (): boolean => false,
+  isCategoryUsed: (): boolean => false,
+};
 
 /**
  * @param model - The starting model.

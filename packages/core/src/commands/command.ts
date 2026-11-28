@@ -9,6 +9,7 @@
 import type { Id } from '../domain/id.js';
 import type { LocalDate, YearMonth } from '../domain/local-date.js';
 import type { AccountType, TransferTreatment } from '../budget/account.js';
+import type { Category } from '../budget/category.js';
 
 /** The kind of every command, named once so a typo cannot compile. */
 export const COMMAND_KIND = {
@@ -20,6 +21,7 @@ export const COMMAND_KIND = {
   addCategory: 'addCategory',
   renameCategory: 'renameCategory',
   removeCategory: 'removeCategory',
+  applyTemplate: 'applyTemplate',
 } as const;
 
 /** One of the command kinds. */
@@ -41,6 +43,7 @@ export const FAILURE = {
   dateOutOfOrder: 'dateOutOfOrder',
   incomeProtected: 'incomeProtected',
   invalidParent: 'invalidParent',
+  categoryInUse: 'categoryInUse',
 } as const;
 
 /** The edits to an account that `updateAccount` may make; omitted fields stay as they are. */
@@ -94,13 +97,20 @@ export type Command =
       readonly id: Id<'Category'>;
       readonly name: string;
     }
-  | { readonly kind: typeof COMMAND_KIND.removeCategory; readonly id: Id<'Category'> };
+  | { readonly kind: typeof COMMAND_KIND.removeCategory; readonly id: Id<'Category'> }
+  | {
+      readonly kind: typeof COMMAND_KIND.applyTemplate;
+      /** The whole category set, Income first or anywhere in it; it replaces the current one. */
+      readonly categories: readonly Category[];
+    };
 
 /** What a command needs to know that the model does not hold. */
 export interface CommandContext {
   readonly lockedMonths: readonly YearMonth[];
   /** Whether an account has any transactions; the transactions part belongs to a later plan. */
   readonly accountHasTransactions: (accountId: Id<'Account'>) => boolean;
+  /** Whether a category is used by anything; a template is refused once one is. Required, so a caller cannot forget it. */
+  readonly isCategoryUsed: (categoryId: Id<'Category'>) => boolean;
 }
 
 /** Why a command was refused. None of them carries a name or an amount. */

@@ -115,3 +115,16 @@ export type { DamagedLine, DecodeFailure } from './file/failures.js';
 export { FORMAT_VERSION } from './file/manifest.js';
 export { MIGRATIONS, runMigrations, type MigrationStep, type RawParts } from './file/migrations.js';
 export { PART_REGISTRY, type PartKind, type PartSpec } from './file/parts.js';
+export {
+  CATEGORY_TEMPLATES,
+  TEMPLATE_IDS,
+  instantiateTemplate,
+  type CategoryTemplate,
+  type TemplateCategory,
+  type TemplateId,
+} from './templates/category-templates.js';
+export {
+  COPY_FROM_FILE_COPIES_RULES,
+  categoriesFromFile,
+  type CopyOptions,
+} from './templates/copy-categories.js';

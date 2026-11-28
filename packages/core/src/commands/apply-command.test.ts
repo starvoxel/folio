@@ -9,11 +9,12 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 
-import { INCOME_CATEGORY_ID } from '../budget/category.js';
+import { INCOME_CATEGORY_ID, type Category } from '../budget/category.js';
 import { createBudget, type BudgetModel } from '../budget/model.js';
 import { fixedClock } from '../domain/clock.js';
 import { id } from '../domain/id.js';
 import { localDate, yearMonth } from '../domain/local-date.js';
+import { instantiateTemplate } from '../templates/category-templates.js';
 import { applyCommand } from './apply-command.js';
 import { applyChangeSet, invertChangeSet } from './change-set.js';
 import {
@@ -29,7 +30,11 @@ const accountId = (n: number): ReturnType<typeof id<'Account'>> =>
   id<'Account'>(`aaaaaaaa-0000-4000-8000-${String(n).padStart(12, '0')}`);
 const categoryId = (n: number): ReturnType<typeof id<'Category'>> =>
   id<'Category'>(`cccccccc-0000-4000-8000-${String(n).padStart(12, '0')}`);
-const noContext: CommandContext = { lockedMonths: [], accountHasTransactions: () => false };
+const noContext: CommandContext = {
+  lockedMonths: [],
+  accountHasTransactions: () => false,
+  isCategoryUsed: () => false,
+};
 
 /**
  * @param model - The starting model.
@@ -497,6 +502,14 @@ const dayOfYear = fc
   );
 
 /** Commands that mostly apply, built from small id pools so that they interact. */
+/**
+ * @returns A source of distinct UUIDs for a template.
+ */
+function templateIds(): () => string {
+  let n = 0;
+  return () => `ffffffff-0000-4000-8000-${String((n += 1)).padStart(12, '0')}`;
+}
+
 const anyCommand: fc.Arbitrary<Command> = fc.oneof(
   fc.record({
     kind: fc.constant(COMMAND_KIND.addAccount),
@@ -528,6 +541,10 @@ const anyCommand: fc.Arbitrary<Command> = fc.oneof(
     kind: fc.constant(COMMAND_KIND.removeCategory),
     id: fc.integer({ min: 1, max: 6 }).map(categoryId),
   }),
+  fc.constantFrom('simple', 'detailed').map((template): Command => ({
+    kind: COMMAND_KIND.applyTemplate,
+    categories: instantiateTemplate(template, templateIds()),
+  })),
 );
 
 describe('invertChangeSet', () => {
@@ -568,6 +585,130 @@ describe('invertChangeSet', () => {
           }
         }),
       );
+    });
+  });
+});
+
+describe('applyTemplate', () => {
+  const ids = (): (() => string) => {
+    let n = 0;
+    return () => `eeeeeeee-0000-4000-8000-${String((n += 1)).padStart(12, '0')}`;
+  };
+  const simple = instantiateTemplate('simple', ids());
+  const apply = (categories: readonly Category[]): Command => ({
+    kind: COMMAND_KIND.applyTemplate,
+    categories,
+  });
+
+  describe('aTemplateOnAModelWithOtherCategories', () => {
+    it('replacesThemAndUndoRestoresThem', () => {
+      const edited = run(
+        run(empty, {
+          kind: COMMAND_KIND.addCategory,
+          id: categoryId(1),
+          name: 'Mine',
+          parentId: null,
+        }),
+        { kind: COMMAND_KIND.addCategory, id: categoryId(2), name: 'Sub', parentId: categoryId(1) },
+      );
+      const result = applyCommand(edited, apply(simple), noContext);
+      expect(result.ok && result.value.model.categories).toEqual(simple);
+      if (result.ok) {
+        const undone = applyChangeSet(result.value.model, invertChangeSet(result.value.changeSet));
+        expect(undone).toEqual(edited);
+      }
+    });
+  });
+
+  describe('aTemplateThatRenamesIncome', () => {
+    it('isUndoneToTheOldName', () => {
+      const renamed = simple.map((category) =>
+        category.id === INCOME_CATEGORY_ID ? { ...category, name: 'Pay and other' } : category,
+      );
+      const result = applyCommand(empty, apply(renamed), noContext);
+      expect(result.ok && result.value.model.categories[0]?.name).toBe('Pay and other');
+      if (result.ok) {
+        const undone = applyChangeSet(result.value.model, invertChangeSet(result.value.changeSet));
+        expect(undone).toEqual(empty);
+      }
+    });
+
+    it('keepsIncomeInPlaceWithTheNewName', () => {
+      const renamed = simple.map((category) =>
+        category.id === INCOME_CATEGORY_ID ? { ...category, name: ' Pay and other ' } : category,
+      );
+      const model = run(empty, apply(renamed));
+      expect(model.categories[0]).toEqual({
+        id: INCOME_CATEGORY_ID,
+        name: 'Pay and other',
+        parentId: null,
+      });
+    });
+  });
+
+  describe('aSetThatIsNotSound', () => {
+    it('isRefusedAndChangesNothing', () => {
+      const withoutIncome = simple.filter((category) => category.id !== INCOME_CATEGORY_ID);
+      expect(refusal(empty, apply(withoutIncome))).toEqual({ code: FAILURE.incomeProtected });
+      const blank = simple.map((category, at) =>
+        at === 1 ? { ...category, name: ' ' } : category,
+      );
+      expect(refusal(empty, apply(blank))).toEqual({ code: FAILURE.nameEmpty });
+      const twice = [...simple, ...simple.slice(1, 2)];
+      expect(refusal(empty, apply(twice))).toEqual({ code: FAILURE.duplicateId });
+      const orphan = [...simple, { id: categoryId(9), name: 'Lost', parentId: categoryId(8) }];
+      expect(refusal(empty, apply(orphan))).toEqual({ code: FAILURE.invalidParent });
+      const deep = [
+        ...simple,
+        { id: categoryId(9), name: 'Deep', parentId: simple[1]?.id ?? null },
+      ];
+      const third = [...deep, { id: categoryId(10), name: 'Deeper', parentId: categoryId(9) }];
+      expect(refusal(empty, apply(third))).toEqual({ code: FAILURE.invalidParent });
+    });
+  });
+
+  describe('aCategoryThatIsInUse', () => {
+    it('isRefused', () => {
+      const context: CommandContext = { ...noContext, isCategoryUsed: () => true };
+      expect(refusal(empty, apply(simple), context)).toEqual({ code: FAILURE.categoryInUse });
+    });
+  });
+
+  describe('editsAfterApplyingATemplate', () => {
+    it('renameAddAndRemoveWorkAtBothLevelsAndIncomeStays', () => {
+      const named = (name: string): Category | undefined =>
+        simple.find((category) => category.name === name);
+      const [income, housing, food, groceries] = [
+        named('Income'),
+        named('Housing'),
+        named('Food'),
+        named('Groceries'),
+      ];
+      let model = run(empty, apply(simple));
+      model = run(model, {
+        kind: COMMAND_KIND.renameCategory,
+        id: housing?.id ?? categoryId(0),
+        name: 'Home',
+      });
+      model = run(model, {
+        kind: COMMAND_KIND.addCategory,
+        id: categoryId(20),
+        name: 'Rent',
+        parentId: housing?.id ?? null,
+      });
+      model = run(model, {
+        kind: COMMAND_KIND.removeCategory,
+        id: groceries?.id ?? categoryId(0),
+      });
+      model = run(model, { kind: COMMAND_KIND.removeCategory, id: food?.id ?? categoryId(0) });
+      const names = model.categories.map((category) => category.name);
+      expect(names).toContain('Home');
+      expect(names).toContain('Rent');
+      expect(names).not.toContain('Groceries');
+      expect(names).not.toContain('Food');
+      expect(
+        refusal(model, { kind: COMMAND_KIND.removeCategory, id: income?.id ?? categoryId(0) }),
+      ).toEqual({ code: FAILURE.incomeProtected });
     });
   });
 });
