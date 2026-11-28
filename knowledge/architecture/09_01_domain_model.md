@@ -8,6 +8,8 @@ key_files:
   - packages/core/src/domain/clock.ts
   - packages/core/src/commands/apply-command.ts
   - packages/core/src/commands/command.ts
+  - packages/core/src/templates/category-templates.ts
+  - packages/core/src/templates/copy-categories.ts
   - packages/core/src/commands/change-set.ts
   - packages/core/src/commands/lock-guard.ts
   - packages/core/src/budget/account-rules.ts
@@ -47,6 +49,8 @@ _Decision._ All mutations are command objects that produce a change set. Before 
 _Consequences._ No code path may mutate the model except through a command; the UI, the importer and undo all use the same path.
 
 _Implementation._ `applyCommand` in `packages/core/src/commands/` looks the command's kind up in one map of kind to planner function (a new command is one entry and one function; the type forces an entry per kind), which plans it into a change set, runs `checkLocks` on its `touchedMonths`, then applies it; the model is never changed in place. Callers supply ids and dates, so a command is deterministic. Each part records an entity's value and list position before and after, so `invertChangeSet` restores the model exactly (a property test checks this). Account and category parts are `global` (AD-5); month-scoped parts arrive with the plans that own months. The transaction check an account rule needs (delete, change type) comes in through `CommandContext`, since transactions belong to a later plan. An account's archive history is a list of dated periods, and `isIncludedInMonth` reads it (S1.14, S1.15).
+
+_Templates and copying (Setup and accounts milestone 4)._ The two starter category sets (Simple, Detailed household) are bundled data in `packages/core/src/templates/`, and `instantiateTemplate` gives them fresh ids, Income keeping its fixed one. `applyTemplate` is a command like any other: it replaces the whole category set with a given list, checked for empty names, repeated ids, a third level and a missing Income, and refused with `categoryInUse` once the plans that use categories report one in use. Setup lets the person switch categories off or edit them before applying; what is switched off is simply left out of the list, and later edits use the add, rename and remove commands. Copy from an existing file reads the other file through `decodeFolio` and keeps only its categories, with fresh ids, so its accounts, transactions and months never come across and a damaged or newer file fails as it does everywhere else. Rules are not copied yet: they have no schema until the categorization plan.
 
 ## AD-5. Undo replays month-tagged change sets
 
