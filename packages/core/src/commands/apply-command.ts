@@ -81,6 +81,7 @@ const PLANNERS: { readonly [K in CommandKind]: Planner<K> } = {
   [COMMAND_KIND.addCategory]: planAddCategory,
   [COMMAND_KIND.renameCategory]: planRenameCategory,
   [COMMAND_KIND.removeCategory]: planRemoveCategory,
+  [COMMAND_KIND.applyTemplate]: planApplyTemplate,
 };
 
 /**
@@ -390,4 +391,100 @@ function planRemoveCategory(
   });
   // Highest index first, so each recorded index is still right when its part is applied.
   return changeSet(parts.reverse());
+}
+
+/**
+ * Replace the category set with a template's, or a copied file's (S1.6). It is a starting set for a
+ * new budget, so it is refused once any category is in use.
+ * @param model - The model.
+ * @param command - The apply command.
+ * @param context - Says whether a category is in use.
+ * @returns The plan.
+ */
+function planApplyTemplate(
+  model: BudgetModel,
+  command: Extract<Command, { kind: typeof COMMAND_KIND.applyTemplate }>,
+  context: CommandContext,
+): Planned {
+  const checked = checkCategorySet(command.categories);
+  if (checked !== null) {
+    return err({ code: checked });
+  }
+  if (model.categories.some((category) => context.isCategoryUsed?.(category.id) === true)) {
+    return err({ code: FAILURE.categoryInUse });
+  }
+  const parts: ChangePart[] = [];
+  // Highest index first, so each recorded index is still right when its part is applied.
+  for (let index = model.categories.length - 1; index >= 0; index -= 1) {
+    const category = model.categories[index];
+    if (category !== undefined && category.id !== INCOME_CATEGORY_ID) {
+      parts.push(categoryPart(category, index, null, null));
+    }
+  }
+  const incomeIndex = model.categories.findIndex((category) => category.id === INCOME_CATEGORY_ID);
+  const income = command.categories.find((category) => category.id === INCOME_CATEGORY_ID);
+  const before = model.categories[incomeIndex];
+  if (before !== undefined && income !== undefined && before.name !== income.name.trim()) {
+    parts.push(
+      categoryPart(before, incomeIndex, { ...before, name: income.name.trim() }, incomeIndex),
+    );
+  }
+  let next = incomeIndex >= 0 ? 1 : 0;
+  for (const category of command.categories) {
+    if (category.id !== INCOME_CATEGORY_ID) {
+      parts.push(categoryPart(null, null, { ...category, name: category.name.trim() }, next));
+      next += 1;
+    }
+  }
+  return changeSet(parts);
+}
+
+/**
+ * Check a whole category set before it replaces the current one.
+ * @param categories - The proposed set.
+ * @returns The refusal code, or null when the set is sound.
+ */
+function checkCategorySet(
+  categories: readonly Category[],
+): Exclude<CommandFailure['code'], typeof FAILURE.monthLocked> | null {
+  const seen = new Set<string>();
+  const mains = new Set(categories.filter((c) => c.parentId === null).map((c) => c.id));
+  if (!mains.has(INCOME_CATEGORY_ID)) {
+    return FAILURE.incomeProtected;
+  }
+  for (const category of categories) {
+    if (category.name.trim() === '') {
+      return FAILURE.nameEmpty;
+    }
+    if (seen.has(category.id)) {
+      return FAILURE.duplicateId;
+    }
+    seen.add(category.id);
+    if (category.parentId !== null && !mains.has(category.parentId)) {
+      return FAILURE.invalidParent;
+    }
+  }
+  return null;
+}
+
+/**
+ * Make one part of a category change.
+ * @param before - The category as it was, or null when it is new.
+ * @param beforeIndex - Where it was.
+ * @param after - The category as it becomes, or null when it is removed.
+ * @param afterIndex - Where it goes.
+ * @returns The part.
+ */
+function categoryPart(
+  before: Category | null,
+  beforeIndex: number | null,
+  after: Category | null,
+  afterIndex: number | null,
+): ChangePart {
+  return {
+    kind: 'category',
+    scope: 'global',
+    before: before === null || beforeIndex === null ? null : { index: beforeIndex, value: before },
+    after: after === null || afterIndex === null ? null : { index: afterIndex, value: after },
+  };
 }
